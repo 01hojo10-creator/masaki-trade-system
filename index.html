@@ -1,0 +1,3299 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Masaki Trade System</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#111a2a;
+      --panel2:#0f1726;
+      --line:rgba(255,255,255,.10);
+      --text:#e8eefc;
+      --muted:#9fb0d1;
+      --good:#19c37d;
+      --bad:#ff5d73;
+      --warn:#f5b942;
+      --blue:#4ea1ff;
+      --chip:#1a2640;
+      --shadow:0 8px 24px rgba(0,0,0,.25);
+      --radius:14px;
+      --gold:#ffd54a;
+      --gold-soft:rgba(255,213,74,.16);
+      --green:#19c37d;
+      --blue2:#4ea1ff;
+      --gray:#cbd5e1;
+      --red:#ff5d73;
+      --signal-row:rgba(78,161,255,.20);
+      --signal-row-strong:rgba(78,161,255,.14);
+      --focus-head:#4a3716;
+      --watch-head:#133c3a;
+      --pool-head:#163453;
+
+      /* カード色 */
+      --focus-card-top:#0f1a2e;
+      --watch-card-top:#0f1a2e;
+      --pool-card-top:#0f1a2e;
+      --card-bottom-navy:#0f1a2e;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      height:100%;
+      background:var(--bg);
+      color:var(--text);
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+
+    .wrap{
+      max-width:1900px;
+      margin:0 auto;
+      padding:10px 14px;
+    }
+
+    .header-panel{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:8px 12px;
+      margin-bottom:10px;
+      overflow:hidden;
+    }
+
+    .header-inline{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      min-width:0;
+    }
+
+    .title{
+      flex:0 0 auto;
+      font-size:24px;
+      font-weight:800;
+      letter-spacing:.2px;
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    .controls{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:nowrap;
+      min-width:0;
+      flex:1 1 auto;
+    }
+
+    input[type="text"]{
+      background:#0c1422;
+      color:var(--text);
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:8px 12px;
+      min-width:0;
+      outline:none;
+    }
+
+    #symbolsInput{
+      flex:0 0 100px;
+      width:100px;
+      text-align:center;
+      font-weight:800;
+      letter-spacing:.4px;
+    }
+
+    #searchInput{
+      flex:0 0 180px;
+      width:180px;
+      font-weight:700;
+    }
+
+    .motto-bar{
+      flex:0 1 320px;
+      min-width:180px;
+      padding:0;
+      font-size:17px;
+      color:#ffe9b2;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      font-weight:900;
+      background:transparent;
+      border:none;
+      border-radius:0;
+    }
+
+    .motto-label{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      margin-right:8px;
+      padding:3px 10px;
+      border:1px solid rgba(255,213,74,.30);
+      border-radius:999px;
+      background:rgba(255,213,74,.12);
+      color:#ffe9b2;
+      font-size:16px;
+      font-weight:900;
+      line-height:1.1;
+      vertical-align:middle;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    .motto-text{
+      color:#ffe9b2;
+      vertical-align:middle;
+      font-size:17px;
+      font-weight:900;
+      line-height:1.1;
+    }
+
+    .auto-loading-bar{
+      display:none;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+      padding:10px 14px;
+      border:1px solid rgba(255,213,74,.22);
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(255,213,74,.10), rgba(15,23,38,.96));
+      color:#ffe9b2;
+      box-shadow:0 8px 20px rgba(0,0,0,.20);
+    }
+
+    .auto-loading-bar.active{
+      display:flex;
+    }
+
+    .auto-loading-dot{
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      background:#ffd54a;
+      box-shadow:0 0 8px rgba(255,213,74,.55);
+      animation:autoPulse 1.2s ease-in-out infinite;
+      flex:0 0 auto;
+    }
+
+    .auto-loading-text{
+      font-size:14px;
+      font-weight:900;
+      letter-spacing:.2px;
+      color:#ffe9b2;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    @keyframes autoPulse{
+      0%,100%{
+        opacity:.55;
+        transform:scale(.92);
+        box-shadow:0 0 6px rgba(255,213,74,.35);
+      }
+      50%{
+        opacity:1;
+        transform:scale(1.08);
+        box-shadow:0 0 12px rgba(255,213,74,.65);
+      }
+    }
+
+    .top-grid{
+      display:grid;
+      grid-template-columns:1.45fr 1fr;
+      gap:14px;
+      align-items:stretch;
+      margin-bottom:14px;
+      height:calc(100vh - 118px);
+      min-height:0;
+    }
+
+    .bottom-grid{
+      display:block;
+    }
+
+    .section{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .top-grid > .section{
+      height:100%;
+      min-height:0;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      padding:10px 14px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg,#12203a,#0f1a2e);
+      flex:0 0 auto;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .section-title h2{
+      margin:0;
+      font-size:18px;
+    }
+
+    .badge{
+      border:1px solid var(--line);
+      background:#0d1626;
+      border-radius:999px;
+      padding:5px 10px;
+      font-size:12px;
+      color:#d7e2ff;
+    }
+
+    .tablewrap{
+      overflow-y:auto;
+      overflow-x:hidden;
+      max-height:420px;
+      flex:1 1 auto;
+      min-height:0;
+      background:#06080d;
+    }
+
+    .top-grid .tablewrap{
+      min-height:0;
+      max-height:none;
+    }
+
+    .focus-section .tablewrap{
+      overflow-y:auto;
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+    }
+
+    .focus-section .tablewrap::-webkit-scrollbar{
+      width:0;
+      height:0;
+    }
+
+    .watch-section .tablewrap{
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+    }
+
+    .watch-section .tablewrap::-webkit-scrollbar{
+      width:0;
+      height:0;
+    }
+
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0 8px;
+      background:#06080d;
+      table-layout:fixed;
+    }
+
+    th,td{
+      border-bottom:1px solid var(--line);
+      padding:9px 8px;
+      font-size:12px;
+      text-align:center;
+      white-space:nowrap;
+      vertical-align:middle;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    th{
+      position:sticky;
+      top:0;
+      z-index:3;
+      color:#dfe8ff;
+      font-size:12px;
+      letter-spacing:.3px;
+      background:#13203a;
+      background-clip:padding-box;
+    }
+
+    .price{font-weight:800;font-size:13px}
+    .up{color:var(--good);font-weight:800}
+    .down{color:var(--bad);font-weight:800}
+    .flat{color:#cbd5e1;font-weight:700}
+    .muted{color:var(--muted)}
+    .small{font-size:11px}
+    .err{color:#ff9baa;font-weight:700}
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:24px;
+      padding:4px 10px;
+      border-radius:999px;
+      background:#1a2640;
+      border:1px solid var(--line);
+      font-weight:800;
+      font-size:11px;
+      max-width:100%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .trend-up{color:#8cf0bf;border-color:rgba(25,195,125,.35);background:rgba(25,195,125,.10)}
+    .trend-down{color:#ff9baa;border-color:rgba(255,93,115,.35);background:rgba(255,93,115,.10)}
+    .trend-range{color:#d1d9e8}
+    .trigger-long{color:#8cf0bf;border-color:rgba(25,195,125,.35);background:rgba(25,195,125,.10)}
+    .trigger-short{color:#ff9baa;border-color:rgba(255,93,115,.35);background:rgba(255,93,115,.10)}
+    .trigger-pull{color:#9fd0ff;border-color:rgba(78,161,255,.35);background:rgba(78,161,255,.10)}
+    .trigger-wait{color:#d1d9e8}
+
+    .trend-entry-up{
+      box-shadow:
+        0 0 6px rgba(25,195,125,.55),
+        0 0 12px rgba(25,195,125,.45),
+        inset 0 0 4px rgba(25,195,125,.20);
+    }
+
+    .trend-entry-down{
+      box-shadow:
+        0 0 6px rgba(255,93,115,.55),
+        0 0 12px rgba(255,93,115,.45),
+        inset 0 0 4px rgba(255,93,115,.20);
+    }
+
+    .score{
+      font-weight:900;
+      padding:4px 10px;
+      border-radius:8px;
+      display:inline-block;
+      min-width:52px;
+      font-size:11px;
+    }
+
+    .score-gold{background:rgba(255,213,74,.16);color:#ffd54a}
+    .score-green{background:rgba(25,195,125,.16);color:#8cf0bf}
+    .score-blue{background:rgba(78,161,255,.16);color:#9fd0ff}
+    .score-gray{background:rgba(203,213,225,.12);color:#dbe5f2}
+
+    .entrybox,.rrbox{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:2px;
+      width:100%;
+      min-height:40px;
+      padding:5px 6px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.12);
+      background:#0d1626;
+      line-height:1.1;
+    }
+
+    .entry-main,.rr-main{
+      font-size:12px;
+      font-weight:900;
+      color:#f7fbff;
+    }
+
+    .entry-sub,.rr-sub{
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .entry-heat-mid{
+      background:linear-gradient(180deg, rgba(255,215,0,.35), rgba(255,215,0,.12));
+      border:1px solid rgba(255,215,0,.55);
+      box-shadow:
+        0 0 6px rgba(255,215,0,.45),
+        0 0 12px rgba(255,215,0,.35),
+        inset 0 0 6px rgba(255,215,0,.15);
+      animation:entryGlow 2.2s ease-in-out infinite;
+    }
+
+    .entry-heat-mid .entry-main{
+      color:#fff9d6;
+      text-shadow:0 0 6px rgba(255,215,0,.45);
+    }
+
+    .entry-heat-mid .entry-sub{
+      color:#ffe9a6;
+      text-shadow:0 0 4px rgba(255,215,0,.28);
+    }
+
+    @keyframes entryGlow{
+      0%,100%{
+        box-shadow:
+          0 0 6px rgba(255,215,0,.45),
+          0 0 12px rgba(255,215,0,.35),
+          inset 0 0 6px rgba(255,215,0,.15);
+      }
+      50%{
+        box-shadow:
+          0 0 10px rgba(255,215,0,.58),
+          0 0 18px rgba(255,215,0,.44),
+          inset 0 0 8px rgba(255,215,0,.20);
+      }
+    }
+
+    .section-foot{
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      padding:10px 12px;
+      border-top:1px solid var(--line);
+      background:var(--panel2);
+      min-height:54px;
+      flex:0 0 auto;
+    }
+
+    .summary{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+    }
+
+    .mini{
+      background:#0d1626;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      color:#d7e2ff;
+    }
+
+    .focus-summary-stack{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width:0;
+    }
+
+    .focus-summary-row{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      min-width:0;
+    }
+
+    .theme-detect-block{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width:0;
+      flex:1 1 100%;
+    }
+
+    .theme-detect-head{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      align-self:flex-start;
+      min-height:28px;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(245,185,66,.26);
+      background:rgba(245,185,66,.10);
+      color:#ffe9b2;
+      font-size:12px;
+      font-weight:900;
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    .theme-detect-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      min-width:0;
+    }
+
+    .theme-detect-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:26px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(245,185,66,.26);
+      background:rgba(245,185,66,.10);
+      color:#ffe9b2;
+      font-size:12px;
+      font-weight:800;
+      line-height:1.1;
+      white-space:nowrap;
+    }
+
+    .focus-section{
+      border:2px solid rgba(245,185,66,.52);
+      box-shadow:0 10px 28px rgba(0,0,0,.28),0 0 0 1px rgba(245,185,66,.14) inset,0 0 18px rgba(245,185,66,.10);
+    }
+    .focus-section .section-head{
+      background:linear-gradient(180deg, rgba(245,185,66,.24), rgba(40,28,10,.95));
+      border-bottom:1px solid rgba(245,185,66,.18);
+    }
+    .focus-section .section-title h2{
+      color:#fff4d6;
+      text-shadow:0 0 10px rgba(245,185,66,.18);
+    }
+    .focus-section .badge{
+      border-color:rgba(245,185,66,.34);
+      background:rgba(245,185,66,.16);
+      color:#ffe9b2;
+      box-shadow:0 0 0 1px rgba(245,185,66,.05) inset;
+    }
+    .focus-section th{
+      background:var(--focus-head);
+      box-shadow:inset 0 -1px 0 rgba(245,185,66,.12);
+    }
+    .focus-section .section-foot{
+      background:linear-gradient(180deg, rgba(245,185,66,.09), rgba(15,23,38,.98));
+      border-top:2px solid rgba(245,185,66,.18);
+    }
+
+    .watch-section{
+      border-color:rgba(25,195,125,.26);
+      box-shadow:0 8px 24px rgba(0,0,0,.25),0 0 0 1px rgba(25,195,125,.05) inset;
+    }
+    .watch-section .section-head{
+      background:linear-gradient(180deg, rgba(25,195,125,.12), rgba(15,26,46,.95));
+      border-bottom-color:rgba(25,195,125,.16);
+    }
+    .watch-section .section-title h2{ color:#d8ffec; }
+    .watch-section .badge{
+      border-color:rgba(25,195,125,.24);
+      background:rgba(25,195,125,.10);
+      color:#bdf5d9;
+    }
+    .watch-section th{ background:var(--watch-head); }
+    .watch-section .section-foot{
+      background:linear-gradient(180deg, rgba(25,195,125,.05), rgba(15,23,38,.98));
+      border-top-color:rgba(25,195,125,.18);
+    }
+
+    .pool-section{
+      border-color:rgba(47,129,247,.24);
+      box-shadow:0 8px 24px rgba(0,0,0,.25),0 0 0 1px rgba(47,129,247,.05) inset;
+    }
+    .pool-section .section-head{
+      background:linear-gradient(180deg, rgba(47,129,247,.18), rgba(15,26,46,.95));
+      border-bottom-color:rgba(47,129,247,.20);
+    }
+    .pool-section .section-title h2{ color:#dceaff; }
+    .pool-section .badge{
+      border-color:rgba(47,129,247,.24);
+      background:rgba(47,129,247,.10);
+      color:#cfe3ff;
+    }
+    .pool-section th{ background:var(--pool-head); }
+    .pool-section .section-foot{
+      background:linear-gradient(180deg, rgba(47,129,247,.05), rgba(15,23,38,.98));
+      border-top-color:rgba(47,129,247,.18);
+    }
+
+    .subrow td{
+      background:var(--card-bottom-navy);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      padding:7px 10px;
+      text-align:left;
+      white-space:normal;
+      overflow:visible;
+      text-overflow:unset;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.04),
+        inset 0 -1px 0 rgba(0,0,0,.20),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+
+    .focus-subrow td{ background:var(--card-bottom-navy); }
+    .watch-subrow td{ background:var(--card-bottom-navy); }
+    .pool-subrow td{ background:var(--card-bottom-navy); }
+
+    .signal-row td{ background:var(--signal-row); }
+    .signal-subrow td{ background:var(--signal-row-strong) !important; }
+
+    .meta-grid{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+      flex-wrap:nowrap;
+    }
+
+    .meta-cell{
+      min-width:0;
+      flex:0 0 auto;
+    }
+
+    .meta-grid .meta-cell:first-child{
+      min-width:0;
+      flex:0 1 auto;
+    }
+
+    .meta-grid .meta-cell:last-child{
+      min-width:0;
+      flex:0 0 320px;
+      display:flex;
+      justify-content:flex-start;
+      margin-left:auto;
+    }
+
+    .watch-section .watch-subrow .meta-grid .meta-cell:last-child{
+      min-width:0;
+      flex:0 0 220px;
+      display:flex;
+      justify-content:flex-start;
+      margin-left:auto;
+      padding-left:48px;
+    }
+
+    .meta-label{
+      display:none;
+    }
+
+    .theme-pill{
+      display:inline-flex;
+      align-items:center;
+      max-width:100%;
+      min-height:24px;
+      padding:3px 10px;
+      border-radius:999px;
+      border:1px solid rgba(245,185,66,.26);
+      background:rgba(245,185,66,.10);
+      color:#ffe9b2;
+      font-size:11px;
+      font-weight:800;
+      line-height:1.2;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      vertical-align:middle;
+    }
+
+    .meta-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:26px;
+      width:84px;
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#0d1626;
+      color:#dfe8ff;
+      text-decoration:none;
+      font-size:12px;
+      font-weight:800;
+      line-height:1;
+      flex:0 0 auto;
+    }
+
+    .meta-link:hover{ filter:brightness(1.08); }
+    .meta-link-news{
+      color:#cfe3ff;
+      background:rgba(47,129,247,.10);
+      border-color:rgba(47,129,247,.22);
+    }
+    .meta-link-tv{
+      color:#bdf5d9;
+      background:rgba(25,195,125,.10);
+      border-color:rgba(25,195,125,.22);
+    }
+
+    .comment-text{
+      display:inline-flex;
+      align-items:center;
+      justify-content:flex-start;
+      min-height:26px;
+      width:100%;
+      padding-left:0;
+      color:#f3f7ff;
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .comment-label{
+      color:#9fb0d1;
+      margin-right:4px;
+      flex:0 0 auto;
+    }
+
+    .comment-body{
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:0 1 auto;
+    }
+
+    .sticky-col{
+      position:sticky;
+      left:0;
+      z-index:2;
+      box-shadow:1px 0 0 rgba(255,255,255,.06);
+      background:#0f1a2e;
+    }
+
+    th.sticky-col{
+      z-index:5;
+    }
+
+    .focus-section td.sticky-col{ background:#0f1a2e; }
+    .watch-section td.sticky-col{ background:#0f1a2e; }
+    .pool-section td.sticky-col{ background:#0f1a2e; }
+    .focus-section th.sticky-col{ background:var(--focus-head); }
+    .watch-section th.sticky-col{ background:var(--watch-head); }
+    .pool-section th.sticky-col{ background:var(--pool-head); }
+
+    .cell-headband{
+      display:grid;
+      grid-template-columns:22px 56px minmax(0,1fr) auto;
+      align-items:center;
+      gap:6px;
+      width:100%;
+      min-width:0;
+      padding:7px 8px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.12);
+      background:#12203a;
+    }
+
+    .focus-section .cell-headband{
+      background:linear-gradient(180deg, rgba(245,185,66,.18), rgba(74,55,22,.96));
+      border-color:rgba(245,185,66,.26);
+    }
+
+    .watch-section .cell-headband{
+      background:linear-gradient(180deg, rgba(25,195,125,.14), rgba(19,60,58,.96));
+      border-color:rgba(25,195,125,.22);
+    }
+
+    .pool-section .cell-headband{
+      background:linear-gradient(180deg, rgba(78,161,255,.16), rgba(22,52,83,.96));
+      border-color:rgba(78,161,255,.24);
+    }
+
+    .symbol-mark{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:22px;
+      height:22px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      line-height:1;
+      border:1px solid rgba(255,255,255,.14);
+      background:#13203a;
+      color:#7f8ea7;
+      appearance:none;
+      cursor:pointer;
+      padding:0;
+    }
+
+    .symbol-mark.active{
+      color:#ffd54a;
+      background:rgba(255,213,74,.14);
+      border-color:rgba(255,213,74,.38);
+      box-shadow:0 0 10px rgba(255,213,74,.10);
+    }
+
+    .head-code{
+      font-size:13px;
+      font-weight:900;
+      color:#ffffff;
+      letter-spacing:.2px;
+      text-align:left;
+    }
+
+    .head-name{
+      font-size:12px;
+      font-weight:800;
+      color:#f4f7ff;
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      text-align:left;
+    }
+
+    .row-action-btn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,.14);
+      background:#101a2c;
+      color:#e8eefc;
+      min-height:22px;
+      padding:3px 8px;
+      border-radius:999px;
+      font-size:10px;
+      font-weight:900;
+      line-height:1;
+      cursor:pointer;
+      flex:0 0 auto;
+    }
+
+    .row-action-btn:hover{
+      filter:brightness(1.08);
+    }
+
+    .delete-btn{
+      color:#ffc6cf;
+      border-color:rgba(255,93,115,.26);
+      background:rgba(255,93,115,.10);
+    }
+
+    .focus-section tbody tr:not(.subrow):hover td,
+    .focus-section tbody tr:not(.subrow):has(+ tr.subrow:hover) td{ background:rgba(255,255,255,.055); }
+    .focus-section tbody tr:not(.subrow):hover td:first-child,
+    .focus-section tbody tr:not(.subrow):has(+ tr.subrow:hover) td:first-child{
+      box-shadow:
+        inset 4px 0 0 rgba(255,213,74,.92),
+        inset 0 1px 0 rgba(245,185,66,.08),
+        inset 0 -1px 0 rgba(0,0,0,.22),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+    .focus-section tbody tr:not(.subrow):hover + tr.subrow td,
+    .focus-section tbody tr.subrow:hover td{
+      background:rgba(255,255,255,.055);
+    }
+
+    .watch-section tbody tr:not(.subrow):hover td,
+    .watch-section tbody tr:not(.subrow):has(+ tr.subrow:hover) td{ background:rgba(255,255,255,.05); }
+    .watch-section tbody tr:not(.subrow):hover td:first-child,
+    .watch-section tbody tr:not(.subrow):has(+ tr.subrow:hover) td:first-child{
+      box-shadow:
+        inset 4px 0 0 rgba(25,195,125,.92),
+        inset 0 1px 0 rgba(25,195,125,.08),
+        inset 0 -1px 0 rgba(0,0,0,.22),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+    .watch-section tbody tr:not(.subrow):hover + tr.subrow td,
+    .watch-section tbody tr.subrow:hover td{
+      background:rgba(255,255,255,.05);
+    }
+
+    .pool-section tbody tr:not(.subrow):hover td,
+    .pool-section tbody tr:not(.subrow):has(+ tr.subrow:hover) td{ background:rgba(255,255,255,.05); }
+    .pool-section tbody tr:not(.subrow):hover td:first-child,
+    .pool-section tbody tr:not(.subrow):has(+ tr.subrow:hover) td:first-child{
+      box-shadow:
+        inset 4px 0 0 rgba(78,161,255,.95),
+        inset 0 1px 0 rgba(47,129,247,.08),
+        inset 0 -1px 0 rgba(0,0,0,.22),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+    .pool-section tbody tr:not(.subrow):hover + tr.subrow td,
+    .pool-section tbody tr.subrow:hover td{
+      background:rgba(255,255,255,.05);
+    }
+
+    .focus-section th:nth-child(1), .focus-section td:nth-child(1){width:245px;}
+    .focus-section th:nth-child(2), .focus-section td:nth-child(2){width:82px;}
+    .focus-section th:nth-child(3), .focus-section td:nth-child(3){width:70px;}
+    .focus-section th:nth-child(4), .focus-section td:nth-child(4){width:74px;}
+    .focus-section th:nth-child(5), .focus-section td:nth-child(5){width:74px;}
+    .focus-section th:nth-child(6), .focus-section td:nth-child(6){width:128px;}
+    .focus-section th:nth-child(7), .focus-section td:nth-child(7){width:84px;}
+    .focus-section th:nth-child(8), .focus-section td:nth-child(8){width:84px;}
+
+    .watch-section th:nth-child(1), .watch-section td:nth-child(1){width:250px;}
+    .watch-section th:nth-child(2), .watch-section td:nth-child(2){width:90px;}
+    .watch-section th:nth-child(3), .watch-section td:nth-child(3){width:78px;}
+    .watch-section th:nth-child(4), .watch-section td:nth-child(4){width:92px;}
+    .watch-section th:nth-child(5), .watch-section td:nth-child(5){width:84px;}
+
+    .pool-section th:nth-child(1), .pool-section td:nth-child(1){width:250px;}
+    .pool-section th:nth-child(2), .pool-section td:nth-child(2){width:94px;}
+    .pool-section th:nth-child(3), .pool-section td:nth-child(3){width:94px;}
+
+    tbody tr:not(.subrow) td{
+      border-top:1px solid rgba(255,255,255,.22);
+      border-bottom:0;
+      padding-top:7px;
+      padding-bottom:7px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05),
+        inset 0 -1px 0 rgba(0,0,0,.20);
+    }
+
+    tbody tr.subrow{
+      position:relative;
+      top:-8px;
+    }
+
+    tbody tr.subrow td{
+      border-top:0;
+      border-bottom:1px solid rgba(255,255,255,.22);
+      padding-top:9px;
+      padding-bottom:7px;
+    }
+
+    tbody tr:not(.subrow) td:first-child{
+      border-left:1px solid rgba(255,255,255,.22);
+      border-top-left-radius:12px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05),
+        inset 0 -1px 0 rgba(0,0,0,.20),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+
+    tbody tr:not(.subrow) td:last-child{
+      border-right:1px solid rgba(255,255,255,.22);
+      border-top-right-radius:12px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05),
+        inset 0 -1px 0 rgba(0,0,0,.20),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+
+    tbody tr.subrow td:first-child{
+      border-left:1px solid rgba(255,255,255,.22);
+      border-right:1px solid rgba(255,255,255,.22);
+      border-bottom-left-radius:12px;
+      border-bottom-right-radius:12px;
+    }
+
+    .focus-section tbody tr:not(.subrow) td{
+      box-shadow:
+        inset 0 1px 0 rgba(245,185,66,.07),
+        inset 0 -1px 0 rgba(0,0,0,.22);
+      background:#0f1a2e;
+    }
+    .watch-section tbody tr:not(.subrow) td{
+      box-shadow:
+        inset 0 1px 0 rgba(25,195,125,.07),
+        inset 0 -1px 0 rgba(0,0,0,.22);
+      background:#0f1a2e;
+    }
+    .pool-section tbody tr:not(.subrow) td{
+      box-shadow:
+        inset 0 1px 0 rgba(47,129,247,.07),
+        inset 0 -1px 0 rgba(0,0,0,.22);
+      background:#0f1a2e;
+    }
+
+    .focus-section tbody tr.signal-row td{
+      background:#173255;
+      box-shadow:
+        inset 0 1px 0 rgba(120,185,255,.16),
+        inset 0 -1px 0 rgba(0,0,0,.18);
+    }
+
+    .focus-section tbody tr.signal-row td:first-child,
+    .focus-section tbody tr.signal-row td:last-child{
+      box-shadow:
+        inset 0 1px 0 rgba(120,185,255,.16),
+        inset 0 -1px 0 rgba(0,0,0,.18),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+
+    .focus-section tbody tr.signal-subrow td{
+      background:#14304f !important;
+      box-shadow:
+        inset 0 1px 0 rgba(120,185,255,.12),
+        inset 0 -1px 0 rgba(0,0,0,.18),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+
+    .focus-section tbody tr:not(.subrow) td:first-child,
+    .focus-section tbody tr:not(.subrow) td:last-child{
+      box-shadow:
+        inset 0 1px 0 rgba(245,185,66,.07),
+        inset 0 -1px 0 rgba(0,0,0,.22),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+
+    .watch-section tbody tr:not(.subrow) td:first-child,
+    .watch-section tbody tr:not(.subrow) td:last-child{
+      box-shadow:
+        inset 0 1px 0 rgba(25,195,125,.07),
+        inset 0 -1px 0 rgba(0,0,0,.22),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+
+    .pool-section tbody tr:not(.subrow) td:first-child,
+    .pool-section tbody tr:not(.subrow) td:last-child{
+      box-shadow:
+        inset 0 1px 0 rgba(47,129,247,.07),
+        inset 0 -1px 0 rgba(0,0,0,.22),
+        0 8px 16px rgba(0,0,0,.22);
+    }
+
+    .signal-row td:first-child{ border-left-color:rgba(255,215,0,.22); }
+    .signal-row td:last-child{ border-right-color:rgba(255,215,0,.22); }
+    .signal-subrow td:first-child{
+      border-left-color:rgba(255,215,0,.22);
+      border-right-color:rgba(255,215,0,.22);
+      border-bottom-color:rgba(255,215,0,.22);
+    }
+
+    @media (max-width:1400px){
+      .header-inline{
+        flex-wrap:wrap;
+        align-items:flex-start;
+      }
+
+      .controls{
+        flex-wrap:wrap;
+        justify-content:flex-start;
+        width:100%;
+      }
+
+      #symbolsInput{
+        flex:0 0 100px;
+        width:100px;
+      }
+
+      #searchInput{
+        flex:0 1 180px;
+        width:180px;
+      }
+
+      .motto-bar{
+        flex:1 1 260px;
+        white-space:normal;
+      }
+
+      .top-grid{
+        height:auto;
+      }
+
+      .focus-section .tablewrap{
+        overflow-y:auto;
+      }
+    }
+
+    @media (max-width:1200px){
+      .top-grid{
+        grid-template-columns:1fr;
+        height:auto;
+      }
+      .top-grid > .section{
+        height:auto;
+        min-height:unset;
+      }
+      .focus-section .tablewrap{
+        overflow-y:auto;
+      }
+    }
+
+    @media (max-width:768px){
+      .wrap{padding:8px}
+      .header-panel{padding:8px 10px}
+      .header-inline{
+        gap:10px;
+      }
+      .title{
+        font-size:18px;
+      }
+      .controls{
+        flex-wrap:wrap;
+        gap:8px;
+      }
+      #symbolsInput{
+        flex:0 0 96px;
+        width:96px;
+      }
+      #searchInput{
+        flex:1 1 160px;
+        width:100%;
+      }
+      .motto-bar{
+        flex:1 1 100%;
+        white-space:normal;
+      }
+      .auto-loading-bar{
+        padding:9px 10px;
+      }
+      .auto-loading-text{
+        white-space:normal;
+        line-height:1.35;
+      }
+      .top-grid{
+        height:auto;
+      }
+      .tablewrap{max-height:none}
+      table{min-width:100%}
+      th,td{padding:8px 4px;font-size:11px}
+      .meta-grid{
+        flex-wrap:wrap;
+        gap:8px;
+      }
+      .meta-grid .meta-cell:last-child{
+        flex:1 1 100%;
+        margin-left:0;
+      }
+      .watch-section .watch-subrow .meta-grid .meta-cell:last-child{
+        flex:1 1 100%;
+        margin-left:0;
+        padding-left:0;
+      }
+      .theme-pill{
+        white-space:normal;
+        border-radius:10px;
+      }
+      .comment-text{
+        white-space:normal;
+      }
+      .focus-section .tablewrap{
+        overflow-y:auto;
+      }
+      .cell-headband{
+        grid-template-columns:22px 50px minmax(0,1fr);
+      }
+      .cell-headband .delete-btn{
+        grid-column:2 / span 2;
+        justify-self:end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header-panel">
+      <div class="header-inline">
+        <div class="title">Masaki Trade System</div>
+
+        <div class="controls">
+          <input id="symbolsInput" type="text" placeholder="入力" />
+          <input id="searchInput" type="text" placeholder="検索" />
+          <div class="motto-bar" id="mottoBar">
+            <span class="motto-label">格言</span>
+            <span class="motto-text">欲を捨てろ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auto-loading-bar" id="autoLoadingBar">
+      <span class="auto-loading-dot"></span>
+      <span class="auto-loading-text" id="autoLoadingText">Universe読み込み中...（初回は少し時間がかかります）</span>
+    </div>
+
+    <div class="top-grid">
+      <div class="section focus-section">
+        <div class="section-head">
+          <div class="section-title">
+            <h2>Focus</h2>
+          </div>
+          <div class="small muted">5分更新</div>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="sticky-col">銘柄名</th>
+                <th>現在</th>
+                <th>スコア</th>
+                <th>トレンド</th>
+                <th>トリガー</th>
+                <th>Entry帯</th>
+                <th>SL</th>
+                <th>TP</th>
+              </tr>
+            </thead>
+            <tbody id="focusTbody"></tbody>
+          </table>
+        </div>
+        <div class="section-foot">
+          <div class="summary" id="focusSummary"></div>
+          <div class="small muted" id="focusUpdated">未更新</div>
+        </div>
+      </div>
+
+      <div class="section watch-section">
+        <div class="section-head">
+          <div class="section-title">
+            <h2>Watch</h2>
+          </div>
+          <div class="small muted">15分更新</div>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="sticky-col">銘柄名</th>
+                <th>現在</th>
+                <th>スコア</th>
+                <th>トレンド</th>
+                <th>出来高</th>
+              </tr>
+            </thead>
+            <tbody id="watchTbody"></tbody>
+          </table>
+        </div>
+        <div class="section-foot">
+          <div class="summary" id="watchSummary"></div>
+          <div class="small muted" id="watchUpdated">未更新</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-grid">
+      <div class="section pool-section">
+        <div class="section-head">
+          <div class="section-title">
+            <h2>Pool</h2>
+            <span class="badge">保管</span>
+            <span class="badge">テーマ監視</span>
+          </div>
+          <div class="small muted">1日更新</div>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="sticky-col">銘柄名</th>
+                <th>現在</th>
+                <th>前日比</th>
+              </tr>
+            </thead>
+            <tbody id="poolTbody"></tbody>
+          </table>
+        </div>
+        <div class="section-foot">
+          <div class="summary" id="poolSummary"></div>
+          <div class="small muted" id="poolUpdated">未更新</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "masaki_trade_system_v14_2_pc";
+    const CORS_PROXY = "https://billowing-art-2c77.01hojo10.workers.dev/?url=";
+
+    const SYSTEM_MODE = "AUTO";
+
+    const SCAN_UNIVERSE = [
+      "1332","1333","1605","1719","1721","1801","1802","1803","1808","1812",
+      "1925","1928","1963","2002","2269","2502","2503","2801","2802","2871",
+      "2914","3038","3092","3382","3401","3402","3407","3861","4004","4005",
+      "4062","4063","4183","4188","4204","4452","4502","4503","4506","4507",
+      "4519","4523","4543","4568","4578","4631","4684","4689","4751","4755",
+      "4901","4902","4911","5101","5108","5201","5202","5214","5232","5233",
+      "5301","5332","5333","5351","5401","5411","5711","5713","5801","5802",
+      "5803","5805","5901","6098","6141","6146","6178","6301","6302","6305",
+      "6326","6361","6367","6471","6472","6501","6503","6504","6506","6525",
+      "6526","6586","6594","6613","6723","6724","6752","6753","6754","6758",
+      "6762","6770","6841","6856","6857","6861","6869","6920","6923","6951",
+      "6952","6954","6961","6963","6971","6976","6981","6988","7003","7011",
+      "7012","7013","7182","7201","7202","7203","7205","7211","7261","7267",
+      "7269","7270","7272","7731","7732","7733","7735","7741","7751","7752",
+      "7762","7832","7911","7951","7974","8001","8002","8015","8031","8035",
+      "8053","8058","8233","8252","8304","8306","8316","8411","8473","8591",
+      "8601","8604","8697","8750","8766","8795","8801","8802","8804","8830",
+      "9001","9003","9005","9007","9008","9020","9021","9022","9064","9101",
+      "9104","9107","9201","9202","9416","9432","9433","9434","9501","9502",
+      "9503","9504","9506","9508","9513","9517","9519","9531","9532","9602",
+      "9613","9684","9735","9766","9983","9984",
+
+      "2158","2160","2371","2432","2433","2484","3350","3397","3626","3635",
+      "3659","3660","3661","3668","3678","3681","3687","3692","3694","3697",
+      "3765","3769","3774","3778","3903","3911","3923","3962","3993","4051",
+      "4056","4071","4194","4373","4375","4382","4384","4385","4393","4413",
+      "4419","4425","4431","4436","4443","4475","4477","4478","4483","4488",
+      "4493","4575","4587","4592","4593","5026","5032","5243","5253","5574",
+      "5586","5591","5595","6035","6095","6323","6338","6370","6383","6521",
+      "6619","6627","6740","6777","6787","6855","6871","6875","6890","6946",
+      "6966","7014","7033","7063","7068","7095","7163","7186","7199","7342",
+      "7359","7373","7383","7419","7453","7701","7715","7721","7730","8056",
+      "8068","8136","8227","8439","8570","8698","8848","8876","9166","9229",
+
+      "1306","1308","1321","1329","1346","1348","1357","1365","1397","1458",
+      "1475","1489","1540","1552","1570","1579","1595","1615","1628","1655",
+
+      "1711","1815","1942","1949","1959","2267","2282","2809","3086","3391",
+      "3549","3591","4202","4324","4516","4540","4680","4732","4912","5334",
+      "5726","6254","6258","6268","6315","6368","6432","6465","6701","6728",
+      "6806","6925","6965","6997","7189","7259","7309","7550","7867","7906",
+      "7912","7956","8113","8267","8308","8354","8725","9843"
+    ];
+
+    const MAX_RETRY = 2;
+    const RETRY_BASE_DELAY = 700;
+    const BETWEEN_CHUNK_DELAY = 1200;
+    const FETCH_TIMEOUT_MS = 12000;
+
+    const SCAN_CONCURRENT  = 3;
+    const FOCUS_CONCURRENT = 1;
+    const WATCH_CONCURRENT = 1;
+    const POOL_CONCURRENT  = 1;
+
+    const FOCUS_MAX = 6;
+    const WATCH_MAX = 15;
+
+    const SIGNAL_SCORE_MIN = 50;
+    const SIGNAL_ENTRY_DISTANCE_MAX = 0.01;
+    const SIGNAL_UPSIDE_ROOM_MIN = 0.015;
+    const SIGNAL_RISK_WIDTH_MAX = 0.025;
+
+    const ENTRY_BAND_RATE = 0.003;
+
+    const MOTTO_LIST = [
+      "頭と尻尾はくれてやれ",
+      "利確は正義",
+      "待つも相場",
+      "ノートレも勝ち",
+      "欲を捨てろ",
+      "強いものにつけ",
+      "休むも相場",
+      "迷ったら見送れ",
+      "上がる株が強い株",
+      "トレンドに逆らうな",
+      "勝って兜の緒を締めよ",
+      "負けを小さく、利益を伸ばせ",
+      "焦りは最大の敵",
+      "飛びつくな、引きつけろ",
+      "資金管理が最優先",
+      "シナリオなき売買はしない",
+      "損切りできる者が生き残る",
+      "出来高は嘘をつかない",
+      "初動を追え、天井を追うな",
+      "チャンス以外は待機",
+      "強い押し目を拾え",
+      "根拠が薄いなら入るな",
+      "相場は明日もある",
+      "ルールを守る者が勝つ",
+      "一発より継続",
+      "勝ち急ぐな",
+      "伸びる時は握れ",
+      "崩れたら逃げろ",
+      "板と出来高を見ろ",
+      "大きく負けないことが最重要"
+    ];
+
+    const WAIT_COMMENTS = [
+      "そろそろ初動か？",
+      "ブレイク待ち",
+      "監視継続",
+      "資金入り始め"
+    ];
+
+    const ENTRY_COMMENTS = [
+      "初動発生",
+      "ブレイク確認",
+      "資金流入",
+      "エントリー圏"
+    ];
+
+    let STATE = {
+      scan: [],
+      focus: [],
+      watch: [],
+      pool: [],
+      marked: [],
+      meta: {
+        lastFocusAt: 0,
+        lastWatchAt: 0,
+        lastPoolAt: 0,
+        tempExcluded: [],
+        cache: {
+          focusRows: [],
+          watchRows: [],
+          poolRows: []
+        }
+      }
+    };
+
+    const COMPANY_DB = {
+      "1332":"ニッスイ",
+      "1333":"マルハニチロ",
+      "1605":"INPEX",
+      "1719":"安藤・間",
+      "1721":"コムシスHD",
+      "1801":"大成建設",
+      "1802":"大林組",
+      "1803":"清水建設",
+      "1808":"長谷工コーポレーション",
+      "1812":"鹿島建設",
+      "1925":"大和ハウス工業",
+      "1928":"積水ハウス",
+      "1963":"日揮HD",
+      "2002":"日清製粉グループ本社",
+      "2269":"明治HD",
+      "2502":"アサヒグループHD",
+      "2503":"キリンHD",
+      "2801":"キッコーマン",
+      "2802":"味の素",
+      "2871":"ニチレイ",
+      "2914":"日本たばこ産業",
+      "3038":"神戸物産",
+      "3092":"ZOZO",
+      "3382":"セブン＆アイHD",
+      "3401":"帝人",
+      "3402":"東レ",
+      "3407":"旭化成",
+      "3861":"王子HD",
+      "4004":"レゾナックHD",
+      "4005":"住友化学",
+      "4062":"イビデン",
+      "4063":"信越化学工業",
+      "4183":"三井化学",
+      "4188":"三菱ケミカルグループ",
+      "4204":"積水化学工業",
+      "4452":"花王",
+      "4502":"武田薬品工業",
+      "4503":"アステラス製薬",
+      "4506":"住友ファーマ",
+      "4507":"塩野義製薬",
+      "4519":"中外製薬",
+      "4523":"エーザイ",
+      "4543":"テルモ",
+      "4568":"第一三共",
+      "4578":"大塚HD",
+      "4631":"DIC",
+      "4684":"オービック",
+      "4689":"LINEヤフー",
+      "4751":"サイバーエージェント",
+      "4755":"楽天グループ",
+      "4901":"富士フイルムHD",
+      "4902":"コニカミノルタ",
+      "4911":"資生堂",
+      "5101":"横浜ゴム",
+      "5108":"ブリヂストン",
+      "5201":"AGC",
+      "5202":"日本板硝子",
+      "5214":"日本電気硝子",
+      "5232":"住友大阪セメント",
+      "5233":"太平洋セメント",
+      "5301":"東海カーボン",
+      "5332":"TOTO",
+      "5333":"日本ガイシ",
+      "5351":"品川リフラクトリーズ",
+      "5401":"日本製鉄",
+      "5411":"JFE HD",
+      "5711":"三菱マテリアル",
+      "5713":"住友金属鉱山",
+      "5801":"古河電気工業",
+      "5802":"住友電気工業",
+      "5803":"フジクラ",
+      "5805":"SWCC",
+      "5901":"東洋製罐グループHD",
+      "6098":"リクルートHD",
+      "6141":"DMG森精機",
+      "6146":"ディスコ",
+      "6178":"日本郵政",
+      "6301":"小松製作所",
+      "6302":"住友重機械工業",
+      "6305":"日立建機",
+      "6326":"クボタ",
+      "6361":"荏原製作所",
+      "6367":"ダイキン工業",
+      "6471":"日本精工",
+      "6472":"NTN",
+      "6501":"日立製作所",
+      "6503":"三菱電機",
+      "6504":"富士電機",
+      "6506":"安川電機",
+      "6525":"KOKUSAI ELECTRIC",
+      "6526":"ソシオネクスト",
+      "6586":"マキタ",
+      "6594":"ニデック",
+      "6613":"QDレーザ",
+      "6723":"ルネサスエレクトロニクス",
+      "6724":"セイコーエプソン",
+      "6752":"パナソニックHD",
+      "6753":"シャープ",
+      "6754":"アンリツ",
+      "6758":"ソニーグループ",
+      "6762":"TDK",
+      "6770":"アルプスアルパイン",
+      "6841":"横河電機",
+      "6856":"堀場製作所",
+      "6857":"アドバンテスト",
+      "6861":"キーエンス",
+      "6869":"シスメックス",
+      "6920":"レーザーテック",
+      "6923":"スタンレー電気",
+      "6951":"日本電子",
+      "6952":"カシオ計算機",
+      "6954":"ファナック",
+      "6961":"エンプラス",
+      "6963":"ローム",
+      "6971":"京セラ",
+      "6976":"太陽誘電",
+      "6981":"村田製作所",
+      "6988":"日東電工",
+      "7003":"三井E&S",
+      "7011":"三菱重工業",
+      "7012":"川崎重工業",
+      "7013":"IHI",
+      "7182":"ゆうちょ銀行",
+      "7201":"日産自動車",
+      "7202":"いすゞ自動車",
+      "7203":"トヨタ自動車",
+      "7205":"日野自動車",
+      "7211":"三菱自動車工業",
+      "7261":"マツダ",
+      "7267":"ホンダ",
+      "7269":"スズキ",
+      "7270":"SUBARU",
+      "7272":"ヤマハ発動機",
+      "7731":"ニコン",
+      "7732":"トプコン",
+      "7733":"オリンパス",
+      "7735":"SCREEN HD",
+      "7741":"HOYA",
+      "7751":"キヤノン",
+      "7752":"リコー",
+      "7762":"シチズン時計",
+      "7832":"バンダイナムコHD",
+      "7911":"TOPPAN HD",
+      "7951":"ヤマハ",
+      "7974":"任天堂",
+      "8001":"伊藤忠商事",
+      "8002":"丸紅",
+      "8015":"豊田通商",
+      "8031":"三井物産",
+      "8035":"東京エレクトロン",
+      "8053":"住友商事",
+      "8058":"三菱商事",
+      "8233":"高島屋",
+      "8252":"丸井グループ",
+      "8304":"あおぞら銀行",
+      "8306":"三菱UFJフィナンシャル・グループ",
+      "8316":"三井住友フィナンシャルグループ",
+      "8411":"みずほフィナンシャルグループ",
+      "8473":"SBI HD",
+      "8591":"オリックス",
+      "8601":"大和証券グループ本社",
+      "8604":"野村HD",
+      "8697":"日本取引所グループ",
+      "8750":"第一生命HD",
+      "8766":"東京海上HD",
+      "8795":"T&D HD",
+      "8801":"三井不動産",
+      "8802":"三菱地所",
+      "8804":"東京建物",
+      "8830":"住友不動産",
+      "9001":"東武鉄道",
+      "9003":"相鉄HD",
+      "9005":"東急",
+      "9007":"小田急電鉄",
+      "9008":"京王電鉄",
+      "9020":"東日本旅客鉄道",
+      "9021":"西日本旅客鉄道",
+      "9022":"東海旅客鉄道",
+      "9064":"ヤマトHD",
+      "9101":"日本郵船",
+      "9104":"商船三井",
+      "9107":"川崎汽船",
+      "9201":"日本航空",
+      "9202":"ANA HD",
+      "9416":"ビジョン",
+      "9432":"日本電信電話",
+      "9433":"KDDI",
+      "9434":"ソフトバンク",
+      "9501":"東京電力HD",
+      "9502":"中部電力",
+      "9503":"関西電力",
+      "9504":"中国電力",
+      "9506":"東北電力",
+      "9508":"九州電力",
+      "9513":"J-POWER",
+      "9517":"イーレックス",
+      "9519":"レノバ",
+      "9531":"東京瓦斯",
+      "9532":"大阪瓦斯",
+      "9602":"東宝",
+      "9613":"NTTデータグループ",
+      "9684":"スクウェア・エニックスHD",
+      "9735":"セコム",
+      "9766":"コナミグループ",
+      "9983":"ファーストリテイリング",
+      "9984":"ソフトバンクグループ",
+
+      "2158":"FRONTEO",
+      "2160":"ジーエヌアイグループ",
+      "2371":"カカクコム",
+      "2432":"ディー・エヌ・エー",
+      "2433":"博報堂DY HD",
+      "2484":"出前館",
+      "3350":"メタプラネット",
+      "3397":"トリドールHD",
+      "3626":"TIS",
+      "3635":"コーエーテクモHD",
+      "3659":"ネクソン",
+      "3660":"アイスタイル",
+      "3661":"エムアップHD",
+      "3668":"コロプラ",
+      "3678":"メディアドゥ",
+      "3681":"ブイキューブ",
+      "3687":"フィックスターズ",
+      "3692":"FFRIセキュリティ",
+      "3694":"オプティム",
+      "3697":"SHIFT",
+      "3765":"ガンホー・オンライン・エンターテイメント",
+      "3769":"GMOペイメントゲートウェイ",
+      "3774":"インターネットイニシアティブ",
+      "3778":"さくらインターネット",
+      "3903":"gumi",
+      "3911":"Aiming",
+      "3923":"ラクス",
+      "3962":"チェンジHD",
+      "3993":"PKSHA Technology",
+      "4051":"GMOフィナンシャルゲート",
+      "4056":"ニューラルグループ",
+      "4071":"プラスアルファ・コンサルティング",
+      "4194":"ビジョナル",
+      "4373":"シンプレクス・ホールディングス",
+      "4375":"セーフィー",
+      "4382":"HEROZ",
+      "4384":"ラクスル",
+      "4385":"メルカリ",
+      "4393":"バンク・オブ・イノベーション",
+      "4413":"ボードルア",
+      "4419":"Finatext HD",
+      "4425":"Kudan",
+      "4431":"スマレジ",
+      "4436":"ミンカブ・ジ・インフォノイド",
+      "4443":"Sansan",
+      "4475":"HENNGE",
+      "4477":"BASE",
+      "4478":"フリー",
+      "4483":"JMDC",
+      "4488":"AI inside",
+      "4493":"サイバーセキュリティクラウド",
+      "4575":"キャンバス",
+      "4587":"ペプチドリーム",
+      "4592":"サンバイオ",
+      "4593":"ヘリオス",
+      "5026":"トリプルアイズ",
+      "5032":"ANYCOLOR",
+      "5243":"note",
+      "5253":"カバー",
+      "5574":"ABEJA",
+      "5586":"Laboro.AI",
+      "5591":"AVILEN",
+      "5595":"QPS研究所",
+      "6035":"アイ・アールジャパンHD",
+      "6095":"メドピア",
+      "6323":"ローツェ",
+      "6338":"タカトリ",
+      "6370":"栗田工業",
+      "6383":"ダイフク",
+      "6521":"オキサイド",
+      "6619":"ダブル・スコープ",
+      "6627":"テラプローブ",
+      "6740":"ジャパンディスプレイ",
+      "6777":"santec Holdings",
+      "6787":"メイコー",
+      "6855":"日本電子材料",
+      "6871":"日本マイクロニクス",
+      "6875":"メガチップス",
+      "6890":"フェローテックHD",
+      "6946":"日本アビオニクス",
+      "6966":"三井ハイテック",
+      "7014":"名村造船所",
+      "7033":"マネジメントソリューションズ",
+      "7063":"Birdman",
+      "7068":"フィードフォースグループ",
+      "7095":"Macbee Planet",
+      "7163":"住信SBIネット銀行",
+      "7186":"コンコルディア・フィナンシャルグループ",
+      "7199":"プレミアグループ",
+      "7342":"ウェルスナビ",
+      "7359":"東京通信グループ",
+      "7373":"アイドマ・ホールディングス",
+      "7383":"ネットプロテクションズHD",
+      "7419":"ノジマ",
+      "7453":"良品計画",
+      "7701":"島津製作所",
+      "7715":"長野計器",
+      "7721":"東京計器",
+      "7730":"マニー",
+      "8056":"BIPROGY",
+      "8068":"菱洋エレクトロ",
+      "8136":"サンリオ",
+      "8227":"しまむら",
+      "8439":"東京センチュリー",
+      "8570":"イオンフィナンシャルサービス",
+      "8698":"マネックスグループ",
+      "8848":"レオパレス21",
+      "8876":"リログループ",
+      "9166":"GENDA",
+      "9229":"サンウェルズ",
+
+      "1306":"NEXT FUNDS TOPIX連動型上場投信",
+      "1308":"上場インデックスファンドTOPIX",
+      "1321":"NEXT FUNDS 日経225連動型上場投信",
+      "1329":"iシェアーズ・コア 日経225 ETF",
+      "1346":"MAXIS 日経225上場投信",
+      "1348":"MAXIS トピックス上場投信",
+      "1357":"NEXT FUNDS 日経平均ダブルインバース・インデックス連動型上場投信",
+      "1365":"iFreeETF 日経平均レバレッジ・インデックス",
+      "1397":"SMDAM 日経225上場投信",
+      "1458":"楽天 ETF-日経レバレッジ指数連動型",
+      "1475":"iシェアーズ・コア TOPIX ETF",
+      "1489":"NEXT FUNDS 日経平均高配当株50指数連動型上場投信",
+      "1540":"純金上場信託",
+      "1552":"国際のETF VIX短期先物指数",
+      "1570":"NEXT FUNDS 日経平均レバレッジ・インデックス連動型上場投信",
+      "1579":"日経平均ブル2倍上場投信",
+      "1595":"NZAM 上場投信 東証REIT指数",
+      "1615":"NEXT FUNDS 東証銀行業株価指数連動型上場投信",
+      "1628":"NEXT FUNDS 運輸・物流上場投信",
+      "1655":"iシェアーズ S&P500 米国株 ETF",
+
+      "1711":"SDSホールディングス",
+      "1815":"鉄建建設",
+      "1942":"関電工",
+      "1949":"住友電設",
+      "1959":"九電工",
+      "2267":"ヤクルト本社",
+      "2282":"日本ハム",
+      "2809":"キユーピー",
+      "3086":"J.フロント リテイリング",
+      "3391":"ツルハHD",
+      "3549":"クスリのアオキHD",
+      "3591":"ワコールHD",
+      "4202":"ダイセル",
+      "4324":"電通グループ",
+      "4516":"日本新薬",
+      "4540":"ツムラ",
+      "4680":"ラウンドワン",
+      "4732":"ユー・エス・エス",
+      "4912":"ライオン",
+      "5334":"日本特殊陶業",
+      "5726":"大阪チタニウムテクノロジーズ",
+      "6254":"野村マイクロ・サイエンス",
+      "6258":"平田機工",
+      "6268":"ナブテスコ",
+      "6315":"TOWA",
+      "6368":"オルガノ",
+      "6432":"竹内製作所",
+      "6465":"ホシザキ",
+      "6701":"NEC",
+      "6728":"アルバック",
+      "6806":"ヒロセ電機",
+      "6925":"ウシオ電機",
+      "6965":"浜松ホトニクス",
+      "6997":"日本ケミコン",
+      "7189":"西日本フィナンシャルHD",
+      "7259":"アイシン",
+      "7309":"シマノ",
+      "7550":"ゼンショーHD",
+      "7867":"タカラトミー",
+      "7906":"ヨネックス",
+      "7912":"大日本印刷",
+      "7956":"ピジョン",
+      "8113":"ユニ・チャーム",
+      "8267":"イオン",
+      "8308":"りそなHD",
+      "8354":"ふくおかフィナンシャルグループ",
+      "8725":"MS&ADインシュアランスグループHD",
+      "9843":"ニトリHD",
+
+      "7247":"ミクニ",
+      "7800":"アミファ",
+      "7984":"コクヨ",
+      "6574":"コンヴァノ",
+      "9882":"イエローハット",
+      "6941":"山一電機",
+      "3501":"ＳＵＭＩＮＯＥ",
+      "3777":"環境フレンドリーホールディングス",
+      "9401":"ＴＢＳホールディングス",
+      "5262":"日本ヒューム",
+      "6140":"旭ダイヤモンド工業",
+      "5838":"楽天銀行",
+      "1976":"明星工業",
+      "6563":"みらいワークス",
+      "7810":"クロスフォー",
+      "4221":"大倉工業",
+      "2001":"ニップン",
+      "1720":"東急建設",
+      "218A":"Ｌｉｂｅｒａｗａｒｅ",
+      "5408":"中山製鋼所",
+      "2897":"日清食品ホールディングス",
+      "4980":"デクセリアルズ",
+      "5016":"ＪＸ金属",
+      "4028":"石原産業",
+      "4496":"コマースＯｎｅホールディングス",
+      "5393":"ニチアス",
+      "9115":"明海グループ",
+      "6433":"ヒーハイスト",
+      "6744":"能美防災",
+      "4022":"ラサ工業",
+      "1542":"純銀上場信託（現物国内保管型）",
+      "6489":"前澤工業",
+      "261A":"日水コン",
+      "5020":"ＥＮＥＯＳホールディングス",
+      "4237":"フジプレアム",
+      "6864":"エヌエフホールディングス",
+      "5631":"日本製鋼所",
+      "6232":"ＡＣＳＬ",
+      "1514":"住石ホールディングス",
+      "9348":"ｉｓｐａｃｅ",
+      "4107":"伊勢化学工業",
+      "3561":"力の源ホールディングス",
+      "278A":"Ｔｅｒｒａ Ｄｒｏｎｅ",
+      "3107":"ダイワボウホールディングス",
+      "464A":"ＱＰＳホールディングス",
+      "186A":"アストロスケールホールディングス",
+      "290A":"Ｓｙｎｓｐｅｃｔｉｖｅ",
+      "6996":"ニチコン",
+      "6645":"オムロン",
+      "6330":"東洋エンジニアリング",
+      "3132":"マクニカホールディングス",
+      "4633":"サカタインクス",
+      "6333":"帝国電機製作所"
+    };
+
+    const THEME_DB = {
+      "1332":["水産","食品","ディフェンシブ"],
+      "1333":["水産","食品","ディフェンシブ"],
+      "1605":["資源","LNG","エネルギー"],
+      "1719":["建設","インフラ","国土強靭化"],
+      "1721":["通信インフラ","建設","DX"],
+      "1801":["建設","インフラ","国土強靭化"],
+      "1802":["建設","インフラ","再開発"],
+      "1803":["建設","インフラ","国土強靭化"],
+      "1808":["建設","マンション","不動産"],
+      "1812":["建設","インフラ","国土強靭化"],
+      "1925":["住宅","建設","不動産"],
+      "1928":["住宅","建設","不動産"],
+      "1963":["プラント","LNG","原子力"],
+      "2002":["食品","内需","ディフェンシブ"],
+      "2269":["食品","医薬","ディフェンシブ"],
+      "2502":["食品","飲料","ディフェンシブ"],
+      "2503":["食品","飲料","ヘルスケア"],
+      "2801":["食品","海外展開","ディフェンシブ"],
+      "2802":["食品","アミノ酸","ヘルスケア"],
+      "2871":["食品","冷凍食品","ディフェンシブ"],
+      "2914":["食品","高配当","ディフェンシブ"],
+      "3038":["食品","内需","スーパー"],
+      "3092":["EC","アパレル","ネット"],
+      "3382":["小売","コンビニ","内需"],
+      "3401":["素材","化学","医療"],
+      "3402":["素材","炭素繊維","化学"],
+      "3407":["化学","住宅","ヘルスケア"],
+      "3861":["紙・パルプ","素材","ディフェンシブ"],
+      "4004":["半導体材料","化学","先端素材"],
+      "4005":["化学","農薬","医薬"],
+      "4062":["半導体","パッケージ基板","電子材料"],
+      "4063":["半導体材料","シリコンウエハ","先端素材"],
+      "4183":["化学","素材","モビリティ"],
+      "4188":["化学","素材","ヘルスケア"],
+      "4204":["化学","住宅","インフラ"],
+      "4452":["日用品","化粧品","ディフェンシブ"],
+      "4502":["医薬品","製薬","ディフェンシブ"],
+      "4503":["医薬品","製薬","ディフェンシブ"],
+      "4506":["医薬品","製薬","バイオ"],
+      "4507":["医薬品","感染症","製薬"],
+      "4519":["医薬品","がん","製薬"],
+      "4523":["医薬品","認知症","製薬"],
+      "4543":["医療機器","ヘルスケア","ディフェンシブ"],
+      "4568":["医薬品","がん","製薬"],
+      "4578":["医薬品","ヘルスケア","製薬"],
+      "4631":["化学","印刷材料","電子材料"],
+      "4684":["DX","SI","業務ソフト"],
+      "4689":["インターネット","広告","EC"],
+      "4751":["ネット広告","ゲーム","メディア"],
+      "4755":["EC","フィンテック","通信"],
+      "4901":["医療機器","精密","ヘルスケア"],
+      "4902":["OA","計測","ヘルスケア"],
+      "4911":["化粧品","中国関連","インバウンド"],
+      "5101":["タイヤ","自動車","モビリティ"],
+      "5108":["タイヤ","自動車","モビリティ"],
+      "5201":["ガラス","ペロブスカイト","建材"],
+      "5202":["ガラス","建材","自動車"],
+      "5214":["ガラス","電子部材","ペロブスカイト"],
+      "5232":["セメント","インフラ","建設"],
+      "5233":["セメント","インフラ","建設"],
+      "5301":["炭素","電炉","半導体"],
+      "5332":["住宅設備","建設","リフォーム"],
+      "5333":["碍子","電力設備","インフラ"],
+      "5351":["耐火物","インフラ","製鉄"],
+      "5401":["鉄鋼","インフラ","国策"],
+      "5411":["鉄鋼","インフラ","自動車"],
+      "5711":["非鉄金属","資源","インフラ"],
+      "5713":["非鉄金属","銅","電池材料"],
+      "5801":["電線","データセンター","送配電"],
+      "5802":["電線","送配電","車載"],
+      "5803":["電線","データセンター","AIインフラ"],
+      "5805":["電線","送配電","インフラ"],
+      "5901":["包装","素材","ディフェンシブ"],
+      "6098":["人材","求人","DX"],
+      "6141":["工作機械","FA","自動化"],
+      "6146":["半導体製造装置","研削","AI"],
+      "6178":["郵政","金融","ディフェンシブ"],
+      "6301":["建機","インフラ","資源"],
+      "6302":["機械","FA","インフラ"],
+      "6305":["建機","インフラ","資源"],
+      "6326":["農機","インフラ","水関連"],
+      "6361":["ポンプ","半導体","下水"],
+      "6367":["空調","省エネ","データセンター"],
+      "6471":["自動車部品","ベアリング","産業機械"],
+      "6472":["自動車部品","ベアリング","EV"],
+      "6501":["重電","原子力","DX"],
+      "6503":["重電","防衛","FA"],
+      "6504":["重電","電力機器","インフラ"],
+      "6506":["FA","ロボット","自動化"],
+      "6525":["半導体製造装置","成膜","AI"],
+      "6526":["半導体","SoC","AI"],
+      "6586":["工具","住宅","建設"],
+      "6594":["モーター","EV","ロボット"],
+      "6613":["量子","レーザー","医療機器"],
+      "6723":["半導体","車載","国策"],
+      "6724":["プリンター","FA","省力化"],
+      "6752":["家電","電池","車載"],
+      "6753":["家電","ディスプレイ","EV"],
+      "6754":["5G","通信計測","防衛"],
+      "6758":["ゲーム","半導体イメージセンサー","エンタメ"],
+      "6762":["電子部品","EV","AIサーバー"],
+      "6770":["電子部品","車載","モビリティ"],
+      "6841":["計測","制御","工場DX"],
+      "6856":["分析機器","半導体","ヘルスケア"],
+      "6857":["半導体製造装置","AI","国策"],
+      "6861":["FA","センサー","自動化"],
+      "6869":["医療機器","検査","ヘルスケア"],
+      "6920":["半導体製造装置","EUV","AI"],
+      "6923":["自動車部品","照明","車載"],
+      "6951":["電子顕微鏡","半導体","医療"],
+      "6952":["時計","電子機器","内需"],
+      "6954":["FA","ロボット","自動化"],
+      "6961":["半導体","ICソケット","電子部品"],
+      "6963":["半導体","パワー半導体","車載"],
+      "6971":["電子部品","FA","通信"],
+      "6976":["電子部品","スマホ","車載"],
+      "6981":["電子部品","MLCC","AIサーバー"],
+      "6988":["電子材料","スマホ","車載"],
+      "7003":["造船","防衛","港湾"],
+      "7011":["防衛","原子力","LNG"],
+      "7012":["防衛","航空宇宙","ロボット"],
+      "7013":["防衛","航空エンジン","原子力"],
+      "7182":["銀行","金利上昇","内需"],
+      "7201":["自動車","EV","再編"],
+      "7202":["商用車","自動車","物流"],
+      "7203":["自動車","EV","全固体電池"],
+      "7205":["商用車","自動車","物流"],
+      "7211":["自動車","EV","モビリティ"],
+      "7261":["自動車","EV","海外展開"],
+      "7267":["自動車","二輪","ロボット"],
+      "7269":["自動車","二輪","インド"],
+      "7270":["自動車","AWD","EV"],
+      "7272":["二輪","船外機","ロボット"],
+      "7731":["精密","カメラ","半導体"],
+      "7732":["測量","自動運転","建機"],
+      "7733":["医療機器","内視鏡","ヘルスケア"],
+      "7735":["半導体製造装置","洗浄","AI"],
+      "7741":["医療機器","半導体部材","精密"],
+      "7751":["カメラ","半導体製造装置","医療"],
+      "7752":["OA","デジタルサービス","オフィス"],
+      "7762":["時計","精密","車載"],
+      "7832":["ゲーム","IP","エンタメ"],
+      "7911":["印刷","半導体パッケージ","DX"],
+      "7951":["楽器","音響","エンタメ"],
+      "7974":["ゲーム","IP","エンタメ"],
+      "8001":["総合商社","資源","国策"],
+      "8002":["総合商社","LNG","資源"],
+      "8015":["商社","自動車","インフラ"],
+      "8031":["総合商社","資源","インフラ"],
+      "8035":["半導体製造装置","AI","国策"],
+      "8053":["総合商社","資源","電力"],
+      "8058":["総合商社","LNG","資源"],
+      "8233":["百貨店","インバウンド","内需"],
+      "8252":["小売","クレジット","フィンテック"],
+      "8304":["銀行","金利上昇","地方銀行"],
+      "8306":["銀行","金利上昇","メガバンク"],
+      "8316":["銀行","金利上昇","メガバンク"],
+      "8411":["銀行","金利上昇","メガバンク"],
+      "8473":["ネット証券","フィンテック","暗号資産"],
+      "8591":["リース","金融","再エネ"],
+      "8601":["証券","相場活況","金融"],
+      "8604":["証券","金利上昇","相場活況"],
+      "8697":["取引所","日本株","金融インフラ"],
+      "8750":["保険","金利上昇","金融"],
+      "8766":["保険","金利上昇","金融"],
+      "8795":["保険","金利上昇","金融"],
+      "8801":["不動産","再開発","オフィス"],
+      "8802":["不動産","再開発","オフィス"],
+      "8804":["不動産","再開発","オフィス"],
+      "8830":["不動産","再開発","住宅"],
+      "9001":["鉄道","不動産","インバウンド"],
+      "9003":["鉄道","不動産","内需"],
+      "9005":["鉄道","不動産","再開発"],
+      "9007":["鉄道","不動産","インバウンド"],
+      "9008":["鉄道","不動産","内需"],
+      "9020":["鉄道","インバウンド","内需"],
+      "9021":["鉄道","インバウンド","内需"],
+      "9022":["鉄道","インバウンド","内需"],
+      "9064":["物流","宅配","内需"],
+      "9101":["海運","LNG","資源輸送"],
+      "9104":["海運","LNG","資源輸送"],
+      "9107":["海運","LNG","資源輸送"],
+      "9201":["空運","インバウンド","旅行"],
+      "9202":["空運","インバウンド","旅行"],
+      "9416":["通信","旅行","DX"],
+      "9432":["通信","IOWN","ディフェンシブ"],
+      "9433":["通信","金融","DX"],
+      "9434":["通信","生成AI","フィンテック"],
+      "9501":["電力","原子力","インフラ"],
+      "9502":["電力","原子力","インフラ"],
+      "9503":["電力","原子力","インフラ"],
+      "9504":["電力","原子力","インフラ"],
+      "9506":["電力","原子力","インフラ"],
+      "9508":["電力","原子力","インフラ"],
+      "9513":["電力","再生エネルギー","インフラ"],
+      "9517":["電力","再生エネルギー","バイオマス"],
+      "9519":["再生エネルギー","太陽光","GX"],
+      "9531":["ガス","LNG","インフラ"],
+      "9532":["ガス","LNG","インフラ"],
+      "9602":["映画","エンタメ","IP"],
+      "9613":["SI","DX","官公庁"],
+      "9684":["ゲーム","IP","エンタメ"],
+      "9735":["警備","防犯","インフラ"],
+      "9766":["ゲーム","スポーツ","エンタメ"],
+      "9983":["アパレル","グローバル消費","内需"],
+      "9984":["AI","通信","投資"],
+
+      "2158":["AI","リーガルテック","医療"],
+      "2160":["バイオ","創薬","中国関連"],
+      "2371":["ネットサービス","価格比較","EC"],
+      "2432":["ゲーム","スポーツ","エンタメ"],
+      "2433":["広告","マーケティング","内需"],
+      "2484":["フードデリバリー","内需","ネット"],
+      "3350":["ビットコイン","暗号資産","Web3"],
+      "3397":["外食","内需","インバウンド"],
+      "3626":["SI","DX","業務システム"],
+      "3635":["ゲーム","IP","エンタメ"],
+      "3659":["ゲーム","中国関連","エンタメ"],
+      "3660":["美容","EC","メディア"],
+      "3661":["エンタメ","ファンクラブ","DX"],
+      "3668":["ゲーム","位置情報","エンタメ"],
+      "3678":["電子書籍","コンテンツ","DX"],
+      "3681":["リモートワーク","クラウド","DX"],
+      "3687":["AI","高速計算","量子"],
+      "3692":["サイバーセキュリティ","防衛","国策"],
+      "3694":["AI","農業DX","クラウド"],
+      "3697":["DX","ITコンサル","業務効率化"],
+      "3765":["ゲーム","スマホゲーム","エンタメ"],
+      "3769":["フィンテック","決済","DX"],
+      "3774":["通信","クラウド","DX"],
+      "3778":["AI","データセンター","クラウド"],
+      "3903":["ゲーム","ブロックチェーン","Web3"],
+      "3911":["ゲーム","スマホゲーム","エンタメ"],
+      "3923":["SaaS","経費精算","DX"],
+      "3962":["DX","地方創生","官公庁"],
+      "3993":["AI","生成AI","SaaS"],
+      "4051":["決済","フィンテック","キャッシュレス"],
+      "4056":["AI","画像解析","スマートシティ"],
+      "4071":["SaaS","マーケティング","DX"],
+      "4194":["HRテック","DX","人材"],
+      "4373":["金融DX","SI","コンサル"],
+      "4375":["監視カメラ","クラウド","防犯"],
+      "4382":["AI","将棋AI","自動運転"],
+      "4384":["物流DX","EC","印刷"],
+      "4385":["フリマ","フィンテック","EC"],
+      "4393":["ゲーム","スマホゲーム","エンタメ"],
+      "4413":["ITインフラ","クラウド","DX"],
+      "4419":["フィンテック","SaaS","金融DX"],
+      "4425":["AR","自動運転","産業DX"],
+      "4431":["POS","小売DX","SaaS"],
+      "4436":["メディア","金融情報","AI"],
+      "4443":["営業DX","名刺","SaaS"],
+      "4475":["クラウドセキュリティ","SaaS","DX"],
+      "4477":["EC","ネットショップ","SaaS"],
+      "4478":["SaaS","会計","DX"],
+      "4483":["医療データ","ヘルスケア","DX"],
+      "4488":["AI","OCR","業務効率化"],
+      "4493":["サイバーセキュリティ","クラウド","DX"],
+      "4575":["バイオ","創薬","がん"],
+      "4587":["バイオ","創薬","医薬"],
+      "4592":["再生医療","バイオ","医薬"],
+      "4593":["再生医療","バイオ","医薬"],
+      "5026":["AI","顔認証","セキュリティ"],
+      "5032":["VTuber","エンタメ","IP"],
+      "5243":["メディア","コンテンツ","SaaS"],
+      "5253":["VTuber","エンタメ","IP"],
+      "5574":["AI","生成AI","DX"],
+      "5586":["AI","機械学習","DX"],
+      "5591":["AI","人材育成","DX"],
+      "5595":["宇宙","衛星","防衛"],
+      "6035":["IR","アクティビスト","M&A"],
+      "6095":["医療DX","ヘルスケア","SaaS"],
+      "6323":["半導体製造装置","搬送","AI"],
+      "6338":["半導体製造装置","パワー半導体","国策"],
+      "6370":["水処理","半導体","インフラ"],
+      "6383":["物流ロボット","FA","自動化"],
+      "6521":["量子","光学","半導体"],
+      "6619":["EV","電池","エネルギー貯蔵"],
+      "6627":["半導体検査","後工程","AI"],
+      "6740":["ディスプレイ","車載","スマホ"],
+      "6777":["光通信部品","データセンター","半導体"],
+      "6787":["電子基板","半導体","車載"],
+      "6855":["半導体部材","プローブカード","AI"],
+      "6871":["半導体検査","プローブカード","AI"],
+      "6875":["半導体","ASIC","車載"],
+      "6890":["半導体製造装置","真空","太陽電池"],
+      "6946":["防衛","赤外線","セキュリティ"],
+      "6966":["モーターコア","EV","半導体"],
+      "7014":["造船","防衛","国策"],
+      "7033":["コンサル","PMO","DX"],
+      "7063":["広告","エンタメ","IP"],
+      "7068":["マーケティングDX","EC","SaaS"],
+      "7095":["広告DX","データ活用","AI"],
+      "7163":["ネット銀行","フィンテック","金融"],
+      "7186":["銀行","金利上昇","地銀"],
+      "7199":["オートクレジット","中古車","金融"],
+      "7342":["ロボアド","フィンテック","資産運用"],
+      "7359":["メタバース","ゲーム","広告"],
+      "7373":["営業支援","人材","DX"],
+      "7383":["後払い","フィンテック","EC"],
+      "7419":["家電量販","内需","キャリア"],
+      "7453":["小売","生活雑貨","内需"],
+      "7701":["計測機器","ヘルスケア","半導体"],
+      "7715":["圧力計","水素","インフラ"],
+      "7721":["防衛","計測","自動運転"],
+      "7730":["医療機器","ヘルスケア","ディフェンシブ"],
+      "8056":["SI","DX","クラウド"],
+      "8068":["半導体商社","AI","電子部品"],
+      "8136":["キャラクター","IP","エンタメ"],
+      "8227":["衣料品小売","内需","ディフェンシブ"],
+      "8439":["リース","不動産","航空機"],
+      "8570":["クレジット","フィンテック","小売金融"],
+      "8698":["証券","暗号資産","フィンテック"],
+      "8848":["不動産","賃貸","内需"],
+      "8876":["不動産サービス","福利厚生","海外展開"],
+      "9166":["アミューズメント","エンタメ","M&A"],
+      "9229":["介護","ヘルスケア","高齢化"],
+
+      "1306":["ETF","TOPIX","日本株"],
+      "1308":["ETF","TOPIX","日本株"],
+      "1321":["ETF","日経平均","日本株"],
+      "1329":["ETF","日経平均","日本株"],
+      "1346":["ETF","日経平均","日本株"],
+      "1348":["ETF","TOPIX","日本株"],
+      "1357":["ETF","インバース","日経平均"],
+      "1365":["ETF","レバレッジ","日経平均"],
+      "1397":["ETF","日経平均","日本株"],
+      "1458":["ETF","レバレッジ","日経平均"],
+      "1475":["ETF","TOPIX","日本株"],
+      "1489":["ETF","高配当","日本株"],
+      "1540":["ETF","金","コモディティ"],
+      "1552":["ETF","VIX","ボラティリティ"],
+      "1570":["ETF","レバレッジ","日経平均"],
+      "1579":["ETF","レバレッジ","日経平均"],
+      "1595":["ETF","J-REIT","不動産"],
+      "1615":["ETF","銀行","金利上昇"],
+      "1628":["ETF","運輸","物流"],
+      "1655":["ETF","米国株","S&P500"],
+
+      "1711":["再生エネルギー","電力設備","インフラ"],
+      "1815":["建設","鉄道","インフラ"],
+      "1942":["電気工事","電力設備","インフラ"],
+      "1949":["電気工事","電力設備","インフラ"],
+      "1959":["電気工事","電力設備","データセンター"],
+      "2267":["食品","乳酸菌","ディフェンシブ"],
+      "2282":["食品","畜産","ディフェンシブ"],
+      "2809":["食品","調味料","ディフェンシブ"],
+      "3086":["百貨店","インバウンド","内需"],
+      "3391":["ドラッグストア","内需","ディフェンシブ"],
+      "3549":["ドラッグストア","内需","ディフェンシブ"],
+      "3591":["アパレル","内需","ヘルスケア"],
+      "4202":["化学","自動車","素材"],
+      "4324":["広告","コンテンツ","DX"],
+      "4516":["医薬品","製薬","ディフェンシブ"],
+      "4540":["医薬品","漢方","製薬"],
+      "4680":["レジャー","内需","エンタメ"],
+      "4732":["中古車オークション","自動車","内需"],
+      "4912":["日用品","オーラルケア","ディフェンシブ"],
+      "5334":["自動車部品","セラミック","半導体"],
+      "5726":["チタン","航空機","防衛"],
+      "6254":["水処理","半導体","国策"],
+      "6258":["FA","ロボット","半導体"],
+      "6268":["ロボット","鉄道","産業機械"],
+      "6315":["半導体製造装置","モールディング","AI"],
+      "6368":["水処理","半導体","インフラ"],
+      "6432":["建機","北米住宅","インフラ"],
+      "6465":["業務用厨房機器","内需","ディフェンシブ"],
+      "6701":["防衛","AI","官公庁DX"],
+      "6728":["真空装置","半導体","電子材料"],
+      "6806":["コネクタ","車載","半導体"],
+      "6925":["露光","光源","半導体"],
+      "6965":["光半導体","自動運転","医療"],
+      "6997":["電子部品","電源","車載"],
+      "7189":["銀行","金利上昇","地銀"],
+      "7259":["自動車部品","EV","モビリティ"],
+      "7309":["スポーツ","自転車","グローバル"],
+      "7550":["外食","内需","値上げ関連"],
+      "7867":["玩具","IP","エンタメ"],
+      "7906":["スポーツ用品","バドミントン","内需"],
+      "7912":["印刷","半導体パッケージ","電子材料"],
+      "7956":["育児","ディフェンシブ","ヘルスケア"],
+      "8113":["衛生用品","内需","ディフェンシブ"],
+      "8267":["小売","金融","内需"],
+      "8308":["銀行","金利上昇","内需"],
+      "8354":["銀行","金利上昇","地銀"],
+      "8725":["保険","金利上昇","金融"],
+      "9843":["家具","内需","ディフェンシブ"],
+
+      "7247":["自動車部品","EV","航空機"],
+      "7800":["雑貨","100円ショップ","文具"],
+      "7984":["事務用品","オフィス","教育ICT"],
+      "6574":["美容","AI","DX"],
+      "9882":["カー用品","タイヤ","ドライブレコーダー"],
+      "6941":["半導体製造装置","電子部品","データセンター"],
+      "3501":["インテリア","自動車部品","鉄道"],
+      "3777":["再生可能エネルギー","ペロブスカイト","リユース"],
+      "9401":["放送","コンテンツ","不動産"],
+      "5262":["水インフラ","下水道","コンクリート"],
+      "6140":["ダイヤモンド","半導体製造装置","切削工具"],
+      "5838":["ネット銀行","決済","金融"],
+      "1976":["LNG","原子力","プラント"],
+      "6563":["人材","コンサル","DX"],
+      "7810":["ダイヤモンド","宝飾品","EC"],
+      "4221":["包装フィルム","半導体部材","ペロブスカイト"],
+      "2001":["食品","製粉","冷凍食品"],
+      "1720":["建設","再開発","PFI"],
+      "218A":["ドローン","下水道","インフラ"],
+      "5408":["鉄鋼","リサイクル","建設"],
+      "2897":["食品","即席麺","ディフェンシブ"],
+      "4980":["電子材料","半導体部材","車載"],
+      "5016":["銅","半導体","リサイクル"],
+      "4028":["酸化チタン","農薬","電池材料"],
+      "4496":["EC","SaaS","越境EC"],
+      "5393":["LNG","原子力","半導体製造装置"],
+      "9115":["海運","LNG","ホテル"],
+      "6433":["ベアリング","FA","半導体"],
+      "6744":["防災","消防","メンテナンス"],
+      "4022":["電子材料","半導体部材","下水道"],
+      "1542":["ETF","銀","コモディティ"],
+      "6489":["水インフラ","下水道","バルブ"],
+      "261A":["水インフラ","下水道","防災"],
+      "5020":["石油","LNG","水素"],
+      "4237":["ペロブスカイト","液晶部材","再生可能エネルギー"],
+      "6864":["計測機器","量子","宇宙"],
+      "5631":["原子力","防衛","産業機械"],
+      "6232":["ドローン","AI","宇宙"],
+      "1514":["石炭","ダイヤモンド","半導体部材"],
+      "9348":["宇宙","月面開発","データ分析"],
+      "4107":["ヨウ素","ペロブスカイト","天然ガス"],
+      "3561":["外食","ラーメン","海外展開"],
+      "278A":["ドローン","インフラ点検","AI"],
+      "3107":["半導体商社","教育ICT","IT"],
+      "464A":["宇宙","衛星","防衛"],
+      "186A":["宇宙","デブリ対策","防衛"],
+      "290A":["宇宙","衛星","防災"],
+      "6996":["電子部品","蓄電池","EV"],
+      "6645":["FA","センサー","蓄電池"],
+      "6330":["LNG","プラント","アンモニア"],
+      "3132":["半導体商社","AI","サイバーセキュリティ"],
+      "4633":["インキ","ペロブスカイト","化学"],
+      "6333":["ポンプ","原子力","LNG"]
+    };
+
+    function CORS_PROXY_URL(url){ return CORS_PROXY + encodeURIComponent(url); }
+
+    async function fetchJsonWithRetry(url, options={}, retryCount=0){
+      try{
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+        const res = await fetch(url, { ...options, signal: controller.signal });
+        clearTimeout(timeoutId);
+        if(!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.json();
+      }catch(e){
+        if(retryCount < MAX_RETRY){
+          const delay = RETRY_BASE_DELAY * (retryCount+1);
+          await new Promise(r=>setTimeout(r, delay));
+          return fetchJsonWithRetry(url, options, retryCount+1);
+        }
+        throw e;
+      }
+    }
+
+    async function fetchChart(symbol, range, interval){
+      const ticker = symbol.includes(".") ? symbol : symbol+".T";
+      const url = CORS_PROXY_URL(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=${range}&interval=${interval}`);
+      const data = await fetchJsonWithRetry(url);
+      const res = data?.chart?.result?.[0];
+      if(!res?.indicators?.quote?.[0]?.close) return null;
+      const q = res.indicators.quote[0];
+      const adj = res.indicators.adjclose?.[0]?.adjclose || q.close;
+      const meta = res.meta;
+      const closes = q.close.map((v,i) => v === null ? (i>0 ? q.close[i-1] : v) : v);
+      return { closes, meta, adjCloses: adj };
+    }
+
+    function calcHMA(data, period){
+      if(!data || data.length < period) return null;
+      const half = Math.floor(period/2);
+      const sqrt = Math.floor(Math.sqrt(period));
+      const wma1 = calcWMA(data, half);
+      const wma2 = calcWMA(data, period);
+      const diff = wma1.map((v,i) => v*2 - wma2[i]);
+      return calcWMA(diff, sqrt);
+    }
+
+    function calcWMA(data, period){
+      const res = [];
+      const weightSum = (period*(period+1))/2;
+      for(let i=0; i<data.length; i++){
+        if(i < period-1){ res.push(null); continue; }
+        let sum = 0;
+        for(let j=0; j<period; j++) sum += data[i-j]*(period-j);
+        res.push(sum/weightSum);
+      }
+      return res;
+    }
+
+    async function analyzeScan(symbol){
+      const [d1, h1, m15] = await Promise.all([
+        fetchChart(symbol, "1mo", "1d"),
+        fetchChart(symbol, "5d", "1h"),
+        fetchChart(symbol, "2d", "15m")
+      ]);
+      if(!d1) return null;
+      const price = d1.meta.regularMarketPrice;
+      const prev = d1.meta.previousClose;
+      const hmaD = calcHMA(d1.closes, 9);
+      const hmaH = h1 ? calcHMA(h1.closes, 9) : null;
+      const hmaM = m15 ? calcHMA(m15.closes, 9) : null;
+      const score = (hmaD?.at(-1) > hmaD?.at(-2) ? 40:0) + (hmaH?.at(-1) > hmaH?.at(-2) ? 30:0) + (hmaM?.at(-1) > hmaM?.at(-2) ? 10:0);
+      return { symbol, price, prev, score, hmaD, hmaH, hmaM };
+    }
+
+    async function analyzeFocus(symbol){
+      const [h4, h1, m5] = await Promise.all([
+        fetchChart(symbol, "1mo", "4h"),
+        fetchChart(symbol, "5d", "1h"),
+        fetchChart(symbol, "1d", "5m")
+      ]);
+      if(!m5) return null;
+      const price = m5.meta.regularMarketPrice;
+      const hma4 = calcHMA(h4.closes, 9);
+      const hma1 = calcHMA(h1.closes, 9);
+      const hma5 = calcHMA(m5.closes, 9);
+      const decision = buildScanDecision(price, hma4, hma1, hma5);
+      return { symbol, price, hma4, hma1, hma5, decision, isFallback:false };
+    }
+
+    async function analyzeWatch(symbol){
+      const ticker = symbol.includes(".") ? symbol : symbol + ".T";
+
+      const [h4Raw, h1Raw] = await Promise.all([
+        fetchJsonWithRetry(CORS_PROXY_URL(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=1mo&interval=4h`)),
+        fetchJsonWithRetry(CORS_PROXY_URL(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=5d&interval=1h`))
+      ]);
+
+      const h4Res = h4Raw?.chart?.result?.[0];
+      const h1Res = h1Raw?.chart?.result?.[0];
+
+      if(!h1Res?.indicators?.quote?.[0]?.close) return null;
+
+      const h4Quote = h4Res?.indicators?.quote?.[0] || null;
+      const h1Quote = h1Res?.indicators?.quote?.[0] || null;
+
+      const h4Closes = Array.isArray(h4Quote?.close)
+        ? h4Quote.close.map((v,i,arr) => v === null ? (i > 0 ? arr[i-1] : v) : v)
+        : null;
+
+      const h1Closes = Array.isArray(h1Quote?.close)
+        ? h1Quote.close.map((v,i,arr) => v === null ? (i > 0 ? arr[i-1] : v) : v)
+        : null;
+
+      const h1Volumes = Array.isArray(h1Quote?.volume) ? h1Quote.volume : [];
+
+      const hma4 = h4Closes ? calcHMA(h4Closes, 9) : null;
+      const hma1 = h1Closes ? calcHMA(h1Closes, 9) : null;
+
+      const isUp4 = Array.isArray(hma4) && hma4.length >= 2 && Number.isFinite(hma4.at(-1)) && Number.isFinite(hma4.at(-2))
+        ? hma4.at(-1) > hma4.at(-2)
+        : false;
+
+      const isUp1 = Array.isArray(hma1) && hma1.length >= 2 && Number.isFinite(hma1.at(-1)) && Number.isFinite(hma1.at(-2))
+        ? hma1.at(-1) > hma1.at(-2)
+        : false;
+
+      const validVolumes = h1Volumes.filter(v => Number.isFinite(v) && v > 0);
+      const recentVolumes = validVolumes.slice(-5);
+      const baseVolumes = validVolumes.slice(-25, -5);
+
+      const recentAvg = recentVolumes.length ? recentVolumes.reduce((a,b)=>a+b,0) / recentVolumes.length : 0;
+      const baseAvg = baseVolumes.length ? baseVolumes.reduce((a,b)=>a+b,0) / baseVolumes.length : 0;
+
+      const volumeBoost = recentVolumes.length >= 3 && baseVolumes.length >= 5 && recentAvg > (baseAvg * 1.2);
+
+      const score = (isUp1 ? 40 : 0) + (isUp4 ? 40 : 0) + (volumeBoost ? 20 : 0);
+
+      return {
+        symbol,
+        price: h1Res.meta?.regularMarketPrice ?? null,
+        hma4,
+        hma1,
+        score,
+        volumeState: volumeBoost ? "UP" : "--",
+        volumeText: volumeBoost ? "増加" : "通常",
+        isFallback:false
+      };
+    }
+
+    async function analyzePool(symbol){
+      const d1 = await fetchChart(symbol, "5d", "1d");
+      if(!d1) return null;
+      return { symbol, price: d1.meta.regularMarketPrice, prev: d1.meta.previousClose, isFallback:false };
+    }
+
+    function buildScanDecision(price, hma4, hma1, hma5){
+      const t4 = hma4?.at(-1) > hma4?.at(-2) ? "UP" : "DOWN";
+      const t1 = hma1?.at(-1) > hma1?.at(-2) ? "UP" : "DOWN";
+      const t5 = hma5?.at(-1) > hma5?.at(-2) ? "UP" : "DOWN";
+
+      let score = 0;
+      if(t4==="UP") score += 30;
+      if(t1==="UP") score += 30;
+      if(t5==="UP") score += 20;
+
+      let trigger = "WAIT";
+      if(t4==="UP" && t1==="UP" && t5==="UP") trigger = "LONG";
+      else if(t4==="DOWN" && t1==="DOWN" && t5==="DOWN") trigger = "SHORT";
+
+      const entry = trigger === "LONG" ? hma5?.at(-1) : (trigger === "SHORT" ? hma5?.at(-1) : null);
+      const entryLow = Number.isFinite(entry) ? entry * (1 - ENTRY_BAND_RATE) : null;
+      const entryHigh = Number.isFinite(entry) ? entry * (1 + ENTRY_BAND_RATE) : null;
+
+      let sl = null, tp = null;
+      if(Number.isFinite(entryLow) && Number.isFinite(entryHigh)){
+        if(trigger === "LONG"){
+          sl = entryLow * 0.98;
+          tp = entryHigh * 1.05;
+        }else if(trigger === "SHORT"){
+          sl = entryHigh * 1.02;
+          tp = entryLow * 0.95;
+        }
+      }
+
+      return {
+        score,
+        trigger,
+        entry,
+        entryLow,
+        entryHigh,
+        sl,
+        tp,
+        trends: { t4, t1, t5 }
+      };
+    }
+
+    function classifySetup(results){
+      results.sort((a,b) => b.score - a.score);
+      const newFocus = results.slice(0, FOCUS_MAX).map(r=>r.symbol);
+      const remain = results.slice(FOCUS_MAX);
+      const newWatch = remain.slice(0, WATCH_MAX).map(r=>r.symbol);
+      const newPool = remain.slice(WATCH_MAX).map(r=>r.symbol);
+      return { newFocus, newWatch, newPool };
+    }
+
+    function getThemeText(symbol){
+      const themes = THEME_DB[symbol];
+      return Array.isArray(themes) && themes.length ? themes.join(" / ") : "---";
+    }
+
+    function getThemeList(symbol){
+      const themes = THEME_DB[symbol];
+      return Array.isArray(themes) ? themes.filter(t => typeof t === "string" && t.trim()) : [];
+    }
+
+    function getFocusThemeRanking(){
+      const scoreMap = new Map();
+
+      const addThemes = (rows, weight) => {
+        rows.forEach(row => {
+          getThemeList(row.symbol).forEach(theme => {
+            scoreMap.set(theme, (scoreMap.get(theme) || 0) + weight);
+          });
+        });
+      };
+
+      addThemes(Array.isArray(STATE.meta.cache.focusRows) ? STATE.meta.cache.focusRows : [], 2);
+      addThemes(Array.isArray(STATE.meta.cache.watchRows) ? STATE.meta.cache.watchRows : [], 1);
+
+      return [...scoreMap.entries()]
+        .sort((a,b) => {
+          if(b[1] !== a[1]) return b[1] - a[1];
+          return a[0].localeCompare(b[0], "ja");
+        })
+        .slice(0, 3)
+        .map(([theme]) => theme);
+    }
+
+    function getAnyCachedRow(symbol){
+      return [...STATE.meta.cache.focusRows, ...STATE.meta.cache.watchRows, ...STATE.meta.cache.poolRows].find(r => r.symbol === symbol) || null;
+    }
+
+    function buildFocusFallbackRow(symbol){
+      const prev = getAnyCachedRow(symbol);
+      const prevDecision = prev?.decision || {};
+      const fallbackEntry = Number.isFinite(prevDecision.entry) ? prevDecision.entry : null;
+      const fallbackEntryLow = Number.isFinite(prevDecision.entryLow)
+        ? prevDecision.entryLow
+        : (Number.isFinite(fallbackEntry) ? fallbackEntry * (1 - ENTRY_BAND_RATE) : null);
+      const fallbackEntryHigh = Number.isFinite(prevDecision.entryHigh)
+        ? prevDecision.entryHigh
+        : (Number.isFinite(fallbackEntry) ? fallbackEntry * (1 + ENTRY_BAND_RATE) : null);
+
+      return {
+        symbol,
+        price: Number.isFinite(prev?.price) ? prev.price : null,
+        hma5: Array.isArray(prev?.hma5) ? prev.hma5 : null,
+        decision: {
+          score: Number.isFinite(prevDecision.score) ? prevDecision.score : 0,
+          trigger: prevDecision.trigger || "WAIT",
+          entry: fallbackEntry,
+          entryLow: fallbackEntryLow,
+          entryHigh: fallbackEntryHigh,
+          sl: Number.isFinite(prevDecision.sl) ? prevDecision.sl : null,
+          tp: Number.isFinite(prevDecision.tp) ? prevDecision.tp : null,
+          trends: {
+            t4: prevDecision?.trends?.t4 || "--",
+            t1: prevDecision?.trends?.t1 || "--",
+            t5: prevDecision?.trends?.t5 || "--"
+          }
+        },
+        isFallback: true
+      };
+    }
+
+    function buildWatchFallbackRow(symbol){
+      const prev = getAnyCachedRow(symbol);
+      return {
+        symbol,
+        price: Number.isFinite(prev?.price) ? prev.price : null,
+        hma4: Array.isArray(prev?.hma4) ? prev.hma4 : null,
+        hma1: Array.isArray(prev?.hma1) ? prev.hma1 : null,
+        score: Number.isFinite(prev?.score) ? prev.score : 0,
+        volumeState: prev?.volumeState || "--",
+        volumeText: prev?.volumeText || "--",
+        isFallback: true
+      };
+    }
+
+    function buildPoolFallbackRow(symbol){
+      const prev = getAnyCachedRow(symbol);
+      return {
+        symbol,
+        price: Number.isFinite(prev?.price) ? prev.price : null,
+        prev: Number.isFinite(prev?.prev) ? prev.prev : null,
+        isFallback: true
+      };
+    }
+
+    function getTrendArrow(trend){
+      if(trend === "UP") return "↑";
+      if(trend === "DOWN") return "↓";
+      return "→";
+    }
+
+    function getTrendClass(trend){
+      if(trend === "UP") return "trend-up";
+      if(trend === "DOWN") return "trend-down";
+      return "trend-range";
+    }
+
+    function getTrendEntryGlowClass(trend, displayTrigger){
+      if(displayTrigger !== "ENTRY") return "";
+      if(trend === "UP") return "trend-entry-up";
+      if(trend === "DOWN") return "trend-entry-down";
+      return "";
+    }
+
+    function pickComment(symbol, isEntry){
+      const list = isEntry ? ENTRY_COMMENTS : WAIT_COMMENTS;
+      let hash = 0;
+      const base = String(symbol || "");
+      for(let i=0; i<base.length; i++){
+        hash = (hash * 31 + base.charCodeAt(i)) >>> 0;
+      }
+      return list[hash % list.length];
+    }
+
+    function getDisplayTrigger(trigger){
+      return trigger === "WAIT" ? "WAIT" : "ENTRY";
+    }
+
+    function setRandomMotto(){
+      const bar = document.getElementById("mottoBar");
+      if(!bar) return;
+      const idx = Math.floor(Math.random() * MOTTO_LIST.length);
+      bar.innerHTML = `<span class="motto-label">格言</span><span class="motto-text">${MOTTO_LIST[idx]}</span>`;
+    }
+
+    function setAutoLoading(visible, message){
+      const bar = document.getElementById("autoLoadingBar");
+      const text = document.getElementById("autoLoadingText");
+      if(!bar || !text) return;
+
+      if(typeof message === "string" && message){
+        text.textContent = message;
+      }else{
+        text.textContent = "Universe読み込み中...（初回は少し時間がかかります）";
+      }
+
+      if(visible){
+        bar.classList.add("active");
+      }else{
+        bar.classList.remove("active");
+      }
+    }
+
+    function renderFocus(){
+      const body = document.getElementById("focusTbody");
+      body.innerHTML = "";
+      let activeCount = 0;
+
+      STATE.meta.cache.focusRows.forEach(row => {
+        const d = row.decision;
+        const t5Arrow = getTrendArrow(d.trends.t5);
+        const trend5Class = getTrendClass(d.trends.t5);
+        const displayTrigger = getDisplayTrigger(d.trigger);
+        const trendGlowClass = getTrendEntryGlowClass(d.trends.t5, displayTrigger);
+        const trigClass = displayTrigger === "ENTRY" ? (d.trigger === "SHORT" ? "trigger-short" : "trigger-long") : "trigger-wait";
+        const sClass = d.score >= 80 ? "score-gold" : (d.score >= 60 ? "score-green" : (d.score >= 40 ? "score-blue" : "score-gray"));
+        const sigRow = d.trigger !== "WAIT" ? "signal-row" : "";
+        const entryBoxClass = displayTrigger === "ENTRY" ? "entrybox entry-heat-mid" : "entrybox";
+        if(d.trigger !== "WAIT") activeCount++;
+
+        const priceText = Number.isFinite(row.price) ? row.price.toLocaleString() : "---";
+        const entryBandText = (Number.isFinite(d.entryLow) && Number.isFinite(d.entryHigh))
+          ? `${d.entryLow.toFixed(1)} - ${d.entryHigh.toFixed(1)}`
+          : "---";
+        const slText = Number.isFinite(d.sl) ? d.sl.toFixed(1) : "---";
+        const tpText = Number.isFinite(d.tp) ? d.tp.toFixed(1) : "---";
+        const fallbackText = row.isFallback ? " | 取得失敗" : "";
+        const themeText = getThemeText(row.symbol);
+        const commentText = pickComment(row.symbol, displayTrigger === "ENTRY");
+
+        const tr = document.createElement("tr");
+        if(sigRow) tr.className = sigRow;
+        tr.innerHTML = `
+          <td class="sticky-col">
+            <div class="cell-headband">
+              <button class="symbol-mark ${STATE.marked.includes(row.symbol) ? 'active' : ''}" onclick="toggleMark('${row.symbol}')">★</button>
+              <span class="head-code">${row.symbol}</span>
+              <span class="head-name">${COMPANY_DB[row.symbol] || "---"}</span>
+              <button class="row-action-btn delete-btn" onclick="removeItem('focus','${row.symbol}')">削除</button>
+            </div>
+          </td>
+          <td class="price">${priceText}</td>
+          <td><span class="score ${sClass}">${d.score}</span></td>
+          <td><span class="chip ${trend5Class} ${trendGlowClass}">${t5Arrow}</span></td>
+          <td><span class="chip ${trigClass}">${displayTrigger}</span></td>
+          <td><div class="${entryBoxClass}"><span class="entry-main">${entryBandText}</span></div></td>
+          <td class="down">${slText}</td>
+          <td class="up">${tpText}</td>
+        `;
+        body.appendChild(tr);
+
+        const sub = document.createElement("tr");
+        sub.className = "subrow focus-subrow " + (d.trigger !== "WAIT" ? "signal-subrow" : "");
+        sub.innerHTML = `
+          <td colspan="8">
+            <div class="meta-grid">
+              <div class="meta-cell"><span class="theme-pill">${themeText}</span>${fallbackText}</div>
+              <div class="meta-cell"><a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a></div>
+              <div class="meta-cell"><a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a></div>
+              <div class="meta-cell"><span class="comment-text"><span class="comment-label">コメント：</span><span class="comment-body">${commentText}</span></span></div>
+            </div>
+          </td>
+        `;
+        body.appendChild(sub);
+      });
+
+      const rankedThemes = getFocusThemeRanking();
+      const rankedThemeTags = rankedThemes.length
+        ? rankedThemes.map(theme => `<span class="theme-detect-pill">${theme}</span>`).join("")
+        : `<span class="theme-detect-pill">---</span>`;
+
+      document.getElementById("focusSummary").innerHTML = `
+        <div class="focus-summary-stack">
+          <div class="focus-summary-row">
+            <span class="mini">Total: ${STATE.meta.cache.focusRows.length}</span>
+            <span class="mini">Signal: ${activeCount}</span>
+          </div>
+          <div class="focus-summary-row">
+            <span class="theme-detect-head">テーマ検知</span>
+            <div class="theme-detect-tags">${rankedThemeTags}</div>
+          </div>
+        </div>
+      `;
+      document.getElementById("focusUpdated").innerText = STATE.meta.lastFocusAt ? new Date(STATE.meta.lastFocusAt).toLocaleString() : "未更新";
+    }
+
+    function renderWatch(){
+      const body = document.getElementById("watchTbody");
+      body.innerHTML = "";
+
+      STATE.meta.cache.watchRows.forEach(row => {
+        const trendRaw1 = Array.isArray(row.hma1) && row.hma1.length >= 2 && Number.isFinite(row.hma1.at(-1)) && Number.isFinite(row.hma1.at(-2))
+          ? (row.hma1.at(-1) > row.hma1.at(-2) ? "UP" : "DOWN")
+          : "--";
+        const trendArrow1 = getTrendArrow(trendRaw1);
+        const trendClass1 = getTrendClass(trendRaw1);
+        const volumeClass = row.volumeState === "UP" ? "trend-up" : "trend-range";
+        const volumeText = row.volumeText || "--";
+        const sClass = row.score >= 80 ? "score-gold" : (row.score >= 60 ? "score-green" : (row.score >= 40 ? "score-blue" : "score-gray"));
+        const priceText = Number.isFinite(row.price) ? row.price.toLocaleString() : "---";
+        const fallbackText = row.isFallback ? " | 取得失敗" : "";
+        const themeText = getThemeText(row.symbol);
+        const commentText = pickComment(row.symbol, false);
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="sticky-col">
+            <div class="cell-headband">
+              <button class="symbol-mark ${STATE.marked.includes(row.symbol) ? 'active' : ''}" onclick="toggleMark('${row.symbol}')">★</button>
+              <span class="head-code">${row.symbol}</span>
+              <span class="head-name">${COMPANY_DB[row.symbol] || "---"}</span>
+              <button class="row-action-btn delete-btn" onclick="removeItem('watch','${row.symbol}')">削除</button>
+            </div>
+          </td>
+          <td class="price">${priceText}</td>
+          <td><span class="score ${sClass}">${row.score}</span></td>
+          <td><span class="chip ${trendClass1}">${trendArrow1}</span></td>
+          <td><span class="chip ${volumeClass}">${volumeText}</span></td>
+        `;
+        body.appendChild(tr);
+
+        const sub = document.createElement("tr");
+        sub.className = "subrow watch-subrow";
+        sub.innerHTML = `
+          <td colspan="5">
+            <div class="meta-grid">
+              <div class="meta-cell"><span class="theme-pill">${themeText}</span>${fallbackText}</div>
+              <div class="meta-cell"><a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a></div>
+              <div class="meta-cell"><a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a></div>
+              <div class="meta-cell"><span class="comment-text"><span class="comment-label">コメント：</span><span class="comment-body">${commentText}</span></span></div>
+            </div>
+          </td>
+        `;
+        body.appendChild(sub);
+      });
+
+      document.getElementById("watchSummary").innerHTML = `<span class="mini">Total: ${STATE.meta.cache.watchRows.length}</span>`;
+      document.getElementById("watchUpdated").innerText = STATE.meta.lastWatchAt ? new Date(STATE.meta.lastWatchAt).toLocaleString() : "未更新";
+    }
+
+    function renderPool(){
+      const body = document.getElementById("poolTbody");
+      body.innerHTML = "";
+
+      STATE.meta.cache.poolRows.forEach(row => {
+        const hasPrev = Number.isFinite(row.prev) && row.prev !== 0;
+        const hasPrice = Number.isFinite(row.price);
+        const diff = hasPrev && hasPrice ? (row.price - row.prev) : null;
+        const ratio = hasPrev && hasPrice ? (diff / row.prev) * 100 : null;
+        const dClass = diff > 0 ? "up" : (diff < 0 ? "down" : "flat");
+        const priceText = hasPrice ? row.price.toLocaleString() : "---";
+        const diffText = hasPrev && hasPrice ? `${diff > 0 ? '+' : ''}${diff.toLocaleString()} (${ratio.toFixed(2)}%)` : "---";
+        const fallbackText = row.isFallback ? " | 取得失敗" : "";
+        const themeText = getThemeText(row.symbol);
+        const commentText = pickComment(row.symbol, false);
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="sticky-col">
+            <div class="cell-headband">
+              <button class="symbol-mark ${STATE.marked.includes(row.symbol) ? 'active' : ''}" onclick="toggleMark('${row.symbol}')">★</button>
+              <span class="head-code">${row.symbol}</span>
+              <span class="head-name">${COMPANY_DB[row.symbol] || "---"}</span>
+              <button class="row-action-btn delete-btn" onclick="removeItem('pool','${row.symbol}')">削除</button>
+            </div>
+          </td>
+          <td class="price">${priceText}</td>
+          <td class="${dClass}">${diffText}</td>
+        `;
+        body.appendChild(tr);
+
+        const sub = document.createElement("tr");
+        sub.className = "subrow pool-subrow";
+        sub.innerHTML = `
+          <td colspan="3">
+            <div class="meta-grid">
+              <div class="meta-cell"><span class="theme-pill">${themeText}</span>${fallbackText}</div>
+              <div class="meta-cell"><a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a></div>
+              <div class="meta-cell"><a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a></div>
+              <div class="meta-cell"><span class="comment-text"><span class="comment-label">コメント：</span><span class="comment-body">${commentText}</span></span></div>
+            </div>
+          </td>
+        `;
+        body.appendChild(sub);
+      });
+
+      document.getElementById("poolSummary").innerHTML = `<span class="mini">Total: ${STATE.meta.cache.poolRows.length}</span>`;
+      document.getElementById("poolUpdated").innerText = STATE.meta.lastPoolAt ? new Date(STATE.meta.lastPoolAt).toLocaleString() : "未更新";
+    }
+
+    function saveState(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+    }
+
+    function loadState(){
+      const s = localStorage.getItem(STORAGE_KEY);
+      if(s){
+        try{
+          const parsed = JSON.parse(s);
+          STATE = {
+            ...STATE,
+            ...parsed,
+            scan: Array.isArray(parsed.scan) ? parsed.scan : [],
+            focus: Array.isArray(parsed.focus) ? parsed.focus : [],
+            watch: Array.isArray(parsed.watch) ? parsed.watch : [],
+            pool: Array.isArray(parsed.pool) ? parsed.pool : [],
+            marked: Array.isArray(parsed.marked) ? parsed.marked : [],
+            meta: {
+              ...STATE.meta,
+              ...(parsed.meta || {}),
+              tempExcluded: Array.isArray(parsed?.meta?.tempExcluded) ? parsed.meta.tempExcluded : [],
+              cache: {
+                ...STATE.meta.cache,
+                ...((parsed.meta && parsed.meta.cache) || {})
+              }
+            }
+          };
+          renderFocus();
+          renderWatch();
+          renderPool();
+        }catch(e){ console.error(e); }
+      }
+    }
+
+    function toggleMark(symbol){
+      const idx = STATE.marked.indexOf(symbol);
+      if(idx===-1) STATE.marked.push(symbol);
+      else STATE.marked.splice(idx,1);
+      saveState();
+      renderFocus();
+      renderWatch();
+      renderPool();
+    }
+
+    function removeItem(list, symbol){
+      if(!Array.isArray(STATE.meta.tempExcluded)){
+        STATE.meta.tempExcluded = [];
+      }
+
+      if(!STATE.meta.tempExcluded.includes(symbol)){
+        STATE.meta.tempExcluded.push(symbol);
+      }
+
+      STATE.scan = STATE.scan.filter(s => s !== symbol);
+      STATE.focus = STATE.focus.filter(s => s !== symbol);
+      STATE.watch = STATE.watch.filter(s => s !== symbol);
+      STATE.pool = STATE.pool.filter(s => s !== symbol);
+
+      STATE.meta.cache.focusRows = STATE.meta.cache.focusRows.filter(r => r.symbol !== symbol);
+      STATE.meta.cache.watchRows = STATE.meta.cache.watchRows.filter(r => r.symbol !== symbol);
+      STATE.meta.cache.poolRows = STATE.meta.cache.poolRows.filter(r => r.symbol !== symbol);
+
+      saveState();
+      renderFocus();
+      renderWatch();
+      renderPool();
+    }
+
+    async function handleInput(e){
+      if(e.key !== "Enter") return;
+      const val = e.target.value.trim();
+      if(!val) return;
+
+      const codes = [...new Set(val.split(/[\s,]+/).filter(c=>/^\d{4}$/.test(c) || /^\d{3}[A-Z]$/.test(c)))];
+      if(!codes.length) return;
+
+      e.target.value = "";
+      setRandomMotto();
+
+      if(!Array.isArray(STATE.meta.tempExcluded)){
+        STATE.meta.tempExcluded = [];
+      }
+
+      STATE.meta.tempExcluded = STATE.meta.tempExcluded.filter(symbol => !codes.includes(symbol));
+
+      const prevFocus = Array.isArray(STATE.focus) ? [...STATE.focus] : [];
+      const prevWatch = Array.isArray(STATE.watch) ? [...STATE.watch] : [];
+      const prevPool = Array.isArray(STATE.pool) ? [...STATE.pool] : [];
+
+      const allSymbols = [...new Set([
+        ...prevFocus,
+        ...prevWatch,
+        ...prevPool,
+        ...codes
+      ])];
+
+      const results = [];
+      const failedSymbols = [];
+
+      for(const c of allSymbols){
+        try{
+          const r = await analyzeScan(c);
+          if(r){
+            results.push(r);
+          }else{
+            failedSymbols.push(c);
+          }
+          await new Promise(res=>setTimeout(res, 300));
+        }catch(err){
+          console.error(c, err);
+          failedSymbols.push(c);
+        }
+      }
+
+      STATE.scan = [...new Set([
+        ...results.map(r => r.symbol),
+        ...failedSymbols
+      ])];
+
+      const setup = classifySetup(results);
+
+      const newFocus = [...setup.newFocus];
+      const newWatch = [...setup.newWatch];
+      const newPool = [...setup.newPool];
+
+      failedSymbols.forEach(symbol => {
+        if(newFocus.includes(symbol) || newWatch.includes(symbol) || newPool.includes(symbol)) return;
+
+        if(prevFocus.includes(symbol)){
+          newFocus.push(symbol);
+        }else if(prevWatch.includes(symbol)){
+          newWatch.push(symbol);
+        }else if(prevPool.includes(symbol)){
+          newPool.push(symbol);
+        }else{
+          newPool.push(symbol);
+        }
+      });
+
+      codes.forEach(symbol => {
+        if(newFocus.includes(symbol) || newWatch.includes(symbol) || newPool.includes(symbol)) return;
+        newPool.push(symbol);
+      });
+
+      STATE.focus = [...new Set(newFocus)];
+      STATE.watch = [...new Set(newWatch)].filter(s => !STATE.focus.includes(s));
+      STATE.pool = [...new Set(newPool)].filter(s => !STATE.focus.includes(s) && !STATE.watch.includes(s));
+
+      codes.forEach(symbol => {
+        if(STATE.focus.includes(symbol) || STATE.watch.includes(symbol) || STATE.pool.includes(symbol)) return;
+        STATE.pool.push(symbol);
+      });
+
+      STATE.pool = [...new Set(STATE.pool)].filter(s => !STATE.focus.includes(s) && !STATE.watch.includes(s));
+
+      saveState();
+
+      await runFocusTask();
+      await runWatchTask();
+      await runPoolTask();
+    }
+
+    async function runFocusTask(){
+      const rows = [];
+      for(const s of STATE.focus){
+        try{
+          const r = await analyzeFocus(s);
+          rows.push(r || buildFocusFallbackRow(s));
+          await new Promise(res=>setTimeout(res, 500));
+        }catch(e){
+          console.error(s, e);
+          rows.push(buildFocusFallbackRow(s));
+        }
+      }
+
+      rows.sort((a,b) => {
+        const aScore = Number.isFinite(a?.decision?.score) ? a.decision.score : -Infinity;
+        const bScore = Number.isFinite(b?.decision?.score) ? b.decision.score : -Infinity;
+        return bScore - aScore;
+      });
+
+      STATE.meta.cache.focusRows = rows;
+      STATE.meta.lastFocusAt = Date.now();
+      saveState();
+      renderFocus();
+    }
+
+    async function runWatchTask(){
+      const rows = [];
+      for(const s of STATE.watch){
+        try{
+          const r = await analyzeWatch(s);
+          rows.push(r || buildWatchFallbackRow(s));
+          await new Promise(res=>setTimeout(res, 500));
+        }catch(e){
+          console.error(s, e);
+          rows.push(buildWatchFallbackRow(s));
+        }
+      }
+
+      rows.sort((a,b) => {
+        const aScore = Number.isFinite(a?.score) ? a.score : -Infinity;
+        const bScore = Number.isFinite(b?.score) ? b.score : -Infinity;
+        return bScore - aScore;
+      });
+
+      STATE.meta.cache.watchRows = rows;
+      STATE.meta.lastWatchAt = Date.now();
+      saveState();
+      renderWatch();
+      renderFocus();
+    }
+
+    async function runPoolTask(){
+      const rows = [];
+      for(const s of STATE.pool){
+        try{
+          const r = await analyzePool(s);
+          rows.push(r || buildPoolFallbackRow(s));
+          await new Promise(res=>setTimeout(res, 500));
+        }catch(e){
+          console.error(s, e);
+          rows.push(buildPoolFallbackRow(s));
+        }
+      }
+      STATE.meta.cache.poolRows = rows;
+      STATE.meta.lastPoolAt = Date.now();
+      saveState();
+      renderPool();
+    }
+
+    async function runClosingProcess(){
+      await runPoolTask();
+
+      const allSymbols = [...new Set([...STATE.focus, ...STATE.watch, ...STATE.pool])];
+      const results = [];
+      for(const s of allSymbols){
+        try{
+          const r = await analyzeScan(s);
+          if(r) results.push(r);
+          await new Promise(res=>setTimeout(res, 400));
+        }catch(e){
+          console.error(s, e);
+        }
+      }
+
+      const setup = classifySetup(results);
+      STATE.focus = setup.newFocus;
+      STATE.watch = setup.newWatch;
+      STATE.pool = setup.newPool;
+      saveState();
+
+      await runFocusTask();
+      await runWatchTask();
+      await runPoolTask();
+    }
+
+    async function scanUniverseSymbols(symbols){
+      const uniqueSymbols = [...new Set(symbols)];
+      const results = [];
+      const failedSymbols = [];
+
+      for(let i=0; i<uniqueSymbols.length; i += SCAN_CONCURRENT){
+        const chunk = uniqueSymbols.slice(i, i + SCAN_CONCURRENT);
+
+        const chunkResults = await Promise.all(chunk.map(async symbol => {
+          try{
+            const r = await analyzeScan(symbol);
+            return { symbol, result: r, ok: !!r };
+          }catch(err){
+            console.error(symbol, err);
+            return { symbol, result: null, ok: false };
+          }
+        }));
+
+        chunkResults.forEach(item => {
+          if(item.ok && item.result){
+            results.push(item.result);
+          }else{
+            failedSymbols.push(item.symbol);
+          }
+        });
+
+        if(i + SCAN_CONCURRENT < uniqueSymbols.length){
+          await new Promise(res => setTimeout(res, BETWEEN_CHUNK_DELAY));
+        }
+      }
+
+      return { results, failedSymbols };
+    }
+
+    async function initAutoUniverse(){
+      if(SYSTEM_MODE !== "AUTO") return;
+
+      setAutoLoading(true, "Universe読み込み中...（初回は少し時間がかかります）");
+
+      try{
+        if(!Array.isArray(STATE.meta.tempExcluded)){
+          STATE.meta.tempExcluded = [];
+        }
+
+        const excluded = new Set(STATE.meta.tempExcluded);
+        const manualCurrent = [...new Set([
+          ...(Array.isArray(STATE.focus) ? STATE.focus : []),
+          ...(Array.isArray(STATE.watch) ? STATE.watch : []),
+          ...(Array.isArray(STATE.pool) ? STATE.pool : [])
+        ])];
+
+        const baseUniverse = SCAN_UNIVERSE.filter(symbol => !excluded.has(symbol));
+        const mergedSymbols = [...new Set([
+          ...manualCurrent,
+          ...baseUniverse
+        ])];
+
+        if(!mergedSymbols.length){
+          setAutoLoading(false);
+          return;
+        }
+
+        const { results, failedSymbols } = await scanUniverseSymbols(mergedSymbols);
+
+        STATE.scan = [...new Set([
+          ...results.map(r => r.symbol),
+          ...failedSymbols
+        ])];
+
+        const setup = classifySetup(results);
+
+        const newFocus = [...setup.newFocus];
+        const newWatch = [...setup.newWatch];
+        const newPool = [...setup.newPool];
+
+        failedSymbols.forEach(symbol => {
+          if(newFocus.includes(symbol) || newWatch.includes(symbol) || newPool.includes(symbol)) return;
+
+          if(manualCurrent.includes(symbol)){
+            newPool.push(symbol);
+          }else{
+            newPool.push(symbol);
+          }
+        });
+
+        STATE.focus = [...new Set(newFocus)];
+        STATE.watch = [...new Set(newWatch)].filter(s => !STATE.focus.includes(s));
+        STATE.pool = [...new Set(newPool)].filter(s => !STATE.focus.includes(s) && !STATE.watch.includes(s));
+
+        saveState();
+
+        await runFocusTask();
+        await runWatchTask();
+        await runPoolTask();
+      }finally{
+        setAutoLoading(false);
+      }
+    }
+
+    let lastFocusTickKey = "";
+    let lastWatchTickKey = "";
+    let lastClosingTickKey = "";
+    let isFocusRunning = false;
+    let isWatchRunning = false;
+    let isClosingRunning = false;
+
+    function runFocusTaskGuarded(){
+      if(isFocusRunning || isClosingRunning) return;
+      isFocusRunning = true;
+      runFocusTask().finally(() => {
+        isFocusRunning = false;
+      });
+    }
+
+    function runWatchTaskGuarded(){
+      if(isWatchRunning || isClosingRunning) return;
+      isWatchRunning = true;
+      runWatchTask().finally(() => {
+        isWatchRunning = false;
+      });
+    }
+
+    function runClosingProcessGuarded(){
+      if(isClosingRunning) return;
+      isClosingRunning = true;
+      runClosingProcess().finally(() => {
+        isClosingRunning = false;
+      });
+    }
+
+    function tick(){
+      const now = new Date();
+      const min = now.getMinutes();
+      const hour = now.getHours();
+      const key = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${hour}:${min}`;
+
+      if(min % 5 === 0){
+        if(lastFocusTickKey !== key){
+          lastFocusTickKey = key;
+          runFocusTaskGuarded();
+        }
+      }
+
+      if([2,17,32,47].includes(min)){
+        if(lastWatchTickKey !== key){
+          lastWatchTickKey = key;
+          runWatchTaskGuarded();
+        }
+      }
+
+      if(hour === 15 && min === 30){
+        if(lastClosingTickKey !== key){
+          lastClosingTickKey = key;
+          runClosingProcessGuarded();
+        }
+      }
+    }
+
+    async function init(){
+      loadState();
+      setRandomMotto();
+
+      document.getElementById("symbolsInput").addEventListener("keydown", handleInput);
+      document.getElementById("searchInput").addEventListener("input", e => {
+        const q = e.target.value.toLowerCase();
+        [...document.querySelectorAll("tbody tr:not(.subrow)")].forEach(tr => {
+          const text = tr.innerText.toLowerCase();
+          const sub = tr.nextElementSibling;
+          const match = text.includes(q);
+          tr.style.display = match ? "" : "none";
+          if(sub && sub.classList.contains("subrow")) sub.style.display = match ? "" : "none";
+        });
+      });
+      document.getElementById("mottoBar").addEventListener("click", setRandomMotto);
+
+      setInterval(tick, 1000);
+
+      if(SYSTEM_MODE === "AUTO"){
+        await initAutoUniverse();
+        return;
+      }
+
+      if(!STATE.meta.cache.focusRows.length && STATE.focus.length) runFocusTaskGuarded();
+      if(!STATE.meta.cache.watchRows.length && STATE.watch.length) runWatchTaskGuarded();
+      if(!STATE.meta.cache.poolRows.length && STATE.pool.length) runPoolTask();
+    }
+
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>S
