@@ -217,12 +217,12 @@
     }
 
     .top-grid{
-      display:grid;
-      grid-template-columns:1.45fr 1fr;
+      display:flex;
+      flex-direction:column;
       gap:14px;
       align-items:stretch;
       margin-bottom:14px;
-      height:calc(100vh - 118px);
+      height:auto;
       min-height:0;
     }
 
@@ -241,8 +241,12 @@
       flex-direction:column;
     }
 
+    .section + .section{
+      margin-top:0;
+    }
+
     .top-grid > .section{
-      height:100%;
+      height:auto;
       min-height:0;
     }
 
@@ -280,12 +284,19 @@
     }
 
     .tablewrap{
-      overflow-y:auto;
-      overflow-x:hidden;
-      max-height:420px;
+      overflow-x:auto;
+      overflow-y:visible;
+      max-height:none;
       flex:1 1 auto;
       min-height:0;
       background:#06080d;
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+    }
+
+    .tablewrap::-webkit-scrollbar{
+      width:0;
+      height:0;
     }
 
     .top-grid .tablewrap{
@@ -294,7 +305,8 @@
     }
 
     .focus-section .tablewrap{
-      overflow-y:auto;
+      overflow-x:auto;
+      overflow-y:visible;
       scrollbar-width:none;
       -ms-overflow-style:none;
     }
@@ -305,6 +317,8 @@
     }
 
     .watch-section .tablewrap{
+      overflow-x:auto;
+      overflow-y:visible;
       scrollbar-width:none;
       -ms-overflow-style:none;
     }
@@ -315,7 +329,8 @@
     }
 
     table{
-      width:100%;
+      width:max-content;
+      min-width:100%;
       border-collapse:separate;
       border-spacing:0 8px;
       background:#06080d;
@@ -555,6 +570,104 @@
       font-weight:800;
       line-height:1.1;
       white-space:nowrap;
+    }
+
+    .focus-rank{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      color:#fff4d6;
+      background:rgba(245,185,66,.16);
+      border:1px solid rgba(245,185,66,.34);
+      box-shadow:0 0 10px rgba(245,185,66,.10);
+      flex:0 0 auto;
+    }
+
+    .focus-headband{
+      display:grid;
+      grid-template-columns:28px 22px 56px minmax(0,1fr) auto;
+      align-items:center;
+      gap:8px;
+      width:100%;
+      min-width:0;
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(245,185,66,.18), rgba(74,55,22,.96));
+    }
+
+    .focus-meta-stack{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-width:0;
+    }
+
+    .focus-theme-block{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width:0;
+    }
+
+    .focus-theme-label{
+      display:inline-flex;
+      align-items:center;
+      align-self:flex-start;
+      min-height:24px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(245,185,66,.26);
+      background:rgba(245,185,66,.10);
+      color:#ffe9b2;
+      font-size:11px;
+      font-weight:900;
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    .focus-theme-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      min-width:0;
+    }
+
+    .focus-mini-row{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .focus-mini-strong{
+      background:rgba(255,213,74,.16);
+      color:#ffd54a;
+      border:1px solid rgba(255,213,74,.24);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .focus-mini-soft{
+      background:#0d1626;
+      color:#d7e2ff;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .focus-comment-block{
+      padding-top:8px;
+      border-top:1px solid rgba(255,255,255,.08);
     }
 
     .focus-section{
@@ -1095,13 +1208,15 @@
       }
 
       .focus-section .tablewrap{
-        overflow-y:auto;
+        overflow-x:auto;
+        overflow-y:visible;
       }
     }
 
     @media (max-width:1200px){
       .top-grid{
-        grid-template-columns:1fr;
+        display:flex;
+        flex-direction:column;
         height:auto;
       }
       .top-grid > .section{
@@ -1109,7 +1224,8 @@
         min-height:unset;
       }
       .focus-section .tablewrap{
-        overflow-y:auto;
+        overflow-x:auto;
+        overflow-y:visible;
       }
     }
 
@@ -1191,17 +1307,17 @@
       }
 
       .top-grid{
-        display:grid;
-        grid-template-columns:1.45fr 1fr;
+        display:flex;
+        flex-direction:column;
         gap:14px;
         align-items:stretch;
         margin-bottom:14px;
-        height:calc(100vh - 118px);
+        height:auto;
         min-height:0;
       }
 
       .top-grid > .section{
-        height:100%;
+        height:auto;
         min-height:0;
       }
 
@@ -1210,7 +1326,7 @@
       }
 
       table{
-        min-width:0;
+        min-width:100%;
       }
 
       th,td{
@@ -1247,6 +1363,10 @@
 
       .cell-headband{
         grid-template-columns:22px 56px minmax(0,1fr) auto;
+      }
+
+      .focus-headband{
+        grid-template-columns:28px 22px 56px minmax(0,1fr) auto;
       }
 
       .cell-headband .delete-btn{
@@ -2755,7 +2875,7 @@
       body.innerHTML = "";
       let activeCount = 0;
 
-      STATE.meta.cache.focusRows.forEach(row => {
+      STATE.meta.cache.focusRows.forEach((row, index) => {
         const d = row.decision;
         const t5Arrow = getTrendArrow(d.trends.t5);
         const trend5Class = getTrendClass(d.trends.t5);
@@ -2774,14 +2894,14 @@
         const slText = Number.isFinite(d.sl) ? d.sl.toFixed(1) : "---";
         const tpText = Number.isFinite(d.tp) ? d.tp.toFixed(1) : "---";
         const fallbackText = row.isFallback ? " | 取得失敗" : "";
-        const themeText = getThemeText(row.symbol);
         const commentText = pickComment(row.symbol, displayTrigger === "ENTRY");
 
         const tr = document.createElement("tr");
         if(sigRow) tr.className = sigRow;
         tr.innerHTML = `
           <td class="sticky-col">
-            <div class="cell-headband">
+            <div class="focus-headband">
+              <span class="focus-rank">${index + 1}</span>
               <button class="symbol-mark ${STATE.marked.includes(row.symbol) ? 'active' : ''}" onclick="toggleMark('${row.symbol}')">★</button>
               <span class="head-code">${row.symbol}</span>
               <span class="head-name">${COMPANY_DB[row.symbol] || "---"}</span>
@@ -2798,15 +2918,32 @@
         `;
         body.appendChild(tr);
 
+        const themeTags = getThemeList(row.symbol).slice(0,3);
+        const themeTagsHtml = themeTags.length
+          ? themeTags.map(theme => `<span class="theme-detect-pill">${theme}</span>`).join("")
+          : `<span class="theme-detect-pill">---</span>`;
+
         const sub = document.createElement("tr");
         sub.className = "subrow focus-subrow " + (d.trigger !== "WAIT" ? "signal-subrow" : "");
         sub.innerHTML = `
           <td colspan="8">
-            <div class="meta-grid">
-              <div class="meta-cell"><span class="theme-pill">${themeText}</span>${fallbackText}</div>
-              <div class="meta-cell"><a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a></div>
-              <div class="meta-cell"><a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a></div>
-              <div class="meta-cell"><span class="comment-text"><span class="comment-label">コメント：</span><span class="comment-body">${commentText}</span></span></div>
+            <div class="focus-meta-stack">
+              <div class="focus-theme-block">
+                <span class="focus-theme-label">テーマ検知</span>
+                <div class="focus-theme-tags">${themeTagsHtml}</div>
+              </div>
+
+              <div class="focus-mini-row">
+                <span class="focus-mini-strong">Total: ${d.score}</span>
+                <span class="focus-mini-soft">Signal: ${displayTrigger}</span>
+                <a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a>
+                <a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a>
+                ${fallbackText ? `<span class="focus-mini-soft">${fallbackText.replace(" | ","")}</span>` : ""}
+              </div>
+
+              <div class="focus-comment-block">
+                <span class="comment-text"><span class="comment-label">コメント：</span><span class="comment-body">${commentText}</span></span>
+              </div>
             </div>
           </td>
         `;
