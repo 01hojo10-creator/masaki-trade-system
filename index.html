@@ -1167,71 +1167,71 @@
       border-bottom-color:rgba(255,215,0,.22);
     }
 
-    /* ===== スマホ専用カードUI ===== */
+    /* ===== スマホ専用カードUI 最終仕上げ ===== */
     .mobile-card-list{
       display:none;
-      padding:10px;
+      padding:8px;
       background:#06080d;
     }
 
     .mobile-stock-card{
       position:relative;
-      background:linear-gradient(180deg,#111c31 0%, #0d1727 100%);
+      background:linear-gradient(180deg,#101a2d 0%, #0c1524 100%);
       border:1px solid rgba(255,255,255,.10);
       border-radius:16px;
-      padding:12px;
+      padding:10px;
       box-shadow:0 10px 24px rgba(0,0,0,.24);
     }
 
     .mobile-card-list > .mobile-stock-card + .mobile-stock-card{
-      margin-top:12px;
+      margin-top:10px;
     }
 
     .focus-mobile-card{
-      border-color:rgba(245,185,66,.28);
+      border-color:rgba(245,185,66,.30);
       box-shadow:
         0 10px 24px rgba(0,0,0,.24),
         0 0 0 1px rgba(245,185,66,.08) inset;
     }
 
     .watch-mobile-card{
-      border-color:rgba(25,195,125,.20);
+      border-color:rgba(25,195,125,.22);
       box-shadow:
         0 10px 24px rgba(0,0,0,.24),
         0 0 0 1px rgba(25,195,125,.05) inset;
     }
 
     .pool-mobile-card{
-      border-color:rgba(78,161,255,.20);
+      border-color:rgba(78,161,255,.22);
       box-shadow:
         0 10px 24px rgba(0,0,0,.24),
         0 0 0 1px rgba(78,161,255,.05) inset;
     }
 
     .mobile-entry-glow{
-      border-color:rgba(255,215,0,.52);
+      border-color:rgba(255,215,0,.60);
       box-shadow:
-        0 0 8px rgba(255,215,0,.22),
-        0 0 18px rgba(255,215,0,.12),
+        0 0 10px rgba(255,215,0,.22),
+        0 0 22px rgba(255,215,0,.14),
         0 10px 24px rgba(0,0,0,.24),
-        0 0 0 1px rgba(255,215,0,.10) inset;
-      animation:mobileEntryPulse 2s ease-in-out infinite;
+        0 0 0 1px rgba(255,215,0,.12) inset;
+      animation:mobileEntryPulse 1.8s ease-in-out infinite;
     }
 
     @keyframes mobileEntryPulse{
       0%,100%{
         box-shadow:
-          0 0 8px rgba(255,215,0,.22),
-          0 0 18px rgba(255,215,0,.12),
+          0 0 10px rgba(255,215,0,.22),
+          0 0 22px rgba(255,215,0,.14),
           0 10px 24px rgba(0,0,0,.24),
-          0 0 0 1px rgba(255,215,0,.10) inset;
+          0 0 0 1px rgba(255,215,0,.12) inset;
       }
       50%{
         box-shadow:
-          0 0 12px rgba(255,215,0,.32),
-          0 0 24px rgba(255,215,0,.18),
+          0 0 14px rgba(255,215,0,.34),
+          0 0 30px rgba(255,215,0,.18),
           0 10px 24px rgba(0,0,0,.24),
-          0 0 0 1px rgba(255,215,0,.14) inset;
+          0 0 0 1px rgba(255,215,0,.18) inset;
       }
     }
 
@@ -1243,31 +1243,27 @@
     }
 
     .mobile-row + .mobile-row{
-      margin-top:10px;
-    }
-
-    .mobile-row-wrap{
-      flex-wrap:wrap;
+      margin-top:8px;
     }
 
     .mobile-rank-badge{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-width:28px;
-      height:28px;
+      min-width:26px;
+      height:26px;
       padding:0 8px;
       border-radius:999px;
       background:rgba(245,185,66,.18);
       border:1px solid rgba(245,185,66,.34);
       color:#fff4d6;
-      font-size:12px;
+      font-size:11px;
       font-weight:900;
       flex:0 0 auto;
     }
 
     .mobile-code{
-      font-size:13px;
+      font-size:12px;
       font-weight:900;
       color:#ffffff;
       letter-spacing:.2px;
@@ -1277,7 +1273,7 @@
     .mobile-name{
       min-width:0;
       flex:1 1 auto;
-      font-size:14px;
+      font-size:13px;
       font-weight:900;
       color:#f4f7ff;
       overflow:hidden;
@@ -1289,10 +1285,10 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-height:28px;
+      min-height:26px;
       padding:0 10px;
       border-radius:999px;
-      font-size:12px;
+      font-size:11px;
       font-weight:900;
       white-space:nowrap;
       flex:0 0 auto;
@@ -1303,8 +1299,8 @@
 
     .mobile-status-entry{
       color:#fff8cf;
-      border-color:rgba(255,215,0,.44);
-      background:linear-gradient(180deg, rgba(255,215,0,.26), rgba(255,215,0,.10));
+      border-color:rgba(255,215,0,.50);
+      background:linear-gradient(180deg, rgba(255,215,0,.30), rgba(255,215,0,.10));
       box-shadow:0 0 10px rgba(255,215,0,.18);
     }
 
@@ -1314,8 +1310,16 @@
       background:#101a2c;
     }
 
+    .mobile-price-row{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+      min-width:0;
+    }
+
     .mobile-price-strong{
-      font-size:26px;
+      font-size:30px;
       font-weight:900;
       color:#ffffff;
       line-height:1;
@@ -1323,20 +1327,25 @@
       flex:1 1 auto;
     }
 
-    .mobile-kpi-grid{
+    .mobile-price-side-label{
+      font-size:11px;
+      color:#9fb0d1;
+      font-weight:900;
+      white-space:nowrap;
+      flex:0 0 auto;
+      padding-bottom:3px;
+    }
+
+    .mobile-score-trend-row{
       display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
+      grid-template-columns:1fr 1fr;
       gap:8px;
       width:100%;
     }
 
-    .mobile-kpi-grid-4{
-      grid-template-columns:repeat(4, minmax(0,1fr));
-    }
-
     .mobile-kpi{
       min-width:0;
-      padding:9px 8px;
+      padding:8px 9px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.08);
       background:#0c1422;
@@ -1347,7 +1356,7 @@
       color:var(--muted);
       font-weight:800;
       line-height:1;
-      margin-bottom:6px;
+      margin-bottom:5px;
       letter-spacing:.2px;
     }
 
@@ -1361,13 +1370,13 @@
       white-space:nowrap;
     }
 
-    .mobile-kpi-value.total{
+    .mobile-kpi-total .mobile-kpi-value{
       color:#ffd54a;
-      font-size:18px;
+      font-size:19px;
     }
 
-    .mobile-kpi-value.price-small{
-      font-size:16px;
+    .mobile-kpi-trend .mobile-kpi-value{
+      font-size:18px;
     }
 
     .mobile-band-grid{
@@ -1379,7 +1388,7 @@
 
     .mobile-band{
       min-width:0;
-      padding:10px 8px;
+      padding:8px 8px;
       border-radius:12px;
       background:#0c1422;
       border:1px solid rgba(255,255,255,.08);
@@ -1390,11 +1399,11 @@
       color:var(--muted);
       font-weight:800;
       line-height:1;
-      margin-bottom:6px;
+      margin-bottom:5px;
     }
 
     .mobile-band-value{
-      font-size:13px;
+      font-size:12px;
       color:#ffffff;
       font-weight:900;
       line-height:1.2;
@@ -1402,8 +1411,9 @@
     }
 
     .mobile-band-entry{
-      border-color:rgba(255,215,0,.26);
-      background:linear-gradient(180deg, rgba(255,215,0,.14), rgba(12,20,34,1));
+      border-color:rgba(255,215,0,.30);
+      background:linear-gradient(180deg, rgba(255,215,0,.16), rgba(12,20,34,1));
+      box-shadow:inset 0 0 0 1px rgba(255,215,0,.06);
     }
 
     .mobile-tags{
@@ -1417,29 +1427,34 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-height:26px;
-      padding:4px 10px;
+      min-height:24px;
+      padding:3px 9px;
       border-radius:999px;
       border:1px solid rgba(245,185,66,.26);
       background:rgba(245,185,66,.10);
       color:#ffe9b2;
-      font-size:11px;
+      font-size:10px;
       font-weight:800;
       line-height:1.1;
       white-space:nowrap;
     }
 
-    .mobile-divider{
-      height:1px;
-      background:rgba(255,255,255,.08);
-      margin:10px 0;
+    .mobile-comment-row{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+      padding:8px 10px;
+      border-radius:12px;
+      background:#0b1320;
+      border:1px solid rgba(255,255,255,.07);
     }
 
     .mobile-comment{
       font-size:12px;
       color:#f3f7ff;
       font-weight:800;
-      line-height:1.5;
+      line-height:1.2;
       min-width:0;
       flex:1 1 auto;
       overflow:hidden;
@@ -1452,59 +1467,94 @@
       margin-right:4px;
     }
 
-    .mobile-link-row{
-      display:flex;
-      align-items:center;
+    .mobile-bottom-actions{
+      display:grid;
+      grid-template-columns:84px 1fr 1fr;
       gap:8px;
-      flex:0 0 auto;
+      width:100%;
     }
 
-    .mobile-action-row{
-      display:flex;
+    .mobile-btn{
+      display:inline-flex;
       align-items:center;
-      gap:8px;
-      justify-content:space-between;
-      flex-wrap:nowrap;
-      min-width:0;
-    }
-
-    .mobile-action-left{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      min-width:0;
-      flex:1 1 auto;
-    }
-
-    .mobile-delete-btn{
-      appearance:none;
-      border:1px solid rgba(255,93,115,.26);
-      background:rgba(255,93,115,.10);
-      color:#ffc6cf;
-      min-height:28px;
-      padding:4px 10px;
+      justify-content:center;
+      min-height:30px;
+      padding:0 10px;
       border-radius:999px;
+      border:1px solid var(--line);
+      background:#0d1626;
+      color:#dfe8ff;
+      text-decoration:none;
       font-size:11px;
       font-weight:900;
       line-height:1;
-      cursor:pointer;
-      flex:0 0 auto;
+      white-space:nowrap;
     }
 
-    .mobile-delete-btn:hover{
+    .mobile-btn:hover{
       filter:brightness(1.08);
+    }
+
+    .mobile-btn-delete{
+      color:#ffc6cf;
+      border-color:rgba(255,93,115,.26);
+      background:rgba(255,93,115,.10);
+      appearance:none;
+      cursor:pointer;
+    }
+
+    .mobile-btn-news{
+      color:#cfe3ff;
+      background:rgba(47,129,247,.10);
+      border-color:rgba(47,129,247,.22);
+    }
+
+    .mobile-btn-chart{
+      color:#bdf5d9;
+      background:rgba(25,195,125,.10);
+      border-color:rgba(25,195,125,.22);
+    }
+
+    .mobile-inline-metrics{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      width:100%;
+    }
+
+    .mobile-mini-chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:24px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:#0d1626;
+      color:#d7e2ff;
+      font-size:11px;
+      font-weight:900;
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    .mobile-mini-chip-strong{
+      background:rgba(255,213,74,.14);
+      color:#ffd54a;
+      border-color:rgba(255,213,74,.24);
     }
 
     .mobile-fallback{
       display:inline-flex;
       align-items:center;
-      min-height:24px;
+      min-height:22px;
       padding:4px 8px;
       border-radius:999px;
       background:rgba(255,93,115,.10);
       border:1px solid rgba(255,93,115,.18);
       color:#ffc6cf;
-      font-size:11px;
+      font-size:10px;
       font-weight:800;
       white-space:nowrap;
     }
@@ -1675,32 +1725,33 @@
         padding:5px 9px;
       }
 
-      .mobile-kpi-grid-4{
-        grid-template-columns:repeat(2, minmax(0,1fr));
+      .mobile-stock-card{
+        padding:9px;
+        border-radius:15px;
       }
 
-      .mobile-band-grid{
-        grid-template-columns:1fr;
+      .mobile-card-list{
+        padding:8px;
       }
 
-      .mobile-action-row{
-        flex-direction:column;
-        align-items:stretch;
+      .mobile-card-list > .mobile-stock-card + .mobile-stock-card{
+        margin-top:9px;
       }
 
-      .mobile-action-left{
-        width:100%;
+      .mobile-row + .mobile-row{
+        margin-top:7px;
       }
 
-      .mobile-comment{
-        white-space:normal;
-        overflow:visible;
-        text-overflow:unset;
+      .mobile-name{
+        font-size:12px;
       }
 
-      .mobile-link-row{
-        width:100%;
-        justify-content:flex-end;
+      .mobile-price-strong{
+        font-size:28px;
+      }
+
+      .mobile-bottom-actions{
+        grid-template-columns:76px 1fr 1fr;
       }
     }
   </style>
@@ -2934,1170 +2985,1017 @@
       return { symbol, price, hma4, hma1, hma5, decision, isFallback:false };
     }
 
-    async function analyzeWatch(symbol){
-      const ticker = symbol.includes(".") ? symbol : symbol + ".T";
-
-      const [h4Raw, h1Raw] = await Promise.all([
-        fetchJsonWithRetry(CORS_PROXY_URL(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=1mo&interval=4h`)),
-        fetchJsonWithRetry(CORS_PROXY_URL(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=5d&interval=1h`))
+        async function analyzeWatch(symbol){
+      const [d1, h1] = await Promise.all([
+        fetchChart(symbol, "3mo", "1d"),
+        fetchChart(symbol, "5d", "1h")
       ]);
+      if(!d1) return null;
+      const price = d1.meta.regularMarketPrice;
+      const prev = d1.meta.previousClose;
+      const hmaD = calcHMA(d1.closes, 9);
+      const hmaH = h1 ? calcHMA(h1.closes, 9) : null;
+      const trend =
+        hmaD?.at(-1) > hmaD?.at(-2) && hmaH?.at(-1) > hmaH?.at(-2) ? "上昇" :
+        hmaD?.at(-1) < hmaD?.at(-2) && hmaH?.at(-1) < hmaH?.at(-2) ? "下降" :
+        "レンジ";
 
-      const h4Res = h4Raw?.chart?.result?.[0];
-      const h1Res = h1Raw?.chart?.result?.[0];
+      const score =
+        (hmaD?.at(-1) > hmaD?.at(-2) ? 35 : 0) +
+        (hmaH?.at(-1) > hmaH?.at(-2) ? 25 : 0) +
+        (price > (hmaD?.at(-1) || price) ? 15 : 0) +
+        (price > prev ? 10 : 0);
 
-      if(!h1Res?.indicators?.quote?.[0]?.close) return null;
-
-      const h4Quote = h4Res?.indicators?.quote?.[0] || null;
-      const h1Quote = h1Res?.indicators?.quote?.[0] || null;
-
-      const h4Closes = Array.isArray(h4Quote?.close)
-        ? h4Quote.close.map((v,i,arr) => v === null ? (i > 0 ? arr[i-1] : v) : v)
-        : null;
-
-      const h1Closes = Array.isArray(h1Quote?.close)
-        ? h1Quote.close.map((v,i,arr) => v === null ? (i > 0 ? arr[i-1] : v) : v)
-        : null;
-
-      const h1Volumes = Array.isArray(h1Quote?.volume) ? h1Quote.volume : [];
-
-      const hma4 = h4Closes ? calcHMA(h4Closes, 9) : null;
-      const hma1 = h1Closes ? calcHMA(h1Closes, 9) : null;
-
-      const isUp4 = Array.isArray(hma4) && hma4.length >= 2 && Number.isFinite(hma4.at(-1)) && Number.isFinite(hma4.at(-2))
-        ? hma4.at(-1) > hma4.at(-2)
-        : false;
-
-      const isUp1 = Array.isArray(hma1) && hma1.length >= 2 && Number.isFinite(hma1.at(-1)) && Number.isFinite(hma1.at(-2))
-        ? hma1.at(-1) > hma1.at(-2)
-        : false;
-
-      const validVolumes = h1Volumes.filter(v => Number.isFinite(v) && v > 0);
-      const recentVolumes = validVolumes.slice(-5);
-      const baseVolumes = validVolumes.slice(-25, -5);
-
-      const recentAvg = recentVolumes.length ? recentVolumes.reduce((a,b)=>a+b,0) / recentVolumes.length : 0;
-      const baseAvg = baseVolumes.length ? baseVolumes.reduce((a,b)=>a+b,0) / baseVolumes.length : 0;
-
-      const volumeBoost = recentVolumes.length >= 3 && baseVolumes.length >= 5 && recentAvg > (baseAvg * 1.2);
-
-      const score = (isUp1 ? 40 : 0) + (isUp4 ? 40 : 0) + (volumeBoost ? 20 : 0);
+      const volume = d1.meta.regularMarketVolume || 0;
+      const changePct = prev ? ((price - prev) / prev) * 100 : 0;
 
       return {
         symbol,
-        price: h1Res.meta?.regularMarketPrice ?? null,
-        hma4,
-        hma1,
+        price,
+        prev,
         score,
-        volumeState: volumeBoost ? "UP" : "--",
-        volumeText: volumeBoost ? "増加" : "通常",
+        trend,
+        volume,
+        changePct,
+        themes: getThemes(symbol),
+        newsUrl: buildYahooNewsUrl(symbol),
+        chartUrl: buildTradingViewUrl(symbol),
         isFallback:false
       };
     }
 
     async function analyzePool(symbol){
-      const d1 = await fetchChart(symbol, "5d", "1d");
+      const d1 = await fetchChart(symbol, "3mo", "1d");
       if(!d1) return null;
-      return { symbol, price: d1.meta.regularMarketPrice, prev: d1.meta.previousClose, isFallback:false };
+      const price = d1.meta.regularMarketPrice;
+      const prev = d1.meta.previousClose;
+      const changePct = prev ? ((price - prev) / prev) * 100 : 0;
+      return {
+        symbol,
+        price,
+        prev,
+        changePct,
+        themes: getThemes(symbol),
+        newsUrl: buildYahooNewsUrl(symbol),
+        chartUrl: buildTradingViewUrl(symbol),
+        isFallback:false
+      };
     }
 
     function buildScanDecision(price, hma4, hma1, hma5){
-      const t4 = hma4?.at(-1) > hma4?.at(-2) ? "UP" : "DOWN";
-      const t1 = hma1?.at(-1) > hma1?.at(-2) ? "UP" : "DOWN";
-      const t5 = hma5?.at(-1) > hma5?.at(-2) ? "UP" : "DOWN";
+      const h4Now = hma4?.at(-1) ?? null;
+      const h4Prev = hma4?.at(-2) ?? null;
+      const h1Now = hma1?.at(-1) ?? null;
+      const h1Prev = hma1?.at(-2) ?? null;
+      const h5Now = hma5?.at(-1) ?? null;
+      const h5Prev = hma5?.at(-2) ?? null;
 
-      let score = 0;
-      if(t4==="UP") score += 30;
-      if(t1==="UP") score += 30;
-      if(t5==="UP") score += 20;
+      const trendUp = isFinite(h4Now) && isFinite(h4Prev) && isFinite(h1Now) && isFinite(h1Prev) && h4Now > h4Prev && h1Now > h1Prev;
+      const trendDown = isFinite(h4Now) && isFinite(h4Prev) && isFinite(h1Now) && isFinite(h1Prev) && h4Now < h4Prev && h1Now < h1Prev;
+      const triggerLong = trendUp && isFinite(h5Now) && isFinite(h5Prev) && h5Now > h5Prev && price >= h5Now;
+      const triggerShort = trendDown && isFinite(h5Now) && isFinite(h5Prev) && h5Now < h5Prev && price <= h5Now;
 
-      let trigger = "WAIT";
-      if(t4==="UP" && t1==="UP" && t5==="UP") trigger = "LONG";
-      else if(t4==="DOWN" && t1==="DOWN" && t5==="DOWN") trigger = "SHORT";
+      const trend = trendUp ? "上昇" : trendDown ? "下降" : "レンジ";
+      const trigger = triggerLong ? "ロング" : triggerShort ? "ショート" : (Math.abs(price - (h5Now || price)) / Math.max(price || 1, 1) <= 0.003 ? "押し目待ち" : "待機");
 
-      const entry = trigger === "LONG" ? hma5?.at(-1) : (trigger === "SHORT" ? hma5?.at(-1) : null);
-      const entryLow = Number.isFinite(entry) ? entry * (1 - ENTRY_BAND_RATE) : null;
-      const entryHigh = Number.isFinite(entry) ? entry * (1 + ENTRY_BAND_RATE) : null;
+      const ref = isFinite(h5Now) ? h5Now : price;
+      const entryLow = ref * (1 - ENTRY_BAND_RATE);
+      const entryHigh = ref * (1 + ENTRY_BAND_RATE);
+      const sl = trendUp ? ref * 0.985 : trendDown ? ref * 1.015 : ref * 0.988;
+      const tp = trendUp ? ref * 1.03 : trendDown ? ref * 0.97 : ref * 1.015;
 
-      let sl = null, tp = null;
-      if(Number.isFinite(entryLow) && Number.isFinite(entryHigh)){
-        if(trigger === "LONG"){
-          sl = entryLow * 0.98;
-          tp = entryHigh * 1.05;
-        }else if(trigger === "SHORT"){
-          sl = entryHigh * 1.02;
-          tp = entryLow * 0.95;
-        }
-      }
+      const score =
+        (trendUp ? 35 : 0) +
+        (triggerLong ? 20 : 0) +
+        (price > (h1Now || price) ? 10 : 0) +
+        (price > (h4Now || price) ? 10 : 0) +
+        (Math.abs(price - ref) / Math.max(price || 1, 1) <= SIGNAL_ENTRY_DISTANCE_MAX ? 10 : 0) +
+        (((tp - price) / Math.max(price || 1, 1)) >= SIGNAL_UPSIDE_ROOM_MIN ? 10 : 0) +
+        (((price - sl) / Math.max(price || 1, 1)) <= SIGNAL_RISK_WIDTH_MAX ? 5 : 0);
+
+      const entrySide = triggerLong ? "ENTRY" : triggerShort ? "SHORT" : "WAIT";
+      const comment = triggerLong
+        ? pickRandom(ENTRY_COMMENTS)
+        : triggerShort
+          ? "下落波動継続"
+          : pickRandom(WAIT_COMMENTS);
+
+      const isSignal =
+        score >= SIGNAL_SCORE_MIN &&
+        Math.abs(price - ref) / Math.max(price || 1, 1) <= SIGNAL_ENTRY_DISTANCE_MAX &&
+        ((tp - price) / Math.max(price || 1, 1)) >= (trendDown ? -999 : SIGNAL_UPSIDE_ROOM_MIN) &&
+        ((price - sl) / Math.max(price || 1, 1)) <= SIGNAL_RISK_WIDTH_MAX &&
+        (triggerLong || triggerShort);
 
       return {
-        score,
+        trend,
         trigger,
-        entry,
+        score,
+        isSignal,
+        entrySide,
         entryLow,
         entryHigh,
         sl,
         tp,
-        trends: { t4, t1, t5 }
+        comment,
+        trendClass: trendUp ? "trend-up" : trendDown ? "trend-down" : "trend-range",
+        triggerClass: triggerLong ? "trigger-long" : triggerShort ? "trigger-short" : trigger === "押し目待ち" ? "trigger-pull" : "trigger-wait",
+        trendEntryClass: triggerLong ? "trend-entry-up" : triggerShort ? "trend-entry-down" : "",
+        entryHeatClass: isSignal ? "entry-heat-mid" : ""
       };
     }
 
-    function classifySetup(results){
-      results.sort((a,b) => b.score - a.score);
-      const newFocus = results.slice(0, FOCUS_MAX).map(r=>r.symbol);
-      const remain = results.slice(FOCUS_MAX);
-      const newWatch = remain.slice(0, WATCH_MAX).map(r=>r.symbol);
-      const newPool = remain.slice(WATCH_MAX).map(r=>r.symbol);
-      return { newFocus, newWatch, newPool };
+    function classifySetup(scanRows){
+      const rows = [...scanRows].sort((a,b)=> (b.score || 0) - (a.score || 0));
+      const focus = rows.slice(0, FOCUS_MAX).map((r,i)=>({ ...r, rank:i+1 }));
+      const watch = rows.slice(FOCUS_MAX, FOCUS_MAX + WATCH_MAX).map((r,i)=>({ ...r, rank:i+1 }));
+      const pool  = rows.slice(FOCUS_MAX + WATCH_MAX).map((r,i)=>({ ...r, rank:i+1 }));
+      return { focus, watch, pool };
     }
 
-    function getThemeText(symbol){
-      const themes = THEME_DB[symbol];
-      return Array.isArray(themes) && themes.length ? themes.join(" / ") : "---";
+    function formatPrice(v){
+      if(v == null || !isFinite(v)) return "-";
+      if(v >= 1000) return Math.round(v).toLocaleString("ja-JP");
+      return v.toFixed(1);
     }
 
-    function getThemeList(symbol){
-      const themes = THEME_DB[symbol];
-      return Array.isArray(themes) ? themes.filter(t => typeof t === "string" && t.trim()) : [];
+    function formatPct(v){
+      if(v == null || !isFinite(v)) return "-";
+      const sign = v > 0 ? "+" : "";
+      return `${sign}${v.toFixed(2)}%`;
     }
 
-    function getFocusThemeRanking(){
-      const scoreMap = new Map();
-
-      const addThemes = (rows, weight) => {
-        rows.forEach(row => {
-          getThemeList(row.symbol).forEach(theme => {
-            scoreMap.set(theme, (scoreMap.get(theme) || 0) + weight);
-          });
-        });
-      };
-
-      addThemes(Array.isArray(STATE.meta.cache.focusRows) ? STATE.meta.cache.focusRows : [], 2);
-      addThemes(Array.isArray(STATE.meta.cache.watchRows) ? STATE.meta.cache.watchRows : [], 1);
-
-      return [...scoreMap.entries()]
-        .sort((a,b) => {
-          if(b[1] !== a[1]) return b[1] - a[1];
-          return a[0].localeCompare(b[0], "ja");
-        })
-        .slice(0, 3)
-        .map(([theme]) => theme);
+    function formatVolume(v){
+      if(v == null || !isFinite(v)) return "-";
+      if(v >= 100000000) return `${(v/100000000).toFixed(2)}億`;
+      if(v >= 10000) return `${(v/10000).toFixed(1)}万`;
+      return `${Math.round(v).toLocaleString("ja-JP")}`;
     }
 
-    function getAnyCachedRow(symbol){
-      return [...STATE.meta.cache.focusRows, ...STATE.meta.cache.watchRows, ...STATE.meta.cache.poolRows].find(r => r.symbol === symbol) || null;
+    function getThemes(symbol){
+      return THEME_DB[symbol] || ["テーマ未設定"];
     }
 
-    function buildFocusFallbackRow(symbol){
-      const prev = getAnyCachedRow(symbol);
-      const prevDecision = prev?.decision || {};
-      const fallbackEntry = Number.isFinite(prevDecision.entry) ? prevDecision.entry : null;
-      const fallbackEntryLow = Number.isFinite(prevDecision.entryLow)
-        ? prevDecision.entryLow
-        : (Number.isFinite(fallbackEntry) ? fallbackEntry * (1 - ENTRY_BAND_RATE) : null);
-      const fallbackEntryHigh = Number.isFinite(prevDecision.entryHigh)
-        ? prevDecision.entryHigh
-        : (Number.isFinite(fallbackEntry) ? fallbackEntry * (1 + ENTRY_BAND_RATE) : null);
+    function getCompanyName(symbol){
+      return COMPANY_DB[symbol] || symbol;
+    }
 
-      return {
-        symbol,
-        price: Number.isFinite(prev?.price) ? prev.price : null,
-        hma5: Array.isArray(prev?.hma5) ? prev.hma5 : null,
-        decision: {
-          score: Number.isFinite(prevDecision.score) ? prevDecision.score : 0,
-          trigger: prevDecision.trigger || "WAIT",
-          entry: fallbackEntry,
-          entryLow: fallbackEntryLow,
-          entryHigh: fallbackEntryHigh,
-          sl: Number.isFinite(prevDecision.sl) ? prevDecision.sl : null,
-          tp: Number.isFinite(prevDecision.tp) ? prevDecision.tp : null,
-          trends: {
-            t4: prevDecision?.trends?.t4 || "--",
-            t1: prevDecision?.trends?.t1 || "--",
-            t5: prevDecision?.trends?.t5 || "--"
+    function buildYahooNewsUrl(symbol){
+      return `https://finance.yahoo.co.jp/quote/${symbol}.T/news`;
+    }
+
+    function buildTradingViewUrl(symbol){
+      return `https://jp.tradingview.com/chart/?symbol=TSE%3A${symbol}`;
+    }
+
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function priceClassByPct(v){
+      if(v > 0) return "up";
+      if(v < 0) return "down";
+      return "flat";
+    }
+
+    function pickRandom(arr){
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function chunkArray(arr, size){
+      const out = [];
+      for(let i=0; i<arr.length; i+=size) out.push(arr.slice(i, i+size));
+      return out;
+    }
+
+    async function runLimited(items, limit, worker){
+      const results = [];
+      let idx = 0;
+
+      async function runner(){
+        while(idx < items.length){
+          const current = idx++;
+          try{
+            const res = await worker(items[current], current);
+            if(res) results.push(res);
+          }catch(e){
+            console.warn("worker error", items[current], e);
           }
-        },
-        isFallback: true
-      };
-    }
-
-    function buildWatchFallbackRow(symbol){
-      const prev = getAnyCachedRow(symbol);
-      return {
-        symbol,
-        price: Number.isFinite(prev?.price) ? prev.price : null,
-        hma4: Array.isArray(prev?.hma4) ? prev.hma4 : null,
-        hma1: Array.isArray(prev?.hma1) ? prev.hma1 : null,
-        score: Number.isFinite(prev?.score) ? prev.score : 0,
-        volumeState: prev?.volumeState || "--",
-        volumeText: prev?.volumeText || "--",
-        isFallback: true
-      };
-    }
-
-    function buildPoolFallbackRow(symbol){
-      const prev = getAnyCachedRow(symbol);
-      return {
-        symbol,
-        price: Number.isFinite(prev?.price) ? prev.price : null,
-        prev: Number.isFinite(prev?.prev) ? prev.prev : null,
-        isFallback: true
-      };
-    }
-
-    function getTrendArrow(trend){
-      if(trend === "UP") return "↑";
-      if(trend === "DOWN") return "↓";
-      return "→";
-    }
-
-    function getTrendClass(trend){
-      if(trend === "UP") return "trend-up";
-      if(trend === "DOWN") return "trend-down";
-      return "trend-range";
-    }
-
-    function getTrendEntryGlowClass(trend, displayTrigger){
-      if(displayTrigger !== "ENTRY") return "";
-      if(trend === "UP") return "trend-entry-up";
-      if(trend === "DOWN") return "trend-entry-down";
-      return "";
-    }
-
-    function pickComment(symbol, isEntry){
-      const list = isEntry ? ENTRY_COMMENTS : WAIT_COMMENTS;
-      let hash = 0;
-      const base = String(symbol || "");
-      for(let i=0; i<base.length; i++){
-        hash = (hash * 31 + base.charCodeAt(i)) >>> 0;
-      }
-      return list[hash % list.length];
-    }
-
-    function getDisplayTrigger(trigger){
-      return trigger === "WAIT" ? "WAIT" : "ENTRY";
-    }
-
-    function setRandomMotto(){
-      const bar = document.getElementById("mottoBar");
-      if(!bar) return;
-      const idx = Math.floor(Math.random() * MOTTO_LIST.length);
-      bar.innerHTML = `<span class="motto-label">格言</span><span class="motto-text">${MOTTO_LIST[idx]}</span>`;
-    }
-
-    function setAutoLoading(visible, message){
-      const bar = document.getElementById("autoLoadingBar");
-      const text = document.getElementById("autoLoadingText");
-      if(!bar || !text) return;
-
-      if(typeof message === "string" && message){
-        text.textContent = message;
-      }else{
-        text.textContent = "Universe読み込み中...（初回は少し時間がかかります）";
+        }
       }
 
-      if(visible){
-        bar.classList.add("active");
-      }else{
-        bar.classList.remove("active");
+      const workers = Array.from({length:Math.min(limit, items.length || 1)}, ()=>runner());
+      await Promise.all(workers);
+      return results;
+    }
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return;
+        const parsed = JSON.parse(raw);
+        if(parsed && typeof parsed === "object"){
+          STATE = {
+            ...STATE,
+            ...parsed,
+            meta: {
+              ...STATE.meta,
+              ...(parsed.meta || {}),
+              cache: {
+                focusRows: parsed?.meta?.cache?.focusRows || [],
+                watchRows: parsed?.meta?.cache?.watchRows || [],
+                poolRows: parsed?.meta?.cache?.poolRows || []
+              }
+            }
+          };
+        }
+      }catch(e){
+        console.warn("loadState error", e);
       }
     }
 
-    function renderFocus(){
-      const body = document.getElementById("focusTbody");
-      body.innerHTML = "";
-      let activeCount = 0;
+    function saveState(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+      }catch(e){
+        console.warn("saveState error", e);
+      }
+    }
 
-      STATE.meta.cache.focusRows.forEach((row, index) => {
-        const d = row.decision;
-        const t5Arrow = getTrendArrow(d.trends.t5);
-        const trend5Class = getTrendClass(d.trends.t5);
-        const displayTrigger = getDisplayTrigger(d.trigger);
-        const trendGlowClass = getTrendEntryGlowClass(d.trends.t5, displayTrigger);
-        const trigClass = displayTrigger === "ENTRY" ? (d.trigger === "SHORT" ? "trigger-short" : "trigger-long") : "trigger-wait";
-        const sClass = d.score >= 80 ? "score-gold" : (d.score >= 60 ? "score-green" : (d.score >= 40 ? "score-blue" : "score-gray"));
-        const sigRow = d.trigger !== "WAIT" ? "signal-row" : "";
-        const entryBoxClass = displayTrigger === "ENTRY" ? "entrybox entry-heat-mid" : "entrybox";
-        if(d.trigger !== "WAIT") activeCount++;
+    function isMarked(symbol){
+      return Array.isArray(STATE.marked) && STATE.marked.includes(symbol);
+    }
 
-        const priceText = Number.isFinite(row.price) ? row.price.toLocaleString() : "---";
-        const entryBandText = (Number.isFinite(d.entryLow) && Number.isFinite(d.entryHigh))
-          ? `${d.entryLow.toFixed(1)} - ${d.entryHigh.toFixed(1)}`
-          : "---";
-        const slText = Number.isFinite(d.sl) ? d.sl.toFixed(1) : "---";
-        const tpText = Number.isFinite(d.tp) ? d.tp.toFixed(1) : "---";
-        const fallbackText = row.isFallback ? " | 取得失敗" : "";
-        const commentText = pickComment(row.symbol, displayTrigger === "ENTRY");
+    function toggleMarked(symbol){
+      const set = new Set(STATE.marked || []);
+      if(set.has(symbol)) set.delete(symbol);
+      else set.add(symbol);
+      STATE.marked = Array.from(set);
+      saveState();
+      renderAll();
+    }
 
-        const tr = document.createElement("tr");
-        if(sigRow) tr.className = sigRow;
-        tr.innerHTML = `
+    function removeTemp(symbol){
+      const next = (STATE.meta.tempExcluded || []).filter(s => s !== symbol);
+      STATE.meta.tempExcluded = next;
+      saveState();
+      renderAll();
+    }
+
+    function tempExclude(symbol){
+      const set = new Set(STATE.meta.tempExcluded || []);
+      set.add(symbol);
+      STATE.meta.tempExcluded = Array.from(set);
+      saveState();
+      renderAll();
+    }
+
+    function filteredFocusRows(){
+      const excluded = new Set(STATE.meta.tempExcluded || []);
+      return (STATE.meta.cache.focusRows || []).filter(r => !excluded.has(r.symbol));
+    }
+
+    function filteredWatchRows(){
+      const excluded = new Set(STATE.meta.tempExcluded || []);
+      return (STATE.meta.cache.watchRows || []).filter(r => !excluded.has(r.symbol));
+    }
+
+    function filteredPoolRows(){
+      const excluded = new Set(STATE.meta.tempExcluded || []);
+      return (STATE.meta.cache.poolRows || []).filter(r => !excluded.has(r.symbol));
+    }
+
+    function buildFocusRowHtml(row){
+      const decision = row.decision || {};
+      const themes = getThemes(row.symbol);
+      const changePct = row.prev ? ((row.price - row.prev) / row.prev) * 100 : 0;
+      const rankBadge = `<span class="focus-rank">${row.rank || "-"}</span>`;
+      const markClass = isMarked(row.symbol) ? "symbol-mark active" : "symbol-mark";
+      const signalMainClass = decision.isSignal ? "signal-row" : "";
+      const signalSubClass = decision.isSignal ? "signal-subrow" : "";
+      const themeTags = themes.slice(0,3).map(t => `<span class="theme-pill">${escapeHtml(t)}</span>`).join("");
+      const newsUrl = buildYahooNewsUrl(row.symbol);
+      const chartUrl = buildTradingViewUrl(row.symbol);
+
+      return `
+        <tr class="${signalMainClass}">
           <td class="sticky-col">
             <div class="focus-headband">
-              <span class="focus-rank">${index + 1}</span>
-              <button class="symbol-mark ${STATE.marked.includes(row.symbol) ? 'active' : ''}" onclick="toggleMark('${row.symbol}')">★</button>
-              <span class="head-code">${row.symbol}</span>
-              <span class="head-name">${COMPANY_DB[row.symbol] || "---"}</span>
-              <button class="row-action-btn delete-btn" onclick="removeItem('focus','${row.symbol}')">削除</button>
+              ${rankBadge}
+              <button class="${markClass}" onclick="toggleMarked('${row.symbol}')">★</button>
+              <div class="head-code">${escapeHtml(row.symbol)}</div>
+              <div class="head-name">${escapeHtml(getCompanyName(row.symbol))}</div>
+              <button class="row-action-btn delete-btn" onclick="tempExclude('${row.symbol}')">削除</button>
             </div>
           </td>
-          <td class="price">${priceText}</td>
-          <td><span class="score ${sClass}">${d.score}</span></td>
-          <td><span class="chip ${trend5Class} ${trendGlowClass}">${t5Arrow}</span></td>
-          <td><span class="chip ${trigClass}">${displayTrigger}</span></td>
-          <td><div class="${entryBoxClass}"><span class="entry-main">${entryBandText}</span></div></td>
-          <td class="down">${slText}</td>
-          <td class="up">${tpText}</td>
-        `;
-        body.appendChild(tr);
-
-        const themeTags = getThemeList(row.symbol).slice(0,3);
-        const themeTagsHtml = themeTags.length
-          ? themeTags.map(theme => `<span class="theme-detect-pill">${theme}</span>`).join("")
-          : `<span class="theme-detect-pill">---</span>`;
-
-        const sub = document.createElement("tr");
-        sub.className = "subrow focus-subrow " + (d.trigger !== "WAIT" ? "signal-subrow" : "");
-        sub.innerHTML = `
+          <td>
+            <div class="price">${formatPrice(row.price)}</div>
+            <div class="${priceClassByPct(changePct)} small">${formatPct(changePct)}</div>
+          </td>
+          <td><span class="score score-gold">${Math.round(decision.score || 0)}</span></td>
+          <td><span class="chip ${decision.trendClass || ""} ${decision.trendEntryClass || ""}">${escapeHtml(decision.trend || "-")}</span></td>
+          <td><span class="chip ${decision.triggerClass || ""}">${escapeHtml(decision.trigger || "-")}</span></td>
+          <td>
+            <div class="entrybox ${decision.entryHeatClass || ""}">
+              <div class="entry-main">${formatPrice(decision.entryLow)} - ${formatPrice(decision.entryHigh)}</div>
+              <div class="entry-sub">${escapeHtml(decision.entrySide || "WAIT")}</div>
+            </div>
+          </td>
+          <td><div class="rrbox"><div class="rr-main">${formatPrice(decision.sl)}</div><div class="rr-sub muted">SL</div></div></td>
+          <td><div class="rrbox"><div class="rr-main">${formatPrice(decision.tp)}</div><div class="rr-sub muted">TP</div></div></td>
+        </tr>
+        <tr class="subrow focus-subrow ${signalSubClass}">
           <td colspan="8">
             <div class="focus-meta-stack">
               <div class="focus-theme-block">
-                <span class="focus-theme-label">テーマ検知</span>
-                <div class="focus-theme-tags">${themeTagsHtml}</div>
+                <div class="focus-theme-label">テーマ検知</div>
+                <div class="focus-theme-tags">${themeTags}</div>
               </div>
-
               <div class="focus-mini-row">
-                <span class="focus-mini-strong">Total: ${d.score}</span>
-                <span class="focus-mini-soft">Signal: ${displayTrigger}</span>
-                <a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a>
-                <a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a>
-                ${fallbackText ? `<span class="focus-mini-soft">${fallbackText.replace(" | ","")}</span>` : ""}
+                <span class="focus-mini-strong">Total ${Math.round(decision.score || 0)}</span>
+                <span class="focus-mini-soft">Signal ${decision.isSignal ? "ON" : "WAIT"}</span>
               </div>
-
-              <div class="focus-comment-block">
-                <span class="comment-text"><span class="comment-label">コメント：</span><span class="comment-body">${commentText}</span></span>
+              <div class="meta-grid">
+                <div class="meta-cell">
+                  <div class="comment-text">
+                    <span class="comment-label">Comment</span>
+                    <span class="comment-body">${escapeHtml(decision.comment || "-")}</span>
+                  </div>
+                </div>
+                <div class="meta-cell">
+                  <a class="meta-link meta-link-news" href="${newsUrl}" target="_blank" rel="noopener noreferrer">News</a>
+                  <a class="meta-link meta-link-tv" href="${chartUrl}" target="_blank" rel="noopener noreferrer" style="margin-left:8px;">Chart</a>
+                </div>
               </div>
             </div>
           </td>
-        `;
-        body.appendChild(sub);
-      });
+        </tr>
+      `;
+    }
 
-      const rankedThemes = getFocusThemeRanking();
-      const rankedThemeTags = rankedThemes.length
-        ? rankedThemes.map(theme => `<span class="theme-detect-pill">${theme}</span>`).join("")
-        : `<span class="theme-detect-pill">---</span>`;
+    function buildWatchRowHtml(row){
+      const themeTags = getThemes(row.symbol).slice(0,3).map(t => `<span class="theme-pill">${escapeHtml(t)}</span>`).join("");
+      const markClass = isMarked(row.symbol) ? "symbol-mark active" : "symbol-mark";
+
+      return `
+        <tr>
+          <td class="sticky-col">
+            <div class="cell-headband">
+              <button class="${markClass}" onclick="toggleMarked('${row.symbol}')">★</button>
+              <div class="head-code">${escapeHtml(row.symbol)}</div>
+              <div class="head-name">${escapeHtml(getCompanyName(row.symbol))}</div>
+              <button class="row-action-btn delete-btn" onclick="tempExclude('${row.symbol}')">削除</button>
+            </div>
+          </td>
+          <td>
+            <div class="price">${formatPrice(row.price)}</div>
+            <div class="${priceClassByPct(row.changePct)} small">${formatPct(row.changePct)}</div>
+          </td>
+          <td><span class="score score-green">${Math.round(row.score || 0)}</span></td>
+          <td><span class="chip ${row.trend === "上昇" ? "trend-up" : row.trend === "下降" ? "trend-down" : "trend-range"}">${escapeHtml(row.trend)}</span></td>
+          <td><span class="chip">${formatVolume(row.volume)}</span></td>
+        </tr>
+        <tr class="subrow watch-subrow">
+          <td colspan="5">
+            <div class="meta-grid">
+              <div class="meta-cell">
+                <div class="comment-text">
+                  <span class="comment-label">Theme</span>
+                  <span class="comment-body">${themeTags || '<span class="mobile-fallback">未設定</span>'}</span>
+                </div>
+              </div>
+              <div class="meta-cell">
+                <a class="meta-link meta-link-news" href="${row.newsUrl}" target="_blank" rel="noopener noreferrer">News</a>
+                <a class="meta-link meta-link-tv" href="${row.chartUrl}" target="_blank" rel="noopener noreferrer" style="margin-left:8px;">Chart</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
+
+    function buildPoolRowHtml(row){
+      const themeTags = getThemes(row.symbol).slice(0,3).map(t => `<span class="theme-pill">${escapeHtml(t)}</span>`).join("");
+      const markClass = isMarked(row.symbol) ? "symbol-mark active" : "symbol-mark";
+
+      return `
+        <tr>
+          <td class="sticky-col">
+            <div class="cell-headband">
+              <button class="${markClass}" onclick="toggleMarked('${row.symbol}')">★</button>
+              <div class="head-code">${escapeHtml(row.symbol)}</div>
+              <div class="head-name">${escapeHtml(getCompanyName(row.symbol))}</div>
+              <button class="row-action-btn delete-btn" onclick="tempExclude('${row.symbol}')">削除</button>
+            </div>
+          </td>
+          <td><div class="price">${formatPrice(row.price)}</div></td>
+          <td><div class="${priceClassByPct(row.changePct)}">${formatPct(row.changePct)}</div></td>
+        </tr>
+        <tr class="subrow pool-subrow">
+          <td colspan="3">
+            <div class="meta-grid">
+              <div class="meta-cell">
+                <div class="comment-text">
+                  <span class="comment-label">Theme</span>
+                  <span class="comment-body">${themeTags || '<span class="mobile-fallback">未設定</span>'}</span>
+                </div>
+              </div>
+              <div class="meta-cell">
+                <a class="meta-link meta-link-news" href="${row.newsUrl}" target="_blank" rel="noopener noreferrer">News</a>
+                <a class="meta-link meta-link-tv" href="${row.chartUrl}" target="_blank" rel="noopener noreferrer" style="margin-left:8px;">Chart</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
+
+    function renderFocusTable(rows){
+      const tbody = document.getElementById("focusTbody");
+      tbody.innerHTML = rows.map(buildFocusRowHtml).join("");
+    }
+
+    function renderWatchTable(rows){
+      const tbody = document.getElementById("watchTbody");
+      tbody.innerHTML = rows.map(buildWatchRowHtml).join("");
+    }
+
+    function renderPoolTable(rows){
+      const tbody = document.getElementById("poolTbody");
+      tbody.innerHTML = rows.map(buildPoolRowHtml).join("");
+    }
+
+    function buildFocusMobileCard(row){
+      const d = row.decision || {};
+      const themes = getThemes(row.symbol).slice(0,3);
+      const changePct = row.prev ? ((row.price - row.prev) / row.prev) * 100 : 0;
+      const cardClass = [
+        "mobile-stock-card",
+        "focus-mobile-card",
+        d.isSignal ? "mobile-entry-glow" : ""
+      ].filter(Boolean).join(" ");
+
+      return `
+        <div class="${cardClass}">
+          <div class="mobile-row">
+            <span class="mobile-rank-badge">${row.rank || "-"}</span>
+            <span class="mobile-code">${escapeHtml(row.symbol)}</span>
+            <div class="mobile-name">${escapeHtml(getCompanyName(row.symbol))}</div>
+            <span class="mobile-status ${d.isSignal ? "mobile-status-entry" : "mobile-status-wait"}">${d.isSignal ? "ENTRY" : "WAIT"}</span>
+          </div>
+
+          <div class="mobile-row mobile-price-row">
+            <div class="mobile-price-strong">${formatPrice(row.price)}</div>
+            <div class="mobile-price-side-label ${priceClassByPct(changePct)}">${formatPct(changePct)}</div>
+          </div>
+
+          <div class="mobile-row mobile-score-trend-row">
+            <div class="mobile-kpi mobile-kpi-total">
+              <div class="mobile-kpi-label">TOTAL</div>
+              <div class="mobile-kpi-value">${Math.round(d.score || 0)}</div>
+            </div>
+            <div class="mobile-kpi mobile-kpi-trend">
+              <div class="mobile-kpi-label">TREND</div>
+              <div class="mobile-kpi-value">${escapeHtml(d.trend || "-")}</div>
+            </div>
+          </div>
+
+          <div class="mobile-row mobile-band-grid">
+            <div class="mobile-band mobile-band-entry">
+              <div class="mobile-band-label">Entry帯</div>
+              <div class="mobile-band-value">${formatPrice(d.entryLow)} - ${formatPrice(d.entryHigh)}</div>
+            </div>
+            <div class="mobile-band">
+              <div class="mobile-band-label">SL</div>
+              <div class="mobile-band-value">${formatPrice(d.sl)}</div>
+            </div>
+            <div class="mobile-band">
+              <div class="mobile-band-label">TP</div>
+              <div class="mobile-band-value">${formatPrice(d.tp)}</div>
+            </div>
+          </div>
+
+          <div class="mobile-row mobile-inline-metrics">
+            <span class="mobile-mini-chip mobile-mini-chip-strong">Signal ${d.isSignal ? "ON" : "WAIT"}</span>
+            <span class="mobile-mini-chip">Trigger ${escapeHtml(d.trigger || "-")}</span>
+          </div>
+
+          <div class="mobile-row mobile-tags">
+            ${themes.map(t => `<span class="mobile-tag">${escapeHtml(t)}</span>`).join("")}
+          </div>
+
+          <div class="mobile-row mobile-comment-row">
+            <div class="mobile-comment"><span class="mobile-comment-label">Comment</span>${escapeHtml(d.comment || "-")}</div>
+          </div>
+
+          <div class="mobile-row mobile-bottom-actions">
+            <button class="mobile-btn mobile-btn-delete" onclick="tempExclude('${row.symbol}')">削除</button>
+            <a class="mobile-btn mobile-btn-news" href="${buildYahooNewsUrl(row.symbol)}" target="_blank" rel="noopener noreferrer">News</a>
+            <a class="mobile-btn mobile-btn-chart" href="${buildTradingViewUrl(row.symbol)}" target="_blank" rel="noopener noreferrer">Chart</a>
+          </div>
+        </div>
+      `;
+    }
+
+    function buildWatchMobileCard(row){
+      const themes = getThemes(row.symbol).slice(0,3);
+      return `
+        <div class="mobile-stock-card watch-mobile-card">
+          <div class="mobile-row">
+            <span class="mobile-code">${escapeHtml(row.symbol)}</span>
+            <div class="mobile-name">${escapeHtml(getCompanyName(row.symbol))}</div>
+            <span class="mobile-status mobile-status-wait">WATCH</span>
+          </div>
+
+          <div class="mobile-row mobile-price-row">
+            <div class="mobile-price-strong">${formatPrice(row.price)}</div>
+            <div class="mobile-price-side-label ${priceClassByPct(row.changePct)}">${formatPct(row.changePct)}</div>
+          </div>
+
+          <div class="mobile-row mobile-score-trend-row">
+            <div class="mobile-kpi">
+              <div class="mobile-kpi-label">SCORE</div>
+              <div class="mobile-kpi-value">${Math.round(row.score || 0)}</div>
+            </div>
+            <div class="mobile-kpi">
+              <div class="mobile-kpi-label">TREND</div>
+              <div class="mobile-kpi-value">${escapeHtml(row.trend || "-")}</div>
+            </div>
+          </div>
+
+          <div class="mobile-row mobile-inline-metrics">
+            <span class="mobile-mini-chip">出来高 ${formatVolume(row.volume)}</span>
+          </div>
+
+          <div class="mobile-row mobile-tags">
+            ${themes.map(t => `<span class="mobile-tag">${escapeHtml(t)}</span>`).join("")}
+          </div>
+
+          <div class="mobile-row mobile-bottom-actions">
+            <button class="mobile-btn mobile-btn-delete" onclick="tempExclude('${row.symbol}')">削除</button>
+            <a class="mobile-btn mobile-btn-news" href="${row.newsUrl}" target="_blank" rel="noopener noreferrer">News</a>
+            <a class="mobile-btn mobile-btn-chart" href="${row.chartUrl}" target="_blank" rel="noopener noreferrer">Chart</a>
+          </div>
+        </div>
+      `;
+    }
+
+    function buildPoolMobileCard(row){
+      const themes = getThemes(row.symbol).slice(0,3);
+      return `
+        <div class="mobile-stock-card pool-mobile-card">
+          <div class="mobile-row">
+            <span class="mobile-code">${escapeHtml(row.symbol)}</span>
+            <div class="mobile-name">${escapeHtml(getCompanyName(row.symbol))}</div>
+            <span class="mobile-status mobile-status-wait">POOL</span>
+          </div>
+
+          <div class="mobile-row mobile-price-row">
+            <div class="mobile-price-strong">${formatPrice(row.price)}</div>
+            <div class="mobile-price-side-label ${priceClassByPct(row.changePct)}">${formatPct(row.changePct)}</div>
+          </div>
+
+          <div class="mobile-row mobile-tags">
+            ${themes.map(t => `<span class="mobile-tag">${escapeHtml(t)}</span>`).join("")}
+          </div>
+
+          <div class="mobile-row mobile-bottom-actions">
+            <button class="mobile-btn mobile-btn-delete" onclick="tempExclude('${row.symbol}')">削除</button>
+            <a class="mobile-btn mobile-btn-news" href="${row.newsUrl}" target="_blank" rel="noopener noreferrer">News</a>
+            <a class="mobile-btn mobile-btn-chart" href="${row.chartUrl}" target="_blank" rel="noopener noreferrer">Chart</a>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFocusMobile(rows){
+      document.getElementById("focusMobileList").innerHTML = rows.map(buildFocusMobileCard).join("");
+    }
+
+    function renderWatchMobile(rows){
+      document.getElementById("watchMobileList").innerHTML = rows.map(buildWatchMobileCard).join("");
+    }
+
+    function renderPoolMobile(rows){
+      document.getElementById("poolMobileList").innerHTML = rows.map(buildPoolMobileCard).join("");
+    }
+
+    function renderSummaries(){
+      const focusRows = filteredFocusRows();
+      const watchRows = filteredWatchRows();
+      const poolRows = filteredPoolRows();
+
+      const focusSignalCount = focusRows.filter(r => r.decision?.isSignal).length;
+      const focusThemes = [...new Set(focusRows.flatMap(r => getThemes(r.symbol)).slice(0, 30))].slice(0,3);
 
       document.getElementById("focusSummary").innerHTML = `
         <div class="focus-summary-stack">
           <div class="focus-summary-row">
-            <span class="mini">Total: ${STATE.meta.cache.focusRows.length}</span>
-            <span class="mini">Signal: ${activeCount}</span>
+            <span class="mini">件数 ${focusRows.length}</span>
+            <span class="mini">ENTRY ${focusSignalCount}</span>
           </div>
-          <div class="focus-summary-row">
-            <span class="theme-detect-head">テーマ検知</span>
-            <div class="theme-detect-tags">${rankedThemeTags}</div>
+          <div class="theme-detect-block">
+            <div class="theme-detect-head">テーマ検知</div>
+            <div class="theme-detect-tags">
+              ${focusThemes.map(t => `<span class="theme-detect-pill">${escapeHtml(t)}</span>`).join("")}
+            </div>
           </div>
         </div>
       `;
-      document.getElementById("focusUpdated").innerText = STATE.meta.lastFocusAt ? new Date(STATE.meta.lastFocusAt).toLocaleString() : "未更新";
 
-      renderFocusMobile();
+      document.getElementById("watchSummary").innerHTML = `
+        <span class="mini">件数 ${watchRows.length}</span>
+        <span class="mini">上昇 ${watchRows.filter(r=>r.trend==="上昇").length}</span>
+      `;
+
+      document.getElementById("poolSummary").innerHTML = `
+        <span class="mini">件数 ${poolRows.length}</span>
+        <span class="mini">保管中</span>
+      `;
     }
 
-    function renderWatch(){
-      const body = document.getElementById("watchTbody");
-      body.innerHTML = "";
-
-      STATE.meta.cache.watchRows.forEach(row => {
-        const trendRaw1 = Array.isArray(row.hma1) && row.hma1.length >= 2 && Number.isFinite(row.hma1.at(-1)) && Number.isFinite(row.hma1.at(-2))
-          ? (row.hma1.at(-1) > row.hma1.at(-2) ? "UP" : "DOWN")
-          : "--";
-        const trendArrow1 = getTrendArrow(trendRaw1);
-        const trendClass1 = getTrendClass(trendRaw1);
-        const volumeClass = row.volumeState === "UP" ? "trend-up" : "trend-range";
-        const volumeText = row.volumeText || "--";
-        const sClass = row.score >= 80 ? "score-gold" : (row.score >= 60 ? "score-green" : (row.score >= 40 ? "score-blue" : "score-gray"));
-        const priceText = Number.isFinite(row.price) ? row.price.toLocaleString() : "---";
-        const fallbackText = row.isFallback ? " | 取得失敗" : "";
-        const themeText = getThemeText(row.symbol);
-        const commentText = pickComment(row.symbol, false);
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td class="sticky-col">
-            <div class="cell-headband">
-              <button class="symbol-mark ${STATE.marked.includes(row.symbol) ? 'active' : ''}" onclick="toggleMark('${row.symbol}')">★</button>
-              <span class="head-code">${row.symbol}</span>
-              <span class="head-name">${COMPANY_DB[row.symbol] || "---"}</span>
-              <button class="row-action-btn delete-btn" onclick="removeItem('watch','${row.symbol}')">削除</button>
-            </div>
-          </td>
-          <td class="price">${priceText}</td>
-          <td><span class="score ${sClass}">${row.score}</span></td>
-          <td><span class="chip ${trendClass1}">${trendArrow1}</span></td>
-          <td><span class="chip ${volumeClass}">${volumeText}</span></td>
-        `;
-        body.appendChild(tr);
-
-        const sub = document.createElement("tr");
-        sub.className = "subrow watch-subrow";
-        sub.innerHTML = `
-          <td colspan="5">
-            <div class="meta-grid">
-              <div class="meta-cell"><span class="theme-pill">${themeText}</span>${fallbackText}</div>
-              <div class="meta-cell"><a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a></div>
-              <div class="meta-cell"><a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a></div>
-              <div class="meta-cell"><span class="comment-text"><span class="comment-label">コメント：</span><span class="comment-body">${commentText}</span></span></div>
-            </div>
-          </td>
-        `;
-        body.appendChild(sub);
-      });
-
-      document.getElementById("watchSummary").innerHTML = `<span class="mini">Total: ${STATE.meta.cache.watchRows.length}</span>`;
-      document.getElementById("watchUpdated").innerText = STATE.meta.lastWatchAt ? new Date(STATE.meta.lastWatchAt).toLocaleString() : "未更新";
-
-      renderWatchMobile();
+    function formatUpdated(ts){
+      if(!ts) return "未更新";
+      const d = new Date(ts);
+      return `${d.getHours().toString().padStart(2,"0")}:${d.getMinutes().toString().padStart(2,"0")} 更新`;
     }
 
-    function renderPool(){
-      const body = document.getElementById("poolTbody");
-      body.innerHTML = "";
-
-      STATE.meta.cache.poolRows.forEach(row => {
-        const hasPrev = Number.isFinite(row.prev) && row.prev !== 0;
-        const hasPrice = Number.isFinite(row.price);
-        const diff = hasPrev && hasPrice ? (row.price - row.prev) : null;
-        const ratio = hasPrev && hasPrice ? (diff / row.prev) * 100 : null;
-        const dClass = diff > 0 ? "up" : (diff < 0 ? "down" : "flat");
-        const priceText = hasPrice ? row.price.toLocaleString() : "---";
-        const diffText = hasPrev && hasPrice ? `${diff > 0 ? '+' : ''}${diff.toLocaleString()} (${ratio.toFixed(2)}%)` : "---";
-        const fallbackText = row.isFallback ? " | 取得失敗" : "";
-        const themeText = getThemeText(row.symbol);
-        const commentText = pickComment(row.symbol, false);
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td class="sticky-col">
-            <div class="cell-headband">
-              <button class="symbol-mark ${STATE.marked.includes(row.symbol) ? 'active' : ''}" onclick="toggleMark('${row.symbol}')">★</button>
-              <span class="head-code">${row.symbol}</span>
-              <span class="head-name">${COMPANY_DB[row.symbol] || "---"}</span>
-              <button class="row-action-btn delete-btn" onclick="removeItem('pool','${row.symbol}')">削除</button>
-            </div>
-          </td>
-          <td class="price">${priceText}</td>
-          <td class="${dClass}">${diffText}</td>
-        `;
-        body.appendChild(tr);
-
-        const sub = document.createElement("tr");
-        sub.className = "subrow pool-subrow";
-        sub.innerHTML = `
-          <td colspan="3">
-            <div class="meta-grid">
-              <div class="meta-cell"><span class="theme-pill">${themeText}</span>${fallbackText}</div>
-              <div class="meta-cell"><a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a></div>
-              <div class="meta-cell"><a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a></div>
-              <div class="meta-cell"><span class="comment-text"><span class="comment-label">コメント：</span><span class="comment-body">${commentText}</span></span></div>
-            </div>
-          </td>
-        `;
-        body.appendChild(sub);
-      });
-
-      document.getElementById("poolSummary").innerHTML = `<span class="mini">Total: ${STATE.meta.cache.poolRows.length}</span>`;
-      document.getElementById("poolUpdated").innerText = STATE.meta.lastPoolAt ? new Date(STATE.meta.lastPoolAt).toLocaleString() : "未更新";
-
-      renderPoolMobile();
+    function renderUpdatedTimes(){
+      document.getElementById("focusUpdated").textContent = formatUpdated(STATE.meta.lastFocusAt);
+      document.getElementById("watchUpdated").textContent = formatUpdated(STATE.meta.lastWatchAt);
+      document.getElementById("poolUpdated").textContent  = formatUpdated(STATE.meta.lastPoolAt);
     }
 
-    function renderFocusMobile(){
-      const root = document.getElementById("focusMobileList");
-      if(!root) return;
-      root.innerHTML = "";
+    function renderAll(){
+      const focusRows = filteredFocusRows();
+      const watchRows = filteredWatchRows();
+      const poolRows = filteredPoolRows();
 
-      STATE.meta.cache.focusRows.forEach((row, index) => {
-        const d = row.decision || {};
-        const displayTrigger = getDisplayTrigger(d.trigger);
-        const trend = d?.trends?.t5 || "--";
-        const trendArrow = getTrendArrow(trend);
-        const themeTags = getThemeList(row.symbol).slice(0, 3);
-        const tagsHtml = themeTags.length
-          ? themeTags.map(theme => `<span class="mobile-tag">${theme}</span>`).join("")
-          : `<span class="mobile-tag">---</span>`;
-        const priceText = Number.isFinite(row.price) ? row.price.toLocaleString() : "---";
-        const entryText = (Number.isFinite(d.entryLow) && Number.isFinite(d.entryHigh))
-          ? `${d.entryLow.toFixed(1)} - ${d.entryHigh.toFixed(1)}`
-          : "---";
-        const slText = Number.isFinite(d.sl) ? d.sl.toFixed(1) : "---";
-        const tpText = Number.isFinite(d.tp) ? d.tp.toFixed(1) : "---";
-        const commentText = pickComment(row.symbol, displayTrigger === "ENTRY");
-        const fallbackHtml = row.isFallback ? `<span class="mobile-fallback">取得失敗</span>` : "";
+      renderFocusTable(focusRows);
+      renderWatchTable(watchRows);
+      renderPoolTable(poolRows);
 
-        const card = document.createElement("div");
-        card.className = `mobile-stock-card focus-mobile-card ${displayTrigger === "ENTRY" ? "mobile-entry-glow" : ""}`;
-        card.innerHTML = `
-          <div class="mobile-row">
-            <span class="mobile-rank-badge">${index + 1}</span>
-            <button class="symbol-mark ${STATE.marked.includes(row.symbol) ? "active" : ""}" onclick="toggleMark('${row.symbol}')">★</button>
-            <span class="mobile-code">${row.symbol}</span>
-            <span class="mobile-name">${COMPANY_DB[row.symbol] || "---"}</span>
-            <span class="mobile-status ${displayTrigger === "ENTRY" ? "mobile-status-entry" : "mobile-status-wait"}">${displayTrigger}</span>
-          </div>
+      renderFocusMobile(focusRows);
+      renderWatchMobile(watchRows);
+      renderPoolMobile(poolRows);
 
-          <div class="mobile-row">
-            <div class="mobile-price-strong">${priceText}</div>
-          </div>
-
-          <div class="mobile-row">
-            <div class="mobile-kpi-grid">
-              <div class="mobile-kpi">
-                <div class="mobile-kpi-label">現在値</div>
-                <div class="mobile-kpi-value price-small">${priceText}</div>
-              </div>
-              <div class="mobile-kpi">
-                <div class="mobile-kpi-label">Total</div>
-                <div class="mobile-kpi-value total">${Number.isFinite(d.score) ? d.score : "---"}</div>
-              </div>
-              <div class="mobile-kpi">
-                <div class="mobile-kpi-label">Trend</div>
-                <div class="mobile-kpi-value">${trendArrow}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mobile-row">
-            <div class="mobile-band-grid">
-              <div class="mobile-band mobile-band-entry">
-                <div class="mobile-band-label">Entry帯</div>
-                <div class="mobile-band-value">${entryText}</div>
-              </div>
-              <div class="mobile-band">
-                <div class="mobile-band-label">SL</div>
-                <div class="mobile-band-value down">${slText}</div>
-              </div>
-              <div class="mobile-band">
-                <div class="mobile-band-label">TP</div>
-                <div class="mobile-band-value up">${tpText}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mobile-row">
-            <div class="mobile-tags">${tagsHtml}</div>
-          </div>
-
-          <div class="mobile-divider"></div>
-
-          <div class="mobile-action-row">
-            <div class="mobile-action-left">
-              <button class="mobile-delete-btn" onclick="removeItem('focus','${row.symbol}')">削除</button>
-              ${fallbackHtml}
-              <div class="mobile-comment"><span class="mobile-comment-label">コメント：</span>${commentText}</div>
-            </div>
-            <div class="mobile-link-row">
-              <a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a>
-              <a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a>
-            </div>
-          </div>
-        `;
-        root.appendChild(card);
-      });
+      renderSummaries();
+      renderUpdatedTimes();
     }
 
-    function renderWatchMobile(){
-      const root = document.getElementById("watchMobileList");
-      if(!root) return;
-      root.innerHTML = "";
-
-      STATE.meta.cache.watchRows.forEach(row => {
-        const trendRaw1 = Array.isArray(row.hma1) && row.hma1.length >= 2 && Number.isFinite(row.hma1.at(-1)) && Number.isFinite(row.hma1.at(-2))
-          ? (row.hma1.at(-1) > row.hma1.at(-2) ? "UP" : "DOWN")
-          : "--";
-        const trendArrow1 = getTrendArrow(trendRaw1);
-        const priceText = Number.isFinite(row.price) ? row.price.toLocaleString() : "---";
-        const volumeText = row.volumeText || "--";
-        const commentText = pickComment(row.symbol, false);
-        const themeTags = getThemeList(row.symbol).slice(0, 3);
-        const tagsHtml = themeTags.length
-          ? themeTags.map(theme => `<span class="mobile-tag">${theme}</span>`).join("")
-          : `<span class="mobile-tag">---</span>`;
-        const fallbackHtml = row.isFallback ? `<span class="mobile-fallback">取得失敗</span>` : "";
-
-        const card = document.createElement("div");
-        card.className = "mobile-stock-card watch-mobile-card";
-        card.innerHTML = `
-          <div class="mobile-row">
-            <button class="symbol-mark ${STATE.marked.includes(row.symbol) ? "active" : ""}" onclick="toggleMark('${row.symbol}')">★</button>
-            <span class="mobile-code">${row.symbol}</span>
-            <span class="mobile-name">${COMPANY_DB[row.symbol] || "---"}</span>
-          </div>
-
-          <div class="mobile-row">
-            <div class="mobile-kpi-grid mobile-kpi-grid-4">
-              <div class="mobile-kpi">
-                <div class="mobile-kpi-label">現在値</div>
-                <div class="mobile-kpi-value price-small">${priceText}</div>
-              </div>
-              <div class="mobile-kpi">
-                <div class="mobile-kpi-label">Score</div>
-                <div class="mobile-kpi-value total">${Number.isFinite(row.score) ? row.score : "---"}</div>
-              </div>
-              <div class="mobile-kpi">
-                <div class="mobile-kpi-label">Trend</div>
-                <div class="mobile-kpi-value">${trendArrow1}</div>
-              </div>
-              <div class="mobile-kpi">
-                <div class="mobile-kpi-label">出来高</div>
-                <div class="mobile-kpi-value">${volumeText}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mobile-row">
-            <div class="mobile-tags">${tagsHtml}</div>
-          </div>
-
-          <div class="mobile-divider"></div>
-
-          <div class="mobile-action-row">
-            <div class="mobile-action-left">
-              <button class="mobile-delete-btn" onclick="removeItem('watch','${row.symbol}')">削除</button>
-              ${fallbackHtml}
-              <div class="mobile-comment"><span class="mobile-comment-label">コメント：</span>${commentText}</div>
-            </div>
-            <div class="mobile-link-row">
-              <a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a>
-              <a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a>
-            </div>
-          </div>
-        `;
-        root.appendChild(card);
-      });
+    function setAutoLoading(active, text="Universe読み込み中...（初回は少し時間がかかります）"){
+      const bar = document.getElementById("autoLoadingBar");
+      const label = document.getElementById("autoLoadingText");
+      if(label) label.textContent = text;
+      if(bar) bar.classList.toggle("active", !!active);
     }
 
-    function renderPoolMobile(){
-      const root = document.getElementById("poolMobileList");
-      if(!root) return;
-      root.innerHTML = "";
-
-      STATE.meta.cache.poolRows.forEach(row => {
-        const hasPrev = Number.isFinite(row.prev) && row.prev !== 0;
-        const hasPrice = Number.isFinite(row.price);
-        const diff = hasPrev && hasPrice ? (row.price - row.prev) : null;
-        const ratio = hasPrev && hasPrice ? (diff / row.prev) * 100 : null;
-        const priceText = hasPrice ? row.price.toLocaleString() : "---";
-        const diffText = hasPrev && hasPrice ? `${diff > 0 ? "+" : ""}${diff.toLocaleString()} (${ratio.toFixed(2)}%)` : "---";
-        const commentText = pickComment(row.symbol, false);
-        const themeTags = getThemeList(row.symbol).slice(0, 3);
-        const tagsHtml = themeTags.length
-          ? themeTags.map(theme => `<span class="mobile-tag">${theme}</span>`).join("")
-          : `<span class="mobile-tag">---</span>`;
-        const fallbackHtml = row.isFallback ? `<span class="mobile-fallback">取得失敗</span>` : "";
-
-        const card = document.createElement("div");
-        card.className = "mobile-stock-card pool-mobile-card";
-        card.innerHTML = `
-          <div class="mobile-row">
-            <button class="symbol-mark ${STATE.marked.includes(row.symbol) ? "active" : ""}" onclick="toggleMark('${row.symbol}')">★</button>
-            <span class="mobile-code">${row.symbol}</span>
-            <span class="mobile-name">${COMPANY_DB[row.symbol] || "---"}</span>
-          </div>
-
-          <div class="mobile-row">
-            <div class="mobile-kpi-grid">
-              <div class="mobile-kpi">
-                <div class="mobile-kpi-label">現在値</div>
-                <div class="mobile-kpi-value price-small">${priceText}</div>
-              </div>
-              <div class="mobile-kpi">
-                <div class="mobile-kpi-label">前日比</div>
-                <div class="mobile-kpi-value">${diffText}</div>
-              </div>
-              <div class="mobile-kpi">
-                <div class="mobile-kpi-label">状態</div>
-                <div class="mobile-kpi-value">Pool</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mobile-row">
-            <div class="mobile-tags">${tagsHtml}</div>
-          </div>
-
-          <div class="mobile-divider"></div>
-
-          <div class="mobile-action-row">
-            <div class="mobile-action-left">
-              <button class="mobile-delete-btn" onclick="removeItem('pool','${row.symbol}')">削除</button>
-              ${fallbackHtml}
-              <div class="mobile-comment"><span class="mobile-comment-label">コメント：</span>${commentText}</div>
-            </div>
-            <div class="mobile-link-row">
-              <a class="meta-link meta-link-news" href="https://kabutan.jp/stock/news?code=${row.symbol}" target="_blank">News</a>
-              <a class="meta-link meta-link-tv" href="https://jp.tradingview.com/chart/?symbol=TSE:${row.symbol}" target="_blank">Chart</a>
-            </div>
-          </div>
-        `;
-        root.appendChild(card);
-      });
+    function rotateMotto(){
+      const target = document.querySelector("#mottoBar .motto-text");
+      if(!target) return;
+      target.textContent = pickRandom(MOTTO_LIST);
     }
 
-    function saveState(){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
-    }
-
-    function loadState(){
-      const s = localStorage.getItem(STORAGE_KEY);
-      if(s){
-        try{
-          const parsed = JSON.parse(s);
-          STATE = {
-            ...STATE,
-            ...parsed,
-            scan: Array.isArray(parsed.scan) ? parsed.scan : [],
-            focus: Array.isArray(parsed.focus) ? parsed.focus : [],
-            watch: Array.isArray(parsed.watch) ? parsed.watch : [],
-            pool: Array.isArray(parsed.pool) ? parsed.pool : [],
-            marked: Array.isArray(parsed.marked) ? parsed.marked : [],
-            meta: {
-              ...STATE.meta,
-              ...(parsed.meta || {}),
-              tempExcluded: Array.isArray(parsed?.meta?.tempExcluded) ? parsed.meta.tempExcluded : [],
-              cache: {
-                ...STATE.meta.cache,
-                ...((parsed.meta && parsed.meta.cache) || {})
-              }
-            }
-          };
-          renderFocus();
-          renderWatch();
-          renderPool();
-        }catch(e){ console.error(e); }
-      }
-    }
-
-    function toggleMark(symbol){
-      const idx = STATE.marked.indexOf(symbol);
-      if(idx===-1) STATE.marked.push(symbol);
-      else STATE.marked.splice(idx,1);
-      saveState();
-      renderFocus();
-      renderWatch();
-      renderPool();
-    }
-
-    function removeItem(list, symbol){
-      if(!Array.isArray(STATE.meta.tempExcluded)){
-        STATE.meta.tempExcluded = [];
-      }
-
-      if(!STATE.meta.tempExcluded.includes(symbol)){
-        STATE.meta.tempExcluded.push(symbol);
-      }
-
-      STATE.scan = STATE.scan.filter(s => s !== symbol);
-      STATE.focus = STATE.focus.filter(s => s !== symbol);
-      STATE.watch = STATE.watch.filter(s => s !== symbol);
-      STATE.pool = STATE.pool.filter(s => s !== symbol);
-
-      STATE.meta.cache.focusRows = STATE.meta.cache.focusRows.filter(r => r.symbol !== symbol);
-      STATE.meta.cache.watchRows = STATE.meta.cache.watchRows.filter(r => r.symbol !== symbol);
-      STATE.meta.cache.poolRows = STATE.meta.cache.poolRows.filter(r => r.symbol !== symbol);
-
-      saveState();
-      renderFocus();
-      renderWatch();
-      renderPool();
-    }
-
-    async function handleInput(e){
-      if(e.key !== "Enter") return;
-      const val = e.target.value.trim();
-      if(!val) return;
-
-      const codes = [...new Set(val.split(/[\s,]+/).filter(c=>/^\d{4}$/.test(c) || /^\d{3}[A-Z]$/.test(c)))];
-      if(!codes.length) return;
-
-      e.target.value = "";
-      setRandomMotto();
-
-      if(!Array.isArray(STATE.meta.tempExcluded)){
-        STATE.meta.tempExcluded = [];
-      }
-
-      STATE.meta.tempExcluded = STATE.meta.tempExcluded.filter(symbol => !codes.includes(symbol));
-
-      const prevFocus = Array.isArray(STATE.focus) ? [...STATE.focus] : [];
-      const prevWatch = Array.isArray(STATE.watch) ? [...STATE.watch] : [];
-      const prevPool = Array.isArray(STATE.pool) ? [...STATE.pool] : [];
-
-      const allSymbols = [...new Set([
-        ...prevFocus,
-        ...prevWatch,
-        ...prevPool,
-        ...codes
-      ])];
-
-      const results = [];
-      const failedSymbols = [];
-
-      for(const c of allSymbols){
-        try{
-          const r = await analyzeScan(c);
-          if(r){
-            results.push(r);
-          }else{
-            failedSymbols.push(c);
-          }
-          await new Promise(res=>setTimeout(res, 300));
-        }catch(err){
-          console.error(c, err);
-          failedSymbols.push(c);
-        }
-      }
-
-      STATE.scan = [...new Set([
-        ...results.map(r => r.symbol),
-        ...failedSymbols
-      ])];
-
-      const setup = classifySetup(results);
-
-      const newFocus = [...setup.newFocus];
-      const newWatch = [...setup.newWatch];
-      const newPool = [...setup.newPool];
-
-      failedSymbols.forEach(symbol => {
-        if(newFocus.includes(symbol) || newWatch.includes(symbol) || newPool.includes(symbol)) return;
-
-        if(prevFocus.includes(symbol)){
-          newFocus.push(symbol);
-        }else if(prevWatch.includes(symbol)){
-          newWatch.push(symbol);
-        }else if(prevPool.includes(symbol)){
-          newPool.push(symbol);
-        }else{
-          newPool.push(symbol);
-        }
-      });
-
-      codes.forEach(symbol => {
-        if(newFocus.includes(symbol) || newWatch.includes(symbol) || newPool.includes(symbol)) return;
-        newPool.push(symbol);
-      });
-
-      STATE.focus = [...new Set(newFocus)];
-      STATE.watch = [...new Set(newWatch)].filter(s => !STATE.focus.includes(s));
-      STATE.pool = [...new Set(newPool)].filter(s => !STATE.focus.includes(s) && !STATE.watch.includes(s));
-
-      codes.forEach(symbol => {
-        if(STATE.focus.includes(symbol) || STATE.watch.includes(symbol) || STATE.pool.includes(symbol)) return;
-        STATE.pool.push(symbol);
-      });
-
-      STATE.pool = [...new Set(STATE.pool)].filter(s => !STATE.focus.includes(s) && !STATE.watch.includes(s));
-
-      saveState();
-
-      await runFocusTask();
-      await runWatchTask();
-      await runPoolTask();
-    }
-
-    async function runFocusTask(){
-      const rows = [];
-      for(const s of STATE.focus){
-        try{
-          const r = await analyzeFocus(s);
-          rows.push(r || buildFocusFallbackRow(s));
-          await new Promise(res=>setTimeout(res, 500));
-        }catch(e){
-          console.error(s, e);
-          rows.push(buildFocusFallbackRow(s));
-        }
-      }
-
-      rows.sort((a,b) => {
-        const aScore = Number.isFinite(a?.decision?.score) ? a.decision.score : -Infinity;
-        const bScore = Number.isFinite(b?.decision?.score) ? b.decision.score : -Infinity;
-        return bScore - aScore;
-      });
-
-      STATE.meta.cache.focusRows = rows;
-      STATE.meta.lastFocusAt = Date.now();
-      saveState();
-      renderFocus();
-    }
-
-    async function runWatchTask(){
-      const rows = [];
-      for(const s of STATE.watch){
-        try{
-          const r = await analyzeWatch(s);
-          rows.push(r || buildWatchFallbackRow(s));
-          await new Promise(res=>setTimeout(res, 500));
-        }catch(e){
-          console.error(s, e);
-          rows.push(buildWatchFallbackRow(s));
-        }
-      }
-
-      rows.sort((a,b) => {
-        const aScore = Number.isFinite(a?.score) ? a.score : -Infinity;
-        const bScore = Number.isFinite(b?.score) ? b.score : -Infinity;
-        return bScore - aScore;
-      });
-
-      STATE.meta.cache.watchRows = rows;
-      STATE.meta.lastWatchAt = Date.now();
-      saveState();
-      renderWatch();
-      renderFocus();
-    }
-
-    async function runPoolTask(){
-      const rows = [];
-      for(const s of STATE.pool){
-        try{
-          const r = await analyzePool(s);
-          rows.push(r || buildPoolFallbackRow(s));
-          await new Promise(res=>setTimeout(res, 500));
-        }catch(e){
-          console.error(s, e);
-          rows.push(buildPoolFallbackRow(s));
-        }
-      }
-      STATE.meta.cache.poolRows = rows;
-      STATE.meta.lastPoolAt = Date.now();
-      saveState();
-      renderPool();
-    }
-
-    async function runClosingProcess(){
-      await runPoolTask();
-
-      const allSymbols = [...new Set([...STATE.focus, ...STATE.watch, ...STATE.pool])];
-      const results = [];
-      for(const s of allSymbols){
-        try{
-          const r = await analyzeScan(s);
-          if(r) results.push(r);
-          await new Promise(res=>setTimeout(res, 400));
-        }catch(e){
-          console.error(s, e);
-        }
-      }
-
-      const setup = classifySetup(results);
-      STATE.focus = setup.newFocus;
-      STATE.watch = setup.newWatch;
-      STATE.pool = setup.newPool;
-      saveState();
-
-      await runFocusTask();
-      await runWatchTask();
-      await runPoolTask();
-    }
-
-    async function scanUniverseSymbols(symbols){
-      const uniqueSymbols = [...new Set(symbols)];
-      const results = [];
-      const failedSymbols = [];
-
-      for(let i=0; i<uniqueSymbols.length; i += SCAN_CONCURRENT){
-        const chunk = uniqueSymbols.slice(i, i + SCAN_CONCURRENT);
-
-        const chunkResults = await Promise.all(chunk.map(async symbol => {
-          try{
-            const r = await analyzeScan(symbol);
-            return { symbol, result: r, ok: !!r };
-          }catch(err){
-            console.error(symbol, err);
-            return { symbol, result: null, ok: false };
-          }
-        }));
-
-        chunkResults.forEach(item => {
-          if(item.ok && item.result){
-            results.push(item.result);
-          }else{
-            failedSymbols.push(item.symbol);
-          }
-        });
-
-        if(i + SCAN_CONCURRENT < uniqueSymbols.length){
-          await new Promise(res => setTimeout(res, BETWEEN_CHUNK_DELAY));
-        }
-      }
-
-      return { results, failedSymbols };
-    }
-
-    async function initAutoUniverse(){
-      if(SYSTEM_MODE !== "AUTO") return;
-
-      setAutoLoading(true, "Universe読み込み中...（初回は少し時間がかかります）");
-
+    async function runInitialScan(){
+      setAutoLoading(true, `Universe読み込み中... ${SCAN_UNIVERSE.length}銘柄を確認中`);
       try{
-        if(!Array.isArray(STATE.meta.tempExcluded)){
-          STATE.meta.tempExcluded = [];
-        }
+        const chunks = chunkArray(SCAN_UNIVERSE, 60);
+        let all = [];
 
-        const excluded = new Set(STATE.meta.tempExcluded);
-        const manualCurrent = [...new Set([
-          ...(Array.isArray(STATE.focus) ? STATE.focus : []),
-          ...(Array.isArray(STATE.watch) ? STATE.watch : []),
-          ...(Array.isArray(STATE.pool) ? STATE.pool : [])
-        ])];
-
-        const baseUniverse = SCAN_UNIVERSE.filter(symbol => !excluded.has(symbol));
-        const mergedSymbols = [...new Set([
-          ...manualCurrent,
-          ...baseUniverse
-        ])];
-
-        if(!mergedSymbols.length){
-          setAutoLoading(false);
-          return;
-        }
-
-        const { results, failedSymbols } = await scanUniverseSymbols(mergedSymbols);
-
-        STATE.scan = [...new Set([
-          ...results.map(r => r.symbol),
-          ...failedSymbols
-        ])];
-
-        const setup = classifySetup(results);
-
-        const newFocus = [...setup.newFocus];
-        const newWatch = [...setup.newWatch];
-        const newPool = [...setup.newPool];
-
-        failedSymbols.forEach(symbol => {
-          if(newFocus.includes(symbol) || newWatch.includes(symbol) || newPool.includes(symbol)) return;
-
-          if(manualCurrent.includes(symbol)){
-            newPool.push(symbol);
-          }else{
-            newPool.push(symbol);
+        for(let i=0; i<chunks.length; i++){
+          setAutoLoading(true, `Universe読み込み中... ${i+1}/${chunks.length} ブロック`);
+          const part = await runLimited(chunks[i], SCAN_CONCURRENT, async(symbol)=>{
+            const res = await analyzeScan(symbol);
+            if(!res) return null;
+            return {
+              ...res,
+              company: getCompanyName(symbol),
+              themes: getThemes(symbol)
+            };
+          });
+          all = all.concat(part);
+          if(i < chunks.length - 1){
+            await new Promise(r=>setTimeout(r, BETWEEN_CHUNK_DELAY));
           }
+        }
+
+        STATE.scan = all.sort((a,b)=>(b.score||0)-(a.score||0));
+
+        const { focus, watch, pool } = classifySetup(STATE.scan);
+
+        const focusRows = await runLimited(focus, FOCUS_CONCURRENT, async(row, idx)=>{
+          const detail = await analyzeFocus(row.symbol);
+          if(!detail){
+            return {
+              ...row,
+              rank: idx+1,
+              decision: {
+                trend:"レンジ",
+                trigger:"待機",
+                score:row.score || 0,
+                isSignal:false,
+                entrySide:"WAIT",
+                entryLow:row.price,
+                entryHigh:row.price,
+                sl:row.price ? row.price * 0.985 : null,
+                tp:row.price ? row.price * 1.015 : null,
+                comment:"取得不足",
+                trendClass:"trend-range",
+                triggerClass:"trigger-wait",
+                trendEntryClass:"",
+                entryHeatClass:""
+              },
+              isFallback:true
+            };
+          }
+          return { ...row, ...detail, rank: idx+1 };
         });
 
-        STATE.focus = [...new Set(newFocus)];
-        STATE.watch = [...new Set(newWatch)].filter(s => !STATE.focus.includes(s));
-        STATE.pool = [...new Set(newPool)].filter(s => !STATE.focus.includes(s) && !STATE.watch.includes(s));
+        const watchRows = await runLimited(watch, WATCH_CONCURRENT, async(row, idx)=>{
+          const detail = await analyzeWatch(row.symbol);
+          if(!detail){
+            return {
+              ...row,
+              rank: idx+1,
+              trend:"レンジ",
+              volume:0,
+              changePct: row.prev ? ((row.price - row.prev)/row.prev)*100 : 0,
+              themes:getThemes(row.symbol),
+              newsUrl:buildYahooNewsUrl(row.symbol),
+              chartUrl:buildTradingViewUrl(row.symbol),
+              isFallback:true
+            };
+          }
+          return { ...row, ...detail, rank: idx+1 };
+        });
+
+        const poolRows = await runLimited(pool, POOL_CONCURRENT, async(row, idx)=>{
+          const detail = await analyzePool(row.symbol);
+          if(!detail){
+            return {
+              ...row,
+              rank: idx+1,
+              changePct: row.prev ? ((row.price - row.prev)/row.prev)*100 : 0,
+              themes:getThemes(row.symbol),
+              newsUrl:buildYahooNewsUrl(row.symbol),
+              chartUrl:buildTradingViewUrl(row.symbol),
+              isFallback:true
+            };
+          }
+          return { ...row, ...detail, rank: idx+1 };
+        });
+
+        STATE.meta.cache.focusRows = focusRows;
+        STATE.meta.cache.watchRows = watchRows;
+        STATE.meta.cache.poolRows  = poolRows;
+        STATE.focus = focusRows.map(r=>r.symbol);
+        STATE.watch = watchRows.map(r=>r.symbol);
+        STATE.pool  = poolRows.map(r=>r.symbol);
+        STATE.meta.lastFocusAt = Date.now();
+        STATE.meta.lastWatchAt = Date.now();
+        STATE.meta.lastPoolAt = Date.now();
 
         saveState();
-
-        await runFocusTask();
-        await runWatchTask();
-        await runPoolTask();
+        renderAll();
+      }catch(e){
+        console.error("runInitialScan error", e);
       }finally{
         setAutoLoading(false);
       }
     }
 
-    let lastFocusTickKey = "";
-    let lastWatchTickKey = "";
-    let lastClosingTickKey = "";
-    let isFocusRunning = false;
-    let isWatchRunning = false;
-    let isClosingRunning = false;
-
-    function runFocusTaskGuarded(){
-      if(isFocusRunning || isClosingRunning) return;
-      isFocusRunning = true;
-      runFocusTask().finally(() => {
-        isFocusRunning = false;
-      });
-    }
-
-    function runWatchTaskGuarded(){
-      if(isWatchRunning || isClosingRunning) return;
-      isWatchRunning = true;
-      runWatchTask().finally(() => {
-        isWatchRunning = false;
-      });
-    }
-
-    function runClosingProcessGuarded(){
-      if(isClosingRunning) return;
-      isClosingRunning = true;
-      runClosingProcess().finally(() => {
-        isClosingRunning = false;
-      });
-    }
-
-    function tick(){
-      const now = new Date();
-      const min = now.getMinutes();
-      const hour = now.getHours();
-      const key = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${hour}:${min}`;
-
-      if(min % 5 === 0){
-        if(lastFocusTickKey !== key){
-          lastFocusTickKey = key;
-          runFocusTaskGuarded();
-        }
-      }
-
-      if([2,17,32,47].includes(min)){
-        if(lastWatchTickKey !== key){
-          lastWatchTickKey = key;
-          runWatchTaskGuarded();
-        }
-      }
-
-      if(hour === 15 && min === 30){
-        if(lastClosingTickKey !== key){
-          lastClosingTickKey = key;
-          runClosingProcessGuarded();
-        }
-      }
-    }
-
-    async function init(){
-      loadState();
-      setRandomMotto();
-
-      document.getElementById("symbolsInput").addEventListener("keydown", handleInput);
-      document.getElementById("searchInput").addEventListener("input", e => {
-        const q = e.target.value.toLowerCase();
-
-        if(window.innerWidth <= 768){
-          document.querySelectorAll(".mobile-stock-card").forEach(card => {
-            const text = card.innerText.toLowerCase();
-            card.style.display = text.includes(q) ? "" : "none";
-          });
-        }
-
-        [...document.querySelectorAll("tbody tr:not(.subrow)")].forEach(tr => {
-          const text = tr.innerText.toLowerCase();
-          const sub = tr.nextElementSibling;
-          const match = text.includes(q);
-          tr.style.display = match ? "" : "none";
-          if(sub && sub.classList.contains("subrow")) sub.style.display = match ? "" : "none";
+    async function refreshFocusOnly(){
+      if(!STATE.focus?.length) return;
+      try{
+        const focusRows = await runLimited(STATE.focus, FOCUS_CONCURRENT, async(symbol, idx)=>{
+          const base = STATE.scan.find(x => x.symbol === symbol) || { symbol, score:0 };
+          const detail = await analyzeFocus(symbol);
+          if(!detail){
+            return {
+              ...base,
+              symbol,
+              price: base.price || null,
+              prev: base.prev || null,
+              rank: idx+1,
+              decision: {
+                trend:"レンジ",
+                trigger:"待機",
+                score:base.score || 0,
+                isSignal:false,
+                entrySide:"WAIT",
+                entryLow:base.price,
+                entryHigh:base.price,
+                sl:base.price ? base.price * 0.985 : null,
+                tp:base.price ? base.price * 1.015 : null,
+                comment:"取得不足",
+                trendClass:"trend-range",
+                triggerClass:"trigger-wait",
+                trendEntryClass:"",
+                entryHeatClass:""
+              },
+              isFallback:true
+            };
+          }
+          return { ...base, ...detail, rank: idx+1 };
         });
-      });
 
-      document.getElementById("mottoBar").addEventListener("click", setRandomMotto);
+        STATE.meta.cache.focusRows = focusRows;
+        STATE.meta.lastFocusAt = Date.now();
+        saveState();
+        renderAll();
+      }catch(e){
+        console.error("refreshFocusOnly error", e);
+      }
+    }
 
-      setInterval(tick, 1000);
+    async function refreshWatchOnly(){
+      if(!STATE.watch?.length) return;
+      try{
+        const watchRows = await runLimited(STATE.watch, WATCH_CONCURRENT, async(symbol, idx)=>{
+          const base = STATE.scan.find(x => x.symbol === symbol) || { symbol, score:0 };
+          const detail = await analyzeWatch(symbol);
+          if(!detail){
+            return {
+              ...base,
+              symbol,
+              rank: idx+1,
+              trend:"レンジ",
+              volume:0,
+              changePct: base.prev ? ((base.price - base.prev)/base.prev)*100 : 0,
+              themes:getThemes(symbol),
+              newsUrl:buildYahooNewsUrl(symbol),
+              chartUrl:buildTradingViewUrl(symbol),
+              isFallback:true
+            };
+          }
+          return { ...base, ...detail, rank: idx+1 };
+        });
+
+        STATE.meta.cache.watchRows = watchRows;
+        STATE.meta.lastWatchAt = Date.now();
+        saveState();
+        renderAll();
+      }catch(e){
+        console.error("refreshWatchOnly error", e);
+      }
+    }
+
+    async function refreshPoolOnly(){
+      if(!STATE.pool?.length) return;
+      try{
+        const poolRows = await runLimited(STATE.pool, POOL_CONCURRENT, async(symbol, idx)=>{
+          const base = STATE.scan.find(x => x.symbol === symbol) || { symbol, score:0 };
+          const detail = await analyzePool(symbol);
+          if(!detail){
+            return {
+              ...base,
+              symbol,
+              rank: idx+1,
+              changePct: base.prev ? ((base.price - base.prev)/base.prev)*100 : 0,
+              themes:getThemes(symbol),
+              newsUrl:buildYahooNewsUrl(symbol),
+              chartUrl:buildTradingViewUrl(symbol),
+              isFallback:true
+            };
+          }
+          return { ...base, ...detail, rank: idx+1 };
+        });
+
+        STATE.meta.cache.poolRows = poolRows;
+        STATE.meta.lastPoolAt = Date.now();
+        saveState();
+        renderAll();
+      }catch(e){
+        console.error("refreshPoolOnly error", e);
+      }
+    }
+
+    function bindInputs(){
+      const searchInput = document.getElementById("searchInput");
+      const symbolsInput = document.getElementById("symbolsInput");
+
+      if(searchInput){
+        searchInput.addEventListener("input", ()=>{
+          const q = searchInput.value.trim();
+          if(!q){
+            renderAll();
+            return;
+          }
+
+          const filterFn = (row)=>{
+            const name = getCompanyName(row.symbol);
+            const themes = getThemes(row.symbol).join(" ");
+            return row.symbol.includes(q) || name.includes(q) || themes.includes(q);
+          };
+
+          const focusRows = filteredFocusRows().filter(filterFn);
+          const watchRows = filteredWatchRows().filter(filterFn);
+          const poolRows = filteredPoolRows().filter(filterFn);
+
+          renderFocusTable(focusRows);
+          renderWatchTable(watchRows);
+          renderPoolTable(poolRows);
+          renderFocusMobile(focusRows);
+          renderWatchMobile(watchRows);
+          renderPoolMobile(poolRows);
+        });
+      }
+
+      if(symbolsInput){
+        symbolsInput.addEventListener("keydown", async(e)=>{
+          if(e.key !== "Enter") return;
+          const raw = symbolsInput.value.trim();
+          if(!raw) return;
+
+          const symbols = raw.split(/[\s,、]+/).map(s=>s.replace(/[^0-9A-Za-z]/g,"")).filter(Boolean);
+          if(!symbols.length) return;
+
+          setAutoLoading(true, `手動入力を解析中... ${symbols.length}件`);
+          try{
+            const scanRows = await runLimited(symbols, SCAN_CONCURRENT, async(symbol)=>{
+              const code = symbol.toUpperCase();
+              const res = await analyzeScan(code);
+              if(!res) return null;
+              return { ...res, company:getCompanyName(code), themes:getThemes(code) };
+            });
+
+            if(scanRows.length){
+              STATE.scan = scanRows.sort((a,b)=>(b.score||0)-(a.score||0));
+              const { focus, watch, pool } = classifySetup(STATE.scan);
+
+              const focusRows = await runLimited(focus, FOCUS_CONCURRENT, async(row, idx)=>{
+                const detail = await analyzeFocus(row.symbol);
+                return detail ? { ...row, ...detail, rank: idx+1 } : { ...row, rank: idx+1 };
+              });
+
+              const watchRows = await runLimited(watch, WATCH_CONCURRENT, async(row, idx)=>{
+                const detail = await analyzeWatch(row.symbol);
+                return detail ? { ...row, ...detail, rank: idx+1 } : { ...row, rank: idx+1 };
+              });
+
+              const poolRows = await runLimited(pool, POOL_CONCURRENT, async(row, idx)=>{
+                const detail = await analyzePool(row.symbol);
+                return detail ? { ...row, ...detail, rank: idx+1 } : { ...row, rank: idx+1 };
+              });
+
+              STATE.meta.cache.focusRows = focusRows;
+              STATE.meta.cache.watchRows = watchRows;
+              STATE.meta.cache.poolRows = poolRows;
+              STATE.focus = focusRows.map(r=>r.symbol);
+              STATE.watch = watchRows.map(r=>r.symbol);
+              STATE.pool = poolRows.map(r=>r.symbol);
+              STATE.meta.lastFocusAt = Date.now();
+              STATE.meta.lastWatchAt = Date.now();
+              STATE.meta.lastPoolAt = Date.now();
+
+              saveState();
+              renderAll();
+            }
+          }catch(err){
+            console.error(err);
+          }finally{
+            setAutoLoading(false);
+          }
+        });
+      }
+    }
+
+    function scheduleTick(){
+      setInterval(async ()=>{
+        const now = new Date();
+        const min = now.getMinutes();
+
+        rotateMotto();
+
+        if(min % 5 === 0){
+          await refreshFocusOnly();
+        }
+        if(min % 15 === 0){
+          await refreshWatchOnly();
+        }
+      }, 60 * 1000);
+    }
+
+    window.toggleMarked = toggleMarked;
+    window.tempExclude = tempExclude;
+    window.removeTemp = removeTemp;
+
+    document.addEventListener("DOMContentLoaded", async ()=>{
+      loadState();
+      renderAll();
+      bindInputs();
+      rotateMotto();
+      scheduleTick();
 
       if(SYSTEM_MODE === "AUTO"){
-        await initAutoUniverse();
-        return;
+        await runInitialScan();
       }
-
-      if(!STATE.meta.cache.focusRows.length && STATE.focus.length) runFocusTaskGuarded();
-      if(!STATE.meta.cache.watchRows.length && STATE.watch.length) runWatchTaskGuarded();
-      if(!STATE.meta.cache.poolRows.length && STATE.pool.length) runPoolTask();
-    }
-
-    window.addEventListener("DOMContentLoaded", init);
+    });
   </script>
 </body>
 </html>
