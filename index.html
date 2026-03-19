@@ -39,12 +39,24 @@
     }
 
     *{box-sizing:border-box}
+
     html,body{
       margin:0;
-      height:100%;
+      min-height:100%;
       background:var(--bg);
       color:var(--text);
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      overflow-x:hidden;
+    }
+
+    .mobile-scroll-shell{
+      width:100%;
+      min-height:100vh;
+    }
+
+    .mobile-scroll-track{
+      width:100%;
+      min-width:100%;
     }
 
     .wrap{
@@ -1102,182 +1114,258 @@
     }
 
     @media (max-width:768px){
-      .wrap{padding:8px}
-      .header-panel{padding:8px 10px}
+      html,body{
+        overflow-x:hidden;
+      }
+
+      .mobile-scroll-shell{
+        overflow-x:auto;
+        overflow-y:visible;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+        -ms-overflow-style:none;
+      }
+
+      .mobile-scroll-shell::-webkit-scrollbar{
+        width:0;
+        height:0;
+      }
+
+      .mobile-scroll-track{
+        width:max-content;
+        min-width:100%;
+      }
+
+      .wrap{
+        width:1900px;
+        min-width:1900px;
+        max-width:none;
+        margin:0;
+        padding:10px 14px;
+      }
+
+      .header-panel{
+        padding:8px 12px;
+      }
+
       .header-inline{
-        gap:10px;
+        flex-wrap:nowrap;
+        align-items:center;
+        gap:18px;
       }
+
       .title{
-        font-size:18px;
+        font-size:24px;
       }
+
       .controls{
-        flex-wrap:wrap;
-        gap:8px;
+        flex-wrap:nowrap;
+        justify-content:flex-end;
+        gap:10px;
+        width:auto;
       }
+
       #symbolsInput{
-        flex:0 0 96px;
-        width:96px;
+        flex:0 0 100px;
+        width:100px;
       }
+
       #searchInput{
-        flex:1 1 160px;
-        width:100%;
+        flex:0 0 180px;
+        width:180px;
       }
+
       .motto-bar{
-        flex:1 1 100%;
-        white-space:normal;
+        flex:0 1 320px;
+        min-width:180px;
+        white-space:nowrap;
       }
+
       .auto-loading-bar{
-        padding:9px 10px;
+        padding:10px 14px;
       }
+
       .auto-loading-text{
-        white-space:normal;
-        line-height:1.35;
+        white-space:nowrap;
+        line-height:1.2;
       }
+
       .top-grid{
-        height:auto;
+        display:grid;
+        grid-template-columns:1.45fr 1fr;
+        gap:14px;
+        align-items:stretch;
+        margin-bottom:14px;
+        height:calc(100vh - 118px);
+        min-height:0;
       }
-      .tablewrap{max-height:none}
-      table{min-width:100%}
-      th,td{padding:8px 4px;font-size:11px}
+
+      .top-grid > .section{
+        height:100%;
+        min-height:0;
+      }
+
+      .tablewrap{
+        max-height:none;
+      }
+
+      table{
+        min-width:0;
+      }
+
+      th,td{
+        padding:9px 8px;
+        font-size:12px;
+      }
+
       .meta-grid{
-        flex-wrap:wrap;
+        flex-wrap:nowrap;
         gap:8px;
       }
+
       .meta-grid .meta-cell:last-child{
-        flex:1 1 100%;
-        margin-left:0;
+        min-width:0;
+        flex:0 0 320px;
+        margin-left:auto;
       }
+
       .watch-section .watch-subrow .meta-grid .meta-cell:last-child{
-        flex:1 1 100%;
-        margin-left:0;
-        padding-left:0;
+        min-width:0;
+        flex:0 0 220px;
+        margin-left:auto;
+        padding-left:48px;
       }
+
       .theme-pill{
-        white-space:normal;
-        border-radius:10px;
+        white-space:nowrap;
+        border-radius:999px;
       }
+
       .comment-text{
-        white-space:normal;
+        white-space:nowrap;
       }
-      .focus-section .tablewrap{
-        overflow-y:auto;
-      }
+
       .cell-headband{
-        grid-template-columns:22px 50px minmax(0,1fr);
+        grid-template-columns:22px 56px minmax(0,1fr) auto;
       }
+
       .cell-headband .delete-btn{
-        grid-column:2 / span 2;
-        justify-self:end;
+        grid-column:auto;
+        justify-self:auto;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="header-panel">
-      <div class="header-inline">
-        <div class="title">Masaki Trade System</div>
+  <div class="mobile-scroll-shell">
+    <div class="mobile-scroll-track">
+      <div class="wrap">
+        <div class="header-panel">
+          <div class="header-inline">
+            <div class="title">Masaki Trade System</div>
 
-        <div class="controls">
-          <input id="symbolsInput" type="text" placeholder="入力" />
-          <input id="searchInput" type="text" placeholder="検索" />
-          <div class="motto-bar" id="mottoBar">
-            <span class="motto-label">格言</span>
-            <span class="motto-text">欲を捨てろ</span>
+            <div class="controls">
+              <input id="symbolsInput" type="text" placeholder="入力" />
+              <input id="searchInput" type="text" placeholder="検索" />
+              <div class="motto-bar" id="mottoBar">
+                <span class="motto-label">格言</span>
+                <span class="motto-text">欲を捨てろ</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="auto-loading-bar" id="autoLoadingBar">
-      <span class="auto-loading-dot"></span>
-      <span class="auto-loading-text" id="autoLoadingText">Universe読み込み中...（初回は少し時間がかかります）</span>
-    </div>
+        <div class="auto-loading-bar" id="autoLoadingBar">
+          <span class="auto-loading-dot"></span>
+          <span class="auto-loading-text" id="autoLoadingText">Universe読み込み中...（初回は少し時間がかかります）</span>
+        </div>
 
-    <div class="top-grid">
-      <div class="section focus-section">
-        <div class="section-head">
-          <div class="section-title">
-            <h2>Focus</h2>
+        <div class="top-grid">
+          <div class="section focus-section">
+            <div class="section-head">
+              <div class="section-title">
+                <h2>Focus</h2>
+              </div>
+              <div class="small muted">5分更新</div>
+            </div>
+            <div class="tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="sticky-col">銘柄名</th>
+                    <th>現在</th>
+                    <th>スコア</th>
+                    <th>トレンド</th>
+                    <th>トリガー</th>
+                    <th>Entry帯</th>
+                    <th>SL</th>
+                    <th>TP</th>
+                  </tr>
+                </thead>
+                <tbody id="focusTbody"></tbody>
+              </table>
+            </div>
+            <div class="section-foot">
+              <div class="summary" id="focusSummary"></div>
+              <div class="small muted" id="focusUpdated">未更新</div>
+            </div>
           </div>
-          <div class="small muted">5分更新</div>
-        </div>
-        <div class="tablewrap">
-          <table>
-            <thead>
-              <tr>
-                <th class="sticky-col">銘柄名</th>
-                <th>現在</th>
-                <th>スコア</th>
-                <th>トレンド</th>
-                <th>トリガー</th>
-                <th>Entry帯</th>
-                <th>SL</th>
-                <th>TP</th>
-              </tr>
-            </thead>
-            <tbody id="focusTbody"></tbody>
-          </table>
-        </div>
-        <div class="section-foot">
-          <div class="summary" id="focusSummary"></div>
-          <div class="small muted" id="focusUpdated">未更新</div>
-        </div>
-      </div>
 
-      <div class="section watch-section">
-        <div class="section-head">
-          <div class="section-title">
-            <h2>Watch</h2>
+          <div class="section watch-section">
+            <div class="section-head">
+              <div class="section-title">
+                <h2>Watch</h2>
+              </div>
+              <div class="small muted">15分更新</div>
+            </div>
+            <div class="tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="sticky-col">銘柄名</th>
+                    <th>現在</th>
+                    <th>スコア</th>
+                    <th>トレンド</th>
+                    <th>出来高</th>
+                  </tr>
+                </thead>
+                <tbody id="watchTbody"></tbody>
+              </table>
+            </div>
+            <div class="section-foot">
+              <div class="summary" id="watchSummary"></div>
+              <div class="small muted" id="watchUpdated">未更新</div>
+            </div>
           </div>
-          <div class="small muted">15分更新</div>
         </div>
-        <div class="tablewrap">
-          <table>
-            <thead>
-              <tr>
-                <th class="sticky-col">銘柄名</th>
-                <th>現在</th>
-                <th>スコア</th>
-                <th>トレンド</th>
-                <th>出来高</th>
-              </tr>
-            </thead>
-            <tbody id="watchTbody"></tbody>
-          </table>
-        </div>
-        <div class="section-foot">
-          <div class="summary" id="watchSummary"></div>
-          <div class="small muted" id="watchUpdated">未更新</div>
-        </div>
-      </div>
-    </div>
 
-    <div class="bottom-grid">
-      <div class="section pool-section">
-        <div class="section-head">
-          <div class="section-title">
-            <h2>Pool</h2>
-            <span class="badge">保管</span>
-            <span class="badge">テーマ監視</span>
+        <div class="bottom-grid">
+          <div class="section pool-section">
+            <div class="section-head">
+              <div class="section-title">
+                <h2>Pool</h2>
+                <span class="badge">保管</span>
+                <span class="badge">テーマ監視</span>
+              </div>
+              <div class="small muted">1日更新</div>
+            </div>
+            <div class="tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="sticky-col">銘柄名</th>
+                    <th>現在</th>
+                    <th>前日比</th>
+                  </tr>
+                </thead>
+                <tbody id="poolTbody"></tbody>
+              </table>
+            </div>
+            <div class="section-foot">
+              <div class="summary" id="poolSummary"></div>
+              <div class="small muted" id="poolUpdated">未更新</div>
+            </div>
           </div>
-          <div class="small muted">1日更新</div>
-        </div>
-        <div class="tablewrap">
-          <table>
-            <thead>
-              <tr>
-                <th class="sticky-col">銘柄名</th>
-                <th>現在</th>
-                <th>前日比</th>
-              </tr>
-            </thead>
-            <tbody id="poolTbody"></tbody>
-          </table>
-        </div>
-        <div class="section-foot">
-          <div class="summary" id="poolSummary"></div>
-          <div class="small muted" id="poolUpdated">未更新</div>
         </div>
       </div>
     </div>
@@ -3296,4 +3384,4 @@
     window.addEventListener("DOMContentLoaded", init);
   </script>
 </body>
-</html>S
+</html>
