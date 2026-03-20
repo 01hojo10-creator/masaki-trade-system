@@ -661,6 +661,17 @@
       border-top:1px solid rgba(255,255,255,.08);
     }
 
+    .diagnostic-line{
+      width:100%;
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.2;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      text-align:left;
+    }
+
     .focus-section{
       border:2px solid rgba(245,185,66,.52);
       box-shadow:0 10px 28px rgba(0,0,0,.28),0 0 0 1px rgba(245,185,66,.14) inset,0 0 18px rgba(245,185,66,.10);
@@ -2967,7 +2978,7 @@
       const hmaH = h1 ? calcHMA(h1.closes, 9) : null;
       const hmaM = m15 ? calcHMA(m15.closes, 9) : null;
       const score = (hmaD?.at(-1) > hmaD?.at(-2) ? 40:0) + (hmaH?.at(-1) > hmaH?.at(-2) ? 30:0) + (hmaM?.at(-1) > hmaM?.at(-2) ? 10:0);
-      return { symbol, price, prev, score, hmaD, hmaH, hmaM };
+      return { symbol, price, prev, score, hmaD, hmaH, hmaM, analyzedAt: Date.now() };
     }
 
     async function analyzeFocus(symbol){
@@ -2982,10 +2993,10 @@
       const hma1 = calcHMA(h1.closes, 9);
       const hma5 = calcHMA(m5.closes, 9);
       const decision = buildScanDecision(price, hma4, hma1, hma5);
-      return { symbol, price, hma4, hma1, hma5, decision, isFallback:false };
+      return { symbol, price, hma4, hma1, hma5, decision, isFallback:false, analyzedAt: Date.now() };
     }
 
-        async function analyzeWatch(symbol){
+    async function analyzeWatch(symbol){
       const [d1, h1] = await Promise.all([
         fetchChart(symbol, "3mo", "1d"),
         fetchChart(symbol, "5d", "1h")
@@ -3002,196 +3013,242 @@
 
       const score =
         (hmaD?.at(-1) > hmaD?.at(-2) ? 35 : 0) +
-        (hmaH?.at(-1) > hmaH?.at(-2) ? 25 : 0) +
-        (price > (hmaD?.at(-1) || price) ? 15 : 0) +
-        (price > prev ? 10 : 0);
+                (hmaH?.at(-1) > hmaH?.at(-2) ? 25 : 0) +
+        ((price && prev) ? (((price - prev) / prev) > 0 ? 10 : 0) : 0);
 
-      const volume = d1.meta.regularMarketVolume || 0;
-      const changePct = prev ? ((price - prev) / prev) * 100 : 0;
+      const volume = d1.meta?.regularMarketVolume || 0;
 
       return {
         symbol,
         price,
         prev,
-        score,
-        trend,
         volume,
-        changePct,
-        themes: getThemes(symbol),
-        newsUrl: buildYahooNewsUrl(symbol),
-        chartUrl: buildTradingViewUrl(symbol),
-        isFallback:false
+        hmaD,
+        hmaH,
+        trend,
+        score,
+        analyzedAt: Date.now()
       };
     }
 
     async function analyzePool(symbol){
       const d1 = await fetchChart(symbol, "3mo", "1d");
       if(!d1) return null;
+
       const price = d1.meta.regularMarketPrice;
       const prev = d1.meta.previousClose;
-      const changePct = prev ? ((price - prev) / prev) * 100 : 0;
+      const diff = safePct(price, prev);
+
       return {
         symbol,
         price,
         prev,
-        changePct,
-        themes: getThemes(symbol),
-        newsUrl: buildYahooNewsUrl(symbol),
-        chartUrl: buildTradingViewUrl(symbol),
-        isFallback:false
+        diff,
+        analyzedAt: Date.now()
       };
     }
 
     function buildScanDecision(price, hma4, hma1, hma5){
-      const h4Now = hma4?.at(-1) ?? null;
-      const h4Prev = hma4?.at(-2) ?? null;
-      const h1Now = hma1?.at(-1) ?? null;
-      const h1Prev = hma1?.at(-2) ?? null;
-      const h5Now = hma5?.at(-1) ?? null;
-      const h5Prev = hma5?.at(-2) ?? null;
+      const h4Now = hma4?.at(-1);
+      const h4Prev = hma4?.at(-2);
+      const h1Now = hma1?.at(-1);
+      const h1Prev = hma1?.at(-2);
+      const h5Now = hma5?.at(-1);
+      const h5Prev = hma5?.at(-2);
 
-      const trendUp = isFinite(h4Now) && isFinite(h4Prev) && isFinite(h1Now) && isFinite(h1Prev) && h4Now > h4Prev && h1Now > h1Prev;
-      const trendDown = isFinite(h4Now) && isFinite(h4Prev) && isFinite(h1Now) && isFinite(h1Prev) && h4Now < h4Prev && h1Now < h1Prev;
-      const triggerLong = trendUp && isFinite(h5Now) && isFinite(h5Prev) && h5Now > h5Prev && price >= h5Now;
-      const triggerShort = trendDown && isFinite(h5Now) && isFinite(h5Prev) && h5Now < h5Prev && price <= h5Now;
+      const up4 = isValidNum(h4Now) && isValidNum(h4Prev) && h4Now > h4Prev;
+      const up1 = isValidNum(h1Now) && isValidNum(h1Prev) && h1Now > h1Prev;
+      const up5 = isValidNum(h5Now) && isValidNum(h5Prev) && h5Now > h5Prev;
 
-      const trend = trendUp ? "上昇" : trendDown ? "下降" : "レンジ";
-      const trigger = triggerLong ? "ロング" : triggerShort ? "ショート" : (Math.abs(price - (h5Now || price)) / Math.max(price || 1, 1) <= 0.003 ? "押し目待ち" : "待機");
+      const dn4 = isValidNum(h4Now) && isValidNum(h4Prev) && h4Now < h4Prev;
+      const dn1 = isValidNum(h1Now) && isValidNum(h1Prev) && h1Now < h1Prev;
+      const dn5 = isValidNum(h5Now) && isValidNum(h5Prev) && h5Now < h5Prev;
 
-      const ref = isFinite(h5Now) ? h5Now : price;
-      const entryLow = ref * (1 - ENTRY_BAND_RATE);
-      const entryHigh = ref * (1 + ENTRY_BAND_RATE);
-      const sl = trendUp ? ref * 0.985 : trendDown ? ref * 1.015 : ref * 0.988;
-      const tp = trendUp ? ref * 1.03 : trendDown ? ref * 0.97 : ref * 1.015;
+      let trend = "レンジ";
+      if(up4 && up1) trend = "上昇";
+      else if(dn4 && dn1) trend = "下降";
 
-      const score =
-        (trendUp ? 35 : 0) +
-        (triggerLong ? 20 : 0) +
-        (price > (h1Now || price) ? 10 : 0) +
-        (price > (h4Now || price) ? 10 : 0) +
-        (Math.abs(price - ref) / Math.max(price || 1, 1) <= SIGNAL_ENTRY_DISTANCE_MAX ? 10 : 0) +
-        (((tp - price) / Math.max(price || 1, 1)) >= SIGNAL_UPSIDE_ROOM_MIN ? 10 : 0) +
-        (((price - sl) / Math.max(price || 1, 1)) <= SIGNAL_RISK_WIDTH_MAX ? 5 : 0);
+      let trigger = "待機";
+      if(up4 && up1 && up5) trigger = "ロング";
+      else if(dn4 && dn1 && dn5) trigger = "ショート";
+      else if((up4 && up1 && !up5) || (dn4 && dn1 && !dn5)) trigger = "押し目";
+      else trigger = "待機";
 
-      const entrySide = triggerLong ? "ENTRY" : triggerShort ? "SHORT" : "WAIT";
-      const comment = triggerLong
-        ? pickRandom(ENTRY_COMMENTS)
-        : triggerShort
-          ? "下落波動継続"
-          : pickRandom(WAIT_COMMENTS);
+      let score = 0;
+      if(up4) score += 25;
+      if(up1) score += 20;
+      if(up5) score += 15;
+      if(dn4) score += 10;
+      if(dn1) score += 5;
+
+      const entry = calcEntryBand(price);
+      const rr = calcRiskReward(price, entry.sl, entry.tp);
 
       const isSignal =
+        trigger === "ロング" &&
         score >= SIGNAL_SCORE_MIN &&
-        Math.abs(price - ref) / Math.max(price || 1, 1) <= SIGNAL_ENTRY_DISTANCE_MAX &&
-        ((tp - price) / Math.max(price || 1, 1)) >= (trendDown ? -999 : SIGNAL_UPSIDE_ROOM_MIN) &&
-        ((price - sl) / Math.max(price || 1, 1)) <= SIGNAL_RISK_WIDTH_MAX &&
-        (triggerLong || triggerShort);
+        entry.distanceRate <= SIGNAL_ENTRY_DISTANCE_MAX &&
+        entry.upsideRoom >= SIGNAL_UPSIDE_ROOM_MIN &&
+        entry.riskWidth <= SIGNAL_RISK_WIDTH_MAX;
+
+      const comment = isSignal
+        ? pickText(ENTRY_COMMENTS, score)
+        : pickText(WAIT_COMMENTS, score);
 
       return {
         trend,
         trigger,
         score,
+        entryMin: entry.entryMin,
+        entryMax: entry.entryMax,
+        sl: entry.sl,
+        tp: entry.tp,
+        rr,
         isSignal,
-        entrySide,
-        entryLow,
-        entryHigh,
-        sl,
-        tp,
         comment,
-        trendClass: trendUp ? "trend-up" : trendDown ? "trend-down" : "trend-range",
-        triggerClass: triggerLong ? "trigger-long" : triggerShort ? "trigger-short" : trigger === "押し目待ち" ? "trigger-pull" : "trigger-wait",
-        trendEntryClass: triggerLong ? "trend-entry-up" : triggerShort ? "trend-entry-down" : "",
-        entryHeatClass: isSignal ? "entry-heat-mid" : ""
+        entryDistanceRate: entry.distanceRate,
+        upsideRoom: entry.upsideRoom,
+        riskWidth: entry.riskWidth
       };
     }
 
+    function calcEntryBand(price){
+      const width = price * ENTRY_BAND_RATE;
+      const entryMin = Math.max(0, price - width);
+      const entryMax = price + width;
+      const sl = Math.max(0, price * 0.985);
+      const tp = price * 1.03;
+      const distanceRate = Math.abs(price - ((entryMin + entryMax)/2)) / Math.max(price, 1);
+      const upsideRoom = (tp - price) / Math.max(price, 1);
+      const riskWidth = (price - sl) / Math.max(price, 1);
+      return { entryMin, entryMax, sl, tp, distanceRate, upsideRoom, riskWidth };
+    }
+
+    function calcRiskReward(price, sl, tp){
+      const risk = Math.max(price - sl, 0.0001);
+      const reward = Math.max(tp - price, 0);
+      return reward / risk;
+    }
+
     function classifySetup(scanRows){
-      const rows = [...scanRows].sort((a,b)=> (b.score || 0) - (a.score || 0));
-      const focus = rows.slice(0, FOCUS_MAX).map((r,i)=>({ ...r, rank:i+1 }));
-      const watch = rows.slice(FOCUS_MAX, FOCUS_MAX + WATCH_MAX).map((r,i)=>({ ...r, rank:i+1 }));
-      const pool  = rows.slice(FOCUS_MAX + WATCH_MAX).map((r,i)=>({ ...r, rank:i+1 }));
+      const sorted = [...scanRows].sort((a,b) => (b.score||0) - (a.score||0));
+      const focus = sorted.slice(0, FOCUS_MAX).map(x => x.symbol);
+      const watch = sorted.slice(FOCUS_MAX, FOCUS_MAX + WATCH_MAX).map(x => x.symbol);
+      const pool  = sorted.slice(FOCUS_MAX + WATCH_MAX).map(x => x.symbol);
       return { focus, watch, pool };
     }
 
-    function formatPrice(v){
-      if(v == null || !isFinite(v)) return "-";
-      if(v >= 1000) return Math.round(v).toLocaleString("ja-JP");
-      return v.toFixed(1);
+    async function runWithConcurrency(items, worker, concurrency=1){
+      const results = new Array(items.length);
+      let index = 0;
+
+      async function runner(){
+        while(index < items.length){
+          const current = index++;
+          try{
+            results[current] = await worker(items[current], current);
+          }catch(e){
+            results[current] = null;
+          }
+        }
+      }
+
+      const runners = Array.from({length:Math.max(1,concurrency)}, ()=>runner());
+      await Promise.all(runners);
+      return results.filter(Boolean);
     }
 
-    function formatPct(v){
-      if(v == null || !isFinite(v)) return "-";
+    function safePct(a,b){
+      if(!isValidNum(a) || !isValidNum(b) || b === 0) return 0;
+      return ((a - b) / b) * 100;
+    }
+
+    function isValidNum(v){
+      return typeof v === "number" && Number.isFinite(v);
+    }
+
+    function fmtPrice(v){
+      if(!isValidNum(v)) return "-";
+      if(v >= 1000) return Math.round(v).toLocaleString("ja-JP");
+      if(v >= 100) return v.toFixed(1);
+      return v.toFixed(2);
+    }
+
+    function fmtPct(v){
+      if(!isValidNum(v)) return "-";
       const sign = v > 0 ? "+" : "";
       return `${sign}${v.toFixed(2)}%`;
     }
 
-    function formatVolume(v){
-      if(v == null || !isFinite(v)) return "-";
-      if(v >= 100000000) return `${(v/100000000).toFixed(2)}億`;
-      if(v >= 10000) return `${(v/10000).toFixed(1)}万`;
-      return `${Math.round(v).toLocaleString("ja-JP")}`;
+    function fmtNum(v){
+      if(!isValidNum(v)) return "-";
+      return Number(v).toLocaleString("ja-JP");
     }
 
-    function getThemes(symbol){
-      return THEME_DB[symbol] || ["テーマ未設定"];
+    function fmtTime(ts){
+      if(!ts) return "未更新";
+      const d = new Date(ts);
+      const hh = String(d.getHours()).padStart(2,"0");
+      const mm = String(d.getMinutes()).padStart(2,"0");
+      const ss = String(d.getSeconds()).padStart(2,"0");
+      return `${hh}:${mm}:${ss}`;
+    }
+
+    function scoreClass(score){
+      if(score >= 70) return "score-gold";
+      if(score >= 50) return "score-green";
+      if(score >= 30) return "score-blue";
+      return "score-gray";
+    }
+
+    function trendClass(trend, isSignal){
+      if(trend === "上昇") return `trend-up ${isSignal ? "trend-entry-up" : ""}`.trim();
+      if(trend === "下降") return `trend-down ${isSignal ? "trend-entry-down" : ""}`.trim();
+      return "trend-range";
+    }
+
+    function triggerClass(trigger){
+      if(trigger === "ロング") return "trigger-long";
+      if(trigger === "ショート") return "trigger-short";
+      if(trigger === "押し目") return "trigger-pull";
+      return "trigger-wait";
     }
 
     function getCompanyName(symbol){
       return COMPANY_DB[symbol] || symbol;
     }
 
-    function buildYahooNewsUrl(symbol){
-      return `https://finance.yahoo.co.jp/quote/${symbol}.T/news`;
+    function getThemes(symbol){
+      return THEME_DB[symbol] || [];
     }
 
-    function buildTradingViewUrl(symbol){
-      return `https://jp.tradingview.com/chart/?symbol=TSE%3A${symbol}`;
+    function getTradingViewUrl(symbol){
+      return `https://jp.tradingview.com/chart/?symbol=TSE%3A${encodeURIComponent(symbol)}`;
     }
 
-    function escapeHtml(str){
-      return String(str ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
+    function getYahooFinanceUrl(symbol){
+      return `https://finance.yahoo.co.jp/quote/${encodeURIComponent(symbol)}.T`;
     }
 
-    function priceClassByPct(v){
-      if(v > 0) return "up";
-      if(v < 0) return "down";
-      return "flat";
+    function pickText(list, seed=0){
+      if(!list?.length) return "";
+      const idx = Math.abs(Math.floor(seed)) % list.length;
+      return list[idx];
     }
 
-    function pickRandom(arr){
-      return arr[Math.floor(Math.random() * arr.length)];
+    function updateMotto(){
+      const el = document.getElementById("mottoBar");
+      if(!el) return;
+      const textEl = el.querySelector(".motto-text");
+      if(!textEl) return;
+      const hour = new Date().getHours();
+      textEl.textContent = MOTTO_LIST[hour % MOTTO_LIST.length];
     }
 
-    function chunkArray(arr, size){
-      const out = [];
-      for(let i=0; i<arr.length; i+=size) out.push(arr.slice(i, i+size));
-      return out;
-    }
-
-    async function runLimited(items, limit, worker){
-      const results = [];
-      let idx = 0;
-
-      async function runner(){
-        while(idx < items.length){
-          const current = idx++;
-          try{
-            const res = await worker(items[current], current);
-            if(res) results.push(res);
-          }catch(e){
-            console.warn("worker error", items[current], e);
-          }
-        }
-      }
-
-      const workers = Array.from({length:Math.min(limit, items.length || 1)}, ()=>runner());
-      await Promise.all(workers);
-      return results;
+    function saveState(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+      }catch(e){}
     }
 
     function loadState(){
@@ -3214,788 +3271,654 @@
             }
           };
         }
-      }catch(e){
-        console.warn("loadState error", e);
-      }
+      }catch(e){}
     }
 
-    function saveState(){
-      try{
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
-      }catch(e){
-        console.warn("saveState error", e);
-      }
+    function renderAll(){
+      renderFocus();
+      renderWatch();
+      renderPool();
+      updateSummary();
+      updateUpdatedTime();
     }
 
-    function isMarked(symbol){
-      return Array.isArray(STATE.marked) && STATE.marked.includes(symbol);
-    }
+    function renderFocus(){
+      const tbody = document.getElementById("focusTbody");
+      const mobile = document.getElementById("focusMobileList");
+      tbody.innerHTML = "";
+      mobile.innerHTML = "";
 
-    function toggleMarked(symbol){
-      const set = new Set(STATE.marked || []);
-      if(set.has(symbol)) set.delete(symbol);
-      else set.add(symbol);
-      STATE.marked = Array.from(set);
-      saveState();
-      renderAll();
-    }
+      STATE.focus.forEach((row, idx) => {
+        const symbol = row.symbol;
+        const name = getCompanyName(symbol);
+        const themes = getThemes(symbol).slice(0,3);
+        const decision = row.decision || {};
+        const diff = safePct(row.price, STATE.scan.find(x=>x.symbol===symbol)?.prev);
+        const isSignal = !!decision.isSignal;
 
-    function removeTemp(symbol){
-      const next = (STATE.meta.tempExcluded || []).filter(s => s !== symbol);
-      STATE.meta.tempExcluded = next;
-      saveState();
-      renderAll();
-    }
-
-    function tempExclude(symbol){
-      const set = new Set(STATE.meta.tempExcluded || []);
-      set.add(symbol);
-      STATE.meta.tempExcluded = Array.from(set);
-      saveState();
-      renderAll();
-    }
-
-    function filteredFocusRows(){
-      const excluded = new Set(STATE.meta.tempExcluded || []);
-      return (STATE.meta.cache.focusRows || []).filter(r => !excluded.has(r.symbol));
-    }
-
-    function filteredWatchRows(){
-      const excluded = new Set(STATE.meta.tempExcluded || []);
-      return (STATE.meta.cache.watchRows || []).filter(r => !excluded.has(r.symbol));
-    }
-
-    function filteredPoolRows(){
-      const excluded = new Set(STATE.meta.tempExcluded || []);
-      return (STATE.meta.cache.poolRows || []).filter(r => !excluded.has(r.symbol));
-    }
-
-    function buildFocusRowHtml(row){
-      const decision = row.decision || {};
-      const themes = getThemes(row.symbol);
-      const changePct = row.prev ? ((row.price - row.prev) / row.prev) * 100 : 0;
-      const rankBadge = `<span class="focus-rank">${row.rank || "-"}</span>`;
-      const markClass = isMarked(row.symbol) ? "symbol-mark active" : "symbol-mark";
-      const signalMainClass = decision.isSignal ? "signal-row" : "";
-      const signalSubClass = decision.isSignal ? "signal-subrow" : "";
-      const themeTags = themes.slice(0,3).map(t => `<span class="theme-pill">${escapeHtml(t)}</span>`).join("");
-      const newsUrl = buildYahooNewsUrl(row.symbol);
-      const chartUrl = buildTradingViewUrl(row.symbol);
-
-      return `
-        <tr class="${signalMainClass}">
+        const tr = document.createElement("tr");
+        if(isSignal) tr.className = "signal-row";
+        tr.innerHTML = `
           <td class="sticky-col">
-            <div class="focus-headband">
-              ${rankBadge}
-              <button class="${markClass}" onclick="toggleMarked('${row.symbol}')">★</button>
-              <div class="head-code">${escapeHtml(row.symbol)}</div>
-              <div class="head-name">${escapeHtml(getCompanyName(row.symbol))}</div>
-              <button class="row-action-btn delete-btn" onclick="tempExclude('${row.symbol}')">削除</button>
+            <div class="cell-headband">
+              <button class="symbol-mark ${STATE.marked.includes(symbol) ? "active" : ""}" data-mark="${symbol}">★</button>
+              <div class="head-code">${symbol}</div>
+              <div class="head-name">${escapeHtml(name)}</div>
+              <button class="row-action-btn delete-btn" data-delete="${symbol}">削除</button>
             </div>
           </td>
+          <td><span class="price">${fmtPrice(row.price)}</span><br><span class="${diff>0?"up":diff<0?"down":"flat"} small">${fmtPct(diff)}</span></td>
+          <td><span class="score ${scoreClass(decision.score||0)}">${decision.score ?? "-"}</span></td>
+          <td><span class="chip ${trendClass(decision.trend, isSignal)}">${escapeHtml(decision.trend || "-")}</span></td>
+          <td><span class="chip ${triggerClass(decision.trigger)}">${escapeHtml(decision.trigger || "-")}</span></td>
           <td>
-            <div class="price">${formatPrice(row.price)}</div>
-            <div class="${priceClassByPct(changePct)} small">${formatPct(changePct)}</div>
-          </td>
-          <td><span class="score score-gold">${Math.round(decision.score || 0)}</span></td>
-          <td><span class="chip ${decision.trendClass || ""} ${decision.trendEntryClass || ""}">${escapeHtml(decision.trend || "-")}</span></td>
-          <td><span class="chip ${decision.triggerClass || ""}">${escapeHtml(decision.trigger || "-")}</span></td>
-          <td>
-            <div class="entrybox ${decision.entryHeatClass || ""}">
-              <div class="entry-main">${formatPrice(decision.entryLow)} - ${formatPrice(decision.entryHigh)}</div>
-              <div class="entry-sub">${escapeHtml(decision.entrySide || "WAIT")}</div>
+            <div class="entrybox ${isSignal ? "entry-heat-mid" : ""}">
+              <div class="entry-main">${fmtPrice(decision.entryMin)} - ${fmtPrice(decision.entryMax)}</div>
+              <div class="entry-sub">${isSignal ? "ENTRY" : "WAIT"}</div>
             </div>
           </td>
-          <td><div class="rrbox"><div class="rr-main">${formatPrice(decision.sl)}</div><div class="rr-sub muted">SL</div></div></td>
-          <td><div class="rrbox"><div class="rr-main">${formatPrice(decision.tp)}</div><div class="rr-sub muted">TP</div></div></td>
-        </tr>
-        <tr class="subrow focus-subrow ${signalSubClass}">
+          <td>${fmtPrice(decision.sl)}</td>
+          <td>${fmtPrice(decision.tp)}</td>
+        `;
+
+        const sub = document.createElement("tr");
+        sub.className = `subrow focus-subrow ${isSignal ? "signal-subrow" : ""}`;
+        sub.innerHTML = `
           <td colspan="8">
             <div class="focus-meta-stack">
+              <div class="focus-headband">
+                <div class="focus-rank">${idx+1}</div>
+                <button class="symbol-mark ${STATE.marked.includes(symbol) ? "active" : ""}" data-mark="${symbol}">★</button>
+                <div class="head-code">${symbol}</div>
+                <div class="head-name">${escapeHtml(name)}</div>
+                <button class="row-action-btn delete-btn" data-delete="${symbol}">削除</button>
+              </div>
+
               <div class="focus-theme-block">
                 <div class="focus-theme-label">テーマ検知</div>
-                <div class="focus-theme-tags">${themeTags}</div>
+                <div class="focus-theme-tags">
+                  ${themes.length ? themes.map(t => `<span class="theme-pill">${escapeHtml(t)}</span>`).join("") : `<span class="theme-pill">テーマなし</span>`}
+                </div>
               </div>
+
               <div class="focus-mini-row">
-                <span class="focus-mini-strong">Total ${Math.round(decision.score || 0)}</span>
-                <span class="focus-mini-soft">Signal ${decision.isSignal ? "ON" : "WAIT"}</span>
+                <span class="focus-mini-strong">Total ${decision.score ?? "-"}</span>
+                <span class="focus-mini-soft">Signal ${isSignal ? "ON" : "WAIT"}</span>
+                <span class="focus-mini-soft">RR ${isValidNum(decision.rr) ? decision.rr.toFixed(2) : "-"}</span>
               </div>
+
+              <div class="focus-comment-block">
+                <div class="comment-text">
+                  <span class="comment-label">コメント:</span>
+                  <span class="comment-body">${escapeHtml(decision.comment || "-")}</span>
+                </div>
+              </div>
+
               <div class="meta-grid">
                 <div class="meta-cell">
-                  <div class="comment-text">
-                    <span class="comment-label">Comment</span>
-                    <span class="comment-body">${escapeHtml(decision.comment || "-")}</span>
+                  <div class="diagnostic-line">
+                    trend=${escapeHtml(decision.trend||"-")} / trigger=${escapeHtml(decision.trigger||"-")} / score=${decision.score ?? "-"} / distance=${isValidNum(decision.entryDistanceRate) ? (decision.entryDistanceRate*100).toFixed(2)+"%" : "-"} / room=${isValidNum(decision.upsideRoom) ? (decision.upsideRoom*100).toFixed(2)+"%" : "-"} / risk=${isValidNum(decision.riskWidth) ? (decision.riskWidth*100).toFixed(2)+"%" : "-"}
                   </div>
                 </div>
                 <div class="meta-cell">
-                  <a class="meta-link meta-link-news" href="${newsUrl}" target="_blank" rel="noopener noreferrer">News</a>
-                  <a class="meta-link meta-link-tv" href="${chartUrl}" target="_blank" rel="noopener noreferrer" style="margin-left:8px;">Chart</a>
+                  <a class="meta-link meta-link-news" href="${getYahooFinanceUrl(symbol)}" target="_blank" rel="noopener noreferrer">Yahoo</a>
+                  <a class="meta-link meta-link-tv" href="${getTradingViewUrl(symbol)}" target="_blank" rel="noopener noreferrer">TV</a>
                 </div>
               </div>
             </div>
           </td>
-        </tr>
-      `;
-    }
+        `;
 
-    function buildWatchRowHtml(row){
-      const themeTags = getThemes(row.symbol).slice(0,3).map(t => `<span class="theme-pill">${escapeHtml(t)}</span>`).join("");
-      const markClass = isMarked(row.symbol) ? "symbol-mark active" : "symbol-mark";
+        tbody.appendChild(tr);
+        tbody.appendChild(sub);
 
-      return `
-        <tr>
-          <td class="sticky-col">
-            <div class="cell-headband">
-              <button class="${markClass}" onclick="toggleMarked('${row.symbol}')">★</button>
-              <div class="head-code">${escapeHtml(row.symbol)}</div>
-              <div class="head-name">${escapeHtml(getCompanyName(row.symbol))}</div>
-              <button class="row-action-btn delete-btn" onclick="tempExclude('${row.symbol}')">削除</button>
-            </div>
-          </td>
-          <td>
-            <div class="price">${formatPrice(row.price)}</div>
-            <div class="${priceClassByPct(row.changePct)} small">${formatPct(row.changePct)}</div>
-          </td>
-          <td><span class="score score-green">${Math.round(row.score || 0)}</span></td>
-          <td><span class="chip ${row.trend === "上昇" ? "trend-up" : row.trend === "下降" ? "trend-down" : "trend-range"}">${escapeHtml(row.trend)}</span></td>
-          <td><span class="chip">${formatVolume(row.volume)}</span></td>
-        </tr>
-        <tr class="subrow watch-subrow">
-          <td colspan="5">
-            <div class="meta-grid">
-              <div class="meta-cell">
-                <div class="comment-text">
-                  <span class="comment-label">Theme</span>
-                  <span class="comment-body">${themeTags || '<span class="mobile-fallback">未設定</span>'}</span>
-                </div>
-              </div>
-              <div class="meta-cell">
-                <a class="meta-link meta-link-news" href="${row.newsUrl}" target="_blank" rel="noopener noreferrer">News</a>
-                <a class="meta-link meta-link-tv" href="${row.chartUrl}" target="_blank" rel="noopener noreferrer" style="margin-left:8px;">Chart</a>
-              </div>
-            </div>
-          </td>
-        </tr>
-      `;
-    }
-
-    function buildPoolRowHtml(row){
-      const themeTags = getThemes(row.symbol).slice(0,3).map(t => `<span class="theme-pill">${escapeHtml(t)}</span>`).join("");
-      const markClass = isMarked(row.symbol) ? "symbol-mark active" : "symbol-mark";
-
-      return `
-        <tr>
-          <td class="sticky-col">
-            <div class="cell-headband">
-              <button class="${markClass}" onclick="toggleMarked('${row.symbol}')">★</button>
-              <div class="head-code">${escapeHtml(row.symbol)}</div>
-              <div class="head-name">${escapeHtml(getCompanyName(row.symbol))}</div>
-              <button class="row-action-btn delete-btn" onclick="tempExclude('${row.symbol}')">削除</button>
-            </div>
-          </td>
-          <td><div class="price">${formatPrice(row.price)}</div></td>
-          <td><div class="${priceClassByPct(row.changePct)}">${formatPct(row.changePct)}</div></td>
-        </tr>
-        <tr class="subrow pool-subrow">
-          <td colspan="3">
-            <div class="meta-grid">
-              <div class="meta-cell">
-                <div class="comment-text">
-                  <span class="comment-label">Theme</span>
-                  <span class="comment-body">${themeTags || '<span class="mobile-fallback">未設定</span>'}</span>
-                </div>
-              </div>
-              <div class="meta-cell">
-                <a class="meta-link meta-link-news" href="${row.newsUrl}" target="_blank" rel="noopener noreferrer">News</a>
-                <a class="meta-link meta-link-tv" href="${row.chartUrl}" target="_blank" rel="noopener noreferrer" style="margin-left:8px;">Chart</a>
-              </div>
-            </div>
-          </td>
-        </tr>
-      `;
-    }
-
-    function renderFocusTable(rows){
-      const tbody = document.getElementById("focusTbody");
-      tbody.innerHTML = rows.map(buildFocusRowHtml).join("");
-    }
-
-    function renderWatchTable(rows){
-      const tbody = document.getElementById("watchTbody");
-      tbody.innerHTML = rows.map(buildWatchRowHtml).join("");
-    }
-
-    function renderPoolTable(rows){
-      const tbody = document.getElementById("poolTbody");
-      tbody.innerHTML = rows.map(buildPoolRowHtml).join("");
-    }
-
-    function buildFocusMobileCard(row){
-      const d = row.decision || {};
-      const themes = getThemes(row.symbol).slice(0,3);
-      const changePct = row.prev ? ((row.price - row.prev) / row.prev) * 100 : 0;
-      const cardClass = [
-        "mobile-stock-card",
-        "focus-mobile-card",
-        d.isSignal ? "mobile-entry-glow" : ""
-      ].filter(Boolean).join(" ");
-
-      return `
-        <div class="${cardClass}">
+        const card = document.createElement("div");
+        card.className = `mobile-stock-card focus-mobile-card ${isSignal ? "mobile-entry-glow" : ""}`;
+        card.innerHTML = `
           <div class="mobile-row">
-            <span class="mobile-rank-badge">${row.rank || "-"}</span>
-            <span class="mobile-code">${escapeHtml(row.symbol)}</span>
-            <div class="mobile-name">${escapeHtml(getCompanyName(row.symbol))}</div>
-            <span class="mobile-status ${d.isSignal ? "mobile-status-entry" : "mobile-status-wait"}">${d.isSignal ? "ENTRY" : "WAIT"}</span>
+            <div class="mobile-rank-badge">${idx+1}</div>
+            <div class="mobile-code">${symbol}</div>
+            <div class="mobile-name">${escapeHtml(name)}</div>
+            <div class="mobile-status ${isSignal ? "mobile-status-entry" : "mobile-status-wait"}">${isSignal ? "ENTRY" : "WAIT"}</div>
           </div>
 
           <div class="mobile-row mobile-price-row">
-            <div class="mobile-price-strong">${formatPrice(row.price)}</div>
-            <div class="mobile-price-side-label ${priceClassByPct(changePct)}">${formatPct(changePct)}</div>
+            <div class="mobile-price-strong">${fmtPrice(row.price)}</div>
+            <div class="mobile-price-side-label ${diff>0?"up":diff<0?"down":"flat"}">${fmtPct(diff)}</div>
           </div>
 
           <div class="mobile-row mobile-score-trend-row">
             <div class="mobile-kpi mobile-kpi-total">
               <div class="mobile-kpi-label">TOTAL</div>
-              <div class="mobile-kpi-value">${Math.round(d.score || 0)}</div>
+              <div class="mobile-kpi-value">${decision.score ?? "-"}</div>
             </div>
             <div class="mobile-kpi mobile-kpi-trend">
               <div class="mobile-kpi-label">TREND</div>
-              <div class="mobile-kpi-value">${escapeHtml(d.trend || "-")}</div>
+              <div class="mobile-kpi-value">${escapeHtml(decision.trend || "-")}</div>
             </div>
           </div>
 
           <div class="mobile-row mobile-band-grid">
             <div class="mobile-band mobile-band-entry">
               <div class="mobile-band-label">Entry帯</div>
-              <div class="mobile-band-value">${formatPrice(d.entryLow)} - ${formatPrice(d.entryHigh)}</div>
+              <div class="mobile-band-value">${fmtPrice(decision.entryMin)} - ${fmtPrice(decision.entryMax)}</div>
             </div>
             <div class="mobile-band">
               <div class="mobile-band-label">SL</div>
-              <div class="mobile-band-value">${formatPrice(d.sl)}</div>
+              <div class="mobile-band-value">${fmtPrice(decision.sl)}</div>
             </div>
             <div class="mobile-band">
               <div class="mobile-band-label">TP</div>
-              <div class="mobile-band-value">${formatPrice(d.tp)}</div>
+              <div class="mobile-band-value">${fmtPrice(decision.tp)}</div>
             </div>
           </div>
 
           <div class="mobile-row mobile-inline-metrics">
-            <span class="mobile-mini-chip mobile-mini-chip-strong">Signal ${d.isSignal ? "ON" : "WAIT"}</span>
-            <span class="mobile-mini-chip">Trigger ${escapeHtml(d.trigger || "-")}</span>
+            <span class="mobile-mini-chip mobile-mini-chip-strong">Signal ${isSignal ? "ON" : "WAIT"}</span>
+            <span class="mobile-mini-chip">Trigger ${escapeHtml(decision.trigger || "-")}</span>
+            <span class="mobile-mini-chip">RR ${isValidNum(decision.rr) ? decision.rr.toFixed(2) : "-"}</span>
           </div>
 
           <div class="mobile-row mobile-tags">
-            ${themes.map(t => `<span class="mobile-tag">${escapeHtml(t)}</span>`).join("")}
+            ${themes.length ? themes.map(t => `<span class="mobile-tag">${escapeHtml(t)}</span>`).join("") : `<span class="mobile-tag">テーマなし</span>`}
           </div>
 
           <div class="mobile-row mobile-comment-row">
-            <div class="mobile-comment"><span class="mobile-comment-label">Comment</span>${escapeHtml(d.comment || "-")}</div>
+            <div class="mobile-comment"><span class="mobile-comment-label">コメント:</span>${escapeHtml(decision.comment || "-")}</div>
           </div>
 
           <div class="mobile-row mobile-bottom-actions">
-            <button class="mobile-btn mobile-btn-delete" onclick="tempExclude('${row.symbol}')">削除</button>
-            <a class="mobile-btn mobile-btn-news" href="${buildYahooNewsUrl(row.symbol)}" target="_blank" rel="noopener noreferrer">News</a>
-            <a class="mobile-btn mobile-btn-chart" href="${buildTradingViewUrl(row.symbol)}" target="_blank" rel="noopener noreferrer">Chart</a>
+            <button class="mobile-btn mobile-btn-delete" data-delete="${symbol}">削除</button>
+            <a class="mobile-btn mobile-btn-news" href="${getYahooFinanceUrl(symbol)}" target="_blank" rel="noopener noreferrer">Yahoo</a>
+            <a class="mobile-btn mobile-btn-chart" href="${getTradingViewUrl(symbol)}" target="_blank" rel="noopener noreferrer">TV</a>
           </div>
-        </div>
-      `;
+        `;
+        mobile.appendChild(card);
+      });
     }
 
-    function buildWatchMobileCard(row){
-      const themes = getThemes(row.symbol).slice(0,3);
-      return `
-        <div class="mobile-stock-card watch-mobile-card">
+    function renderWatch(){
+      const tbody = document.getElementById("watchTbody");
+      const mobile = document.getElementById("watchMobileList");
+      tbody.innerHTML = "";
+      mobile.innerHTML = "";
+
+      STATE.watch.forEach((row, idx) => {
+        const symbol = row.symbol;
+        const name = getCompanyName(symbol);
+        const diff = safePct(row.price, row.prev);
+        const themes = getThemes(symbol).slice(0,3);
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="sticky-col">
+            <div class="cell-headband">
+              <button class="symbol-mark ${STATE.marked.includes(symbol) ? "active" : ""}" data-mark="${symbol}">★</button>
+              <div class="head-code">${symbol}</div>
+              <div class="head-name">${escapeHtml(name)}</div>
+              <button class="row-action-btn delete-btn" data-delete="${symbol}">削除</button>
+            </div>
+          </td>
+          <td><span class="price">${fmtPrice(row.price)}</span><br><span class="${diff>0?"up":diff<0?"down":"flat"} small">${fmtPct(diff)}</span></td>
+          <td><span class="score ${scoreClass(row.score||0)}">${row.score ?? "-"}</span></td>
+          <td><span class="chip ${trendClass(row.trend,false)}">${escapeHtml(row.trend || "-")}</span></td>
+          <td>${fmtNum(row.volume)}</td>
+        `;
+
+        const sub = document.createElement("tr");
+        sub.className = "subrow watch-subrow";
+        sub.innerHTML = `
+          <td colspan="5">
+            <div class="meta-grid">
+              <div class="meta-cell">
+                <div class="comment-text">
+                  <span class="comment-label">テーマ:</span>
+                  <span class="comment-body">${escapeHtml(themes.join(" / ") || "テーマなし")}</span>
+                </div>
+              </div>
+              <div class="meta-cell">
+                <a class="meta-link meta-link-news" href="${getYahooFinanceUrl(symbol)}" target="_blank" rel="noopener noreferrer">Yahoo</a>
+                <a class="meta-link meta-link-tv" href="${getTradingViewUrl(symbol)}" target="_blank" rel="noopener noreferrer">TV</a>
+              </div>
+            </div>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+        tbody.appendChild(sub);
+
+        const card = document.createElement("div");
+        card.className = "mobile-stock-card watch-mobile-card";
+        card.innerHTML = `
           <div class="mobile-row">
-            <span class="mobile-code">${escapeHtml(row.symbol)}</span>
-            <div class="mobile-name">${escapeHtml(getCompanyName(row.symbol))}</div>
-            <span class="mobile-status mobile-status-wait">WATCH</span>
+            <div class="mobile-rank-badge">${idx+1}</div>
+            <div class="mobile-code">${symbol}</div>
+            <div class="mobile-name">${escapeHtml(name)}</div>
+            <div class="mobile-status mobile-status-wait">WATCH</div>
           </div>
 
           <div class="mobile-row mobile-price-row">
-            <div class="mobile-price-strong">${formatPrice(row.price)}</div>
-            <div class="mobile-price-side-label ${priceClassByPct(row.changePct)}">${formatPct(row.changePct)}</div>
+            <div class="mobile-price-strong">${fmtPrice(row.price)}</div>
+            <div class="mobile-price-side-label ${diff>0?"up":diff<0?"down":"flat"}">${fmtPct(diff)}</div>
           </div>
 
           <div class="mobile-row mobile-score-trend-row">
-            <div class="mobile-kpi">
-              <div class="mobile-kpi-label">SCORE</div>
-              <div class="mobile-kpi-value">${Math.round(row.score || 0)}</div>
+            <div class="mobile-kpi mobile-kpi-total">
+              <div class="mobile-kpi-label">TOTAL</div>
+              <div class="mobile-kpi-value">${row.score ?? "-"}</div>
             </div>
-            <div class="mobile-kpi">
+            <div class="mobile-kpi mobile-kpi-trend">
               <div class="mobile-kpi-label">TREND</div>
               <div class="mobile-kpi-value">${escapeHtml(row.trend || "-")}</div>
             </div>
           </div>
 
           <div class="mobile-row mobile-inline-metrics">
-            <span class="mobile-mini-chip">出来高 ${formatVolume(row.volume)}</span>
+            <span class="mobile-mini-chip">出来高 ${fmtNum(row.volume)}</span>
           </div>
 
           <div class="mobile-row mobile-tags">
-            ${themes.map(t => `<span class="mobile-tag">${escapeHtml(t)}</span>`).join("")}
+            ${themes.length ? themes.map(t => `<span class="mobile-tag">${escapeHtml(t)}</span>`).join("") : `<span class="mobile-tag">テーマなし</span>`}
           </div>
 
           <div class="mobile-row mobile-bottom-actions">
-            <button class="mobile-btn mobile-btn-delete" onclick="tempExclude('${row.symbol}')">削除</button>
-            <a class="mobile-btn mobile-btn-news" href="${row.newsUrl}" target="_blank" rel="noopener noreferrer">News</a>
-            <a class="mobile-btn mobile-btn-chart" href="${row.chartUrl}" target="_blank" rel="noopener noreferrer">Chart</a>
+            <button class="mobile-btn mobile-btn-delete" data-delete="${symbol}">削除</button>
+            <a class="mobile-btn mobile-btn-news" href="${getYahooFinanceUrl(symbol)}" target="_blank" rel="noopener noreferrer">Yahoo</a>
+            <a class="mobile-btn mobile-btn-chart" href="${getTradingViewUrl(symbol)}" target="_blank" rel="noopener noreferrer">TV</a>
           </div>
-        </div>
-      `;
+        `;
+        mobile.appendChild(card);
+      });
     }
 
-    function buildPoolMobileCard(row){
-      const themes = getThemes(row.symbol).slice(0,3);
-      return `
-        <div class="mobile-stock-card pool-mobile-card">
+    function renderPool(){
+      const tbody = document.getElementById("poolTbody");
+      const mobile = document.getElementById("poolMobileList");
+      tbody.innerHTML = "";
+      mobile.innerHTML = "";
+
+      STATE.pool.forEach((row, idx) => {
+        const symbol = row.symbol;
+        const name = getCompanyName(symbol);
+        const diff = row.diff;
+        const themes = getThemes(symbol).slice(0,3);
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="sticky-col">
+            <div class="cell-headband">
+              <button class="symbol-mark ${STATE.marked.includes(symbol) ? "active" : ""}" data-mark="${symbol}">★</button>
+              <div class="head-code">${symbol}</div>
+              <div class="head-name">${escapeHtml(name)}</div>
+              <button class="row-action-btn delete-btn" data-delete="${symbol}">削除</button>
+            </div>
+          </td>
+          <td><span class="price">${fmtPrice(row.price)}</span></td>
+          <td><span class="${diff>0?"up":diff<0?"down":"flat"}">${fmtPct(diff)}</span></td>
+        `;
+
+        const sub = document.createElement("tr");
+        sub.className = "subrow pool-subrow";
+        sub.innerHTML = `
+          <td colspan="3">
+            <div class="meta-grid">
+              <div class="meta-cell">
+                <div class="comment-text">
+                  <span class="comment-label">テーマ:</span>
+                  <span class="comment-body">${escapeHtml(themes.join(" / ") || "テーマなし")}</span>
+                </div>
+              </div>
+              <div class="meta-cell">
+                <a class="meta-link meta-link-news" href="${getYahooFinanceUrl(symbol)}" target="_blank" rel="noopener noreferrer">Yahoo</a>
+                <a class="meta-link meta-link-tv" href="${getTradingViewUrl(symbol)}" target="_blank" rel="noopener noreferrer">TV</a>
+              </div>
+            </div>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+        tbody.appendChild(sub);
+
+        const card = document.createElement("div");
+        card.className = "mobile-stock-card pool-mobile-card";
+        card.innerHTML = `
           <div class="mobile-row">
-            <span class="mobile-code">${escapeHtml(row.symbol)}</span>
-            <div class="mobile-name">${escapeHtml(getCompanyName(row.symbol))}</div>
-            <span class="mobile-status mobile-status-wait">POOL</span>
+            <div class="mobile-rank-badge">${idx+1}</div>
+            <div class="mobile-code">${symbol}</div>
+            <div class="mobile-name">${escapeHtml(name)}</div>
+            <div class="mobile-status mobile-status-wait">POOL</div>
           </div>
 
           <div class="mobile-row mobile-price-row">
-            <div class="mobile-price-strong">${formatPrice(row.price)}</div>
-            <div class="mobile-price-side-label ${priceClassByPct(row.changePct)}">${formatPct(row.changePct)}</div>
+            <div class="mobile-price-strong">${fmtPrice(row.price)}</div>
+            <div class="mobile-price-side-label ${diff>0?"up":diff<0?"down":"flat"}">${fmtPct(diff)}</div>
           </div>
 
           <div class="mobile-row mobile-tags">
-            ${themes.map(t => `<span class="mobile-tag">${escapeHtml(t)}</span>`).join("")}
+            ${themes.length ? themes.map(t => `<span class="mobile-tag">${escapeHtml(t)}</span>`).join("") : `<span class="mobile-tag">テーマなし</span>`}
           </div>
 
           <div class="mobile-row mobile-bottom-actions">
-            <button class="mobile-btn mobile-btn-delete" onclick="tempExclude('${row.symbol}')">削除</button>
-            <a class="mobile-btn mobile-btn-news" href="${row.newsUrl}" target="_blank" rel="noopener noreferrer">News</a>
-            <a class="mobile-btn mobile-btn-chart" href="${row.chartUrl}" target="_blank" rel="noopener noreferrer">Chart</a>
+            <button class="mobile-btn mobile-btn-delete" data-delete="${symbol}">削除</button>
+            <a class="mobile-btn mobile-btn-news" href="${getYahooFinanceUrl(symbol)}" target="_blank" rel="noopener noreferrer">Yahoo</a>
+            <a class="mobile-btn mobile-btn-chart" href="${getTradingViewUrl(symbol)}" target="_blank" rel="noopener noreferrer">TV</a>
           </div>
-        </div>
-      `;
+        `;
+        mobile.appendChild(card);
+      });
     }
 
-    function renderFocusMobile(rows){
-      document.getElementById("focusMobileList").innerHTML = rows.map(buildFocusMobileCard).join("");
-    }
+    function updateSummary(){
+      const focusSummary = document.getElementById("focusSummary");
+      const watchSummary = document.getElementById("watchSummary");
+      const poolSummary = document.getElementById("poolSummary");
 
-    function renderWatchMobile(rows){
-      document.getElementById("watchMobileList").innerHTML = rows.map(buildWatchMobileCard).join("");
-    }
+      const focusSignalCount = STATE.focus.filter(x => x?.decision?.isSignal).length;
+      const focusTopThemes = collectTopThemes(STATE.focus.map(x=>x.symbol));
+      const watchTopThemes = collectTopThemes(STATE.watch.map(x=>x.symbol));
+      const poolTopThemes = collectTopThemes(STATE.pool.map(x=>x.symbol));
 
-    function renderPoolMobile(rows){
-      document.getElementById("poolMobileList").innerHTML = rows.map(buildPoolMobileCard).join("");
-    }
-
-    function renderSummaries(){
-      const focusRows = filteredFocusRows();
-      const watchRows = filteredWatchRows();
-      const poolRows = filteredPoolRows();
-
-      const focusSignalCount = focusRows.filter(r => r.decision?.isSignal).length;
-      const focusThemes = [...new Set(focusRows.flatMap(r => getThemes(r.symbol)).slice(0, 30))].slice(0,3);
-
-      document.getElementById("focusSummary").innerHTML = `
+      focusSummary.innerHTML = `
         <div class="focus-summary-stack">
           <div class="focus-summary-row">
-            <span class="mini">件数 ${focusRows.length}</span>
-            <span class="mini">ENTRY ${focusSignalCount}</span>
+            <span class="mini">件数 ${STATE.focus.length}</span>
+            <span class="mini">Signal ${focusSignalCount}</span>
           </div>
           <div class="theme-detect-block">
             <div class="theme-detect-head">テーマ検知</div>
             <div class="theme-detect-tags">
-              ${focusThemes.map(t => `<span class="theme-detect-pill">${escapeHtml(t)}</span>`).join("")}
+              ${focusTopThemes.length ? focusTopThemes.map(t => `<span class="theme-detect-pill">${escapeHtml(t)}</span>`).join("") : `<span class="theme-detect-pill">テーマなし</span>`}
             </div>
           </div>
         </div>
       `;
 
-      document.getElementById("watchSummary").innerHTML = `
-        <span class="mini">件数 ${watchRows.length}</span>
-        <span class="mini">上昇 ${watchRows.filter(r=>r.trend==="上昇").length}</span>
+      watchSummary.innerHTML = `
+        <span class="mini">件数 ${STATE.watch.length}</span>
+        ${watchTopThemes.slice(0,3).map(t => `<span class="mini">${escapeHtml(t)}</span>`).join("")}
       `;
 
-      document.getElementById("poolSummary").innerHTML = `
-        <span class="mini">件数 ${poolRows.length}</span>
-        <span class="mini">保管中</span>
+      poolSummary.innerHTML = `
+        <span class="mini">件数 ${STATE.pool.length}</span>
+        ${poolTopThemes.slice(0,3).map(t => `<span class="mini">${escapeHtml(t)}</span>`).join("")}
       `;
     }
 
-    function formatUpdated(ts){
-      if(!ts) return "未更新";
-      const d = new Date(ts);
-      return `${d.getHours().toString().padStart(2,"0")}:${d.getMinutes().toString().padStart(2,"0")} 更新`;
+    function collectTopThemes(symbols){
+      const map = new Map();
+      symbols.forEach(symbol => {
+        (getThemes(symbol) || []).forEach(theme => {
+          map.set(theme, (map.get(theme) || 0) + 1);
+        });
+      });
+      return [...map.entries()]
+        .sort((a,b) => b[1] - a[1])
+        .slice(0,3)
+        .map(x => x[0]);
     }
 
-    function renderUpdatedTimes(){
-      document.getElementById("focusUpdated").textContent = formatUpdated(STATE.meta.lastFocusAt);
-      document.getElementById("watchUpdated").textContent = formatUpdated(STATE.meta.lastWatchAt);
-      document.getElementById("poolUpdated").textContent  = formatUpdated(STATE.meta.lastPoolAt);
-    }
-
-    function renderAll(){
-      const focusRows = filteredFocusRows();
-      const watchRows = filteredWatchRows();
-      const poolRows = filteredPoolRows();
-
-      renderFocusTable(focusRows);
-      renderWatchTable(watchRows);
-      renderPoolTable(poolRows);
-
-      renderFocusMobile(focusRows);
-      renderWatchMobile(watchRows);
-      renderPoolMobile(poolRows);
-
-      renderSummaries();
-      renderUpdatedTimes();
-    }
-
-    function setAutoLoading(active, text="Universe読み込み中...（初回は少し時間がかかります）"){
-      const bar = document.getElementById("autoLoadingBar");
-      const label = document.getElementById("autoLoadingText");
-      if(label) label.textContent = text;
-      if(bar) bar.classList.toggle("active", !!active);
-    }
-
-    function rotateMotto(){
-      const target = document.querySelector("#mottoBar .motto-text");
-      if(!target) return;
-      target.textContent = pickRandom(MOTTO_LIST);
+    function updateUpdatedTime(){
+      document.getElementById("focusUpdated").textContent = fmtTime(STATE.meta.lastFocusAt);
+      document.getElementById("watchUpdated").textContent = fmtTime(STATE.meta.lastWatchAt);
+      document.getElementById("poolUpdated").textContent = fmtTime(STATE.meta.lastPoolAt);
     }
 
     async function runInitialScan(){
-      setAutoLoading(true, `Universe読み込み中... ${SCAN_UNIVERSE.length}銘柄を確認中`);
-      try{
-        const chunks = chunkArray(SCAN_UNIVERSE, 60);
-        let all = [];
+      setAutoLoading(true, "Universe読み込み中...（初回は少し時間がかかります）");
 
-        for(let i=0; i<chunks.length; i++){
-          setAutoLoading(true, `Universe読み込み中... ${i+1}/${chunks.length} ブロック`);
-          const part = await runLimited(chunks[i], SCAN_CONCURRENT, async(symbol)=>{
-            const res = await analyzeScan(symbol);
-            if(!res) return null;
-            return {
-              ...res,
-              company: getCompanyName(symbol),
-              themes: getThemes(symbol)
-            };
-          });
-          all = all.concat(part);
-          if(i < chunks.length - 1){
-            await new Promise(r=>setTimeout(r, BETWEEN_CHUNK_DELAY));
-          }
-        }
+      const scanRows = await runWithConcurrency(
+        getActiveUniverse(),
+        async(symbol, idx) => {
+          const row = await analyzeScan(symbol);
+          if((idx+1) % 25 === 0) setAutoLoading(true, `Universe読み込み中... ${idx+1} / ${getActiveUniverse().length}`);
+          if((idx+1) % 15 === 0) await sleep(BETWEEN_CHUNK_DELAY);
+          return row;
+        },
+        SCAN_CONCURRENT
+      );
 
-        STATE.scan = all.sort((a,b)=>(b.score||0)-(a.score||0));
+      STATE.scan = scanRows.filter(Boolean);
 
-        const { focus, watch, pool } = classifySetup(STATE.scan);
+      const setup = classifySetup(STATE.scan);
+      const focusRows = await runWithConcurrency(setup.focus, analyzeFocus, FOCUS_CONCURRENT);
+      const watchRows = await runWithConcurrency(setup.watch, analyzeWatch, WATCH_CONCURRENT);
+      const poolRows  = await runWithConcurrency(setup.pool, analyzePool, POOL_CONCURRENT);
 
-        const focusRows = await runLimited(focus, FOCUS_CONCURRENT, async(row, idx)=>{
-          const detail = await analyzeFocus(row.symbol);
-          if(!detail){
-            return {
-              ...row,
-              rank: idx+1,
-              decision: {
-                trend:"レンジ",
-                trigger:"待機",
-                score:row.score || 0,
-                isSignal:false,
-                entrySide:"WAIT",
-                entryLow:row.price,
-                entryHigh:row.price,
-                sl:row.price ? row.price * 0.985 : null,
-                tp:row.price ? row.price * 1.015 : null,
-                comment:"取得不足",
-                trendClass:"trend-range",
-                triggerClass:"trigger-wait",
-                trendEntryClass:"",
-                entryHeatClass:""
-              },
-              isFallback:true
-            };
-          }
-          return { ...row, ...detail, rank: idx+1 };
-        });
+      STATE.focus = sortFocusRows(focusRows);
+      STATE.watch = sortWatchRows(watchRows);
+      STATE.pool  = sortPoolRows(poolRows);
 
-        const watchRows = await runLimited(watch, WATCH_CONCURRENT, async(row, idx)=>{
-          const detail = await analyzeWatch(row.symbol);
-          if(!detail){
-            return {
-              ...row,
-              rank: idx+1,
-              trend:"レンジ",
-              volume:0,
-              changePct: row.prev ? ((row.price - row.prev)/row.prev)*100 : 0,
-              themes:getThemes(row.symbol),
-              newsUrl:buildYahooNewsUrl(row.symbol),
-              chartUrl:buildTradingViewUrl(row.symbol),
-              isFallback:true
-            };
-          }
-          return { ...row, ...detail, rank: idx+1 };
-        });
+      STATE.meta.lastFocusAt = Date.now();
+      STATE.meta.lastWatchAt = Date.now();
+      STATE.meta.lastPoolAt  = Date.now();
 
-        const poolRows = await runLimited(pool, POOL_CONCURRENT, async(row, idx)=>{
-          const detail = await analyzePool(row.symbol);
-          if(!detail){
-            return {
-              ...row,
-              rank: idx+1,
-              changePct: row.prev ? ((row.price - row.prev)/row.prev)*100 : 0,
-              themes:getThemes(row.symbol),
-              newsUrl:buildYahooNewsUrl(row.symbol),
-              chartUrl:buildTradingViewUrl(row.symbol),
-              isFallback:true
-            };
-          }
-          return { ...row, ...detail, rank: idx+1 };
-        });
+      STATE.meta.cache.focusRows = STATE.focus;
+      STATE.meta.cache.watchRows = STATE.watch;
+      STATE.meta.cache.poolRows  = STATE.pool;
 
-        STATE.meta.cache.focusRows = focusRows;
-        STATE.meta.cache.watchRows = watchRows;
-        STATE.meta.cache.poolRows  = poolRows;
-        STATE.focus = focusRows.map(r=>r.symbol);
-        STATE.watch = watchRows.map(r=>r.symbol);
-        STATE.pool  = poolRows.map(r=>r.symbol);
-        STATE.meta.lastFocusAt = Date.now();
-        STATE.meta.lastWatchAt = Date.now();
-        STATE.meta.lastPoolAt = Date.now();
-
-        saveState();
-        renderAll();
-      }catch(e){
-        console.error("runInitialScan error", e);
-      }finally{
-        setAutoLoading(false);
-      }
+      saveState();
+      renderAll();
+      setAutoLoading(false);
     }
 
     async function refreshFocusOnly(){
-      if(!STATE.focus?.length) return;
-      try{
-        const focusRows = await runLimited(STATE.focus, FOCUS_CONCURRENT, async(symbol, idx)=>{
-          const base = STATE.scan.find(x => x.symbol === symbol) || { symbol, score:0 };
-          const detail = await analyzeFocus(symbol);
-          if(!detail){
-            return {
-              ...base,
-              symbol,
-              price: base.price || null,
-              prev: base.prev || null,
-              rank: idx+1,
-              decision: {
-                trend:"レンジ",
-                trigger:"待機",
-                score:base.score || 0,
-                isSignal:false,
-                entrySide:"WAIT",
-                entryLow:base.price,
-                entryHigh:base.price,
-                sl:base.price ? base.price * 0.985 : null,
-                tp:base.price ? base.price * 1.015 : null,
-                comment:"取得不足",
-                trendClass:"trend-range",
-                triggerClass:"trigger-wait",
-                trendEntryClass:"",
-                entryHeatClass:""
-              },
-              isFallback:true
-            };
-          }
-          return { ...base, ...detail, rank: idx+1 };
-        });
-
-        STATE.meta.cache.focusRows = focusRows;
-        STATE.meta.lastFocusAt = Date.now();
-        saveState();
-        renderAll();
-      }catch(e){
-        console.error("refreshFocusOnly error", e);
-      }
+      const symbols = STATE.focus.map(x => x.symbol);
+      const rows = await runWithConcurrency(symbols, analyzeFocus, FOCUS_CONCURRENT);
+      STATE.focus = sortFocusRows(rows);
+      STATE.meta.lastFocusAt = Date.now();
+      STATE.meta.cache.focusRows = STATE.focus;
+      saveState();
+      renderAll();
     }
 
     async function refreshWatchOnly(){
-      if(!STATE.watch?.length) return;
-      try{
-        const watchRows = await runLimited(STATE.watch, WATCH_CONCURRENT, async(symbol, idx)=>{
-          const base = STATE.scan.find(x => x.symbol === symbol) || { symbol, score:0 };
-          const detail = await analyzeWatch(symbol);
-          if(!detail){
-            return {
-              ...base,
-              symbol,
-              rank: idx+1,
-              trend:"レンジ",
-              volume:0,
-              changePct: base.prev ? ((base.price - base.prev)/base.prev)*100 : 0,
-              themes:getThemes(symbol),
-              newsUrl:buildYahooNewsUrl(symbol),
-              chartUrl:buildTradingViewUrl(symbol),
-              isFallback:true
-            };
-          }
-          return { ...base, ...detail, rank: idx+1 };
-        });
-
-        STATE.meta.cache.watchRows = watchRows;
-        STATE.meta.lastWatchAt = Date.now();
-        saveState();
-        renderAll();
-      }catch(e){
-        console.error("refreshWatchOnly error", e);
-      }
+      const symbols = STATE.watch.map(x => x.symbol);
+      const rows = await runWithConcurrency(symbols, analyzeWatch, WATCH_CONCURRENT);
+      STATE.watch = sortWatchRows(rows);
+      STATE.meta.lastWatchAt = Date.now();
+      STATE.meta.cache.watchRows = STATE.watch;
+      saveState();
+      renderAll();
     }
 
     async function refreshPoolOnly(){
-      if(!STATE.pool?.length) return;
-      try{
-        const poolRows = await runLimited(STATE.pool, POOL_CONCURRENT, async(symbol, idx)=>{
-          const base = STATE.scan.find(x => x.symbol === symbol) || { symbol, score:0 };
-          const detail = await analyzePool(symbol);
-          if(!detail){
-            return {
-              ...base,
-              symbol,
-              rank: idx+1,
-              changePct: base.prev ? ((base.price - base.prev)/base.prev)*100 : 0,
-              themes:getThemes(symbol),
-              newsUrl:buildYahooNewsUrl(symbol),
-              chartUrl:buildTradingViewUrl(symbol),
-              isFallback:true
-            };
-          }
-          return { ...base, ...detail, rank: idx+1 };
-        });
+      const symbols = STATE.pool.map(x => x.symbol);
+      const rows = await runWithConcurrency(symbols, analyzePool, POOL_CONCURRENT);
+      STATE.pool = sortPoolRows(rows);
+      STATE.meta.lastPoolAt = Date.now();
+      STATE.meta.cache.poolRows = STATE.pool;
+      saveState();
+      renderAll();
+    }
 
-        STATE.meta.cache.poolRows = poolRows;
-        STATE.meta.lastPoolAt = Date.now();
+    function sortFocusRows(rows){
+      return [...rows].sort((a,b) => {
+        const sa = a?.decision?.score || 0;
+        const sb = b?.decision?.score || 0;
+        if(sb !== sa) return sb - sa;
+        return (b?.price || 0) - (a?.price || 0);
+      });
+    }
+
+    function sortWatchRows(rows){
+      return [...rows].sort((a,b) => {
+        const sa = a?.score || 0;
+        const sb = b?.score || 0;
+        if(sb !== sa) return sb - sa;
+        return (b?.volume || 0) - (a?.volume || 0);
+      });
+    }
+
+    function sortPoolRows(rows){
+      return [...rows].sort((a,b) => Math.abs(b?.diff || 0) - Math.abs(a?.diff || 0));
+    }
+
+    function getActiveUniverse(){
+      const excluded = new Set(STATE.meta.tempExcluded || []);
+      return SCAN_UNIVERSE.filter(symbol => !excluded.has(symbol));
+    }
+
+    function setAutoLoading(active, text=""){
+      const bar = document.getElementById("autoLoadingBar");
+      const label = document.getElementById("autoLoadingText");
+      if(active){
+        bar.classList.add("active");
+        if(text) label.textContent = text;
+      }else{
+        bar.classList.remove("active");
+      }
+    }
+
+    function sleep(ms){
+      return new Promise(r => setTimeout(r, ms));
+    }
+
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#39;");
+    }
+
+    function handleMark(symbol){
+      const set = new Set(STATE.marked || []);
+      if(set.has(symbol)) set.delete(symbol);
+      else set.add(symbol);
+      STATE.marked = [...set];
+      saveState();
+      renderAll();
+    }
+
+    function handleDelete(symbol){
+      if(!STATE.meta.tempExcluded.includes(symbol)){
+        STATE.meta.tempExcluded.push(symbol);
+      }
+      STATE.scan = STATE.scan.filter(x => x.symbol !== symbol);
+      STATE.focus = STATE.focus.filter(x => x.symbol !== symbol);
+      STATE.watch = STATE.watch.filter(x => x.symbol !== symbol);
+      STATE.pool = STATE.pool.filter(x => x.symbol !== symbol);
+      saveState();
+      renderAll();
+    }
+
+    function bindEvents(){
+      document.addEventListener("click", (e) => {
+        const mark = e.target.closest("[data-mark]");
+        if(mark){
+          handleMark(mark.getAttribute("data-mark"));
+          return;
+        }
+
+        const del = e.target.closest("[data-delete]");
+        if(del){
+          handleDelete(del.getAttribute("data-delete"));
+          return;
+        }
+      });
+
+      const symbolsInput = document.getElementById("symbolsInput");
+      symbolsInput.addEventListener("keydown", async (e) => {
+        if(e.key !== "Enter") return;
+        const raw = symbolsInput.value.trim();
+        if(!raw) return;
+
+        const inputSymbols = raw
+          .split(/[,\s、　]+/)
+          .map(x => x.trim().replace(/\.T$/i,""))
+          .filter(Boolean);
+
+        if(!inputSymbols.length) return;
+
+        setAutoLoading(true, "手動銘柄を読み込み中...");
+        const scanRows = await runWithConcurrency(inputSymbols, analyzeScan, 1);
+        const setup = classifySetup(scanRows);
+        const focusRows = await runWithConcurrency(setup.focus, analyzeFocus, 1);
+        const watchRows = await runWithConcurrency(setup.watch, analyzeWatch, 1);
+        const poolRows  = await runWithConcurrency(setup.pool, analyzePool, 1);
+
+        STATE.scan = scanRows;
+        STATE.focus = sortFocusRows(focusRows);
+        STATE.watch = sortWatchRows(watchRows);
+        STATE.pool  = sortPoolRows(poolRows);
+        STATE.meta.lastFocusAt = Date.now();
+        STATE.meta.lastWatchAt = Date.now();
+        STATE.meta.lastPoolAt  = Date.now();
+
         saveState();
         renderAll();
-      }catch(e){
-        console.error("refreshPoolOnly error", e);
-      }
-    }
+        setAutoLoading(false);
+      });
 
-    function bindInputs(){
       const searchInput = document.getElementById("searchInput");
-      const symbolsInput = document.getElementById("symbolsInput");
+      searchInput.addEventListener("input", () => {
+        applySearch(searchInput.value.trim());
+      });
+    }
 
-      if(searchInput){
-        searchInput.addEventListener("input", ()=>{
-          const q = searchInput.value.trim();
-          if(!q){
-            renderAll();
-            return;
-          }
+    function applySearch(keyword){
+      const q = keyword.toLowerCase();
+      const focusList = document.getElementById("focusMobileList");
+      const watchList = document.getElementById("watchMobileList");
+      const poolList  = document.getElementById("poolMobileList");
 
-          const filterFn = (row)=>{
-            const name = getCompanyName(row.symbol);
-            const themes = getThemes(row.symbol).join(" ");
-            return row.symbol.includes(q) || name.includes(q) || themes.includes(q);
-          };
-
-          const focusRows = filteredFocusRows().filter(filterFn);
-          const watchRows = filteredWatchRows().filter(filterFn);
-          const poolRows = filteredPoolRows().filter(filterFn);
-
-          renderFocusTable(focusRows);
-          renderWatchTable(watchRows);
-          renderPoolTable(poolRows);
-          renderFocusMobile(focusRows);
-          renderWatchMobile(watchRows);
-          renderPoolMobile(poolRows);
+      [focusList, watchList, poolList].forEach(list => {
+        [...list.children].forEach(card => {
+          const text = card.textContent.toLowerCase();
+          card.style.display = !q || text.includes(q) ? "" : "none";
         });
+      });
+
+      ["focusTbody","watchTbody","poolTbody"].forEach(id => {
+        const tbody = document.getElementById(id);
+        const rows = [...tbody.querySelectorAll("tr")];
+        for(let i=0; i<rows.length; i+=2){
+          const main = rows[i];
+          const sub  = rows[i+1];
+          const text = `${main?.textContent || ""} ${sub?.textContent || ""}`.toLowerCase();
+          const show = !q || text.includes(q);
+          if(main) main.style.display = show ? "" : "none";
+          if(sub) sub.style.display = show ? "" : "none";
+        }
+      });
+    }
+
+    function tick(){
+      const now = new Date();
+      const min = now.getMinutes();
+      const sec = now.getSeconds();
+
+      if(sec !== 0) return;
+
+      if(min % 5 === 0 && STATE.focus.length){
+        refreshFocusOnly().catch(()=>{});
       }
 
-      if(symbolsInput){
-        symbolsInput.addEventListener("keydown", async(e)=>{
-          if(e.key !== "Enter") return;
-          const raw = symbolsInput.value.trim();
-          if(!raw) return;
+      if(min % 15 === 0 && STATE.watch.length){
+        refreshWatchOnly().catch(()=>{});
+      }
 
-          const symbols = raw.split(/[\s,、]+/).map(s=>s.replace(/[^0-9A-Za-z]/g,"")).filter(Boolean);
-          if(!symbols.length) return;
-
-          setAutoLoading(true, `手動入力を解析中... ${symbols.length}件`);
-          try{
-            const scanRows = await runLimited(symbols, SCAN_CONCURRENT, async(symbol)=>{
-              const code = symbol.toUpperCase();
-              const res = await analyzeScan(code);
-              if(!res) return null;
-              return { ...res, company:getCompanyName(code), themes:getThemes(code) };
-            });
-
-            if(scanRows.length){
-              STATE.scan = scanRows.sort((a,b)=>(b.score||0)-(a.score||0));
-              const { focus, watch, pool } = classifySetup(STATE.scan);
-
-              const focusRows = await runLimited(focus, FOCUS_CONCURRENT, async(row, idx)=>{
-                const detail = await analyzeFocus(row.symbol);
-                return detail ? { ...row, ...detail, rank: idx+1 } : { ...row, rank: idx+1 };
-              });
-
-              const watchRows = await runLimited(watch, WATCH_CONCURRENT, async(row, idx)=>{
-                const detail = await analyzeWatch(row.symbol);
-                return detail ? { ...row, ...detail, rank: idx+1 } : { ...row, rank: idx+1 };
-              });
-
-              const poolRows = await runLimited(pool, POOL_CONCURRENT, async(row, idx)=>{
-                const detail = await analyzePool(row.symbol);
-                return detail ? { ...row, ...detail, rank: idx+1 } : { ...row, rank: idx+1 };
-              });
-
-              STATE.meta.cache.focusRows = focusRows;
-              STATE.meta.cache.watchRows = watchRows;
-              STATE.meta.cache.poolRows = poolRows;
-              STATE.focus = focusRows.map(r=>r.symbol);
-              STATE.watch = watchRows.map(r=>r.symbol);
-              STATE.pool = poolRows.map(r=>r.symbol);
-              STATE.meta.lastFocusAt = Date.now();
-              STATE.meta.lastWatchAt = Date.now();
-              STATE.meta.lastPoolAt = Date.now();
-
-              saveState();
-              renderAll();
-            }
-          }catch(err){
-            console.error(err);
-          }finally{
-            setAutoLoading(false);
-          }
-        });
+      if(now.getHours() === 15 && now.getMinutes() === 30){
+        refreshPoolOnly().catch(()=>{});
       }
     }
 
-    function scheduleTick(){
-      setInterval(async ()=>{
-        const now = new Date();
-        const min = now.getMinutes();
-
-        rotateMotto();
-
-        if(min % 5 === 0){
-          await refreshFocusOnly();
-        }
-        if(min % 15 === 0){
-          await refreshWatchOnly();
-        }
-      }, 60 * 1000);
-    }
-
-    window.toggleMarked = toggleMarked;
-    window.tempExclude = tempExclude;
-    window.removeTemp = removeTemp;
-
-    document.addEventListener("DOMContentLoaded", async ()=>{
+    async function init(){
       loadState();
+      updateMotto();
+      bindEvents();
       renderAll();
-      bindInputs();
-      rotateMotto();
-      scheduleTick();
 
-      if(SYSTEM_MODE === "AUTO"){
+      if(!STATE.focus.length && !STATE.watch.length && !STATE.pool.length){
         await runInitialScan();
       }
-    });
+
+      setInterval(updateMotto, 60 * 60 * 1000);
+      setInterval(tick, 1000);
+    }
+
+    init();
   </script>
 </body>
 </html>
