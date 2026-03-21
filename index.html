@@ -1880,7 +1880,7 @@
 
     const SYSTEM_MODE = "AUTO";
 
-    const SCAN_UNIVERSE = [
+let SCAN_UNIVERSE = [
       "1332","1333","1605","1719","1721","1801","1802","1803","1808","1812",
       "1925","1928","1963","2002","2269","2502","2503","2801","2802","2871",
       "2914","3038","3092","3382","3401","3402","3407","3861","4004","4005",
@@ -2898,6 +2898,10 @@
       "4633":["インキ","ペロブスカイト","化学"],
       "6333":["ポンプ","原子力","LNG"]
     };
+
+SCAN_UNIVERSE = [...new Set([...SCAN_UNIVERSE, ...Object.keys(COMPANY_DB)])];
+console.log("SCAN TEST", Object.keys(COMPANY_DB).length, SCAN_UNIVERSE.length);
+
 
     function CORS_PROXY_URL(url){ return CORS_PROXY + encodeURIComponent(url); }
 
