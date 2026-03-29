@@ -2974,20 +2974,23 @@ console.log("SCAN TEST", Object.keys(COMPANY_DB).length, SCAN_UNIVERSE.length);
       return { symbol, price, prev, score, hmaD, hmaH, hmaM };
     }
 
-    async function analyzeFocus(symbol){
-      const [h4, h1, m5] = await Promise.all([
-        fetchChart(symbol, "1mo", "4h"),
-        fetchChart(symbol, "5d", "1h"),
-        fetchChart(symbol, "1d", "5m")
-      ]);
-      if(!m5) return null;
-      const price = m5.meta.regularMarketPrice;
-      const hma4 = calcHMA(h4.closes, 9);
-      const hma1 = calcHMA(h1.closes, 9);
-      const hma5 = calcHMA(m5.closes, 9);
-      const decision = buildScanDecision(price, hma4, hma1, hma5);
-      return { symbol, price, hma4, hma1, hma5, decision, isFallback:false };
-    }
+   async function analyzeFocus(symbol){
+  const [h4, h1, m5] = await Promise.all([
+    fetchChart(symbol, "1mo", "4h"),
+    fetchChart(symbol, "5d", "1h"),
+    fetchChart(symbol, "1d", "5m")
+  ]);
+
+  if(!m5) return null;
+
+  const price = m5.meta?.regularMarketPrice ?? null;
+  const hma4 = h4?.closes ? calcHMA(h4.closes, 9) : null;
+  const hma1 = h1?.closes ? calcHMA(h1.closes, 9) : null;
+  const hma5 = m5?.closes ? calcHMA(m5.closes, 9) : null;
+
+  const decision = buildScanDecision(price, hma4, hma1, hma5);
+  return { symbol, price, hma4, hma1, hma5, decision, isFallback:false };
+}
 
         async function analyzeWatch(symbol){
       const [d1, h1] = await Promise.all([
