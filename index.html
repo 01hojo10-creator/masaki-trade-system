@@ -1927,13 +1927,13 @@ let SCAN_UNIVERSE = [
 
     const MAX_RETRY = 2;
     const RETRY_BASE_DELAY = 700;
-    const BETWEEN_CHUNK_DELAY = 1200;
-    const FETCH_TIMEOUT_MS = 12000;
+   const BETWEEN_CHUNK_DELAY = 150;
+const FETCH_TIMEOUT_MS = 12000;
 
-    const SCAN_CONCURRENT  = 3;
-    const FOCUS_CONCURRENT = 1;
-    const WATCH_CONCURRENT = 1;
-    const POOL_CONCURRENT  = 1;
+const SCAN_CONCURRENT  = 8;
+const FOCUS_CONCURRENT = 1;
+const WATCH_CONCURRENT = 1;
+const POOL_CONCURRENT  = 1;
 
     const FOCUS_MAX = 6;
     const WATCH_MAX = 15;
@@ -2923,18 +2923,31 @@ console.log("SCAN TEST", Object.keys(COMPANY_DB).length, SCAN_UNIVERSE.length);
       }
     }
 
-    async function fetchChart(symbol, range, interval){
-      const ticker = symbol.includes(".") ? symbol : symbol+".T";
-      const url = CORS_PROXY_URL(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=${range}&interval=${interval}`);
-      const data = await fetchJsonWithRetry(url);
-      const res = data?.chart?.result?.[0];
-      if(!res?.indicators?.quote?.[0]?.close) return null;
-      const q = res.indicators.quote[0];
-      const adj = res.indicators.adjclose?.[0]?.adjclose || q.close;
-      const meta = res.meta;
-      const closes = q.close.map((v,i) => v === null ? (i>0 ? q.close[i-1] : v) : v);
-      return { closes, meta, adjCloses: adj };
-    }
+   async function fetchChart(symbol, range, interval){
+  try{
+    const ticker = symbol.includes(".") ? symbol : symbol + ".T";
+    const url = CORS_PROXY_URL(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=${range}&interval=${interval}`);
+    const data = await fetchJsonWithRetry(url);
+    const res = data?.chart?.result?.[0];
+    if(!res?.indicators?.quote?.[0]?.close) return null;
+
+    const q = res.indicators.quote[0];
+    const adj = res.indicators.adjclose?.[0]?.adjclose || q.close;
+    const meta = res.meta;
+
+    const closes = q.close.map((v, i) => {
+      if(v === null) return i > 0 ? q.close[i - 1] : null;
+      return v;
+    }).filter(v => v !== null);
+
+    if(!closes.length) return null;
+
+    return { closes, meta, adjCloses: adj };
+  }catch(e){
+    console.warn("fetchChart error", symbol, range, interval, e);
+    return null;
+  }
+}
 
     function calcHMA(data, period){
       if(!data || data.length < period) return null;
