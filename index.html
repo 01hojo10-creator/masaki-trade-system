@@ -3664,114 +3664,175 @@ console.log("SCAN TEST", Object.keys(COMPANY_DB).length, SCAN_UNIVERSE.length);
       if(!target) return;
       target.textContent = pickRandom(MOTTO_LIST);
     }
+    
+    async function scanUniverseSymbols(symbols){
+  const uniqueSymbols = [...new Set(symbols)];
+  const results = [];
+  const failedSymbols = [];
+  const total = uniqueSymbols.length;
 
-    async function runInitialScan(){
-      setAutoLoading(true, `Universe読み込み中... ${SCAN_UNIVERSE.length}銘柄を確認中`);
-      try{
-        const chunks = chunkArray(SCAN_UNIVERSE, 60);
-        let all = [];
+  setAutoLoading(true, `Universe読み込み中... 0/${total}`);
 
-        for(let i=0; i<chunks.length; i++){
-          setAutoLoading(true, `Universe読み込み中... ${i+1}/${chunks.length} ブロック`);
-          const part = await runLimited(chunks[i], SCAN_CONCURRENT, async(symbol)=>{
-            const res = await analyzeScan(symbol);
-            if(!res) return null;
+  for(let i = 0; i < uniqueSymbols.length; i += SCAN_CONCURRENT){
+    const chunk = uniqueSymbols.slice(i, i + SCAN_CONCURRENT);
+
+    const chunkResults = await Promise.all(
+      chunk.map(async(symbol)=>{
+        try{
+          const r = await analyzeScan(symbol);
+          if(r){
             return {
-              ...res,
-              company: getCompanyName(symbol),
-              themes: getThemes(symbol)
+              ok: true,
+              row: {
+                ...r,
+                company: getCompanyName(symbol),
+                themes: getThemes(symbol)
+              }
             };
-          });
-          all = all.concat(part);
-          if(i < chunks.length - 1){
-            await new Promise(r=>setTimeout(r, BETWEEN_CHUNK_DELAY));
           }
+          return { ok: false, symbol };
+        }catch(e){
+          console.error(symbol, e);
+          return { ok: false, symbol };
         }
+      })
+    );
 
-        STATE.scan = all.sort((a,b)=>(b.score||0)-(a.score||0));
-
-        const { focus, watch, pool } = classifySetup(STATE.scan);
-
-        const focusRows = await runLimited(focus, FOCUS_CONCURRENT, async(row, idx)=>{
-          const detail = await analyzeFocus(row.symbol);
-          if(!detail){
-            return {
-              ...row,
-              rank: idx+1,
-              decision: {
-                trend:"レンジ",
-                trigger:"待機",
-                score:row.score || 0,
-                isSignal:false,
-                entrySide:"WAIT",
-                entryLow:row.price,
-                entryHigh:row.price,
-                sl:row.price ? row.price * 0.985 : null,
-                tp:row.price ? row.price * 1.015 : null,
-                comment:"取得不足",
-                trendClass:"trend-range",
-                triggerClass:"trigger-wait",
-                trendEntryClass:"",
-                entryHeatClass:""
-              },
-              isFallback:true
-            };
-          }
-          return { ...row, ...detail, rank: idx+1 };
-        });
-
-        const watchRows = await runLimited(watch, WATCH_CONCURRENT, async(row, idx)=>{
-          const detail = await analyzeWatch(row.symbol);
-          if(!detail){
-            return {
-              ...row,
-              rank: idx+1,
-              trend:"レンジ",
-              volume:0,
-              changePct: row.prev ? ((row.price - row.prev)/row.prev)*100 : 0,
-              themes:getThemes(row.symbol),
-              newsUrl:buildYahooNewsUrl(row.symbol),
-              chartUrl:buildTradingViewUrl(row.symbol),
-              isFallback:true
-            };
-          }
-          return { ...row, ...detail, rank: idx+1 };
-        });
-
-        const poolRows = await runLimited(pool, POOL_CONCURRENT, async(row, idx)=>{
-          const detail = await analyzePool(row.symbol);
-          if(!detail){
-            return {
-              ...row,
-              rank: idx+1,
-              changePct: row.prev ? ((row.price - row.prev)/row.prev)*100 : 0,
-              themes:getThemes(row.symbol),
-              newsUrl:buildYahooNewsUrl(row.symbol),
-              chartUrl:buildTradingViewUrl(row.symbol),
-              isFallback:true
-            };
-          }
-          return { ...row, ...detail, rank: idx+1 };
-        });
-
-        STATE.meta.cache.focusRows = focusRows;
-        STATE.meta.cache.watchRows = watchRows;
-        STATE.meta.cache.poolRows  = poolRows;
-        STATE.focus = focusRows.map(r=>r.symbol);
-        STATE.watch = watchRows.map(r=>r.symbol);
-        STATE.pool  = poolRows.map(r=>r.symbol);
-        STATE.meta.lastFocusAt = Date.now();
-        STATE.meta.lastWatchAt = Date.now();
-        STATE.meta.lastPoolAt = Date.now();
-
-        saveState();
-        renderAll();
-      }catch(e){
-        console.error("runInitialScan error", e);
-      }finally{
-        setAutoLoading(false);
-      }
+    for(const item of chunkResults){
+      if(item.ok) results.push(item.row);
+      else failedSymbols.push(item.symbol);
     }
+
+    setAutoLoading(true, `Universe読み込み中... ${Math.min(i + chunk.length, total)}/${total}`);
+
+    if(i + SCAN_CONCURRENT < uniqueSymbols.length){
+      await new Promise(r => setTimeout(r, BETWEEN_CHUNK_DELAY));
+    }
+  }
+
+  return { results, failedSymbols };
+}
+
+async function initAutoUniverse(){
+  setAutoLoading(true, "Universe読み込み中...（PC基準で振り分け中）");
+  try{
+    const manualCurrent = [
+      ...(STATE.focus || []),
+      ...(STATE.watch || []),
+      ...(STATE.pool || [])
+    ];
+
+    const universe = [...new Set([
+      ...manualCurrent,
+      ...SCAN_UNIVERSE
+    ])];
+
+    const { results, failedSymbols } = await scanUniverseSymbols(universe);
+
+    STATE.scan = results.sort((a,b)=>(b.score || 0) - (a.score || 0));
+
+    const { focus, watch, pool } = classifySetup(STATE.scan);
+
+    const focusRows = await runLimited(focus, FOCUS_CONCURRENT, async(row, idx)=>{
+      const detail = await analyzeFocus(row.symbol);
+      if(!detail){
+        return {
+          ...row,
+          rank: idx + 1,
+          decision: {
+            trend:"レンジ",
+            trigger:"待機",
+            score:row.score || 0,
+            isSignal:false,
+            entrySide:"WAIT",
+            entryLow:row.price,
+            entryHigh:row.price,
+            sl:row.price ? row.price * 0.985 : null,
+            tp:row.price ? row.price * 1.015 : null,
+            comment:"取得不足",
+            trendClass:"trend-range",
+            triggerClass:"trigger-wait",
+            trendEntryClass:"",
+            entryHeatClass:""
+          },
+          isFallback:true
+        };
+      }
+      return { ...row, ...detail, rank: idx + 1 };
+    });
+
+    const watchRows = await runLimited(watch, WATCH_CONCURRENT, async(row, idx)=>{
+      const detail = await analyzeWatch(row.symbol);
+      if(!detail){
+        return {
+          ...row,
+          rank: idx + 1,
+          trend:"レンジ",
+          volume:0,
+          changePct: row.prev ? ((row.price - row.prev) / row.prev) * 100 : 0,
+          themes:getThemes(row.symbol),
+          newsUrl:buildYahooNewsUrl(row.symbol),
+          chartUrl:buildTradingViewUrl(row.symbol),
+          isFallback:true
+        };
+      }
+      return { ...row, ...detail, rank: idx + 1 };
+    });
+
+    const poolRows = await runLimited(pool, POOL_CONCURRENT, async(row, idx)=>{
+      const detail = await analyzePool(row.symbol);
+      if(!detail){
+        return {
+          ...row,
+          rank: idx + 1,
+          changePct: row.prev ? ((row.price - row.prev) / row.prev) * 100 : 0,
+          themes:getThemes(row.symbol),
+          newsUrl:buildYahooNewsUrl(row.symbol),
+          chartUrl:buildTradingViewUrl(row.symbol),
+          isFallback:true
+        };
+      }
+      return { ...row, ...detail, rank: idx + 1 };
+    });
+
+    const successSymbols = new Set(results.map(r => r.symbol));
+    const mergedPool = [
+      ...poolRows,
+      ...failedSymbols
+        .filter(symbol => !successSymbols.has(symbol))
+        .map((symbol, idx)=>({
+          symbol,
+          rank: poolRows.length + idx + 1,
+          price: null,
+          prev: null,
+          changePct: 0,
+          themes: getThemes(symbol),
+          newsUrl: buildYahooNewsUrl(symbol),
+          chartUrl: buildTradingViewUrl(symbol),
+          isFallback: true
+        }))
+    ];
+
+    STATE.meta.cache.focusRows = focusRows;
+    STATE.meta.cache.watchRows = watchRows;
+    STATE.meta.cache.poolRows = mergedPool;
+
+    STATE.focus = focusRows.map(r => r.symbol);
+    STATE.watch = watchRows.map(r => r.symbol);
+    STATE.pool = mergedPool.map(r => r.symbol);
+
+    STATE.meta.lastFocusAt = Date.now();
+    STATE.meta.lastWatchAt = Date.now();
+    STATE.meta.lastPoolAt = Date.now();
+
+    saveState();
+    renderAll();
+  }catch(e){
+    console.error("initAutoUniverse error", e);
+  }finally{
+    setAutoLoading(false);
+  }
+}
 
     async function refreshFocusOnly(){
       if(!STATE.focus?.length) return;
@@ -4183,8 +4244,9 @@ function scheduleTick(){
       rotateMotto();
       scheduleTick();
 
-      if(SYSTEM_MODE === "AUTO"){
-        await runInitialScan();
+     if(SYSTEM_MODE === "AUTO"){
+  await initAutoUniverse();
+} 
       }
     });
   </script>
