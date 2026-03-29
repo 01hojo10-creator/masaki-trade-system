@@ -4107,12 +4107,12 @@ async function runClosingProcess(){
   try{
     await runPoolTaskGuarded();
 
-    const allSymbols = [...new Set([
-      ...(STATE.focus || []),
-      ...(STATE.watch || []),
-      ...(STATE.pool || [])
-    ])];
-
+  const allSymbols = [...new Set([
+  ...SCAN_UNIVERSE,
+  ...(STATE.focus || []),
+  ...(STATE.watch || []),
+  ...(STATE.pool || [])
+])];
     const results = [];
     for(const symbol of allSymbols){
       try{
