@@ -1,129 +1,62 @@
 {
-  "timestamp": "2026-06-09T08:10:16.965Z",
+  "timestamp": "2026-06-10T00:32:23.239Z",
   "source": "Masaki Trade System",
   "scan": {
     "status": "complete",
-    "current": 36,
-    "total": 36,
-    "success": 36,
+    "current": 25,
+    "total": 25,
+    "success": 25,
     "pending": 0,
     "active": false,
     "complete": true,
     "stage": "通知前再評価完了",
-    "focusUpdated": "2026/6/9 17:10:16",
-    "watchUpdated": "2026/6/9 17:02:31"
+    "focusUpdated": "2026/6/10 9:32:23",
+    "watchUpdated": "2026/6/10 9:32:23"
   },
   "focus": [
     {
       "rank": 1,
-      "code": "4044",
-      "name": "セントラル硝子",
-      "signal": "WAIT",
-      "entryStatus": "WAIT",
-      "trend": "LONG",
-      "theme": "化学 / ガラス / 肥料",
-      "score": 80,
-      "initialScore": 82,
-      "volumeRatio": "",
-      "priceChange": "",
-      "entry": "4017.7-4041.9",
-      "sl": "3937.4",
-      "tp": "4244.0",
-      "risk": "ブレイク待ち",
-      "comment": "そろそろ初動か？",
-      "focusTier": "PREPARATION",
-      "focusLabel": "ブレイク待ち",
-      "hourly": {
-        "available": true,
-        "score": 73,
-        "grade": "B",
-        "pass": true,
-        "entryAllowed": true,
-        "hardFail": false,
-        "pattern": "higher_low_breakout_setup",
-        "overheadRoomPct": -0.12315270935960591,
-        "higherHigh": true,
-        "higherLow": true,
-        "reasons": [
-          "price_above_ema9",
-          "price_above_ema21",
-          "ema9_above_ema21",
-          "ema9_up",
-          "ema21_up",
-          "higher_low",
-          "higher_high",
-          "near_ema_rebound_area",
-          "contracting_near_high",
-          "volume_rising",
-          "breakout_area"
-        ],
-        "risks": [],
-        "ema9": 4008.1560342357216,
-        "ema21": 3990.430326800115
-      },
-      "fibonacci": {
-        "available": true,
-        "impulseLow": 3810,
-        "impulseHigh": 4145,
-        "impulsePct": 8.792650918635172,
-        "pullbackLow": 3870,
-        "pullbackRatio": 0.8208955223880597,
-        "reboundRatio": 0.6909090909090909,
-        "state": "deep_pullback_rebounding",
-        "retracementZone": "78.6+",
-        "target382": 3975.05,
-        "target500": 4007.5,
-        "target618": 4039.95,
-        "previousHigh": 4145
-      }
-    },
-    {
-      "rank": 2,
       "code": "5838",
       "name": "楽天銀行",
       "signal": "WAIT",
       "entryStatus": "WAIT",
-      "trend": "WATCH",
+      "trend": "SHORT",
       "theme": "ネット銀行 / 決済 / 金融",
-      "score": 30,
+      "score": 0,
       "initialScore": 0,
       "volumeRatio": "",
       "priceChange": "",
       "entry": "",
       "sl": "",
       "tp": "",
-      "risk": "利確警戒",
+      "risk": "継続監視",
       "comment": "そろそろ初動か？",
       "focusTier": "PREPARATION",
-      "focusLabel": "ブレイク待ち",
+      "focusLabel": "押し目待ち",
       "hourly": {
         "available": true,
-        "score": 68,
+        "score": 63,
         "grade": "C",
         "pass": false,
         "entryAllowed": false,
         "hardFail": false,
         "pattern": "higher_low_breakout_setup",
-        "overheadRoomPct": 1.056131429689028,
+        "overheadRoomPct": 4.5951417004048585,
         "higherHigh": true,
         "higherLow": true,
         "reasons": [
-          "price_above_ema9",
-          "price_above_ema21",
           "ema9_above_ema21",
-          "ema9_up",
-          "ema21_up",
           "higher_low",
           "higher_high",
           "healthy_fib_pullback",
           "near_ema_rebound_area",
-          "contracting_near_high"
+          "contracting_near_high",
+          "healthy_overhead_room",
+          "pullback_volume_cooling"
         ],
-        "risks": [
-          "low_overhead_room"
-        ],
-        "ema9": 5065.007124678868,
-        "ema21": 4988.939656025131
+        "risks": [],
+        "ema9": 5012.645699743095,
+        "ema21": 4970.358364981524
       },
       "fibonacci": {
         "available": true,
@@ -132,7 +65,7 @@
         "impulsePct": 18.747121142330723,
         "pullbackLow": 4764,
         "pullbackRatio": 0.48157248157248156,
-        "reboundRatio": 0.8903061224489796,
+        "reboundRatio": 0.4489795918367347,
         "state": "healthy_pullback_rebound",
         "retracementZone": "38.2-61.8",
         "target382": 4913.744,
@@ -140,29 +73,36 @@
         "target618": 5006.256,
         "previousHigh": 5156
       }
-    }
-  ],
-  "watch": [
+    },
     {
-      "rank": 1,
-      "code": "3561",
-      "name": "力の源ホールディングス",
-      "signal": "UP",
-      "theme": "外食 / ラーメン / 海外展開",
-      "score": 80,
+      "rank": 2,
+      "code": "6333",
+      "name": "帝国電機製作所",
+      "signal": "WAIT",
+      "entryStatus": "WAIT",
+      "trend": "WATCH",
+      "theme": "ポンプ / 原子力 / LNG",
+      "score": 60,
+      "initialScore": 15,
       "volumeRatio": "",
       "priceChange": "",
-      "reason": "通常",
+      "entry": "",
+      "sl": "",
+      "tp": "",
+      "risk": "継続監視",
+      "comment": "ブレイク待ち",
+      "focusTier": "PREPARATION",
+      "focusLabel": "継続監視",
       "hourly": {
         "available": true,
-        "score": 70,
-        "grade": "B",
-        "pass": true,
-        "entryAllowed": true,
+        "score": 61,
+        "grade": "C",
+        "pass": false,
+        "entryAllowed": false,
         "hardFail": false,
-        "pattern": "higher_low_breakout_setup",
-        "overheadRoomPct": -0.26666666666666666,
-        "higherHigh": true,
+        "pattern": "range_watch",
+        "overheadRoomPct": 1.5363605326049845,
+        "higherHigh": false,
         "higherLow": true,
         "reasons": [
           "price_above_ema9",
@@ -171,17 +111,15 @@
           "ema9_up",
           "ema21_up",
           "higher_low",
-          "higher_high",
           "near_ema_rebound_area",
           "contracting_near_high",
-          "breakout_area",
           "pullback_volume_cooling"
         ],
         "risks": [
-          "upper_wicks"
+          "lower_high"
         ],
-        "ema9": 1491.706259858618,
-        "ema21": 1484.393227008365
+        "ema9": 2916.0458750250687,
+        "ema21": 2911.8114339757485
       },
       "fibonacci": {
         "available": false,
@@ -195,26 +133,28 @@
         "target618": 0,
         "previousHigh": 0
       }
-    },
+    }
+  ],
+  "watch": [
     {
-      "rank": 2,
-      "code": "3092",
-      "name": "ZOZO",
-      "signal": "DOWN",
-      "theme": "EC / アパレル / ネット",
-      "score": 40,
+      "rank": 1,
+      "code": "3549",
+      "name": "クスリのアオキHD",
+      "signal": "WATCH",
+      "theme": "ドラッグストア / 内需 / ディフェンシブ",
+      "score": 50,
       "volumeRatio": "",
       "priceChange": "",
-      "reason": "通常",
+      "reason": "1H監視",
       "hourly": {
         "available": true,
-        "score": 68,
-        "grade": "C",
-        "pass": false,
-        "entryAllowed": false,
+        "score": 71,
+        "grade": "B",
+        "pass": true,
+        "entryAllowed": true,
         "hardFail": false,
         "pattern": "higher_low_breakout_setup",
-        "overheadRoomPct": 1.6559337626494939,
+        "overheadRoomPct": 1.541733120680489,
         "higherHigh": true,
         "higherLow": true,
         "reasons": [
@@ -226,86 +166,33 @@
           "higher_low",
           "higher_high",
           "near_ema_rebound_area",
-          "contracting_near_high"
+          "contracting_near_high",
+          "pullback_volume_cooling"
         ],
         "risks": [
           "upper_wicks"
         ],
-        "ema9": 1084.250899308885,
-        "ema21": 1071.1020420656714
+        "ema9": 3751.203156594543,
+        "ema21": 3714.7251764660273
       },
       "fibonacci": {
         "available": true,
-        "impulseLow": 992.4000244140625,
-        "impulseHigh": 1097.5,
-        "impulsePct": 10.590484985930056,
-        "pullbackLow": 1079.5,
-        "pullbackRatio": 0.17126550124915937,
-        "reboundRatio": 0.4166666666666667,
-        "state": "shallow_pullback",
-        "retracementZone": "<23.6",
-        "target382": 1086.376,
-        "target500": 1088.5,
-        "target618": 1090.624,
-        "previousHigh": 1097.5
+        "impulseLow": 3414,
+        "impulseHigh": 3820,
+        "impulsePct": 11.892208553016989,
+        "pullbackLow": 3702,
+        "pullbackRatio": 0.29064039408866993,
+        "reboundRatio": 0.5084745762711864,
+        "state": "strong_shallow_pullback",
+        "retracementZone": "23.6-38.2",
+        "target382": 3747.076,
+        "target500": 3761,
+        "target618": 3774.924,
+        "previousHigh": 3820
       }
     },
     {
-      "rank": 3,
-      "code": "7715",
-      "name": "長野計器",
-      "signal": "DOWN",
-      "theme": "圧力計 / 水素 / インフラ",
-      "score": 60,
-      "volumeRatio": "",
-      "priceChange": "",
-      "reason": "増加",
-      "hourly": {
-        "available": true,
-        "score": 57,
-        "grade": "D",
-        "pass": false,
-        "entryAllowed": false,
-        "hardFail": false,
-        "pattern": "higher_low_breakout_setup",
-        "overheadRoomPct": 1.1378002528445006,
-        "higherHigh": true,
-        "higherLow": true,
-        "reasons": [
-          "price_above_ema9",
-          "price_above_ema21",
-          "ema9_above_ema21",
-          "ema9_up",
-          "ema21_up",
-          "higher_low",
-          "higher_high",
-          "near_ema_rebound_area",
-          "volume_rising"
-        ],
-        "risks": [
-          "low_overhead_room"
-        ],
-        "ema9": 3899.5668230656365,
-        "ema21": 3811.4773705741504
-      },
-      "fibonacci": {
-        "available": true,
-        "impulseLow": 2928,
-        "impulseHigh": 3720,
-        "impulsePct": 27.049180327868854,
-        "pullbackLow": 3605,
-        "pullbackRatio": 0.1452020202020202,
-        "reboundRatio": 3.0434782608695654,
-        "state": "shallow_pullback",
-        "retracementZone": "<23.6",
-        "target382": 3648.93,
-        "target500": 3662.5,
-        "target618": 3676.07,
-        "previousHigh": 3720
-      }
-    },
-    {
-      "rank": 4,
+      "rank": 2,
       "code": "8304",
       "name": "あおぞら銀行",
       "signal": "UP",
@@ -316,7 +203,7 @@
       "reason": "通常",
       "hourly": {
         "available": true,
-        "score": 56,
+        "score": 59,
         "grade": "D",
         "pass": false,
         "entryAllowed": false,
@@ -334,14 +221,15 @@
           "higher_low",
           "higher_high",
           "near_ema_rebound_area",
-          "contracting_near_high"
+          "contracting_near_high",
+          "pullback_volume_cooling"
         ],
         "risks": [
           "low_overhead_room",
           "upper_wicks"
         ],
-        "ema9": 2728.8722881873364,
-        "ema21": 2704.285183957645
+        "ema9": 2731.257830549869,
+        "ema21": 2707.5898366557108
       },
       "fibonacci": {
         "available": true,
@@ -357,106 +245,6 @@
         "target500": 2746.75,
         "target618": 2751.765,
         "previousHigh": 2768
-      }
-    },
-    {
-      "rank": 5,
-      "code": "5401",
-      "name": "日本製鉄",
-      "signal": "UP",
-      "theme": "鉄鋼 / インフラ / 国策",
-      "score": 80,
-      "volumeRatio": "",
-      "priceChange": "",
-      "reason": "通常",
-      "hourly": {
-        "available": true,
-        "score": 54,
-        "grade": "D",
-        "pass": false,
-        "entryAllowed": false,
-        "hardFail": false,
-        "pattern": "range_watch",
-        "overheadRoomPct": 1.608730104180739,
-        "higherHigh": false,
-        "higherLow": true,
-        "reasons": [
-          "price_above_ema9",
-          "price_above_ema21",
-          "ema9_up",
-          "ema21_up",
-          "higher_low",
-          "near_ema_rebound_area",
-          "contracting_near_high",
-          "pullback_volume_cooling"
-        ],
-        "risks": [
-          "lower_high"
-        ],
-        "ema9": 540.0492100678482,
-        "ema21": 540.5970821263367
-      },
-      "fibonacci": {
-        "available": false,
-        "impulsePct": 0,
-        "pullbackRatio": 0,
-        "reboundRatio": 0,
-        "state": "unavailable",
-        "retracementZone": "",
-        "target382": 0,
-        "target500": 0,
-        "target618": 0,
-        "previousHigh": 0
-      }
-    },
-    {
-      "rank": 6,
-      "code": "6333",
-      "name": "帝国電機製作所",
-      "signal": "DOWN",
-      "theme": "ポンプ / 原子力 / LNG",
-      "score": 0,
-      "volumeRatio": "",
-      "priceChange": "",
-      "reason": "通常",
-      "hourly": {
-        "available": true,
-        "score": 53,
-        "grade": "D",
-        "pass": false,
-        "entryAllowed": false,
-        "hardFail": false,
-        "pattern": "range_watch",
-        "overheadRoomPct": 2.129120879120879,
-        "higherHigh": false,
-        "higherLow": true,
-        "reasons": [
-          "price_above_ema21",
-          "ema9_above_ema21",
-          "ema21_up",
-          "higher_low",
-          "near_ema_rebound_area",
-          "contracting_near_high",
-          "healthy_overhead_room",
-          "pullback_volume_cooling"
-        ],
-        "risks": [
-          "lower_high"
-        ],
-        "ema9": 2912.807343781336,
-        "ema21": 2910.0925773733234
-      },
-      "fibonacci": {
-        "available": false,
-        "impulsePct": 0,
-        "pullbackRatio": 0,
-        "reboundRatio": 0,
-        "state": "unavailable",
-        "retracementZone": "",
-        "target382": 0,
-        "target500": 0,
-        "target618": 0,
-        "previousHigh": 0
       }
     }
   ],
