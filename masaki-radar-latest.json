@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-11T04:03:11.025Z",
+  "timestamp": "2026-06-11T04:06:05.458Z",
   "source": "Masaki Trade System",
   "scan": {
     "status": "complete",
@@ -10,19 +10,81 @@
     "active": false,
     "complete": true,
     "stage": "通知前再評価完了",
-    "focusUpdated": "2026/6/11 13:03:11",
-    "watchUpdated": "2026/6/11 13:03:11"
+    "focusUpdated": "2026/6/11 13:06:05",
+    "watchUpdated": "2026/6/11 13:03:09"
   },
   "focus": [
     {
       "rank": 1,
+      "code": "2871",
+      "name": "ニチレイ",
+      "signal": "WAIT",
+      "entryStatus": "WAIT",
+      "trend": "WATCH",
+      "theme": "食品 / 冷凍食品 / ディフェンシブ",
+      "score": 60,
+      "initialScore": 0,
+      "volumeRatio": "",
+      "priceChange": "",
+      "entry": "",
+      "sl": "",
+      "tp": "",
+      "risk": "利確警戒",
+      "comment": "そろそろ初動か？",
+      "focusTier": "PREPARATION",
+      "focusLabel": "継続監視",
+      "hourly": {
+        "available": true,
+        "score": 75,
+        "grade": "B",
+        "pass": true,
+        "entryAllowed": true,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": 1.6835016835016834,
+        "higherHigh": true,
+        "higherLow": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "near_ema_rebound_area",
+          "contracting_near_high",
+          "pullback_volume_cooling"
+        ],
+        "risks": [],
+        "ema9": 2070.7674085926906,
+        "ema21": 2044.3977061065145
+      },
+      "fibonacci": {
+        "available": true,
+        "impulseLow": 1845,
+        "impulseHigh": 2050,
+        "impulsePct": 11.11111111111111,
+        "pullbackLow": 2017,
+        "pullbackRatio": 0.16097560975609757,
+        "reboundRatio": 1.878787878787879,
+        "state": "shallow_pullback",
+        "retracementZone": "<23.6",
+        "target382": 2029.606,
+        "target500": 2033.5,
+        "target618": 2037.394,
+        "previousHigh": 2050
+      }
+    },
+    {
+      "rank": 2,
       "code": "3038",
       "name": "神戸物産",
       "signal": "WAIT",
       "entryStatus": "WAIT",
       "trend": "WATCH",
       "theme": "食品 / 内需 / スーパー",
-      "score": 50,
+      "score": 30,
       "initialScore": 0,
       "volumeRatio": "",
       "priceChange": "",
@@ -78,14 +140,14 @@
       }
     },
     {
-      "rank": 2,
+      "rank": 3,
       "code": "8802",
       "name": "三菱地所",
       "signal": "WAIT",
       "entryStatus": "WAIT",
       "trend": "WATCH",
       "theme": "不動産 / 再開発 / オフィス",
-      "score": 50,
+      "score": 30,
       "initialScore": 0,
       "volumeRatio": "",
       "priceChange": "",
@@ -138,68 +200,6 @@
         "target500": 4180.5,
         "target618": 4193.598,
         "previousHigh": 4236
-      }
-    },
-    {
-      "rank": 3,
-      "code": "2871",
-      "name": "ニチレイ",
-      "signal": "WAIT",
-      "entryStatus": "WAIT",
-      "trend": "LONG",
-      "theme": "食品 / 冷凍食品 / ディフェンシブ",
-      "score": 80,
-      "initialScore": 0,
-      "volumeRatio": "",
-      "priceChange": "",
-      "entry": "2626.4-2642.2",
-      "sl": "2573.9",
-      "tp": "2774.4",
-      "risk": "利確警戒",
-      "comment": "そろそろ初動か？",
-      "focusTier": "PREPARATION",
-      "focusLabel": "継続監視",
-      "hourly": {
-        "available": true,
-        "score": 75,
-        "grade": "B",
-        "pass": true,
-        "entryAllowed": true,
-        "hardFail": false,
-        "pattern": "higher_low_breakout_setup",
-        "overheadRoomPct": 1.6835016835016834,
-        "higherHigh": true,
-        "higherLow": true,
-        "reasons": [
-          "price_above_ema9",
-          "price_above_ema21",
-          "ema9_above_ema21",
-          "ema9_up",
-          "ema21_up",
-          "higher_low",
-          "higher_high",
-          "near_ema_rebound_area",
-          "contracting_near_high",
-          "pullback_volume_cooling"
-        ],
-        "risks": [],
-        "ema9": 2070.7674085926906,
-        "ema21": 2044.3977061065145
-      },
-      "fibonacci": {
-        "available": true,
-        "impulseLow": 1845,
-        "impulseHigh": 2050,
-        "impulsePct": 11.11111111111111,
-        "pullbackLow": 2017,
-        "pullbackRatio": 0.16097560975609757,
-        "reboundRatio": 1.878787878787879,
-        "state": "shallow_pullback",
-        "retracementZone": "<23.6",
-        "target382": 2029.606,
-        "target500": 2033.5,
-        "target618": 2037.394,
-        "previousHigh": 2050
       }
     }
   ],
@@ -688,18 +688,18 @@
       "summary": "unavailable"
     },
     {
-      "theme": "不動産",
-      "sampleCount": 3,
-      "matchedCount": 2,
-      "confidence": 0.67,
-      "state": "unavailable",
-      "summary": "unavailable"
-    },
-    {
       "theme": "ディフェンシブ",
       "sampleCount": 4,
       "matchedCount": 3,
       "confidence": 0.75,
+      "state": "unavailable",
+      "summary": "unavailable"
+    },
+    {
+      "theme": "不動産",
+      "sampleCount": 3,
+      "matchedCount": 2,
+      "confidence": 0.67,
       "state": "unavailable",
       "summary": "unavailable"
     }
@@ -723,6 +723,6 @@
     ],
     "yenWeakMaterials": [],
     "yenStrongMaterials": [],
-    "updatedAt": "2026/6/11 13:03:11"
+    "updatedAt": "2026/6/11 13:06:05"
   }
 }
