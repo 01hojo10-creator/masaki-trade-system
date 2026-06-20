@@ -140,12 +140,32 @@
       font-size:15px;
       letter-spacing:0;
     }
+    .news-list{
+      display:grid;
+      gap:8px;
+    }
+    .news-item{
+      border:1px solid var(--line);
+      border-radius:8px;
+      padding:10px;
+      background:rgba(255,255,255,.035);
+    }
+    .news-item p{
+      margin:6px 0 0;
+      color:var(--muted);
+      line-height:1.55;
+    }
     .kv{
       display:grid;
       grid-template-columns:140px minmax(0, 1fr);
       gap:6px 10px;
       font-size:13px;
       line-height:1.5;
+    }
+    .kv.compact{
+      margin-top:6px;
+      grid-template-columns:112px minmax(0,1fr);
+      font-size:12px;
     }
     .k{ color:var(--muted); font-weight:800; }
     .v{ color:var(--text); min-width:0; overflow-wrap:anywhere; }
@@ -247,6 +267,47 @@
       }).join("")}</div>`;
     }
 
+    function renderNewsList(items){
+      const source = asList(items);
+      if(!source.length) return '<p class="muted">重要ニュースはありません。</p>';
+      return `<div class="news-list">${source.map(item => {
+        const title = item && typeof item === "object" ? item.title || item.summary || "---" : item;
+        const themes = item && typeof item === "object" && Array.isArray(item.themes) ? item.themes.join(" / ") : "";
+        const tickers = item && typeof item === "object" && Array.isArray(item.relatedTickers) ? item.relatedTickers.join(" / ") : "";
+        const sources = item && typeof item === "object" && Array.isArray(item.sources) ? item.sources.join(" / ") : (item?.source || "");
+        const url = item && typeof item === "object" ? item.url || "" : "";
+        return `<article class="news-item">
+          <div><strong>${escapeHtml(title)}</strong></div>
+          <div class="kv compact">
+            <div class="k">severity</div><div class="v">${escapeHtml(item?.severity || "---")}</div>
+            <div class="k">category</div><div class="v">${escapeHtml(item?.category || "---")}</div>
+            <div class="k">themes</div><div class="v">${escapeHtml(themes || "---")}</div>
+            <div class="k">relatedTickers</div><div class="v">${escapeHtml(tickers || "---")}</div>
+            <div class="k">source</div><div class="v">${escapeHtml(sources || "---")}</div>
+            <div class="k">publishedAt</div><div class="v">${escapeHtml(item?.publishedAt || "---")}</div>
+          </div>
+          <p>${escapeHtml(item?.summary || "")}</p>
+          <p>${escapeHtml(item?.impact || "")}</p>
+          ${url ? `<p><a href="${escapeHtml(url)}" target="_blank" rel="noopener">ニュースを開く</a></p>` : ""}
+        </article>`;
+      }).join("")}</div>`;
+    }
+
+    function renderNewsFetchStatus(newsFetch){
+      if(!newsFetch || typeof newsFetch !== "object") return '<p class="muted">取得状態はありません。</p>';
+      const sources = Array.isArray(newsFetch.sources) ? newsFetch.sources : [];
+      const warnings = Array.isArray(newsFetch.warnings) ? newsFetch.warnings : [];
+      const errors = Array.isArray(newsFetch.errors) ? newsFetch.errors : [];
+      return `<div class="kv">
+        <div class="k">status</div><div class="v">${escapeHtml(newsFetch.status || "---")}</div>
+        <div class="k">ready</div><div class="v">${escapeHtml(newsFetch.ready ?? "---")}</div>
+        <div class="k">fetchedAt</div><div class="v">${escapeHtml(newsFetch.fetchedAt || "---")}</div>
+        <div class="k">sources</div><div class="v">${escapeHtml(sources.map(src => `${src.name}:${src.status}(${src.count ?? 0})`).join(" / ") || "---")}</div>
+        <div class="k">warnings</div><div class="v">${escapeHtml(warnings.join(" / ") || "---")}</div>
+        <div class="k">errors</div><div class="v">${escapeHtml(errors.join(" / ") || "---")}</div>
+      </div>`;
+    }
+
     async function loadDate(dateKey){
       const path = `reports/radar-notifications-${dateKey}.json?cb=${Date.now()}`;
       const status = document.getElementById("status");
@@ -308,6 +369,7 @@
       const diagnostics = item.diagnostics || {};
       const dataStatus = item.dataStatus || {};
       const itemHoliday = !!item.isMarketHoliday || item.marketMode === "holiday";
+      const newsItems = item.holidayImportantNews || item.importantNews || [];
       grid.innerHTML = `
         <div class="card">
           <h2>通知概要</h2>
@@ -336,11 +398,15 @@
         </div>
         <div class="card">
           <h2>重要材料・注意点</h2>
-          ${itemHoliday ? `<div class="k">休日材料メモ</div>${chips(item.importantNews)}` : ""}
+          ${itemHoliday ? `<div class="k">休日重要ニュース</div>${renderNewsList(newsItems)}` : ""}
           <div class="k">重要材料</div>
           ${chips(item.importantMaterials)}
           <div class="k" style="margin-top:10px;">注意点</div>
           ${chips(item.cautions)}
+        </div>
+        <div class="card">
+          <h2>ニュース取得状態</h2>
+          ${renderNewsFetchStatus(item.newsFetch)}
         </div>
         <div class="card">
           <h2>次の時間帯への引き継ぎ</h2>
