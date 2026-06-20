@@ -92,6 +92,20 @@
       font-size:14px;
       font-weight:750;
     }
+    .holiday-banner{
+      margin-bottom:12px;
+      padding:12px;
+      border:1px solid rgba(255,213,74,.42);
+      border-radius:8px;
+      background:rgba(255,213,74,.12);
+      line-height:1.65;
+    }
+    .holiday-banner strong{
+      display:block;
+      margin-bottom:4px;
+      color:var(--warn);
+      font-size:16px;
+    }
     .slot-tabs{
       display:grid;
       grid-template-columns:repeat(4, minmax(0, 1fr));
@@ -224,7 +238,13 @@
     function chips(items){
       const source = asList(items);
       if(!source.length) return '<span class="chip">---</span>';
-      return `<div class="chips">${source.map(item => `<span class="chip">${escapeHtml(item)}</span>`).join("")}</div>`;
+      return `<div class="chips">${source.map(item => {
+        if(item && typeof item === "object"){
+          const label = [item.severity, item.title || item.summary].filter(Boolean).join(" | ");
+          return `<span class="chip">${escapeHtml(label || JSON.stringify(item))}</span>`;
+        }
+        return `<span class="chip">${escapeHtml(item)}</span>`;
+      }).join("")}</div>`;
     }
 
     async function loadDate(dateKey){
@@ -255,7 +275,19 @@
         grid.innerHTML = "";
         return;
       }
-      summary.textContent = currentData.dailySummary || "日中の通知を時系列で確認できます。";
+      const isHoliday = !!currentData.isMarketHoliday || currentData.marketMode === "holiday";
+      if(isHoliday){
+        summary.innerHTML = `
+          <div class="holiday-banner">
+            <strong>本日は休場日</strong>
+            <div>休場理由: ${escapeHtml(currentData.holidayReason || "---")} / 次回営業日: ${escapeHtml(currentData.nextBusinessDate || "---")}</div>
+            <div>通常スキャン・ENTRY判断は停止中です。前営業日のFocus / Watchは参考扱いで確認してください。</div>
+          </div>
+          <div>${escapeHtml(currentData.dailySummary || "休場日モードで通知を確認できます。")}</div>
+        `;
+      }else{
+        summary.textContent = currentData.dailySummary || "日中の通知を時系列で確認できます。";
+      }
       const reports = currentData.reports || {};
       tabs.innerHTML = SLOT_ORDER.map(([key, label]) => {
         const item = reports[key];
@@ -275,6 +307,7 @@
       }
       const diagnostics = item.diagnostics || {};
       const dataStatus = item.dataStatus || {};
+      const itemHoliday = !!item.isMarketHoliday || item.marketMode === "holiday";
       grid.innerHTML = `
         <div class="card">
           <h2>通知概要</h2>
@@ -283,6 +316,9 @@
             <div class="k">generatedAt</div><div class="v">${escapeHtml(item.generatedAt)}</div>
             <div class="k">notificationType</div><div class="v">${escapeHtml(item.notificationType)} / ${escapeHtml(item.notificationLabel)}</div>
             <div class="k">runId</div><div class="v">${escapeHtml(item.runId || "---")}</div>
+            <div class="k">marketMode</div><div class="v">${escapeHtml(item.marketMode || (itemHoliday ? "holiday" : "regular"))}</div>
+            <div class="k">休場理由</div><div class="v">${escapeHtml(item.holidayReason || "---")}</div>
+            <div class="k">次回営業日</div><div class="v">${escapeHtml(item.nextBusinessDate || "---")}</div>
             <div class="k">地合い判断</div><div class="v">${escapeHtml(item.marketRegime || "---")}</div>
             <div class="k">Focus件数</div><div class="v">${escapeHtml(item.focusCount ?? 0)}</div>
             <div class="k">Watch件数</div><div class="v">${escapeHtml(item.watchCount ?? 0)}</div>
@@ -300,6 +336,7 @@
         </div>
         <div class="card">
           <h2>重要材料・注意点</h2>
+          ${itemHoliday ? `<div class="k">休日材料メモ</div>${chips(item.importantNews)}` : ""}
           <div class="k">重要材料</div>
           ${chips(item.importantMaterials)}
           <div class="k" style="margin-top:10px;">注意点</div>
