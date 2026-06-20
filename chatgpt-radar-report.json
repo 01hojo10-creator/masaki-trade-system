@@ -1,7 +1,7 @@
 {
   "ready": true,
   "marketDate": "2026-06-20",
-  "generatedAt": "2026-06-20T13:41:45+09:00",
+  "generatedAt": "2026-06-20T13:44:00+09:00",
   "runId": "holiday-2026-06-20",
   "marketMode": "holiday",
   "isMarketHoliday": true,
@@ -1079,9 +1079,9 @@
   },
   "holidaySummary": "本日は日本株市場が休場です（理由: 土曜日）。通常の571件スキャン、Focus/Watch/ENTRY新規判断は停止し、前営業日の結果は参考扱いにします。次回営業日は2026-06-22です。",
   "nextBusinessDayHandoff": "翌営業日の準備として前営業日のFocus / Watchを確認してください。",
-  "source": "raw_snapshot",
-  "publishedAt": "2026-06-20T13:41:40+09:00",
-  "latestSnapshot": "snapshots/masaki-radar-latest-20260620-134140.json",
+  "source": "raw_latest",
+  "publishedAt": "2026-06-20T13:43:55+09:00",
+  "latestSnapshot": "snapshots/masaki-radar-latest-20260620-134355.json",
   "timestamp": "2026-06-20T01:57:17.543Z",
   "scan": {
     "status": "holiday",
@@ -1109,12 +1109,12 @@
       "hourlyEvaluatedCount": 0,
       "scanOnlyCount": 0,
       "incompleteBarExcludedCount": 0,
-      "indexFetchStatus": "OK",
-      "snapshotFetchStatus": "OK",
+      "indexFetchStatus": "FAILED",
+      "snapshotFetchStatus": "FAILED",
       "latestFetchStatus": "OK",
       "chatgptReportFetchStatus": "GENERATED",
       "verificationFetchStatus": "GENERATED",
-      "fallbackUsed": false,
+      "fallbackUsed": true,
       "dataFreshnessStatus": "PUBLIC_VERIFIED",
       "marketDate": "2026-06-20",
       "generatedAt": "2026-06-20T01:57:17.543Z",
@@ -1155,7 +1155,9 @@
       "nearEntryCandidates": []
     },
     "workflowSummary": "本日は日本株市場が休場です（理由: 土曜日）。通常の571件スキャン、Focus/Watch/ENTRY新規判断は停止し、前営業日の結果は参考扱いにします。次回営業日は2026-06-22です。",
-    "warnings": [],
+    "warnings": [
+      "index check failed: masaki-radar-index.json is stale: expected snapshots/masaki-radar-latest-20260620-134355.json, got snapshots/masaki-radar-latest-20260620-134140.json"
+    ],
     "errors": [],
     "unchangedCoreLogic": true
   },
