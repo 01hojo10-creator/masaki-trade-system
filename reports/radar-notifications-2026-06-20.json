@@ -1,6 +1,6 @@
 {
   "marketDate": "2026-06-20",
-  "updatedAt": "2026-06-20T13:36:36+09:00",
+  "updatedAt": "2026-06-20T13:40:26+09:00",
   "schemaVersion": "radar_notifications_daily_v1",
   "marketMode": "holiday",
   "isMarketHoliday": true,
@@ -1186,7 +1186,7 @@
     },
     "midday": {
       "marketDate": "2026-06-20",
-      "generatedAt": "2026-06-20T13:36:36+09:00",
+      "generatedAt": "2026-06-20T13:40:26+09:00",
       "notificationType": "holiday",
       "notificationLabel": "休場日",
       "runId": "holiday-2026-06-20",
@@ -2275,6 +2275,7 @@
       "themes": [],
       "importantMaterials": [],
       "cautions": [
+        "index check failed: masaki-radar-index.json is stale: expected snapshots/masaki-radar-latest-20260620-134020.json, got snapshots/masaki-radar-latest-20260620-133631.json",
         "NEWSAPI_KEY not configured"
       ],
       "handoffToNextSession": "本日は日本株市場が休場です（理由: 土曜日）。通常の571件スキャン、Focus/Watch/ENTRY新規判断は停止し、前営業日の結果は参考扱いにします。次回営業日は2026-06-22です。",
@@ -2285,12 +2286,12 @@
         "hourlyEvaluatedCount": 0,
         "scanOnlyCount": 0,
         "incompleteBarExcludedCount": 0,
-        "indexFetchStatus": "OK",
-        "snapshotFetchStatus": "OK",
+        "indexFetchStatus": "FAILED",
+        "snapshotFetchStatus": "FAILED",
         "latestFetchStatus": "OK",
         "chatgptReportFetchStatus": "GENERATED",
         "verificationFetchStatus": "GENERATED",
-        "fallbackUsed": false,
+        "fallbackUsed": true,
         "dataFreshnessStatus": "PUBLIC_VERIFIED",
         "marketDate": "2026-06-20",
         "generatedAt": "2026-06-20T01:57:17.543Z",
@@ -2308,12 +2309,12 @@
           "hourlyEvaluatedCount": 0,
           "scanOnlyCount": 0,
           "incompleteBarExcludedCount": 0,
-          "indexFetchStatus": "OK",
-          "snapshotFetchStatus": "OK",
+          "indexFetchStatus": "FAILED",
+          "snapshotFetchStatus": "FAILED",
           "latestFetchStatus": "OK",
           "chatgptReportFetchStatus": "GENERATED",
           "verificationFetchStatus": "GENERATED",
-          "fallbackUsed": false,
+          "fallbackUsed": true,
           "dataFreshnessStatus": "PUBLIC_VERIFIED",
           "marketDate": "2026-06-20",
           "generatedAt": "2026-06-20T01:57:17.543Z",
@@ -2354,11 +2355,13 @@
           "nearEntryCandidates": []
         },
         "workflowSummary": "本日は日本株市場が休場です（理由: 土曜日）。通常の571件スキャン、Focus/Watch/ENTRY新規判断は停止し、前営業日の結果は参考扱いにします。次回営業日は2026-06-22です。",
-        "warnings": [],
+        "warnings": [
+          "index check failed: masaki-radar-index.json is stale: expected snapshots/masaki-radar-latest-20260620-134020.json, got snapshots/masaki-radar-latest-20260620-133631.json"
+        ],
         "errors": [],
         "unchangedCoreLogic": true
       },
-      "shortNotificationText": "【相場レーダー｜2026/06/20 休場日】\n本日は日本株市場が休場です。\n通常のFocus / Watch / ENTRY判断は行いません。\n重要材料：米ドル円が年初来高値を更新 FOMCタカ派化で介入警戒水準へ 野村證券・後藤祐二朗 - nomura.co.jp - <a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE95M1ROUmhmQ2tVUGFzUGJGUjVkcnR2bDVxTXhDVEI0WEhrd2VqLV96czR2Vk1CLVJCYTVjLUR3ZWNSQk5HYXhNaGwwU3NzclEwQTcxRk1DRW54aE5obnNB?oc=5\" target=\"_blank\">米ドル円が年初来高値を更新 FOMCタカ派化で介入警戒水準へ 野村證券・後藤祐二朗</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">nomura.co.jp</font> / ドル161円台、口先介入トーンダウン 円安はFRB新議長が誘因？ - 朝日新聞 - <a href=\"https://news.google.com/rss/articles/CBMiZ0FVX3lxTFAtNnNIMl9DNlBTdUd6RUJ6eDF6el9aLWFpOUZEQjk4cmJ2OXBIUDA4OGF4S2JCV19hU3JoR0JWRUFEQnlycFpPVmFmam1JT3Itd3JfTkhzZXpfUkJBMUhselJ4Z0hrVkU?oc=5\" target=\"_blank\">ドル161円台、口先介入トーンダウン 円安はFRB新議長が誘因？</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">朝日新聞</font> / 米利上げ観測で迫る「４０年ぶり円安水準」、為替介入に警戒感も…１ドル＝１６１円台半ば - 読売新聞 - <a href=\"https://news.google.com/rss/articles/CBMiZEFVX3lxTE5ZVWtKeUdEVGMwdU5yQlh4Z0t0dVM3aHlRT1RmQXJkWHlJZkYxVWxlYjczT3lPbG5aRVktdUpycHpPUUNPSjhlWGF4aWNsbjZSS3dITFRBUjJrZ0MwRUtkaXV0dUg?oc=5\" target=\"_blank\">米利上げ観測で迫る「４０年ぶり円安水準」、為替介入に警戒感も…１ドル＝１６１円台半ば</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">読売新聞</font>\n翌営業日への注意：翌営業日の準備として前営業日のFocus / Watchを確認してください。\n詳細は本日のレーダーページで確認。"
+      "shortNotificationText": "【相場レーダー｜2026/06/20 休場日】\n本日は日本株市場が休場です。\n通常のFocus / Watch / ENTRY判断は行いません。\n重要材料：米ドル円が年初来高値を更新 FOMCタカ派化で介入警戒水準へ 野村證券・後藤祐二朗 - nomura.co.jp - 米ドル円が年初来高値を更新 FOMCタカ派化で介入警戒水準へ 野村證券・後藤祐二朗 nomura.co.jp / ドル161円台、口先介入トーンダウン 円安はFRB新議長が誘因？ - 朝日新聞 - ドル161円台、口先介入トーンダウン 円安はFRB新議長が誘因？ 朝日新聞 / 米利上げ観測で迫る「４０年ぶり円安水準」、為替介入に警戒感も…１ドル＝１６１円台半ば - 読売新聞 - 米利上げ観測で迫る「４０年ぶり円安水準」、為替介入に警戒感も…１ドル＝１６１円台半ば 読売新聞\n翌営業日への注意：翌営業日の準備として前営業日のFocus / Watchを確認してください。\n詳細は本日のレーダーページで確認。"
     }
   },
   "dailySummary": "本日は休場日です（土曜日）。通常スキャン・ENTRY判断は停止中です。次回営業日: 2026-06-22",
