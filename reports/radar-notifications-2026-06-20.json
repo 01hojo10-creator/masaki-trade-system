@@ -1,49 +1,62 @@
 {
   "marketDate": "2026-06-20",
-  "updatedAt": "2026-06-20T07:23:24+09:00",
+  "updatedAt": "2026-06-20T09:59:55+09:00",
   "schemaVersion": "radar_notifications_daily_v1",
   "reports": {
     "morning": {
       "marketDate": "2026-06-20",
-      "generatedAt": "2026-06-20T07:23:24+09:00",
+      "generatedAt": "2026-06-20T09:59:55+09:00",
       "notificationType": "morning",
       "notificationLabel": "朝",
-      "runId": "",
+      "runId": "20260620-095352-rn9p77",
       "marketRegime": "PUBLIC_VERIFIED",
-      "focusCount": 4,
-      "watchCount": 8,
+      "focusCount": 6,
+      "watchCount": 11,
       "entryCandidates": [],
       "focusSymbols": [
-        "7186 コンコルディア・フィナンシャルグループ",
-        "8316 三井住友フィナンシャルグループ",
-        "6525 KOKUSAI ELECTRIC",
-        "4151 協和キリン"
+        "6258 平田機工",
+        "6103 オークマ",
+        "7912 大日本印刷",
+        "5201 AGC",
+        "5706 三井金属鉱業",
+        "7721 東京計器"
       ],
       "watchSymbols": [
-        "5726 大阪チタニウムテクノロジーズ",
-        "7004 日立造船",
-        "6701 NEC",
-        "3774 インターネットイニシアティブ",
-        "3994 マネーフォワード",
-        "2158 FRONTEO",
-        "3501 ＳＵＭＩＮＯＥ",
-        "4593 ヘリオス"
+        "5802 住友電気工業",
+        "6674 ジーエス・ユアサ　コーポレーション",
+        "4061 デンカ",
+        "2531 宝ＨＬＤＧＳ",
+        "5393 ニチアス",
+        "4488 AI inside",
+        "4237 フジプレアム",
+        "6740 ジャパンディスプレイ"
       ],
       "themes": [
-        "銀行 / 金利上昇 / 地銀",
-        "日銀 / 金利 / 銀行",
-        "半導体製造装置 / 成膜 / AI",
-        "医薬品 / バイオ / ヘルスケア"
+        "FA / ロボット / 半導体",
+        "工作機械 / FA / 設備投資",
+        "印刷 / 半導体パッケージ / 電子材料",
+        "ガラス / ペロブスカイト / 建材",
+        "非鉄金属 / 銅 / 電子材料"
       ],
       "importantMaterials": [
-        "銀行 / 金利上昇 / 地銀",
-        "日銀 / 金利 / 銀行",
-        "半導体製造装置 / 成膜 / AI",
-        "医薬品 / バイオ / ヘルスケア"
+        "FA / ロボット / 半導体",
+        "工作機械 / FA / 設備投資",
+        "印刷 / 半導体パッケージ / 電子材料",
+        "ガラス / ペロブスカイト / 建材",
+        "非鉄金属 / 銅 / 電子材料"
       ],
-      "cautions": [],
-      "handoffToNextSession": "",
+      "cautions": [
+        "data_fetch_failed:19",
+        "scan_only_rows:312"
+      ],
+      "handoffToNextSession": "本日のレーダー状態は診断可能です。Focus不足の主因は「scan_onlyのため未評価」です。Watch固定化傾向: 新規材料または昇格条件が不足。ENTRYゼロは「1時間足形状不足」が主因の見送りとして分類しています。 データ取得を要確認。今日の運用方針は、売買条件を変更せず、Focus/Watch/ENTRY不成立理由とデータ取得状態を確認しながら監視することです。",
       "dataStatus": {
+        "scanTargetCount": 571,
+        "priceFetchSuccessCount": 552,
+        "priceFetchFailedCount": 19,
+        "hourlyEvaluatedCount": 240,
+        "scanOnlyCount": 312,
+        "incompleteBarExcludedCount": 238,
         "indexFetchStatus": "OK",
         "snapshotFetchStatus": "OK",
         "latestFetchStatus": "OK",
@@ -51,14 +64,22 @@
         "verificationFetchStatus": "GENERATED",
         "fallbackUsed": false,
         "dataFreshnessStatus": "PUBLIC_VERIFIED",
-        "runId": ""
+        "marketDate": "2026-06-20",
+        "generatedAt": "2026-06-20T00:59:34.087Z",
+        "runId": "20260620-095352-rn9p77"
       },
       "diagnostics": {
         "ready": true,
         "marketDate": "2026-06-20",
-        "generatedAt": "2026-06-20T07:23:24+09:00",
-        "runId": "",
+        "generatedAt": "2026-06-20T00:59:34.087Z",
+        "runId": "20260620-095352-rn9p77",
         "dataIntegrity": {
+          "scanTargetCount": 571,
+          "priceFetchSuccessCount": 552,
+          "priceFetchFailedCount": 19,
+          "hourlyEvaluatedCount": 240,
+          "scanOnlyCount": 312,
+          "incompleteBarExcludedCount": 238,
           "indexFetchStatus": "OK",
           "snapshotFetchStatus": "OK",
           "latestFetchStatus": "OK",
@@ -66,19 +87,160 @@
           "verificationFetchStatus": "GENERATED",
           "fallbackUsed": false,
           "dataFreshnessStatus": "PUBLIC_VERIFIED",
-          "runId": ""
+          "marketDate": "2026-06-20",
+          "generatedAt": "2026-06-20T00:59:34.087Z",
+          "runId": "20260620-095352-rn9p77"
         },
-        "focusDiagnostics": {},
-        "watchDiagnostics": {},
-        "entryDiagnostics": {},
-        "workflowSummary": "",
-        "warnings": [],
+        "focusDiagnostics": {
+          "currentFocusCount": 6,
+          "currentFocusSymbols": [
+            "6258",
+            "6103",
+            "7912",
+            "5201",
+            "5706",
+            "7721"
+          ],
+          "shortageDetected": false,
+          "reasonCounts": {
+            "1時間足形状不足": 114,
+            "地合いが弱い": 97,
+            "長期EMA75条件で除外": 16,
+            "出来高不足": 7,
+            "scan_onlyのため未評価": 312,
+            "データ不足": 19
+          },
+          "topReasons": [
+            {
+              "reason": "scan_onlyのため未評価",
+              "count": 312
+            },
+            {
+              "reason": "1時間足形状不足",
+              "count": 114
+            },
+            {
+              "reason": "地合いが弱い",
+              "count": 97
+            },
+            {
+              "reason": "データ不足",
+              "count": 19
+            },
+            {
+              "reason": "長期EMA75条件で除外",
+              "count": 16
+            },
+            {
+              "reason": "出来高不足",
+              "count": 7
+            }
+          ]
+        },
+        "watchDiagnostics": {
+          "previousWatchCount": 11,
+          "currentWatchCount": 11,
+          "watchOverlapCount": 11,
+          "watchOverlapRate": 100,
+          "newWatchCount": 0,
+          "droppedWatchCount": 0,
+          "promotedToFocusCount": 0,
+          "demotedFromFocusCount": 0,
+          "watchStagnationReason": "Watch固定化傾向: 新規材料または昇格条件が不足",
+          "previousWatchSymbols": [
+            "5802",
+            "6674",
+            "4061",
+            "2531",
+            "5393",
+            "4488",
+            "4237",
+            "6740",
+            "6563",
+            "6504",
+            "8136"
+          ],
+          "currentWatchSymbols": [
+            "5802",
+            "6674",
+            "4061",
+            "2531",
+            "5393",
+            "4488",
+            "4237",
+            "6740",
+            "6563",
+            "6504",
+            "8136"
+          ]
+        },
+        "entryDiagnostics": {
+          "evaluatedRows": 17,
+          "entryGoCount": 0,
+          "entryGoSymbols": [],
+          "reasonCounts": {
+            "ENTRY帯に届いていない": 6,
+            "出来高強化不足": 1,
+            "1時間足形状不足": 10
+          },
+          "topReasons": [
+            {
+              "reason": "1時間足形状不足",
+              "count": 10
+            },
+            {
+              "reason": "ENTRY帯に届いていない",
+              "count": 6
+            },
+            {
+              "reason": "出来高強化不足",
+              "count": 1
+            }
+          ],
+          "entryNearbySymbols": [
+            {
+              "symbol": "6258",
+              "name": "平田機工",
+              "reason": "ENTRY帯に届いていない"
+            },
+            {
+              "symbol": "7912",
+              "name": "大日本印刷",
+              "reason": "ENTRY帯に届いていない"
+            },
+            {
+              "symbol": "5201",
+              "name": "AGC",
+              "reason": "ENTRY帯に届いていない"
+            },
+            {
+              "symbol": "5706",
+              "name": "三井金属鉱業",
+              "reason": "ENTRY帯に届いていない"
+            },
+            {
+              "symbol": "7721",
+              "name": "東京計器",
+              "reason": "ENTRY帯に届いていない"
+            },
+            {
+              "symbol": "8136",
+              "name": "サンリオ",
+              "reason": "ENTRY帯に届いていない"
+            }
+          ]
+        },
+        "workflowSummary": "本日のレーダー状態は診断可能です。Focus不足の主因は「scan_onlyのため未評価」です。Watch固定化傾向: 新規材料または昇格条件が不足。ENTRYゼロは「1時間足形状不足」が主因の見送りとして分類しています。 データ取得を要確認。今日の運用方針は、売買条件を変更せず、Focus/Watch/ENTRY不成立理由とデータ取得状態を確認しながら監視することです。",
+        "warnings": [
+          "data_fetch_failed:19",
+          "scan_only_rows:312"
+        ],
         "errors": [],
         "unchangedCoreLogic": true
       },
-      "shortNotificationText": "【相場レーダー｜2026/06/20 朝】\n地合い：PUBLIC_VERIFIED\nFocus：4件\nWatch：8件\n注目：銀行 / 金利上昇 / 地銀, 日銀 / 金利 / 銀行, 半導体製造装置 / 成膜 / AI\nENTRY候補：0件\n方針：売買条件を変更せず、Focus/Watch/ENTRY不成立理由を確認。\n詳細は本日のレーダーページで確認。"
+      "shortNotificationText": "【相場レーダー｜2026/06/20 朝】\n地合い：PUBLIC_VERIFIED\nFocus：6件\nWatch：11件\n注目：FA / ロボット / 半導体, 工作機械 / FA / 設備投資, 印刷 / 半導体パッケージ / 電子材料\nENTRY候補：0件\n方針：本日のレーダー状態は診断可能です。Focus不足の主因は「scan_onlyのため未評価」です。Watch固定化傾向: 新規材料または昇格条件が不足。ENTRY\n詳細は本日のレーダーページで確認。"
     }
   },
-  "dailySummary": "最新通知ではFocus 4件、Watch 8件です。",
-  "nextBusinessDayHandoff": "【相場レーダー｜2026/06/20 朝】\n地合い：PUBLIC_VERIFIED\nFocus：4件\nWatch：8件\n注目：銀行 / 金利上昇 / 地銀, 日銀 / 金利 / 銀行, 半導体製造装置 / 成膜 / AI\nENTRY候補：0件\n方針：売買条件を変更せず、Focus/Watch/ENTRY不成立理由を確認。\n詳細は本日のレーダーページで確認。"
+  "dailySummary": "最新通知ではFocus 6件、Watch 11件です。本日のレーダー状態は診断可能です。Focus不足の主因は「scan_onlyのため未評価」です。Watch固定化傾向: 新規材料または昇格条件が不足。ENTRYゼロは「1時間足形状不足」が主因の見送りとして分類しています。 データ取得を要確",
+  "nextBusinessDayHandoff": "本日のレーダー状態は診断可能です。Focus不足の主因は「scan_onlyのため未評価」です。Watch固定化傾向: 新規材料または昇格条件が不足。ENTRYゼロは「1時間足形状不足」が主因の見送りとして分類しています。 データ取得を要確認。今日の運用方針は、売買条件を変更せず、Focus/Watch/ENTRY不成立理由とデータ取得状態を確認しながら監視することです。"
 }
