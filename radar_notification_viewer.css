@@ -37,15 +37,27 @@ main{max-width:1180px;margin:0 auto;padding:12px;padding-bottom:max(24px,env(saf
 .k{color:var(--muted);font-weight:800}
 .v{min-width:0;overflow-wrap:anywhere}
 .list{display:grid;gap:7px}
-.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;padding:9px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.035);min-width:0}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;padding:9px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.035);min-width:0;text-decoration:none;color:inherit}
 .row-main{font-weight:850;overflow-wrap:anywhere}
 .row-sub{margin-top:3px;color:var(--muted);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
 .num{min-width:30px;text-align:center;padding:2px 7px;border:1px solid rgba(96,165,250,.36);border-radius:999px;color:#bfdbfe;font-size:12px;font-weight:900}
 .clickable{cursor:pointer;transition:transform .12s ease,border-color .12s ease,background .12s ease}
 .clickable:hover,.clickable:focus{outline:none;transform:translateY(-1px);border-color:rgba(96,165,250,.6);background:rgba(96,165,250,.08)}
-.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{max-width:100%;padding:4px 8px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.05);font-size:12px;font-weight:800;overflow-wrap:anywhere}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{max-width:100%;padding:4px 8px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.05);font-size:12px;font-weight:800;overflow-wrap:anywhere;text-decoration:none}
 pre{margin:0;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:#dbeafe;font-size:12px;line-height:1.55}
 .muted{color:var(--muted)}
 a{color:#93c5fd}
-@media(max-width:760px){header{position:static}.head{display:block}h1{margin-bottom:9px;font-size:17px}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.controls input{grid-column:1/-1;width:100%;font-size:16px}.controls button{width:100%}main{padding:9px}.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}.card.full{grid-column:auto}.kv{grid-template-columns:1fr;gap:2px}.k{margin-top:7px}.row{grid-template-columns:minmax(0,1fr) auto}}
+.news-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.news-card{min-width:0;padding:12px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.035)}
+.news-card.high{border-color:rgba(255,154,170,.42);background:rgba(255,154,170,.045)}
+.news-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.news-time{color:var(--muted);font-size:11px;font-weight:750}
+.news-title{display:block;color:#dbeafe;font-size:15px;font-weight:900;line-height:1.45;overflow-wrap:anywhere;text-decoration:none}
+a.news-title:hover,a.news-title:focus{text-decoration:underline}
+.news-meta{margin-top:6px;color:var(--muted);font-size:11px;font-weight:800;line-height:1.45;overflow-wrap:anywhere}
+.news-summary{margin:9px 0 0;color:var(--text);font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.news-impact{margin-top:9px;padding:8px 9px;border-left:3px solid rgba(96,165,250,.65);background:rgba(96,165,250,.07);font-size:12px;line-height:1.55;overflow-wrap:anywhere}
+.news-tickers{margin-top:9px}
+.ticker-chip{color:#bfdbfe;border-color:rgba(96,165,250,.35)}
+@media(max-width:760px){header{position:static}.head{display:block}h1{margin-bottom:9px;font-size:17px}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.controls input{grid-column:1/-1;width:100%;font-size:16px}.controls button{width:100%}main{padding:9px}.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}.card.full{grid-column:auto}.kv{grid-template-columns:1fr;gap:2px}.k{margin-top:7px}.row{grid-template-columns:minmax(0,1fr) auto}.news-grid{grid-template-columns:1fr}}
 @media(max-width:380px){.controls{grid-template-columns:1fr}.controls input{grid-column:auto}.tabs{grid-template-columns:1fr 1fr}button,input{font-size:13px}}
