@@ -8,7 +8,7 @@
     ['night', '夜']
   ];
   var AUTO_REFRESH_MS = 60000;
-  var VIEWER_VERSION = '20260622-8';
+  var VIEWER_VERSION = '20260623-9';
 
   var currentData = null;
   var activeSlot = 'morning';
@@ -69,8 +69,7 @@
         month: '2-digit',
         day: '2-digit',
         hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
+        minute: '2-digit'
       }).format(date);
     }catch(error){
       return date.toLocaleString();
@@ -207,17 +206,91 @@
     return '<div class="list" id="symbolList">' + html.join('') + '</div>';
   }
 
-  function renderReasonRows(reasonCounts){
-    if(!reasonCounts || typeof reasonCounts !== 'object') return '<p class="muted">理由データはありません。</p>';
-    var keys = Object.keys(reasonCounts);
-    if(!keys.length) return '<p class="muted">理由データはありません。</p>';
-    keys.sort(function(a, b){ return Number(reasonCounts[b] || 0) - Number(reasonCounts[a] || 0); });
+  function severityRank(value){
+    var key = String(value || '').toUpperCase();
+    if(key === 'HIGH') return 3;
+    if(key === 'MEDIUM') return 2;
+    if(key === 'LOW') return 1;
+    return 0;
+  }
+
+  function collectMarketNews(activeItem){
+    var combined = [];
+    var map = {};
+
+    function add(items){
+      var list = asList(items);
+      var i;
+      for(i = 0; i < list.length; i += 1){
+        var news = list[i] || {};
+        var key = news.id || news.url || news.title;
+        if(!key || map[key]) continue;
+        map[key] = true;
+        combined.push(news);
+      }
+    }
+
+    add(currentData && currentData.importantNews);
+    add(currentData && currentData.holidayImportantNews);
+    add(activeItem && activeItem.importantNews);
+
+    combined.sort(function(a, b){
+      var aTime = parseDate(a.publishedAt);
+      var bTime = parseDate(b.publishedAt);
+      var aValue = aTime ? aTime.getTime() : 0;
+      var bValue = bTime ? bTime.getTime() : 0;
+      if(aValue !== bValue) return bValue - aValue;
+      return severityRank(b.severity) - severityRank(a.severity);
+    });
+
+    return combined;
+  }
+
+  function renderTickerChips(tickers){
+    var list = asList(tickers);
+    if(!list.length) return '';
     var html = [];
     var i;
-    for(i = 0; i < keys.length; i += 1){
-      html.push('<div class="row"><div class="row-main">' + escapeHtml(keys[i]) + '</div><div class="num">' + escapeHtml(reasonCounts[keys[i]]) + '</div></div>');
+    for(i = 0; i < list.length; i += 1){
+      var code = normalizeJapaneseStockCode(list[i]);
+      if(!code) continue;
+      html.push('<a class="chip ticker-chip" href="' + escapeHtml(tradingViewUrl(code)) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(code) + '</a>');
     }
-    return '<div class="list">' + html.join('') + '</div>';
+    return html.length ? '<div class="chips news-tickers">' + html.join('') + '</div>' : '';
+  }
+
+  function renderMarketNews(activeItem){
+    var newsList = collectMarketNews(activeItem);
+    if(!newsList.length){
+      return '<p class="muted">現在、表示できる相場関連ニュースはありません。</p>';
+    }
+
+    var html = [];
+    var i;
+    for(i = 0; i < newsList.length; i += 1){
+      var news = newsList[i] || {};
+      var severity = String(news.severity || '').toUpperCase();
+      var severityClass = severity === 'HIGH' ? 'bad' : (severity === 'MEDIUM' ? 'warn' : '');
+      var sources = asList(news.sources).length ? asList(news.sources).join(' / ') : (news.source || '---');
+      var title = news.title || news.summary || '見出しなし';
+      var titleHtml = news.url
+        ? '<a class="news-title" href="' + escapeHtml(news.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(title) + '</a>'
+        : '<div class="news-title">' + escapeHtml(title) + '</div>';
+      var summary = news.summary && news.summary !== title ? '<p class="news-summary">' + escapeHtml(news.summary) + '</p>' : '';
+      var impact = news.impact ? '<div class="news-impact"><strong>相場への影響：</strong>' + escapeHtml(news.impact) + '</div>' : '';
+
+      html.push(
+        '<article class="news-card' + (severity === 'HIGH' ? ' high' : '') + '">' +
+        '<div class="news-head"><span class="badge ' + severityClass + '">' + escapeHtml(severity || 'NEWS') + '</span>' +
+        '<span class="news-time">' + escapeHtml(formatJst(news.publishedAt)) + '</span></div>' +
+        titleHtml +
+        '<div class="news-meta">' + escapeHtml([news.category || '未分類', sources].join(' / ')) + '</div>' +
+        summary + impact + renderTickerChips(news.relatedTickers) +
+        '</article>'
+      );
+    }
+
+    return '<div class="news-grid">' + html.join('') + '</div>';
   }
 
   function requestJson(url, onSuccess, onFailure){
@@ -277,7 +350,7 @@
     }
 
     var reports = currentData.reports || {};
-    summary.textContent = currentData.dailySummary || '銘柄をタップするとTradingViewの60分足を別タブで開きます。';
+    summary.textContent = currentData.dailySummary || '銘柄と相場関連ニュースを表示します。';
 
     var tabHtml = [];
     var i;
@@ -300,32 +373,14 @@
 
     var activeItem = reports[activeSlot];
     if(!activeItem){
-      content.innerHTML = '<div class="card"><h2>' + escapeHtml(slotLabel(activeSlot)) + '</h2><p>この時間帯の通知はまだありません。</p></div>';
+      content.innerHTML = '<div class="card full"><h2>' + escapeHtml(slotLabel(activeSlot)) + '</h2><p>この時間帯の通知はまだありません。</p></div>' +
+        '<div class="card full"><h2>相場関連ニュース</h2>' + renderMarketNews(null) + '</div>';
       return;
     }
 
-    var diagnostics = activeItem.diagnostics || {};
-    var entryDiagnostics = getPath(diagnostics, ['entryDiagnostics'], {});
-    var focusDiagnostics = getPath(diagnostics, ['focusDiagnostics'], {});
-    var dataStatus = activeItem.dataStatus || {};
-
     content.innerHTML =
       '<div class="card full"><h2>銘柄一覧（タップでTradingViewを開く）</h2>' + renderSymbolList(activeItem) + '</div>' +
-      '<div class="card"><h2>通知概要</h2><div class="kv">' +
-      '<div class="k">marketDate</div><div class="v">' + escapeHtml(activeItem.marketDate || '---') + '</div>' +
-      '<div class="k">generatedAt</div><div class="v">' + escapeHtml(formatJst(activeItem.generatedAt)) + '</div>' +
-      '<div class="k">Focus</div><div class="v">' + escapeHtml(activeItem.focusCount || 0) + '件</div>' +
-      '<div class="k">Watch</div><div class="v">' + escapeHtml(activeItem.watchCount || 0) + '件</div>' +
-      '<div class="k">ENTRY</div><div class="v">' + asList(activeItem.entryCandidates).length + '件</div></div></div>' +
-      '<div class="card"><h2>短文通知</h2><pre>' + escapeHtml(activeItem.shortNotificationText || '') + '</pre></div>' +
-      '<div class="card"><h2>ENTRY不成立理由</h2>' + renderReasonRows(getPath(entryDiagnostics, ['reasonCounts'], {})) +
-      '<h3>Focus除外・不足理由</h3>' + renderReasonRows(getPath(focusDiagnostics, ['reasonCounts'], {})) + '</div>' +
-      '<div class="card"><h2>データ取得状態</h2><div class="kv">' +
-      '<div class="k">scanTarget</div><div class="v">' + escapeHtml(dataStatus.scanTargetCount == null ? '---' : dataStatus.scanTargetCount) + '</div>' +
-      '<div class="k">success / failed</div><div class="v">' + escapeHtml(dataStatus.priceFetchSuccessCount == null ? '---' : dataStatus.priceFetchSuccessCount) + ' / ' + escapeHtml(dataStatus.priceFetchFailedCount == null ? '---' : dataStatus.priceFetchFailedCount) + '</div>' +
-      '<div class="k">hourlyEvaluated</div><div class="v">' + escapeHtml(dataStatus.hourlyEvaluatedCount == null ? '---' : dataStatus.hourlyEvaluatedCount) + '</div>' +
-      '<div class="k">scanOnly</div><div class="v">' + escapeHtml(dataStatus.scanOnlyCount == null ? '---' : dataStatus.scanOnlyCount) + '</div></div></div>' +
-      '<div class="card full"><h2>次の時間帯への引き継ぎ</h2><div class="v">' + escapeHtml(activeItem.handoffToNextSession || '---') + '</div></div>';
+      '<div class="card full"><h2>相場関連ニュース</h2>' + renderMarketNews(activeItem) + '</div>';
   }
 
   function setAutoRefresh(enabled){
@@ -349,17 +404,17 @@
   byId('todayBtn').onclick = function(){
     var key = jstDateKey();
     byId('dateInput').value = key;
-    loadDate(key, false, false);
+    loadDate(key, false, false, addDays(key, -1));
   };
 
   byId('yesterdayBtn').onclick = function(){
     var key = addDays(jstDateKey(), -1);
     byId('dateInput').value = key;
-    loadDate(key, false, false);
+    loadDate(key, false, false, '');
   };
 
   byId('loadBtn').onclick = function(){
-    loadDate(byId('dateInput').value || jstDateKey(), false, false);
+    loadDate(byId('dateInput').value || jstDateKey(), false, false, '');
   };
 
   byId('refreshBtn').onclick = function(){
