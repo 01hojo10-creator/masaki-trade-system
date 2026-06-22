@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-06-22T01:25:48.873Z",
+  "timestamp": "2026-06-22T03:10:48.880Z",
   "source": "Masaki Trade System",
   "marketDate": "2026-06-22",
-  "generatedAt": "2026-06-22T01:25:48.873Z",
-  "runId": "20260622-005512-g0c38t",
+  "generatedAt": "2026-06-22T03:10:48.880Z",
+  "runId": "20260622-084505-pz8yju",
   "scan": {
     "status": "complete",
     "current": 31,
@@ -14,8 +14,8 @@
     "active": false,
     "complete": true,
     "stage": "通知前再評価完了",
-    "focusUpdated": "2026/6/22 10:25:48",
-    "watchUpdated": "2026/6/22 10:21:52"
+    "focusUpdated": "2026/6/22 12:10:48",
+    "watchUpdated": "2026/6/22 12:02:59"
   },
   "focus": [
     {
@@ -3455,8 +3455,8 @@
   "diagnostics": {
     "ready": true,
     "marketDate": "2026-06-22",
-    "generatedAt": "2026-06-21T16:00:43.243Z",
-    "runId": "20260622-005512-g0c38t",
+    "generatedAt": "2026-06-21T23:50:33.031Z",
+    "runId": "20260622-084505-pz8yju",
     "dataIntegrity": {
       "scanTargetCount": 571,
       "priceFetchSuccessCount": 552,
@@ -3472,8 +3472,8 @@
       "fallbackUsed": true,
       "dataFreshnessStatus": "FRESH_OR_CURRENT_RUN",
       "marketDate": "2026-06-22",
-      "generatedAt": "2026-06-21T16:00:43.243Z",
-      "runId": "20260622-005512-g0c38t"
+      "generatedAt": "2026-06-21T23:50:33.031Z",
+      "runId": "20260622-084505-pz8yju"
     },
     "focusDiagnostics": {
       "currentFocusCount": 6,
@@ -3522,16 +3522,28 @@
       ]
     },
     "watchDiagnostics": {
-      "previousWatchCount": 0,
+      "previousWatchCount": 11,
       "currentWatchCount": 11,
-      "watchOverlapCount": 0,
-      "watchOverlapRate": 0,
-      "newWatchCount": 11,
+      "watchOverlapCount": 11,
+      "watchOverlapRate": 100,
+      "newWatchCount": 0,
       "droppedWatchCount": 0,
       "promotedToFocusCount": 0,
       "demotedFromFocusCount": 0,
-      "watchStagnationReason": "比較対象なし",
-      "previousWatchSymbols": [],
+      "watchStagnationReason": "Watch固定化傾向: 新規材料または昇格条件が不足",
+      "previousWatchSymbols": [
+        "5802",
+        "6674",
+        "4061",
+        "2531",
+        "5393",
+        "4488",
+        "4237",
+        "6740",
+        "6563",
+        "6504",
+        "8136"
+      ],
       "currentWatchSymbols": [
         "5802",
         "6674",
@@ -3602,7 +3614,7 @@
         }
       ]
     },
-    "workflowSummary": "本日のレーダー状態は診断可能です。Focus不足の主因は「scan_onlyのため未評価」です。比較対象なし。ENTRYゼロは「1時間足形状不足」が主因の見送りとして分類しています。 データ取得を要確認。今日の運用方針は、売買条件を変更せず、Focus/Watch/ENTRY不成立理由とデータ取得状態を確認しながら監視することです。",
+    "workflowSummary": "本日のレーダー状態は診断可能です。Focus不足の主因は「scan_onlyのため未評価」です。Watch固定化傾向: 新規材料または昇格条件が不足。ENTRYゼロは「1時間足形状不足」が主因の見送りとして分類しています。 データ取得を要確認。今日の運用方針は、売買条件を変更せず、Focus/Watch/ENTRY不成立理由とデータ取得状態を確認しながら監視することです。",
     "warnings": [
       "data_fetch_failed:19",
       "scan_only_rows:312"
@@ -3612,7 +3624,7 @@
     "newsFetch": {
       "ready": true,
       "status": "PARTIAL",
-      "fetchedAt": "2026-06-22T10:30:03+09:00",
+      "fetchedAt": "2026-06-22T12:30:04+09:00",
       "sources": [
         {
           "name": "manual_news",
@@ -3660,7 +3672,7 @@
       "warnings": [
         "NEWSAPI_KEY not configured"
       ],
-      "dedupedCount": 28
+      "dedupedCount": 31
     }
   },
   "usdJpyRadar": {
@@ -3682,12 +3694,12 @@
     ],
     "yenWeakMaterials": [],
     "yenStrongMaterials": [],
-    "updatedAt": "2026/6/22 10:25:48"
+    "updatedAt": "2026/6/22 12:10:48"
   },
   "newsFetch": {
     "ready": true,
     "status": "PARTIAL",
-    "fetchedAt": "2026-06-22T10:30:03+09:00",
+    "fetchedAt": "2026-06-22T12:30:04+09:00",
     "sources": [
       {
         "name": "manual_news",
@@ -3735,7 +3747,7 @@
     "warnings": [
       "NEWSAPI_KEY not configured"
     ],
-    "dedupedCount": 28
+    "dedupedCount": 31
   },
   "holidayImportantNews": [
     {
@@ -3769,75 +3781,6 @@
         "8411"
       ],
       "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
-      "notify": true
-    },
-    {
-      "id": "news-44f11d44819e3ae4",
-      "title": "日経平均7万円超え。AI半導体ブーム、原油下落など7つの追い風（窪田真之） - トウシル",
-      "summary": "日経平均7万円超え。AI半導体ブーム、原油下落など7つの追い風（窪田真之） トウシル",
-      "source": "google_news_japan_themes_jp",
-      "sources": [
-        "google_news_japan_themes_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBYVGtiLXZLOTI5VTJwMFk0RFFPT3Q2UVk3eW5ZTUZGRERWSDJRVEtuQWF5ZHk0SVhzOTkwM0ZmX19QbzBraHR1R09MWnRxZ2dqaGQ2RVl0UUlWUQ?oc=5",
-      "publishedAt": "2026-06-22T08:00:00+09:00",
-      "severity": "HIGH",
-      "category": "地政学",
-      "themes": [
-        "AI",
-        "データセンター",
-        "半導体",
-        "原油",
-        "地政学",
-        "防衛"
-      ],
-      "relatedTickers": [
-        "1605",
-        "5020",
-        "6526",
-        "6723",
-        "6857",
-        "6920",
-        "7011",
-        "7012",
-        "7013",
-        "8035"
-      ],
-      "impact": "防衛・資源・エネルギー関連に資金が向かう可能性",
-      "notify": true
-    },
-    {
-      "id": "news-62d665fffe144e17",
-      "title": "ドル/円見通し(為替/FX ニュース )：先週末のドル円は円高で161円台前半｜日本のCPIは市場予想と一致でドル円は反応薄(2026年6月22日) - OANDA証券",
-      "summary": "ドル/円見通し(為替/FX ニュース )：先週末のドル円は円高で161円台前半｜日本のCPIは市場予想と一致でドル円は反応薄(2026年6月22日) OANDA証券",
-      "source": "google_news_fx_rates_jp",
-      "sources": [
-        "google_news_fx_rates_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5uLWJOYVZXTElrRkN4czJNVHM4eWcyVm94d3FJMFJ1ZmlQR1hUUWQ0OXZKSXVVN0dxZHlILWRzeVJxclNlT2VCX3FDbU1IZlJuakJ1czJfajBjLXJzc0NkcHlCaHJaNWpnTHVOTjRZRFRKdWs?oc=5",
-      "publishedAt": "2026-06-22T08:08:55+09:00",
-      "severity": "HIGH",
-      "category": "米金利",
-      "themes": [
-        "FOMC",
-        "FRB",
-        "グロース",
-        "ドル円",
-        "為替",
-        "米金利",
-        "輸出"
-      ],
-      "relatedTickers": [
-        "6501",
-        "6758",
-        "6857",
-        "6920",
-        "7203",
-        "7267",
-        "8035",
-        "9984"
-      ],
-      "impact": "米金利とNASDAQを通じて半導体・AI・グロース株に影響する可能性",
       "notify": true
     },
     {
@@ -3875,29 +3818,36 @@
       "notify": true
     },
     {
-      "id": "news-257e34196de5b047",
-      "title": "日欧米中銀、長短金利差が示す「信認の格差」 日銀への不安消えず - 日本経済新聞",
-      "summary": "日欧米中銀、長短金利差が示す「信認の格差」 日銀への不安消えず 日本経済新聞",
+      "id": "news-da826cbe6ab19495",
+      "title": "日銀利上げも、円安達成できず？ 物価高当面続くか【週間ニュースまとめ6月15日～21日】 - 就活ニュースペーパーｂｙ朝日新聞",
+      "summary": "日銀利上げも、円安達成できず？ 物価高当面続くか【週間ニュースまとめ6月15日～21日】 就活ニュースペーパーｂｙ朝日新聞",
       "source": "google_news_macro_jp",
       "sources": [
         "google_news_macro_jp"
       ],
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5VVGYtZFNCQWJKVDJFWEdDVldja1dKQnFjSWhMVVVWa3lCUERxUWlMSmlYXzRDb3FZWG9BUlJfSGNEVVdZeDFkdTRPRGZlZmFoMFhxV2xsTEV2RXBSYXo1eDc0aEF2eDI4cTdSeQ?oc=5",
-      "publishedAt": "2026-06-22T04:30:00+09:00",
-      "severity": "MEDIUM",
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1hWnl0TzRXUUd4NWNBaGF3U1Jaa1h1dUl1YWFNLXJLZlZ0MmUtQU1tc2s5ejNrd1piQ1NqNmhRU2RmZ2tIeGlDY1JtdzEyTFpQZm9EMWgwaUNIWFhFZ2c5a3hfX1lNaEszVjFaX3NLR2xaNlR6WnNv?oc=5",
+      "publishedAt": "2026-06-22T10:50:34+09:00",
+      "severity": "HIGH",
       "category": "金利",
       "themes": [
+        "ドル円",
         "日銀",
+        "為替",
+        "輸出",
         "金利上昇",
         "銀行"
       ],
       "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267",
         "8306",
         "8316",
         "8411"
       ],
       "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
-      "notify": false
+      "notify": true
     },
     {
       "id": "news-35f83c8625276e90",
@@ -3933,121 +3883,15 @@
       "notify": false
     },
     {
-      "id": "news-1393b6902f86df76",
-      "title": "eMAXIS 日経半導体株インデックス【03311247】：基準価格・投資信託情報 - Yahoo!ファイナンス",
-      "summary": "eMAXIS 日経半導体株インデックス【03311247】：基準価格・投資信託情報 Yahoo!ファイナンス",
-      "source": "google_news_us_market_jp",
-      "sources": [
-        "google_news_us_market_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1WcnBkNXkzRS1PdnNIWkxieGVIMWw3YjRKMXZON1NIZlpIQjd1Z09ETlVHUWdXUmthamQ3LWdyakFSd1hMU0Z5cWVuSkF3Z0tGY0Q1Vg?oc=5",
-      "publishedAt": "2026-06-22T05:35:52+09:00",
-      "severity": "MEDIUM",
-      "category": "半導体/AI",
-      "themes": [
-        "AI",
-        "データセンター",
-        "半導体"
-      ],
-      "relatedTickers": [
-        "6526",
-        "6723",
-        "6857",
-        "6920",
-        "8035"
-      ],
-      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
-      "notify": false
-    },
-    {
-      "id": "news-891d5926a5336c90",
-      "title": "【ご案内】ひびきの半導体アカデミー「＜上期＞半導体活用基礎講座オンデマンドセミナー」 - 北九州学術研究都市",
-      "summary": "【ご案内】ひびきの半導体アカデミー「＜上期＞半導体活用基礎講座オンデマンドセミナー」 北九州学術研究都市",
-      "source": "google_news_us_market_jp",
-      "sources": [
-        "google_news_us_market_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9RSHJGeDE1UllwN0JwY3FDUWNpTW1nWnFOaHB4eE5UQlpDQlVoOTMyWncxQ0E5ek82SWd4THhXbU9GelV1Z29RVFJ1SkI5a2dJbzNyUlRWYWh1a3Bu?oc=5",
-      "publishedAt": "2026-06-22T07:00:00+09:00",
-      "severity": "MEDIUM",
-      "category": "半導体/AI",
-      "themes": [
-        "AI",
-        "データセンター",
-        "半導体"
-      ],
-      "relatedTickers": [
-        "6526",
-        "6723",
-        "6857",
-        "6920",
-        "8035"
-      ],
-      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
-      "notify": false
-    },
-    {
-      "id": "news-bafcac11d5ac5d0f",
-      "title": "警察がAIを使うときの注意点は「場面ごとに効果や副作用の検討を」 [AIの時代] - 朝日新聞",
-      "summary": "警察がAIを使うときの注意点は「場面ごとに効果や副作用の検討を」 [AIの時代] 朝日新聞",
-      "source": "google_news_us_market_jp",
-      "sources": [
-        "google_news_us_market_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9lamU4NHRydURad1lxMk1ia3ZSQXA3REpSYkpIYVpTZVpsTmxoRzBYLVdzN1ZhNE94emhEWVlabGppU0RkOG1qanFHUktORVdwUFFBYTNVdGo3b09VUk42MUxISVJGVmc?oc=5",
-      "publishedAt": "2026-06-22T08:00:00+09:00",
-      "severity": "MEDIUM",
-      "category": "半導体/AI",
-      "themes": [
-        "AI",
-        "データセンター",
-        "半導体"
-      ],
-      "relatedTickers": [
-        "6526",
-        "6723",
-        "6857",
-        "6920",
-        "8035"
-      ],
-      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
-      "notify": false
-    },
-    {
-      "id": "news-c51a3e840fa6ddfb",
-      "title": "日銀政策正常化は時間との戦いか、首相指名のハト派委員が利上げ反対 - Bloomberg",
-      "summary": "日銀政策正常化は時間との戦いか、首相指名のハト派委員が利上げ反対 Bloomberg",
+      "id": "news-07aad2627660c990",
+      "title": "「日本の若者は本当に貧乏なのか？」竹中平蔵が警鐘…日銀の利上げで始まる、若い世代を待ち受ける“さらに厳しい現実” - Yahoo!ニュース",
+      "summary": "「日本の若者は本当に貧乏なのか？」竹中平蔵が警鐘…日銀の利上げで始まる、若い世代を待ち受ける“さらに厳しい現実” Yahoo!ニュース",
       "source": "google_news_macro_jp",
       "sources": [
         "google_news_macro_jp"
       ],
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPejRKaHJrUDZxMEhRekxHOEVEb3c5QWVRejBzRFhPamh5WVc4YlAwNktZNE9CRjRhMEpTeExnZU5CYzVJMlV6NWtPanVIN3UtOUk0UXRhSWY3WWoxQ0VZZ195VDZZUV9SbXQ2T2FYVWxoSTcwZGNvenZmQTloaXlaZWhLcUhFSFdEZHNrT3lR?oc=5",
-      "publishedAt": "2026-06-22T08:08:02+09:00",
-      "severity": "MEDIUM",
-      "category": "金利",
-      "themes": [
-        "日銀",
-        "金利上昇",
-        "銀行"
-      ],
-      "relatedTickers": [
-        "8306",
-        "8316",
-        "8411"
-      ],
-      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
-      "notify": false
-    },
-    {
-      "id": "news-da12336cbc38f89c",
-      "title": "三井住友銀行メンテナンスについて - BOAT RACE オフィシャルウェブサイト",
-      "summary": "三井住友銀行メンテナンスについて BOAT RACE オフィシャルウェブサイト",
-      "source": "google_news_japan_themes_jp",
-      "sources": [
-        "google_news_japan_themes_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9HN29ETng3MmJ1TkZzdmh5Y2NvbTJwN0F4b0liMmxqdTdjeHVrc1E3eVljYWo2bl92RzFiUVEwUGVla2lVUFRMdVdqaUIzQzN1OHpGMFJNZkdPRXo4MkZWcW51bTBXelU?oc=5",
-      "publishedAt": "2026-06-22T08:11:26+09:00",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5CUGJrWl9iTExhNmlVYktIODM5RmVaMEthSW1lSFM1Um5lQ3c0b3JycXNIRHdRUjE2Xy1MNXFOTkd2ZUtXWjNUM3JfUUVfRGMxV003TW13S05EcGdsZFJBRWxwN3FNZDhldUJ2bFViSGlxOG9VNTNZWDBEcmlTRmc?oc=5",
+      "publishedAt": "2026-06-22T07:00:36+09:00",
       "severity": "MEDIUM",
       "category": "金利",
       "themes": [
@@ -4144,32 +3988,6 @@
       "notify": false
     },
     {
-      "id": "news-e71bfead4499004b",
-      "title": "外為：1ドル161円43銭前後とドル高・円安で推移(株探ニュース) - Yahoo!ファイナンス",
-      "summary": "外為：1ドル161円43銭前後とドル高・円安で推移(株探ニュース) Yahoo!ファイナンス",
-      "source": "google_news_fx_rates_jp",
-      "sources": [
-        "google_news_fx_rates_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPS3VWbEYzZVhmeXhXT3lQMXFhUFVFRTdEZU9LZ2NVVHZfTWs4WGoyamo5cHk0Q3o1ZTVNY2ZseTRPa1p1YTNBSGQ4X3JrcW0xUXEwakU2OE9KYloxS2NVbk81cjJ4NFcyRTBpVGxWaFlaMUJpQ2NrSE9NVkJ2d3RDOFhVcU5Qdmc?oc=5",
-      "publishedAt": "2026-06-22T09:01:00+09:00",
-      "severity": "MEDIUM",
-      "category": "為替",
-      "themes": [
-        "ドル円",
-        "為替",
-        "輸出"
-      ],
-      "relatedTickers": [
-        "6501",
-        "6758",
-        "7203",
-        "7267"
-      ],
-      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
-      "notify": false
-    },
-    {
       "id": "news-0b0050fc5d1d8c7f",
       "title": "見切り発車のAI PoCが引き起こす悲劇：技術的には成功でも「中止」になる……一体何が起こってる？ - EnterpriseZine",
       "summary": "見切り発車のAI PoCが引き起こす悲劇：技術的には成功でも「中止」になる……一体何が起こってる？ EnterpriseZine",
@@ -4197,66 +4015,14 @@
       "notify": false
     },
     {
-      "id": "news-7e0e18d69d5ce1e6",
-      "title": "日経平均22日寄り付き＝182円安、7万1067円 - 株探",
-      "summary": "日経平均22日寄り付き＝182円安、7万1067円 株探",
-      "source": "google_news_fx_rates_jp",
-      "sources": [
-        "google_news_fx_rates_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1yeUpFbG9vTlI3QjdTVnFqclNXY2YtNVB1T1UyT2NZdVd0QTl2Tnc5T3ladDE4ZzgwTGZuTWhMcG9WSllheUh4Z3k1bnJyMlBlZUE?oc=5",
-      "publishedAt": "2026-06-22T09:02:16+09:00",
-      "severity": "MEDIUM",
-      "category": "為替",
-      "themes": [
-        "ドル円",
-        "為替",
-        "輸出"
-      ],
-      "relatedTickers": [
-        "6501",
-        "6758",
-        "7203",
-        "7267"
-      ],
-      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
-      "notify": false
-    },
-    {
-      "id": "news-24bccbf8af8dbc11",
-      "title": "【為替】円安阻止介入はいつ再開するのか - マネクリ",
-      "summary": "【為替】円安阻止介入はいつ再開するのか マネクリ",
-      "source": "google_news_fx_rates_jp",
-      "sources": [
-        "google_news_fx_rates_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE9OZHpmdjBIZ3BJYVY1Nkc0RlJWZDZvT180QkE4ZXpRajZWb3JRTEpLb0VjampYdkdkeDY2Y3pWX3FKUkp5dm15MzRTOVV1LVExNW5xc9IBV0FVX3lxTE9JVDNMTWt1dE9RNjlOMWxLbk1kdmcwN3dfQmNrWkhFX3hwSjEwSWlWdUE4UnJubzJRa014d2VRNEFlaEg2RkVHZHpSajZQSzFQSTVtQUlMQQ?oc=5",
-      "publishedAt": "2026-06-22T09:05:00+09:00",
-      "severity": "MEDIUM",
-      "category": "為替",
-      "themes": [
-        "ドル円",
-        "為替",
-        "輸出"
-      ],
-      "relatedTickers": [
-        "6501",
-        "6758",
-        "7203",
-        "7267"
-      ],
-      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
-      "notify": false
-    },
-    {
-      "id": "news-6c8157bd4dbff123",
+      "id": "news-52a71438d39e1db7",
       "title": "日銀はより積極的な姿勢に転じるのでしょうか？ - マネクリ",
       "summary": "日銀はより積極的な姿勢に転じるのでしょうか？ マネクリ",
       "source": "google_news_macro_jp",
       "sources": [
         "google_news_macro_jp"
       ],
-      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFB1NTR5WWl5V2NJSVotc3B0Xy1qSEp2YUI5aWVLNW1hQ3pBZHNwb1pRUE5fMkR4dG9HV1F4MTc3NWVYWTREbTE2X2NpbjdZaGI3Q0ZWRdIBV0FVX3lxTE5tTDJxR1RaNFFhQW9zYVRxWmpnY25OaHRBZzJQZW1Gclppc2oyTm16S3lKakJWM1N5eDFXWXczY3dHZVZnRy1NMmIxOHRDMC1OUy1uXzNKQQ?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5tTDJxR1RaNFFhQW9zYVRxWmpnY25OaHRBZzJQZW1Gclppc2oyTm16S3lKakJWM1N5eDFXWXczY3dHZVZnRy1NMmIxOHRDMC1OUy1uXzNKQdIBV0FVX3lxTE5tTDJxR1RaNFFhQW9zYVRxWmpnY25OaHRBZzJQZW1Gclppc2oyTm16S3lKakJWM1N5eDFXWXczY3dHZVZnRy1NMmIxOHRDMC1OUy1uXzNKQQ?oc=5",
       "publishedAt": "2026-06-22T09:10:00+09:00",
       "severity": "MEDIUM",
       "category": "金利",
@@ -4300,37 +4066,12 @@
       "notify": false
     },
     {
-      "id": "news-55c5e893a58d19d8",
-      "title": "【要人発言】日銀副総裁「基調物価が2％の物価目標を超えて上振れるリスクある」(トレーダーズ・ウェブ) - Yahoo!ファイナンス",
-      "summary": "【要人発言】日銀副総裁「基調物価が2％の物価目標を超えて上振れるリスクある」(トレーダーズ・ウェブ) Yahoo!ファイナンス",
-      "source": "google_news_macro_jp",
-      "sources": [
-        "google_news_macro_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPUzgzSTFlOXpna3pNejZKR0pscWNLTndTYW54blNSZVZWMmFJR0p5MW1oR3pPQVI5N1k1R1h6aHZhNmFCSVNRTkxDbHZWRHFUOFJnT1FvdENPN3RQYmJMYnR2S1hlYTVSSVNFRk9FVk1ubUpVcVBZNXlDeXBZUlRoOEVjMi1qblk?oc=5",
-      "publishedAt": "2026-06-22T09:28:00+09:00",
-      "severity": "MEDIUM",
-      "category": "金利",
-      "themes": [
-        "日銀",
-        "金利上昇",
-        "銀行"
-      ],
-      "relatedTickers": [
-        "8306",
-        "8316",
-        "8411"
-      ],
-      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
-      "notify": false
-    },
-    {
       "id": "news-5ef3306e98713b10",
       "title": "日経平均株価、初の7万2000円台 半導体関連が上昇 - 日本経済新聞",
       "summary": "日経平均株価、初の7万2000円台 半導体関連が上昇 日本経済新聞",
-      "source": "google_news_us_market_jp",
+      "source": "google_news_japan_themes_jp",
       "sources": [
-        "google_news_us_market_jp"
+        "google_news_japan_themes_jp"
       ],
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBTSVlMUno1NW5kNlN0VkRKMXRHRW1uTTFYeUxJTU9nT3lOZ3RqNDdsa2ZvSUVFNmUwT0x0Z3RFVFc3WHZYZU94bGJaU001WkU2Nk5IdlhzeWdfZ3plZWZ1WXRYSXdTZ2o3SXNqOA?oc=5",
       "publishedAt": "2026-06-22T09:35:58+09:00",
@@ -4352,15 +4093,42 @@
       "notify": false
     },
     {
-      "id": "news-f5e656f96d600de5",
-      "title": "物価安定実現へ日銀の適切運営に期待と首相 - 沖縄タイムス社",
-      "summary": "物価安定実現へ日銀の適切運営に期待と首相 沖縄タイムス社",
+      "id": "news-393192074225f7ad",
+      "title": "千葉・茂原市、5.6haに半導体産業などの集積目指す - 建設通信新聞Digital",
+      "summary": "千葉・茂原市、5.6haに半導体産業などの集積目指す 建設通信新聞Digital",
+      "source": "google_news_japan_themes_jp",
+      "sources": [
+        "google_news_japan_themes_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBTR1M4bExSUS1iZ1pHckNnRlNFRTZUdGpQZFRBOUhEbmladk1XTmQwUTRQY1Y0WTc2NVNKek9VSHFBWG9MUFJpbEwtUXV6aWplVkpwSEFR?oc=5",
+      "publishedAt": "2026-06-22T09:44:44+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-ccfd37ac6895a3a3",
+      "title": "高市首相、日銀に2%目標の持続的・安定的実現へ適切な政策運営を期待 - Bloomberg",
+      "summary": "高市首相、日銀に2%目標の持続的・安定的実現へ適切な政策運営を期待 Bloomberg",
       "source": "google_news_macro_jp",
       "sources": [
         "google_news_macro_jp"
       ],
-      "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE01cThpUm54QUlSanJDQ2tDeEUtQnI2UVVzQjZ0VFhMVXZpbEd5TlE5OUVXS1lmMFBHMWItTzVXeE5CVjVXSTV1ZEZhZlJ4STgtZHB5TzBldzJzal9jUlE?oc=5",
-      "publishedAt": "2026-06-22T09:40:13+09:00",
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBodjZleDZ3aFZBWHVWdlJVS1lPdUhIY0VCMWM5YmxHbXBzMWp2VHVHMXp4YXFBbWtZQzBCZEZmeUFNYzVtYzNHTEVnQnFKVENPNGNXUlQ3eWpxaFc3WUl4MjZCWEdWWXQ1Rm1NRm5kMzk4enZYQWRB?oc=5",
+      "publishedAt": "2026-06-22T09:48:00+09:00",
       "severity": "MEDIUM",
       "category": "金利",
       "themes": [
@@ -4377,40 +4145,15 @@
       "notify": false
     },
     {
-      "id": "news-a29bda9fbc2cc9e6",
-      "title": "物価安定実現へ日銀の適切運営に期待と首相 - 京都新聞デジタル",
-      "summary": "物価安定実現へ日銀の適切運営に期待と首相 京都新聞デジタル",
-      "source": "google_news_macro_jp",
-      "sources": [
-        "google_news_macro_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBxNHF2OFloZm5SbmZjTjZFZEV5VUppQlU3YjRzZDJCejVJVGtacWp5OHRoellhRE9Cc0luejF1OWdIeWdDMGhTRnRLb0V5QUVDUUxoYndNOFo?oc=5",
-      "publishedAt": "2026-06-22T09:40:13+09:00",
-      "severity": "MEDIUM",
-      "category": "金利",
-      "themes": [
-        "日銀",
-        "金利上昇",
-        "銀行"
-      ],
-      "relatedTickers": [
-        "8306",
-        "8316",
-        "8411"
-      ],
-      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
-      "notify": false
-    },
-    {
-      "id": "news-9d48ef46df1d3e31",
-      "title": "行き過ぎた円安が招いた値上げラッシュ、過度な円安政策は見直しを - 読売新聞",
-      "summary": "行き過ぎた円安が招いた値上げラッシュ、過度な円安政策は見直しを 読売新聞",
+      "id": "news-1dddffa0f78c6e00",
+      "title": "為替、いつでも適切に対応 円安で市場けん制―片山財務相 - 時事ドットコム",
+      "summary": "為替、いつでも適切に対応 円安で市場けん制―片山財務相 時事ドットコム",
       "source": "google_news_fx_rates_jp",
       "sources": [
         "google_news_fx_rates_jp"
       ],
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9NcUVWVnZSMDJmUzZVQTJhR2VmNHUtdmwxQlhOM2pOejQ2b2FaTHh2S1RJcnVnVzhjNlVWNmFLdE5BY01scnhaRDIydlZFWE0xaks1enFaVjJYbm5GRUE0VVNOWUprLThsNTVOOWtFUk0?oc=5",
-      "publishedAt": "2026-06-22T09:55:00+09:00",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFA4cUlYSDE0M1JqOUFySC04Tlo0LTBlZ0t4VklBYnp2N2dyN0k5bWFhaktzX1pzT1dpT05mRTNEejh5UzBJeGFLc1d0N1Q5c2EyUjN5T3BLN1Uzc09XYlUxa3lvZw?oc=5",
+      "publishedAt": "2026-06-22T10:00:00+09:00",
       "severity": "MEDIUM",
       "category": "為替",
       "themes": [
@@ -4428,37 +4171,65 @@
       "notify": false
     },
     {
-      "id": "news-02d51fb8d181b13f",
-      "title": "日銀は政府と密接に連携し、物価目標実現に向け適切な政策運営を＝高市首相 - Reuters",
-      "summary": "日銀は政府と密接に連携し、物価目標実現に向け適切な政策運営を＝高市首相 Reuters",
-      "source": "google_news_macro_jp",
+      "id": "news-f56278f14b99c7f4",
+      "title": "Sakana AI、一部「ミュトス越えの性能」うたうAIを提供 複数モデルの“集合知”を活用 - ITmedia",
+      "summary": "Sakana AI、一部「ミュトス越えの性能」うたうAIを提供 複数モデルの“集合知”を活用 ITmedia",
+      "source": "google_news_us_market_jp",
       "sources": [
-        "google_news_macro_jp"
+        "google_news_us_market_jp"
       ],
-      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9TRllPTzJHRkFUUTJGTHpzZ0xmaGpwdU9lMHoyNHZBelhuSjhHQV92M3ZGbXdaMjM2b2U4aHZSU3loYmdldjloWG5tN2U1QWFZLVJpeXZsTDJpZ1lOT0IwY0JuaTBzLTBDS1ZIN1ZYc2dNdU5IUWV1dWZsSXdEdw?oc=5",
-      "publishedAt": "2026-06-22T10:04:00+09:00",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE81OVI0NlU1X3BtaVZHRVN1ZFZyOWdkR0xTSGlwa3BnY1l4cmtyTWZHeHhOUFdESjlkYjJ0SzV4ejBoNVBvaHhWU0dJR0VCN1JMcHdBUk5COWJSR2R0OUI1b0VVcTAyTU1rRTBIeQ?oc=5",
+      "publishedAt": "2026-06-22T10:02:17+09:00",
       "severity": "MEDIUM",
-      "category": "金利",
+      "category": "半導体/AI",
       "themes": [
-        "日銀",
-        "金利上昇",
-        "銀行"
+        "AI",
+        "データセンター",
+        "半導体"
       ],
       "relatedTickers": [
-        "8306",
-        "8316",
-        "8411"
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
       ],
-      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-e73c2258dc9aae18",
+      "title": "外為：1ドル161円49銭前後とドル高・円安で推移(株探ニュース) - Yahoo!ファイナンス",
+      "summary": "外為：1ドル161円49銭前後とドル高・円安で推移(株探ニュース) Yahoo!ファイナンス",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPQmpOMDZySl85V3poZkc5b25SSXNhXzRtNnNXTlh4bGVRUHVXbzFaUFZ1LXRqUmVBb2RILXg1bDBXNVd0NUM0V0ZoUmVFSGVZTzluU0VMVDJyd3BLb1JoRnRpUFN1Nzd3MGEzTGd5UEdvOFFtZnZRWGJhc1YxWHJIbllxS0NJbnM?oc=5",
+      "publishedAt": "2026-06-22T10:05:24+09:00",
+      "severity": "MEDIUM",
+      "category": "為替",
+      "themes": [
+        "ドル円",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
       "notify": false
     },
     {
       "id": "news-edb931e035d86990",
       "title": "日経平均7万円維持なるか 半導体株の動き注目 市場の過熱感に警戒の声も - khb東日本放送",
       "summary": "日経平均7万円維持なるか 半導体株の動き注目 市場の過熱感に警戒の声も khb東日本放送",
-      "source": "google_news_us_market_jp",
+      "source": "google_news_japan_themes_jp",
       "sources": [
-        "google_news_us_market_jp"
+        "google_news_japan_themes_jp"
       ],
       "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE52Y3lGRUY1VEY0U0ZWSXdORklscllzLS1nb3FlU2NQZUFIYjhzRmJRamRnUzktYXFZLVVQMkVzWC1pcURqQmhmRnNwYjREMU0?oc=5",
       "publishedAt": "2026-06-22T10:18:57+09:00",
@@ -4480,15 +4251,310 @@
       "notify": false
     },
     {
-      "id": "news-4979976552362bbf",
-      "title": "TOPPANホールディングスと東京大学が共同記者会見を開催 - u-tokyo.ac.jp",
-      "summary": "TOPPANホールディングスと東京大学が共同記者会見を開催 u-tokyo.ac.jp",
+      "id": "news-9c24d5aab9dca040",
+      "title": "適切な金融政策、政府施策や成長投資と相まって持続的成長に資する＝氷見野日銀副総裁 - Reuters",
+      "summary": "適切な金融政策、政府施策や成長投資と相まって持続的成長に資する＝氷見野日銀副総裁 Reuters",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNSkRfNUdyYTdvYjZhdGhiZEZWRjJFa2xkaml5RDRjbXJ1T0hlelVDcXpzaVVCNkI2eWdYWDZMUzk1eHJKSGx6UVZBdjFmTWg0TUtsMU1CbEdINlRVTVdkUG9iM1lvUFhPYlB0WlRoX0I3NHhYY244M1Z6MVJWOXNpdllnOERURUhPWXc0?oc=5",
+      "publishedAt": "2026-06-22T10:28:00+09:00",
+      "severity": "MEDIUM",
+      "category": "金利",
+      "themes": [
+        "日銀",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-c90b4b4f6e220161",
+      "title": "高市首相「物価2%目標へ日銀に適切な政策期待」 利上げ受け発言 - 日本経済新聞",
+      "summary": "高市首相「物価2%目標へ日銀に適切な政策期待」 利上げ受け発言 日本経済新聞",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5pYkEwSGhxOFRWZ0NQZ1laNGRGUHp5eU1QYnRPS1VwVUJCMHlaNGxIR2tJLWdkb1J1U3V1QTVDYlh5YVpCQXJWR1hwR0RBS1poRGNCaXBYRng3QkhmREF5UTc0SGJiZy11TUhNVw?oc=5",
+      "publishedAt": "2026-06-22T10:32:39+09:00",
+      "severity": "MEDIUM",
+      "category": "金利",
+      "themes": [
+        "日銀",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-21638364798fc33e",
+      "title": "40年ぶりの円安水準、自動車7社で9000億円超の利益上振れ要因に - Bloomberg",
+      "summary": "40年ぶりの円安水準、自動車7社で9000億円超の利益上振れ要因に Bloomberg",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPQ19jaTVIelo4dnkycnVPN2JTSjFUeVA0RnpSelJnRWJlakkydmxUSDNSQkw4b0lJamhMZEpmR01VaDFrTE5EbURpd1BTZ1Q5Vk96SFhmWjMzZHZlbUhYaS1VbnlCOFRsTnlnV24yY2Jka09Fd2tVTER5WmNYTFlSdWhkcUlmZkxIT0o1enVB?oc=5",
+      "publishedAt": "2026-06-22T10:35:00+09:00",
+      "severity": "MEDIUM",
+      "category": "為替",
+      "themes": [
+        "ドル円",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-3afffcbdbab38a7e",
+      "title": "ＴＯＴＯ---大幅続伸、半導体部材に800億円投資などと伝わる(フィスコ) - Yahoo!ファイナンス",
+      "summary": "ＴＯＴＯ---大幅続伸、半導体部材に800億円投資などと伝わる(フィスコ) Yahoo!ファイナンス",
       "source": "google_news_us_market_jp",
       "sources": [
         "google_news_us_market_jp"
       ],
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE93clByR1VvT0lXYTJ4cjNNUHlSTnNET0VSU0UxV2dZWDB1S0t1V1N1QmMxRTRPOUJvSTZRdm5SNlk0dnRFRFBGMVhqcDVjNnNtN2JVdFktUWFzd0JsMTV1a182Tm5UUW1jb1RBOQ?oc=5",
-      "publishedAt": "2026-06-22T10:02:06+09:00",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNZl9WWnNaTzRlMGRiaGI1THEtMWxCZklWbWlTQWF3cFdqNHVSYmtRWnpMeHpUeXBQSnlTWmpNTUdaU0FNdFpsY2MyMU1ZZjZmcUo1Z3U1Um1Na1FZVmFsUzhVQlREWUVaVjZpSVFCYnZjemR2V05vS2JJVENBMmRWb1cxX2c2N28?oc=5",
+      "publishedAt": "2026-06-22T10:39:00+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-d375708705a7edfa",
+      "title": "日経平均、一時7万2000円超え AI・半導体分野への成長期待 - 朝日新聞",
+      "summary": "日経平均、一時7万2000円超え AI・半導体分野への成長期待 朝日新聞",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9VU1VoLTg3alZtZzJhTUR0MGVVUEp5aWZhTFZUUmZjcGwwN2tqMU1CVGdCMHFMM2tXTnNLbGxmUEtzTWt3aWcySTIzMDNub1NoWmpIXzVKS3NOZnQ4QnpFR3UzTnhYbTg?oc=5",
+      "publishedAt": "2026-06-22T10:46:19+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-8611609d75b2c4d3",
+      "title": "国産生成AI基盤モデルPLaMo 3.0 Primeを正式リリース - 株式会社Preferred Networks",
+      "summary": "国産生成AI基盤モデルPLaMo 3.0 Primeを正式リリース 株式会社Preferred Networks",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFA5Z3dYZGpWMWVYU3RCNnJ1WE1MQllxYjNSYXN1VldyVkJpYVFRZVVsbGJpZGpTLWp1Mm1yZzFjdkdEUE9fRFF2SVBOYXpkcW56cDRLNUNB?oc=5",
+      "publishedAt": "2026-06-22T11:00:00+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-5c86edccca7436d1",
+      "title": "外為：1ドル161円53銭前後とドル高・円安で推移 - 株探",
+      "summary": "外為：1ドル161円53銭前後とドル高・円安で推移 株探",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE91Zzh4eVdTdDJVRFVXVDdPdFp0X1BaaU96VzdOa3JoejJTSHZtM0hqSGVOaTF1bGxNZ3F4ODZzNkVxZFVyc3NsdXNkS2hLa3ZWMWc?oc=5",
+      "publishedAt": "2026-06-22T11:01:01+09:00",
+      "severity": "MEDIUM",
+      "category": "為替",
+      "themes": [
+        "ドル円",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-f27f8efc973271db",
+      "title": "日銀利上げで株高の銀行株､次に動意づくタイミングは？ - 四季報オンライン",
+      "summary": "日銀利上げで株高の銀行株､次に動意づくタイミングは？ 四季報オンライン",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1CRjNiYU92ZFMzbkc4LVg0LTZHLVRzOGlUOTNLazgtZDc5aEk0T0FoRm9DLVphNFktRGFXQ1ZTV2Z4ZUpiM25BNWhBbWVYX21mVVBoV0FzMA?oc=5",
+      "publishedAt": "2026-06-22T11:30:00+09:00",
+      "severity": "MEDIUM",
+      "category": "金利",
+      "themes": [
+        "日銀",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-8cfe81631938bccd",
+      "title": "投信の1年リターン、上位に半導体関連が並ぶ - 日本経済新聞",
+      "summary": "投信の1年リターン、上位に半導体関連が並ぶ 日本経済新聞",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE0tUXc1YUp5UWtmV2MwTHFIQlZvam9Fc1Y5YlRhZ3BwdVJkak9fTGpnWGtrUjd5S0I1cWV0MkRVVnpJbUNYTDNER0dWa3pVdGdKSHJ2NHdqMzk0bVVOSFNZTXN2cE9MdkNKYVkwNg?oc=5",
+      "publishedAt": "2026-06-22T12:00:00+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-5dcdd9585a8496bf",
+      "title": "外為：1ドル161円53銭前後とドル高・円安で推移(株探ニュース) - Yahoo!ファイナンス",
+      "summary": "外為：1ドル161円53銭前後とドル高・円安で推移(株探ニュース) Yahoo!ファイナンス",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNRmJ1X0pjVkVTMnV6SURlb3VRSFJRZW16dEk3d19MaVFhZ1Zqa3dYYk5EUnUtNnlIRkhURGtkci1DZ2VPSVVVMlM2Qk9JRG52V3ZFcmVBUmtKSW55cW1mcVR3NXNETkRuZEVsODBwZlJfNVVVaG1VVGE0Y0FESXRUMjc5NjZHWWM?oc=5",
+      "publishedAt": "2026-06-22T12:01:00+09:00",
+      "severity": "MEDIUM",
+      "category": "為替",
+      "themes": [
+        "ドル円",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-41e7f98cd67a0dce",
+      "title": "万博レガシーイベント「Resona EXPO Re:Future」の開催について|ニュースリリース - りそなホールディングス",
+      "summary": "万博レガシーイベント「Resona EXPO Re:Future」の開催について|ニュースリリース りそなホールディングス",
+      "source": "google_news_japan_themes_jp",
+      "sources": [
+        "google_news_japan_themes_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPUDl5ZTVWLUFDcUlfY2I2SXpnVlFhdExvX0d4bm1fYUlHUjhnZ0ZuS3M4UldoSzgyb0JfMDBzY2hSdlBUZXc1V0ZvZUpYcFNkeVMydTlDZW0yZEx3S3FhRTVTX1BoSktjQjFOTFljblZCN2gxcjBRa3ZjUXNtSXVhTTJaOWtQREk?oc=5",
+      "publishedAt": "2026-06-22T10:07:34+09:00",
+      "severity": "LOW",
+      "category": "その他",
+      "themes": [],
+      "relatedTickers": [],
+      "impact": "翌営業日の地合い・監視テーマへの影響を確認",
+      "notify": false
+    },
+    {
+      "id": "news-a37069f724501f4c",
+      "title": "橘川 武郎氏が自然エネルギー財団評議員に就任｜お知らせ - 自然エネルギー財団",
+      "summary": "橘川 武郎氏が自然エネルギー財団評議員に就任｜お知らせ 自然エネルギー財団",
+      "source": "google_news_japan_themes_jp",
+      "sources": [
+        "google_news_japan_themes_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBKUFdsSmJjVmxiNlVHaEZOeFV6S01vRHBMbjc1Nnl0TGViQmJ6U2NEUGp4VjhlcnBKUWpMTTRxdDZ1THBfRzd5amVzX1FSbHhsLWZEb1h5YmF6SEdrZGpMTzFNTFp2eUNZTUtvOEpxSlpSQQ?oc=5",
+      "publishedAt": "2026-06-22T11:00:21+09:00",
+      "severity": "LOW",
+      "category": "その他",
+      "themes": [],
+      "relatedTickers": [],
+      "impact": "翌営業日の地合い・監視テーマへの影響を確認",
+      "notify": false
+    },
+    {
+      "id": "news-1c2d6a1a7868a74f",
+      "title": "午前の日経平均は大幅続伸、初の7万2000円台 ＡＩ株がけん引 - Reuters",
+      "summary": "午前の日経平均は大幅続伸、初の7万2000円台 ＡＩ株がけん引 Reuters",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOcS1hNFBKckNBUVJ5VHpOM2xBSkNmdmowbXNDRHZwTTZ6YUU1WmdKZDEwWEVINV9xWU1kalhRYWh4QkdCVkZVVlVlcUhPRDRnZlR4ZVZWQkJ3VFI3NlBaSXl4ektpZ1E3RHpUckhubkhCekxENl9iOXhUVm9pWWtPUA?oc=5",
+      "publishedAt": "2026-06-22T12:05:00+09:00",
       "severity": "LOW",
       "category": "その他",
       "themes": [],
@@ -4532,75 +4598,6 @@
       "notify": true
     },
     {
-      "id": "news-44f11d44819e3ae4",
-      "title": "日経平均7万円超え。AI半導体ブーム、原油下落など7つの追い風（窪田真之） - トウシル",
-      "summary": "日経平均7万円超え。AI半導体ブーム、原油下落など7つの追い風（窪田真之） トウシル",
-      "source": "google_news_japan_themes_jp",
-      "sources": [
-        "google_news_japan_themes_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBYVGtiLXZLOTI5VTJwMFk0RFFPT3Q2UVk3eW5ZTUZGRERWSDJRVEtuQWF5ZHk0SVhzOTkwM0ZmX19QbzBraHR1R09MWnRxZ2dqaGQ2RVl0UUlWUQ?oc=5",
-      "publishedAt": "2026-06-22T08:00:00+09:00",
-      "severity": "HIGH",
-      "category": "地政学",
-      "themes": [
-        "AI",
-        "データセンター",
-        "半導体",
-        "原油",
-        "地政学",
-        "防衛"
-      ],
-      "relatedTickers": [
-        "1605",
-        "5020",
-        "6526",
-        "6723",
-        "6857",
-        "6920",
-        "7011",
-        "7012",
-        "7013",
-        "8035"
-      ],
-      "impact": "防衛・資源・エネルギー関連に資金が向かう可能性",
-      "notify": true
-    },
-    {
-      "id": "news-62d665fffe144e17",
-      "title": "ドル/円見通し(為替/FX ニュース )：先週末のドル円は円高で161円台前半｜日本のCPIは市場予想と一致でドル円は反応薄(2026年6月22日) - OANDA証券",
-      "summary": "ドル/円見通し(為替/FX ニュース )：先週末のドル円は円高で161円台前半｜日本のCPIは市場予想と一致でドル円は反応薄(2026年6月22日) OANDA証券",
-      "source": "google_news_fx_rates_jp",
-      "sources": [
-        "google_news_fx_rates_jp"
-      ],
-      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5uLWJOYVZXTElrRkN4czJNVHM4eWcyVm94d3FJMFJ1ZmlQR1hUUWQ0OXZKSXVVN0dxZHlILWRzeVJxclNlT2VCX3FDbU1IZlJuakJ1czJfajBjLXJzc0NkcHlCaHJaNWpnTHVOTjRZRFRKdWs?oc=5",
-      "publishedAt": "2026-06-22T08:08:55+09:00",
-      "severity": "HIGH",
-      "category": "米金利",
-      "themes": [
-        "FOMC",
-        "FRB",
-        "グロース",
-        "ドル円",
-        "為替",
-        "米金利",
-        "輸出"
-      ],
-      "relatedTickers": [
-        "6501",
-        "6758",
-        "6857",
-        "6920",
-        "7203",
-        "7267",
-        "8035",
-        "9984"
-      ],
-      "impact": "米金利とNASDAQを通じて半導体・AI・グロース株に影響する可能性",
-      "notify": true
-    },
-    {
       "id": "news-22b0d8f42fac071f",
       "title": "FX/為替「ドル/円今日の見通し｜中東情勢懸念で円売り地合い続く」 外為どっとコム トゥデイ 2026年6月8日号 - 外為どっとコム",
       "summary": "FX/為替「ドル/円今日の見通し｜中東情勢懸念で円売り地合い続く」 外為どっとコム トゥデイ 2026年6月8日号 外為どっとコム",
@@ -4633,7 +4630,39 @@
       ],
       "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
       "notify": true
+    },
+    {
+      "id": "news-da826cbe6ab19495",
+      "title": "日銀利上げも、円安達成できず？ 物価高当面続くか【週間ニュースまとめ6月15日～21日】 - 就活ニュースペーパーｂｙ朝日新聞",
+      "summary": "日銀利上げも、円安達成できず？ 物価高当面続くか【週間ニュースまとめ6月15日～21日】 就活ニュースペーパーｂｙ朝日新聞",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1hWnl0TzRXUUd4NWNBaGF3U1Jaa1h1dUl1YWFNLXJLZlZ0MmUtQU1tc2s5ejNrd1piQ1NqNmhRU2RmZ2tIeGlDY1JtdzEyTFpQZm9EMWgwaUNIWFhFZ2c5a3hfX1lNaEszVjFaX3NLR2xaNlR6WnNv?oc=5",
+      "publishedAt": "2026-06-22T10:50:34+09:00",
+      "severity": "HIGH",
+      "category": "金利",
+      "themes": [
+        "ドル円",
+        "日銀",
+        "為替",
+        "輸出",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267",
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": true
     }
   ],
-  "importantNewsCount": 4
+  "importantNewsCount": 3
 }
