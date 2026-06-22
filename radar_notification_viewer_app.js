@@ -8,7 +8,7 @@
     ['night', '夜']
   ];
   var AUTO_REFRESH_MS = 60000;
-  var VIEWER_VERSION = '20260622-7';
+  var VIEWER_VERSION = '20260622-8';
 
   var currentData = null;
   var activeSlot = 'morning';
@@ -196,7 +196,7 @@
     for(i = 0; i < symbols.length; i += 1){
       var symbol = symbols[i];
       var detail = symbol.statuses.join(' / ');
-      if(symbol.details.length) detail += '｜' + symbol.details.join('｜');
+      if(symbol.details.length) detail += ' | ' + symbol.details.join(' | ');
       html.push(
         '<a class="row clickable" href="' + escapeHtml(tradingViewUrl(symbol.code)) + '" target="_blank" rel="noopener noreferrer">' +
         '<div><div class="row-main">' + escapeHtml(symbol.code + (symbol.name ? ' ' + symbol.name : '')) + '</div>' +
@@ -204,7 +204,7 @@
         '<div class="num">TV</div></a>'
       );
     }
-    return '<div class="list">' + html.join('') + '</div>';
+    return '<div class="list" id="symbolList">' + html.join('') + '</div>';
   }
 
   function renderReasonRows(reasonCounts){
