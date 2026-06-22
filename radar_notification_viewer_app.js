@@ -239,19 +239,25 @@
     catch(error){ onFailure(error.message || '取得エラー'); }
   }
 
-  function loadDate(dateKey, preserveSlot, quiet){
+  function loadDate(dateKey, preserveSlot, quiet, fallbackDateKey){
     currentDateKey = dateKey;
     var path = 'reports/radar-notifications-' + dateKey + '.json';
     if(!quiet) renderStatus(dateKey + ' を読み込み中', 'ok', path);
 
     requestJson(path + '?cb=' + Date.now(), function(nextData){
       currentData = nextData || {};
+      byId('dateInput').value = dateKey;
       var reports = currentData.reports || {};
       if(!preserveSlot || !reports[activeSlot]) activeSlot = newestSlotKey(reports);
       lastLoadedAt = new Date();
       render();
       renderStatus(dateKey + ' の通知履歴を表示中', 'ok', path);
     }, function(message){
+      if(fallbackDateKey && fallbackDateKey !== dateKey){
+        renderStatus(dateKey + ' は未生成のため ' + fallbackDateKey + ' を表示します', 'warning', path);
+        loadDate(fallbackDateKey, false, true, '');
+        return;
+      }
       currentData = null;
       render();
       renderStatus(dateKey + ' の通知履歴を取得できません: ' + message, 'error', path);
@@ -333,7 +339,9 @@
     }
     if(enabled){
       autoRefreshTimer = setInterval(function(){
-        loadDate(byId('dateInput').value || jstDateKey(), true, true);
+        var today = jstDateKey();
+        var fallback = currentDateKey && currentDateKey !== today ? currentDateKey : addDays(today, -1);
+        loadDate(today, true, true, fallback);
       }, AUTO_REFRESH_MS);
     }
   }
@@ -361,5 +369,5 @@
   var initialDate = jstDateKey();
   byId('dateInput').value = initialDate;
   setAutoRefresh(true);
-  loadDate(initialDate, false, false);
+  loadDate(initialDate, false, false, addDays(initialDate, -1));
 })();
