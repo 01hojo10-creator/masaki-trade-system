@@ -1,0 +1,3777 @@
+{
+  "timestamp": "2026-06-23T08:10:27.480Z",
+  "source": "Masaki Trade System",
+  "marketDate": "2026-06-23",
+  "generatedAt": "2026-06-23T08:10:27.480Z",
+  "runId": "20260623-095510-f8dl2b",
+  "scan": {
+    "status": "complete",
+    "current": 36,
+    "total": 36,
+    "success": 36,
+    "pending": 0,
+    "poolCount": 558,
+    "active": false,
+    "complete": true,
+    "stage": "通知前再評価完了",
+    "focusUpdated": "2026/6/23 17:10:27",
+    "watchUpdated": "2026/6/23 17:02:32"
+  },
+  "focus": [
+    {
+      "rank": 1,
+      "code": "8795",
+      "name": "T&D HD",
+      "signal": "WAIT",
+      "entryStatus": "WAIT",
+      "trend": "WATCH",
+      "theme": "保険 / 金利上昇 / 金融",
+      "score": 60,
+      "initialScore": 0,
+      "volumeRatio": "",
+      "priceChange": "",
+      "entry": "",
+      "sl": "",
+      "tp": "",
+      "risk": "継続監視",
+      "comment": "資金入り始め",
+      "focusTier": "PREPARATION",
+      "focusLabel": "ブレイク待ち",
+      "missingConditions": [
+        "上値余地1.5%以上",
+        "ENTRY帯成立",
+        "初動/押し目/出来高強化"
+      ],
+      "promotionHint": "上値余地1.5%以上 / ENTRY帯成立 / 初動/押し目/出来高強化 が揃えばFocus候補",
+      "focusReadiness": "preparation_ready",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "exclusion",
+        "classification": "watch",
+        "reason": "overhead_room_short"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "UPTREND",
+      "setupType": "BREAKOUT_SETUP",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:48:13.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 4749.802306006444,
+      "hourlyLongEmaPrev": 4720.70210673452,
+      "hourlyLongEmaSlope": 0.6164379495670728,
+      "ema75SlopeShortPct": 0.6164379495670728,
+      "ema75SlopeLongPct": 7.551518836343689,
+      "ema75LongDecline": false,
+      "ema75LongRise": true,
+      "ema75SlopeState": "LONG_RISE",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": true,
+      "focusBlockReasons": [],
+      "longTrendPromotionHint": "",
+      "hourly": {
+        "available": true,
+        "score": 81,
+        "grade": "A",
+        "pass": true,
+        "entryAllowed": true,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": -0.6986027944111777,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "healthy_fib_pullback",
+          "near_ema_rebound_area",
+          "contracting_near_high",
+          "volume_rising",
+          "breakout_area"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:48:13.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 4948.821803063736,
+        "ema21": 4915.962543234925,
+        "hourlyLongEma": 4749.802306006444,
+        "hourlyLongEmaPrev": 4720.70210673452,
+        "hourlyLongEmaSlope": 0.6164379495670728,
+        "ema75SlopeShortPct": 0.6164379495670728,
+        "ema75SlopeLongPct": 7.551518836343689,
+        "ema75LongDecline": false,
+        "ema75LongRise": true,
+        "ema75SlopeState": "LONG_RISE",
+        "priceAboveLongEma": true,
+        "ema75": 4749.802306006444,
+        "ema200": 0,
+        "marketRegime": "UPTREND",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "BREAKOUT_SETUP",
+        "focusTrendGate": true,
+        "focusBlockReasons": [],
+        "longTrendPromotionHint": ""
+      },
+      "fibonacci": {
+        "available": true,
+        "impulseLow": 4351,
+        "impulseHigh": 4981,
+        "impulsePct": 14.479430016088255,
+        "pullbackLow": 4598,
+        "pullbackRatio": 0.6079365079365079,
+        "reboundRatio": 1.0757180156657964,
+        "state": "healthy_pullback_rebound",
+        "retracementZone": "38.2-61.8",
+        "target382": 4744.306,
+        "target500": 4789.5,
+        "target618": 4834.694,
+        "previousHigh": 4981
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 2,
+      "code": "1815",
+      "name": "鉄建建設",
+      "signal": "WAIT",
+      "entryStatus": "WAIT",
+      "trend": "WATCH",
+      "theme": "建設 / 鉄道 / インフラ",
+      "score": 60,
+      "initialScore": 15,
+      "volumeRatio": "",
+      "priceChange": "",
+      "entry": "",
+      "sl": "",
+      "tp": "",
+      "risk": "継続監視",
+      "comment": "資金入り始め",
+      "focusTier": "PREPARATION",
+      "focusLabel": "押し目待ち",
+      "missingConditions": [
+        "ENTRY帯成立",
+        "初動/押し目/出来高強化"
+      ],
+      "promotionHint": "ENTRY帯成立 / 初動/押し目/出来高強化 が揃えばFocus候補",
+      "focusReadiness": "preparation_ready",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "score_gate",
+        "classification": "candidate",
+        "reason": "ok"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "UPTREND",
+      "setupType": "TREND_PULLBACK",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:43:05.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 4513.594729511092,
+      "hourlyLongEmaPrev": 4503.075335486348,
+      "hourlyLongEmaSlope": 0.23360466439115218,
+      "ema75SlopeShortPct": 0.23360466439115218,
+      "ema75SlopeLongPct": 2.9118172024411746,
+      "ema75LongDecline": false,
+      "ema75LongRise": true,
+      "ema75SlopeState": "LONG_RISE",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": true,
+      "focusBlockReasons": [],
+      "longTrendPromotionHint": "",
+      "hourly": {
+        "available": true,
+        "score": 72,
+        "grade": "B",
+        "pass": true,
+        "entryAllowed": true,
+        "hardFail": false,
+        "pattern": "healthy_pullback_rebound",
+        "overheadRoomPct": 2.6143790849673203,
+        "higherHigh": false,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "healthy_fib_pullback",
+          "near_ema_rebound_area",
+          "contracting_near_high",
+          "healthy_overhead_room",
+          "pullback_volume_cooling"
+        ],
+        "risks": [
+          "lower_high"
+        ],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:43:05.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 4580.679856255705,
+        "ema21": 4575.380822688767,
+        "hourlyLongEma": 4513.594729511092,
+        "hourlyLongEmaPrev": 4503.075335486348,
+        "hourlyLongEmaSlope": 0.23360466439115218,
+        "ema75SlopeShortPct": 0.23360466439115218,
+        "ema75SlopeLongPct": 2.9118172024411746,
+        "ema75LongDecline": false,
+        "ema75LongRise": true,
+        "ema75SlopeState": "LONG_RISE",
+        "priceAboveLongEma": true,
+        "ema75": 4513.594729511092,
+        "ema200": 0,
+        "marketRegime": "UPTREND",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "TREND_PULLBACK",
+        "focusTrendGate": true,
+        "focusBlockReasons": [],
+        "longTrendPromotionHint": ""
+      },
+      "fibonacci": {
+        "available": true,
+        "impulseLow": 4260,
+        "impulseHigh": 4720,
+        "impulsePct": 10.7981220657277,
+        "pullbackLow": 4505,
+        "pullbackRatio": 0.4673913043478261,
+        "reboundRatio": 0.3953488372093023,
+        "state": "healthy_pullback_rebound",
+        "retracementZone": "38.2-61.8",
+        "target382": 4587.13,
+        "target500": 4612.5,
+        "target618": 4637.87,
+        "previousHigh": 4720
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 3,
+      "code": "4431",
+      "name": "スマレジ",
+      "signal": "WAIT",
+      "entryStatus": "WAIT",
+      "trend": "WATCH",
+      "theme": "POS / 小売DX / SaaS",
+      "score": 60,
+      "initialScore": 15,
+      "volumeRatio": "",
+      "priceChange": "",
+      "entry": "",
+      "sl": "",
+      "tp": "",
+      "risk": "継続監視",
+      "comment": "監視継続",
+      "focusTier": "PREPARATION",
+      "focusLabel": "ブレイク待ち",
+      "missingConditions": [
+        "上値余地1.5%以上",
+        "ENTRY帯成立",
+        "初動/押し目/出来高強化"
+      ],
+      "promotionHint": "上値余地1.5%以上 / ENTRY帯成立 / 初動/押し目/出来高強化 が揃えばFocus候補",
+      "focusReadiness": "preparation_ready",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "exclusion",
+        "classification": "watch",
+        "reason": "overhead_room_short"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "UPTREND",
+      "setupType": "BREAKOUT_SETUP",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:47:42.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 2438.4047838858223,
+      "hourlyLongEmaPrev": 2424.0407356793444,
+      "hourlyLongEmaSlope": 0.5925662879775153,
+      "ema75SlopeShortPct": 0.5925662879775153,
+      "ema75SlopeLongPct": 3.8074432888147123,
+      "ema75LongDecline": false,
+      "ema75LongRise": true,
+      "ema75SlopeState": "LONG_RISE",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": true,
+      "focusBlockReasons": [],
+      "longTrendPromotionHint": "",
+      "hourly": {
+        "available": true,
+        "score": 76,
+        "grade": "B",
+        "pass": true,
+        "entryAllowed": true,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": -0.5426356589147286,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "healthy_fib_pullback",
+          "near_ema_rebound_area",
+          "volume_rising",
+          "breakout_area"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:47:42.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 2518.7408121594135,
+        "ema21": 2485.33256686235,
+        "hourlyLongEma": 2438.4047838858223,
+        "hourlyLongEmaPrev": 2424.0407356793444,
+        "hourlyLongEmaSlope": 0.5925662879775153,
+        "ema75SlopeShortPct": 0.5925662879775153,
+        "ema75SlopeLongPct": 3.8074432888147123,
+        "ema75LongDecline": false,
+        "ema75LongRise": true,
+        "ema75SlopeState": "LONG_RISE",
+        "priceAboveLongEma": true,
+        "ema75": 2438.4047838858223,
+        "ema200": 0,
+        "marketRegime": "UPTREND",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "BREAKOUT_SETUP",
+        "focusTrendGate": true,
+        "focusBlockReasons": [],
+        "longTrendPromotionHint": ""
+      },
+      "fibonacci": {
+        "available": true,
+        "impulseLow": 2242,
+        "impulseHigh": 2561,
+        "impulsePct": 14.228367528991972,
+        "pullbackLow": 2368,
+        "pullbackRatio": 0.6050156739811913,
+        "reboundRatio": 1.0984455958549222,
+        "state": "healthy_pullback_rebound",
+        "retracementZone": "38.2-61.8",
+        "target382": 2441.726,
+        "target500": 2464.5,
+        "target618": 2487.274,
+        "previousHigh": 2561
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 4,
+      "code": "1301",
+      "name": "極洋",
+      "signal": "WAIT",
+      "entryStatus": "WAIT",
+      "trend": "WATCH",
+      "theme": "水産 / 食品 / 冷凍食品",
+      "score": 60,
+      "initialScore": 15,
+      "volumeRatio": "",
+      "priceChange": "",
+      "entry": "",
+      "sl": "",
+      "tp": "",
+      "risk": "継続監視",
+      "comment": "資金入り始め",
+      "focusTier": "PREPARATION",
+      "focusLabel": "ブレイク待ち",
+      "missingConditions": [
+        "上値余地1.5%以上",
+        "ENTRY帯成立",
+        "初動/押し目/出来高強化"
+      ],
+      "promotionHint": "上値余地1.5%以上 / ENTRY帯成立 / 初動/押し目/出来高強化 が揃えばFocus候補",
+      "focusReadiness": "preparation_ready",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "exclusion",
+        "classification": "watch",
+        "reason": "overhead_room_short"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "UPTREND",
+      "setupType": "BREAKOUT_SETUP",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:47:36.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 4315.098556231125,
+      "hourlyLongEmaPrev": 4303.439933266725,
+      "hourlyLongEmaSlope": 0.27091403958669624,
+      "ema75SlopeShortPct": 0.27091403958669624,
+      "ema75SlopeLongPct": 0.3030518003466771,
+      "ema75LongDecline": false,
+      "ema75LongRise": false,
+      "ema75SlopeState": "SHORT_RISING",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": true,
+      "focusBlockReasons": [],
+      "longTrendPromotionHint": "",
+      "hourly": {
+        "available": true,
+        "score": 71,
+        "grade": "B",
+        "pass": true,
+        "entryAllowed": true,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": -1.0123734533183353,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "near_ema_rebound_area",
+          "contracting_near_high",
+          "breakout_area"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:47:36.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 4384.224083653431,
+        "ema21": 4353.472337369445,
+        "hourlyLongEma": 4315.098556231125,
+        "hourlyLongEmaPrev": 4303.439933266725,
+        "hourlyLongEmaSlope": 0.27091403958669624,
+        "ema75SlopeShortPct": 0.27091403958669624,
+        "ema75SlopeLongPct": 0.3030518003466771,
+        "ema75LongDecline": false,
+        "ema75LongRise": false,
+        "ema75SlopeState": "SHORT_RISING",
+        "priceAboveLongEma": true,
+        "ema75": 4315.098556231125,
+        "ema200": 0,
+        "marketRegime": "UPTREND",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "BREAKOUT_SETUP",
+        "focusTrendGate": true,
+        "focusBlockReasons": [],
+        "longTrendPromotionHint": ""
+      },
+      "fibonacci": {
+        "available": false,
+        "impulsePct": 0,
+        "pullbackRatio": 0,
+        "reboundRatio": 0,
+        "state": "unavailable",
+        "retracementZone": "",
+        "target382": 0,
+        "target500": 0,
+        "target618": 0,
+        "previousHigh": 0
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 5,
+      "code": "1976",
+      "name": "明星工業",
+      "signal": "WAIT",
+      "entryStatus": "WAIT",
+      "trend": "WATCH",
+      "theme": "LNG / 原子力 / プラント",
+      "score": 60,
+      "initialScore": 15,
+      "volumeRatio": "",
+      "priceChange": "",
+      "entry": "",
+      "sl": "",
+      "tp": "",
+      "risk": "継続監視",
+      "comment": "資金入り始め",
+      "focusTier": "PREPARATION",
+      "focusLabel": "ブレイク待ち",
+      "missingConditions": [
+        "上値余地1.5%以上",
+        "ENTRY帯成立",
+        "初動/押し目/出来高強化"
+      ],
+      "promotionHint": "上値余地1.5%以上 / ENTRY帯成立 / 初動/押し目/出来高強化 が揃えばFocus候補",
+      "focusReadiness": "preparation_ready",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "exclusion",
+        "classification": "watch",
+        "reason": "overhead_room_short"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "UPTREND",
+      "setupType": "BREAKOUT_SETUP",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:47:55.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 1764.147655248193,
+      "hourlyLongEmaPrev": 1753.6788051105395,
+      "hourlyLongEmaSlope": 0.5969650831808667,
+      "ema75SlopeShortPct": 0.5969650831808667,
+      "ema75SlopeLongPct": 3.567823796344855,
+      "ema75LongDecline": false,
+      "ema75LongRise": true,
+      "ema75SlopeState": "LONG_RISE",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": true,
+      "focusBlockReasons": [],
+      "longTrendPromotionHint": "",
+      "hourly": {
+        "available": true,
+        "score": 71,
+        "grade": "B",
+        "pass": true,
+        "entryAllowed": true,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": -0.3783783783783784,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "near_ema_rebound_area",
+          "contracting_near_high",
+          "breakout_area"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:47:55.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 1831.014674087054,
+        "ema21": 1811.8854961665725,
+        "hourlyLongEma": 1764.147655248193,
+        "hourlyLongEmaPrev": 1753.6788051105395,
+        "hourlyLongEmaSlope": 0.5969650831808667,
+        "ema75SlopeShortPct": 0.5969650831808667,
+        "ema75SlopeLongPct": 3.567823796344855,
+        "ema75LongDecline": false,
+        "ema75LongRise": true,
+        "ema75SlopeState": "LONG_RISE",
+        "priceAboveLongEma": true,
+        "ema75": 1764.147655248193,
+        "ema200": 0,
+        "marketRegime": "UPTREND",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "BREAKOUT_SETUP",
+        "focusTrendGate": true,
+        "focusBlockReasons": [],
+        "longTrendPromotionHint": ""
+      },
+      "fibonacci": {
+        "available": true,
+        "impulseLow": 1621,
+        "impulseHigh": 1772,
+        "impulsePct": 9.31523750771129,
+        "pullbackLow": 1752,
+        "pullbackRatio": 0.13245033112582782,
+        "reboundRatio": 4.9,
+        "state": "shallow_pullback",
+        "retracementZone": "<23.6",
+        "target382": 1759.64,
+        "target500": 1762,
+        "target618": 1764.36,
+        "previousHigh": 1772
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 6,
+      "code": "1333",
+      "name": "マルハニチロ",
+      "signal": "WAIT",
+      "entryStatus": "WAIT",
+      "trend": "WATCH",
+      "theme": "水産 / 食品 / ディフェンシブ",
+      "score": 60,
+      "initialScore": 15,
+      "volumeRatio": "",
+      "priceChange": "",
+      "entry": "",
+      "sl": "",
+      "tp": "",
+      "risk": "継続監視",
+      "comment": "監視継続",
+      "focusTier": "PREPARATION",
+      "focusLabel": "ブレイク待ち",
+      "missingConditions": [
+        "上値余地1.5%以上",
+        "ENTRY帯成立",
+        "初動/押し目/出来高強化"
+      ],
+      "promotionHint": "上値余地1.5%以上 / ENTRY帯成立 / 初動/押し目/出来高強化 が揃えばFocus候補",
+      "focusReadiness": "preparation_ready",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "exclusion",
+        "classification": "watch",
+        "reason": "overhead_room_short"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "TRANSITION",
+      "setupType": "TRANSITION_SETUP",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:48:04.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 1263.6678270089621,
+      "hourlyLongEmaPrev": 1263.2375711520192,
+      "hourlyLongEmaSlope": 0.03405977361412503,
+      "ema75SlopeShortPct": 0.03405977361412503,
+      "ema75SlopeLongPct": -0.4129630770432949,
+      "ema75LongDecline": false,
+      "ema75LongRise": false,
+      "ema75SlopeState": "FLAT",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": true,
+      "focusBlockReasons": [],
+      "longTrendPromotionHint": "",
+      "hourly": {
+        "available": true,
+        "score": 73,
+        "grade": "B",
+        "pass": true,
+        "entryAllowed": true,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": -0.8593750000000001,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "near_ema_rebound_area",
+          "contracting_near_high",
+          "volume_rising",
+          "breakout_area"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:48:04.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 1262.8128430183258,
+        "ema21": 1258.5067470619888,
+        "hourlyLongEma": 1263.6678270089621,
+        "hourlyLongEmaPrev": 1263.2375711520192,
+        "hourlyLongEmaSlope": 0.03405977361412503,
+        "ema75SlopeShortPct": 0.03405977361412503,
+        "ema75SlopeLongPct": -0.4129630770432949,
+        "ema75LongDecline": false,
+        "ema75LongRise": false,
+        "ema75SlopeState": "FLAT",
+        "priceAboveLongEma": true,
+        "ema75": 1263.6678270089621,
+        "ema200": 0,
+        "marketRegime": "TRANSITION",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "TRANSITION_SETUP",
+        "focusTrendGate": true,
+        "focusBlockReasons": [],
+        "longTrendPromotionHint": ""
+      },
+      "fibonacci": {
+        "available": false,
+        "impulsePct": 0,
+        "pullbackRatio": 0,
+        "reboundRatio": 0,
+        "state": "unavailable",
+        "retracementZone": "",
+        "target382": 0,
+        "target500": 0,
+        "target618": 0,
+        "previousHigh": 0
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    }
+  ],
+  "watch": [
+    {
+      "rank": 1,
+      "code": "7984",
+      "name": "コクヨ",
+      "signal": "WATCH",
+      "theme": "事務用品 / オフィス / 教育ICT",
+      "score": 80,
+      "volumeRatio": "",
+      "priceChange": "",
+      "reason": "1H監視",
+      "missingConditions": [
+        "上値余地1.5%以上",
+        "ENTRY帯成立",
+        "初動/押し目/出来高強化"
+      ],
+      "promotionHint": "上値余地1.5%以上 / ENTRY帯成立 / 初動/押し目/出来高強化 が揃えばFocus候補",
+      "focusReadiness": "preparation_ready",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "exclusion",
+        "classification": "watch",
+        "reason": "overhead_room_short"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "TRANSITION",
+      "setupType": "TRANSITION_SETUP",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:47:55.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 808.2621700520862,
+      "hourlyLongEmaPrev": 808.1024215157606,
+      "hourlyLongEmaSlope": 0.019768352633555586,
+      "ema75SlopeShortPct": 0.019768352633555586,
+      "ema75SlopeLongPct": -0.18629015428894138,
+      "ema75LongDecline": false,
+      "ema75LongRise": false,
+      "ema75SlopeState": "FLAT",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": true,
+      "focusBlockReasons": [],
+      "longTrendPromotionHint": "",
+      "hourly": {
+        "available": true,
+        "score": 73,
+        "grade": "B",
+        "pass": true,
+        "entryAllowed": true,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": -0.30735184718009934,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "near_ema_rebound_area",
+          "contracting_near_high",
+          "volume_rising",
+          "breakout_area"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:47:55.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 807.8882826453874,
+        "ema21": 806.5447893653887,
+        "hourlyLongEma": 808.2621700520862,
+        "hourlyLongEmaPrev": 808.1024215157606,
+        "hourlyLongEmaSlope": 0.019768352633555586,
+        "ema75SlopeShortPct": 0.019768352633555586,
+        "ema75SlopeLongPct": -0.18629015428894138,
+        "ema75LongDecline": false,
+        "ema75LongRise": false,
+        "ema75SlopeState": "FLAT",
+        "priceAboveLongEma": true,
+        "ema75": 808.2621700520862,
+        "ema200": 0,
+        "marketRegime": "TRANSITION",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "TRANSITION_SETUP",
+        "focusTrendGate": true,
+        "focusBlockReasons": [],
+        "longTrendPromotionHint": ""
+      },
+      "fibonacci": {
+        "available": false,
+        "impulsePct": 0,
+        "pullbackRatio": 0,
+        "reboundRatio": 0,
+        "state": "unavailable",
+        "retracementZone": "",
+        "target382": 0,
+        "target500": 0,
+        "target618": 0,
+        "previousHigh": 0
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 2,
+      "code": "9502",
+      "name": "中部電力",
+      "signal": "WATCH",
+      "theme": "原子力 / 電力 / インフラ",
+      "score": 80,
+      "volumeRatio": "",
+      "priceChange": "",
+      "reason": "1H監視",
+      "missingConditions": [
+        "1Hスコア70以上",
+        "hourlyGrade A/B",
+        "hourly_grade_not_focus",
+        "1H通過",
+        "上値余地1.5%以上",
+        "ENTRY帯成立"
+      ],
+      "promotionHint": "1Hスコア70以上 / hourlyGrade A/B / hourly_grade_not_focus が揃えばFocus候補",
+      "focusReadiness": "watch_waiting",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "daily_and_hourly_shape",
+        "classification": "watch",
+        "reason": "hourly_grade_not_focus"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "TRANSITION",
+      "setupType": "TRANSITION_SETUP",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:48:08.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 2830.6606060726954,
+      "hourlyLongEmaPrev": 2826.263983077168,
+      "hourlyLongEmaSlope": 0.15556306919144397,
+      "ema75SlopeShortPct": 0.15556306919144397,
+      "ema75SlopeLongPct": 1.0400697345948606,
+      "ema75LongDecline": false,
+      "ema75LongRise": true,
+      "ema75SlopeState": "LONG_RISE",
+      "priceAboveLongEma": true,
+      "mediumStructure": "RANGE",
+      "focusTrendGate": false,
+      "focusBlockReasons": [
+        "hourly_grade_not_focus"
+      ],
+      "longTrendPromotionHint": "",
+      "hourly": {
+        "available": true,
+        "score": 64,
+        "grade": "C",
+        "pass": false,
+        "entryAllowed": false,
+        "hardFail": false,
+        "pattern": "healthy_pullback_rebound",
+        "overheadRoomPct": -0.6222990492653414,
+        "higherHigh": true,
+        "higherLow": false,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_high",
+          "healthy_fib_pullback",
+          "near_ema_rebound_area",
+          "contracting_near_high",
+          "volume_rising",
+          "breakout_area"
+        ],
+        "risks": [
+          "lower_low"
+        ],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:48:08.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 2857.0657594664326,
+        "ema21": 2847.662385805387,
+        "hourlyLongEma": 2830.6606060726954,
+        "hourlyLongEmaPrev": 2826.263983077168,
+        "hourlyLongEmaSlope": 0.15556306919144397,
+        "ema75SlopeShortPct": 0.15556306919144397,
+        "ema75SlopeLongPct": 1.0400697345948606,
+        "ema75LongDecline": false,
+        "ema75LongRise": true,
+        "ema75SlopeState": "LONG_RISE",
+        "priceAboveLongEma": true,
+        "ema75": 2830.6606060726954,
+        "ema200": 0,
+        "marketRegime": "TRANSITION",
+        "mediumStructure": "RANGE",
+        "setupType": "TRANSITION_SETUP",
+        "focusTrendGate": false,
+        "focusBlockReasons": [
+          "hourly_grade_not_focus"
+        ],
+        "longTrendPromotionHint": ""
+      },
+      "fibonacci": {
+        "available": true,
+        "impulseLow": 2661.5,
+        "impulseHigh": 2875.5,
+        "impulsePct": 8.040578621078339,
+        "pullbackLow": 2788,
+        "pullbackRatio": 0.4088785046728972,
+        "reboundRatio": 1.1942857142857144,
+        "state": "healthy_pullback_rebound",
+        "retracementZone": "38.2-61.8",
+        "target382": 2821.425,
+        "target500": 2831.75,
+        "target618": 2842.075,
+        "previousHigh": 2875.5
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 3,
+      "code": "4980",
+      "name": "デクセリアルズ",
+      "signal": "WATCH",
+      "theme": "電子材料 / 半導体部材 / 車載",
+      "score": 50,
+      "volumeRatio": "",
+      "priceChange": "",
+      "reason": "1H監視",
+      "missingConditions": [
+        "1Hスコア70以上",
+        "hourlyGrade A/B",
+        "hourly_grade_not_focus",
+        "1H通過",
+        "ENTRY帯成立",
+        "初動/押し目/出来高強化"
+      ],
+      "promotionHint": "1Hスコア70以上 / hourlyGrade A/B / hourly_grade_not_focus が揃えばFocus候補",
+      "focusReadiness": "watch_waiting",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "daily_and_hourly_shape",
+        "classification": "watch",
+        "reason": "hourly_grade_not_focus"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "TRANSITION",
+      "setupType": "TRANSITION_SETUP",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:48:17.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 4510.617378857621,
+      "hourlyLongEmaPrev": 4447.362966357735,
+      "hourlyLongEmaSlope": 1.422290309524464,
+      "ema75SlopeShortPct": 1.422290309524464,
+      "ema75SlopeLongPct": 11.48412487801515,
+      "ema75LongDecline": false,
+      "ema75LongRise": true,
+      "ema75SlopeState": "LONG_RISE",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": false,
+      "focusBlockReasons": [
+        "hourly_grade_not_focus"
+      ],
+      "longTrendPromotionHint": "",
+      "hourly": {
+        "available": true,
+        "score": 61,
+        "grade": "C",
+        "pass": false,
+        "entryAllowed": false,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": 3.7858742112762056,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": false,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "near_ema_rebound_area",
+          "volume_rising",
+          "healthy_overhead_room"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:48:17.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 4935.526060641174,
+        "ema21": 4845.040109229931,
+        "hourlyLongEma": 4510.617378857621,
+        "hourlyLongEmaPrev": 4447.362966357735,
+        "hourlyLongEmaSlope": 1.422290309524464,
+        "ema75SlopeShortPct": 1.422290309524464,
+        "ema75SlopeLongPct": 11.48412487801515,
+        "ema75LongDecline": false,
+        "ema75LongRise": true,
+        "ema75SlopeState": "LONG_RISE",
+        "priceAboveLongEma": true,
+        "ema75": 4510.617378857621,
+        "ema200": 0,
+        "marketRegime": "TRANSITION",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "TRANSITION_SETUP",
+        "focusTrendGate": false,
+        "focusBlockReasons": [
+          "hourly_grade_not_focus"
+        ],
+        "longTrendPromotionHint": ""
+      },
+      "fibonacci": {
+        "available": true,
+        "impulseLow": 3577,
+        "impulseHigh": 4694,
+        "impulsePct": 31.227285434721836,
+        "pullbackLow": 4538,
+        "pullbackRatio": 0.1396598030438675,
+        "reboundRatio": 2.4038461538461537,
+        "state": "shallow_pullback",
+        "retracementZone": "<23.6",
+        "target382": 4597.592,
+        "target500": 4616,
+        "target618": 4634.408,
+        "previousHigh": 4694
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 4,
+      "code": "1332",
+      "name": "ニッスイ",
+      "signal": "WATCH",
+      "theme": "水産 / 食品 / ディフェンシブ",
+      "score": 80,
+      "volumeRatio": "",
+      "priceChange": "",
+      "reason": "1H監視",
+      "missingConditions": [
+        "REVERSAL_WATCH",
+        "market_downtrend",
+        "ema75_long_decline",
+        "reversal_watch_not_focus",
+        "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち",
+        "1H通過"
+      ],
+      "promotionHint": "REVERSAL_WATCH / market_downtrend / ema75_long_decline が揃えばFocus候補",
+      "focusReadiness": "watch_waiting",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "daily_and_hourly_shape",
+        "classification": "watch",
+        "reason": "reversal_watch"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "DOWNTREND",
+      "setupType": "REVERSAL_WATCH",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:47:51.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 1273.2357341125462,
+      "hourlyLongEmaPrev": 1273.9273281233566,
+      "hourlyLongEmaSlope": -0.05428834090788957,
+      "ema75SlopeShortPct": -0.05428834090788957,
+      "ema75SlopeLongPct": -1.4276458331713564,
+      "ema75LongDecline": true,
+      "ema75LongRise": false,
+      "ema75SlopeState": "LONG_DECLINE",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": false,
+      "focusBlockReasons": [
+        "market_downtrend",
+        "ema75_long_decline",
+        "reversal_watch_not_focus"
+      ],
+      "longTrendPromotionHint": "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち",
+      "hourly": {
+        "available": true,
+        "score": 73,
+        "grade": "B",
+        "pass": false,
+        "entryAllowed": false,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": -1.168679392286716,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "near_ema_rebound_area",
+          "contracting_near_high",
+          "volume_rising",
+          "breakout_area"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:47:51.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 1264.745477914122,
+        "ema21": 1261.9678137249857,
+        "hourlyLongEma": 1273.2357341125462,
+        "hourlyLongEmaPrev": 1273.9273281233566,
+        "hourlyLongEmaSlope": -0.05428834090788957,
+        "ema75SlopeShortPct": -0.05428834090788957,
+        "ema75SlopeLongPct": -1.4276458331713564,
+        "ema75LongDecline": true,
+        "ema75LongRise": false,
+        "ema75SlopeState": "LONG_DECLINE",
+        "priceAboveLongEma": true,
+        "ema75": 1273.2357341125462,
+        "ema200": 0,
+        "marketRegime": "DOWNTREND",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "REVERSAL_WATCH",
+        "focusTrendGate": false,
+        "focusBlockReasons": [
+          "market_downtrend",
+          "ema75_long_decline",
+          "reversal_watch_not_focus"
+        ],
+        "longTrendPromotionHint": "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち"
+      },
+      "fibonacci": {
+        "available": false,
+        "impulsePct": 0,
+        "pullbackRatio": 0,
+        "reboundRatio": 0,
+        "state": "unavailable",
+        "retracementZone": "",
+        "target382": 0,
+        "target500": 0,
+        "target618": 0,
+        "previousHigh": 0
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 5,
+      "code": "7459",
+      "name": "メディパルＨＬＤＧＳ",
+      "signal": "WATCH",
+      "theme": "医薬品卸 / ヘルスケア / 物流",
+      "score": 80,
+      "volumeRatio": "",
+      "priceChange": "",
+      "reason": "1H監視",
+      "missingConditions": [
+        "REVERSAL_WATCH",
+        "market_downtrend",
+        "ema75_long_decline",
+        "below_falling_ema75",
+        "reversal_watch_not_focus",
+        "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち"
+      ],
+      "promotionHint": "REVERSAL_WATCH / market_downtrend / ema75_long_decline が揃えばFocus候補",
+      "focusReadiness": "watch_waiting",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "daily_and_hourly_shape",
+        "classification": "watch",
+        "reason": "reversal_watch"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "DOWNTREND",
+      "setupType": "REVERSAL_WATCH",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:47:37.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 2619.2739182705823,
+      "hourlyLongEmaPrev": 2622.839188044719,
+      "hourlyLongEmaSlope": -0.13593169533182256,
+      "ema75SlopeShortPct": -0.13593169533182256,
+      "ema75SlopeLongPct": -2.439701612180148,
+      "ema75LongDecline": true,
+      "ema75LongRise": false,
+      "ema75SlopeState": "LONG_DECLINE",
+      "priceAboveLongEma": false,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": false,
+      "focusBlockReasons": [
+        "market_downtrend",
+        "ema75_long_decline",
+        "below_falling_ema75",
+        "reversal_watch_not_focus"
+      ],
+      "longTrendPromotionHint": "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち",
+      "hourly": {
+        "available": true,
+        "score": 73,
+        "grade": "B",
+        "pass": false,
+        "entryAllowed": false,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": -0.03844675124951942,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "near_ema_rebound_area",
+          "contracting_near_high",
+          "volume_rising",
+          "breakout_area"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:47:37.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 2591.0620662957335,
+        "ema21": 2588.601243588302,
+        "hourlyLongEma": 2619.2739182705823,
+        "hourlyLongEmaPrev": 2622.839188044719,
+        "hourlyLongEmaSlope": -0.13593169533182256,
+        "ema75SlopeShortPct": -0.13593169533182256,
+        "ema75SlopeLongPct": -2.439701612180148,
+        "ema75LongDecline": true,
+        "ema75LongRise": false,
+        "ema75SlopeState": "LONG_DECLINE",
+        "priceAboveLongEma": false,
+        "ema75": 2619.2739182705823,
+        "ema200": 0,
+        "marketRegime": "DOWNTREND",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "REVERSAL_WATCH",
+        "focusTrendGate": false,
+        "focusBlockReasons": [
+          "market_downtrend",
+          "ema75_long_decline",
+          "below_falling_ema75",
+          "reversal_watch_not_focus"
+        ],
+        "longTrendPromotionHint": "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち"
+      },
+      "fibonacci": {
+        "available": false,
+        "impulsePct": 0,
+        "pullbackRatio": 0,
+        "reboundRatio": 0,
+        "state": "unavailable",
+        "retracementZone": "",
+        "target382": 0,
+        "target500": 0,
+        "target618": 0,
+        "previousHigh": 0
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 6,
+      "code": "6864",
+      "name": "エヌエフホールディングス",
+      "signal": "WATCH",
+      "theme": "計測機器 / 量子 / 宇宙",
+      "score": 80,
+      "volumeRatio": "",
+      "priceChange": "",
+      "reason": "1H監視",
+      "missingConditions": [
+        "REVERSAL_WATCH",
+        "ema75_long_decline",
+        "reversal_watch_not_focus",
+        "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち",
+        "1H通過",
+        "上値余地1.5%以上"
+      ],
+      "promotionHint": "REVERSAL_WATCH / ema75_long_decline / reversal_watch_not_focus が揃えばFocus候補",
+      "focusReadiness": "watch_waiting",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "daily_and_hourly_shape",
+        "classification": "watch",
+        "reason": "reversal_watch"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "TRANSITION",
+      "setupType": "REVERSAL_WATCH",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:48:11.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 1947.7721161738223,
+      "hourlyLongEmaPrev": 1933.8245299117893,
+      "hourlyLongEmaSlope": 0.7212436312755399,
+      "ema75SlopeShortPct": 0.7212436312755399,
+      "ema75SlopeLongPct": -1.499978701987314,
+      "ema75LongDecline": true,
+      "ema75LongRise": false,
+      "ema75SlopeState": "LONG_DECLINE",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": false,
+      "focusBlockReasons": [
+        "ema75_long_decline",
+        "reversal_watch_not_focus"
+      ],
+      "longTrendPromotionHint": "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち",
+      "hourly": {
+        "available": true,
+        "score": 71,
+        "grade": "B",
+        "pass": false,
+        "entryAllowed": false,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": -4.029990627928772,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "healthy_fib_pullback",
+          "volume_rising",
+          "breakout_area"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:48:11.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 2028.7198405659406,
+        "ema21": 1985.3559904363315,
+        "hourlyLongEma": 1947.7721161738223,
+        "hourlyLongEmaPrev": 1933.8245299117893,
+        "hourlyLongEmaSlope": 0.7212436312755399,
+        "ema75SlopeShortPct": 0.7212436312755399,
+        "ema75SlopeLongPct": -1.499978701987314,
+        "ema75LongDecline": true,
+        "ema75LongRise": false,
+        "ema75SlopeState": "LONG_DECLINE",
+        "priceAboveLongEma": true,
+        "ema75": 1947.7721161738223,
+        "ema200": 0,
+        "marketRegime": "TRANSITION",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "REVERSAL_WATCH",
+        "focusTrendGate": false,
+        "focusBlockReasons": [
+          "ema75_long_decline",
+          "reversal_watch_not_focus"
+        ],
+        "longTrendPromotionHint": "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち"
+      },
+      "fibonacci": {
+        "available": true,
+        "impulseLow": 1821,
+        "impulseHigh": 2137,
+        "impulsePct": 17.353102690829214,
+        "pullbackLow": 2009,
+        "pullbackRatio": 0.4050632911392405,
+        "reboundRatio": 0.9765625,
+        "state": "healthy_pullback_rebound",
+        "retracementZone": "38.2-61.8",
+        "target382": 2057.896,
+        "target500": 2073,
+        "target618": 2088.104,
+        "previousHigh": 2137
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    },
+    {
+      "rank": 7,
+      "code": "6754",
+      "name": "アンリツ",
+      "signal": "WATCH",
+      "theme": "5G / 通信計測 / 防衛",
+      "score": 80,
+      "volumeRatio": "",
+      "priceChange": "",
+      "reason": "1H監視",
+      "missingConditions": [
+        "1Hスコア70以上",
+        "hourlyGrade A/B",
+        "ema75_long_decline",
+        "reversal_watch_not_focus",
+        "hourly_grade_not_focus",
+        "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち"
+      ],
+      "promotionHint": "1Hスコア70以上 / hourlyGrade A/B / ema75_long_decline が揃えばFocus候補",
+      "focusReadiness": "watch_waiting",
+      "unifiedDecision": {
+        "policy": {
+          "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+          "watch": "promising_but_waiting_for_missing_conditions",
+          "pool": "monitoring_target_but_not_trade_preparation",
+          "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+        },
+        "priority": [
+          "data_freshness",
+          "liquidity",
+          "exclusion",
+          "market_context",
+          "daily_and_hourly_shape",
+          "volume_and_initial_move",
+          "entry",
+          "total_score"
+        ],
+        "layer": "daily_and_hourly_shape",
+        "classification": "watch",
+        "reason": "hourly_grade_not_focus"
+      },
+      "entryTimeframe": {
+        "key": "morning",
+        "label": "前場",
+        "entryMode": "normal"
+      },
+      "marketRegime": "TRANSITION",
+      "setupType": "REVERSAL_WATCH",
+      "hourlyDataCount": 148,
+      "hourlyRawBarsCount": 149,
+      "hourlyEvaluationBarsCount": 148,
+      "excludedIncompleteBarCount": 1,
+      "incompleteBarExcluded": true,
+      "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+      "rawLatestBarAt": "2026-06-23T00:48:15.000Z",
+      "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+      "hourlyLongEma": 4222.798292260577,
+      "hourlyLongEmaPrev": 4197.0021210699,
+      "hourlyLongEmaSlope": 0.6146332655200417,
+      "ema75SlopeShortPct": 0.6146332655200417,
+      "ema75SlopeLongPct": -1.8898204461874286,
+      "ema75LongDecline": true,
+      "ema75LongRise": false,
+      "ema75SlopeState": "LONG_DECLINE",
+      "priceAboveLongEma": true,
+      "mediumStructure": "HIGHER_LOW_UP",
+      "focusTrendGate": false,
+      "focusBlockReasons": [
+        "ema75_long_decline",
+        "reversal_watch_not_focus",
+        "hourly_grade_not_focus"
+      ],
+      "longTrendPromotionHint": "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち",
+      "hourly": {
+        "available": true,
+        "score": 68,
+        "grade": "C",
+        "pass": false,
+        "entryAllowed": false,
+        "hardFail": false,
+        "pattern": "higher_low_breakout_setup",
+        "overheadRoomPct": -4.642082429501085,
+        "higherHigh": true,
+        "higherLow": true,
+        "ema9Up": true,
+        "ema21Up": true,
+        "reasons": [
+          "price_above_ema9",
+          "price_above_ema21",
+          "ema9_above_ema21",
+          "ema9_up",
+          "ema21_up",
+          "higher_low",
+          "higher_high",
+          "contracting_near_high",
+          "volume_rising",
+          "breakout_area"
+        ],
+        "risks": [],
+        "hourlyDataCount": 148,
+        "hourlyRawBarsCount": 149,
+        "hourlyEvaluationBarsCount": 148,
+        "excludedIncompleteBarCount": 1,
+        "incompleteBarExcluded": true,
+        "incompleteBarExcludeReason": "same_as_regular_market_time+non_hourly_aligned+short_interval+zero_volume",
+        "rawLatestBarAt": "2026-06-23T00:48:15.000Z",
+        "evaluationLatestBarAt": "2026-06-23T00:00:00.000Z",
+        "ema9": 4386.36212696421,
+        "ema21": 4299.357188822649,
+        "hourlyLongEma": 4222.798292260577,
+        "hourlyLongEmaPrev": 4197.0021210699,
+        "hourlyLongEmaSlope": 0.6146332655200417,
+        "ema75SlopeShortPct": 0.6146332655200417,
+        "ema75SlopeLongPct": -1.8898204461874286,
+        "ema75LongDecline": true,
+        "ema75LongRise": false,
+        "ema75SlopeState": "LONG_DECLINE",
+        "priceAboveLongEma": true,
+        "ema75": 4222.798292260577,
+        "ema200": 0,
+        "marketRegime": "TRANSITION",
+        "mediumStructure": "HIGHER_LOW_UP",
+        "setupType": "REVERSAL_WATCH",
+        "focusTrendGate": false,
+        "focusBlockReasons": [
+          "ema75_long_decline",
+          "reversal_watch_not_focus",
+          "hourly_grade_not_focus"
+        ],
+        "longTrendPromotionHint": "EMA75の中期下降解消待ち / 48本スロープ改善待ち / 直近戻り高値突破待ち / 高値切り下げ解消待ち / 出来高を伴う上昇待ち"
+      },
+      "fibonacci": {
+        "available": true,
+        "impulseLow": 3968,
+        "impulseHigh": 4773,
+        "impulsePct": 20.287298387096776,
+        "pullbackLow": 4595,
+        "pullbackRatio": 0.22111801242236026,
+        "reboundRatio": 0.08426966292134831,
+        "state": "shallow_pullback",
+        "retracementZone": "<23.6",
+        "target382": 4662.996,
+        "target500": 4684,
+        "target618": 4705.004,
+        "previousHigh": 4773
+      },
+      "reclaimShortSwing": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RECLAIM_SHORT_SWING",
+        "entryBand": "",
+        "reclaimLevel": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      },
+      "rciPullbackRebound": {
+        "available": false,
+        "status": "REJECT",
+        "type": "RCI_PULLBACK_REBOUND",
+        "rciShortPeriod": 9,
+        "rciMiddlePeriod": 26,
+        "rciLongPeriod": 52,
+        "rciShort": null,
+        "rciMiddle": null,
+        "rciLong": null,
+        "rciShortWasOversoldRecently": false,
+        "rciShortTurnedUp": false,
+        "rciShortCrossUpLevel": -80,
+        "supportType": "",
+        "supportLevel": null,
+        "entryBand": "",
+        "entryBandLow": null,
+        "entryBandHigh": null,
+        "stopLoss": null,
+        "takeProfit1": null,
+        "takeProfit2": null,
+        "takeProfit3": null,
+        "riskReward": 0,
+        "reasons": [],
+        "risks": [
+          "not_evaluated"
+        ],
+        "missingConditions": [
+          "not_evaluated"
+        ],
+        "highPriceChaseCaution": false,
+        "isShadowEligible": false,
+        "isWaitCandidate": false
+      }
+    }
+  ],
+  "poolCount": 558,
+  "counts": {
+    "focus": 6,
+    "watch": 7,
+    "pool": 558
+  },
+  "themePatterns": [
+    {
+      "theme": "水産",
+      "sampleCount": 3,
+      "matchedCount": 3,
+      "confidence": 1,
+      "state": "unavailable",
+      "summary": "unavailable"
+    },
+    {
+      "theme": "食品",
+      "sampleCount": 3,
+      "matchedCount": 3,
+      "confidence": 1,
+      "state": "unavailable",
+      "summary": "unavailable"
+    }
+  ],
+  "decisionPolicy": {
+    "definitions": {
+      "focus": "required_conditions_met_and_trade_decision_ready_now_or_soon",
+      "watch": "promising_but_waiting_for_missing_conditions",
+      "pool": "monitoring_target_but_not_trade_preparation",
+      "excluded": "liquidity_failure_data_abnormal_overheated_shape_broken_or_theme_expired"
+    },
+    "priority": [
+      "data_freshness",
+      "liquidity",
+      "exclusion",
+      "market_context",
+      "daily_and_hourly_shape",
+      "volume_and_initial_move",
+      "entry",
+      "total_score"
+    ]
+  },
+  "diagnostics": {
+    "ready": true,
+    "marketDate": "2026-06-23",
+    "generatedAt": "2026-06-23T01:03:28.941Z",
+    "runId": "20260623-095510-f8dl2b",
+    "dataIntegrity": {
+      "scanTargetCount": 571,
+      "priceFetchSuccessCount": 552,
+      "priceFetchFailedCount": 19,
+      "hourlyEvaluatedCount": 130,
+      "scanOnlyCount": 422,
+      "incompleteBarExcludedCount": 130,
+      "indexFetchStatus": "NOT_OBSERVED_LOCAL_HTML",
+      "snapshotFetchStatus": "NOT_OBSERVED_LOCAL_HTML",
+      "latestFetchStatus": "NOT_OBSERVED_LOCAL_HTML",
+      "chatgptReportFetchStatus": "NOT_OBSERVED_LOCAL_HTML",
+      "verificationFetchStatus": "NOT_OBSERVED_LOCAL_HTML",
+      "fallbackUsed": true,
+      "dataFreshnessStatus": "FRESH_OR_CURRENT_RUN",
+      "marketDate": "2026-06-23",
+      "generatedAt": "2026-06-23T01:03:28.941Z",
+      "runId": "20260623-095510-f8dl2b"
+    },
+    "focusDiagnostics": {
+      "currentFocusCount": 6,
+      "currentFocusSymbols": [
+        "8795",
+        "1815",
+        "4431",
+        "1301",
+        "1976",
+        "1333"
+      ],
+      "shortageDetected": false,
+      "reasonCounts": {
+        "出来高不足": 4,
+        "1時間足形状不足": 68,
+        "地合いが弱い": 47,
+        "長期EMA75条件で除外": 5,
+        "scan_onlyのため未評価": 422,
+        "データ不足": 19
+      },
+      "topReasons": [
+        {
+          "reason": "scan_onlyのため未評価",
+          "count": 422
+        },
+        {
+          "reason": "1時間足形状不足",
+          "count": 68
+        },
+        {
+          "reason": "地合いが弱い",
+          "count": 47
+        },
+        {
+          "reason": "データ不足",
+          "count": 19
+        },
+        {
+          "reason": "長期EMA75条件で除外",
+          "count": 5
+        },
+        {
+          "reason": "出来高不足",
+          "count": 4
+        }
+      ]
+    },
+    "watchDiagnostics": {
+      "previousWatchCount": 0,
+      "currentWatchCount": 7,
+      "watchOverlapCount": 0,
+      "watchOverlapRate": 0,
+      "newWatchCount": 7,
+      "droppedWatchCount": 0,
+      "promotedToFocusCount": 0,
+      "demotedFromFocusCount": 0,
+      "watchStagnationReason": "比較対象なし",
+      "previousWatchSymbols": [],
+      "currentWatchSymbols": [
+        "7984",
+        "9502",
+        "4980",
+        "1332",
+        "7459",
+        "6864",
+        "6754"
+      ]
+    },
+    "entryDiagnostics": {
+      "evaluatedRows": 13,
+      "entryGoCount": 0,
+      "entryGoSymbols": [],
+      "reasonCounts": {
+        "ENTRY帯に届いていない": 7,
+        "1時間足形状不足": 6
+      },
+      "topReasons": [
+        {
+          "reason": "ENTRY帯に届いていない",
+          "count": 7
+        },
+        {
+          "reason": "1時間足形状不足",
+          "count": 6
+        }
+      ],
+      "entryNearbySymbols": [
+        {
+          "symbol": "8795",
+          "name": "T&D HD",
+          "reason": "ENTRY帯に届いていない"
+        },
+        {
+          "symbol": "1815",
+          "name": "鉄建建設",
+          "reason": "ENTRY帯に届いていない"
+        },
+        {
+          "symbol": "4431",
+          "name": "スマレジ",
+          "reason": "ENTRY帯に届いていない"
+        },
+        {
+          "symbol": "1301",
+          "name": "極洋",
+          "reason": "ENTRY帯に届いていない"
+        },
+        {
+          "symbol": "1976",
+          "name": "明星工業",
+          "reason": "ENTRY帯に届いていない"
+        },
+        {
+          "symbol": "1333",
+          "name": "マルハニチロ",
+          "reason": "ENTRY帯に届いていない"
+        },
+        {
+          "symbol": "7984",
+          "name": "コクヨ",
+          "reason": "ENTRY帯に届いていない"
+        }
+      ]
+    },
+    "workflowSummary": "本日のレーダー状態は診断可能です。Focus不足の主因は「scan_onlyのため未評価」です。比較対象なし。ENTRYゼロは「ENTRY帯に届いていない」が主因の見送りとして分類しています。 データ取得を要確認。今日の運用方針は、売買条件を変更せず、Focus/Watch/ENTRY不成立理由とデータ取得状態を確認しながら監視することです。",
+    "warnings": [
+      "data_fetch_failed:19",
+      "scan_only_rows:422"
+    ],
+    "errors": [],
+    "unchangedCoreLogic": true,
+    "newsFetch": {
+      "ready": true,
+      "status": "PARTIAL",
+      "fetchedAt": "2026-06-23T17:15:03+09:00",
+      "sources": [
+        {
+          "name": "manual_news",
+          "status": "NOT_CONFIGURED",
+          "count": 0,
+          "checked": 2
+        },
+        {
+          "name": "google_news_macro_jp",
+          "status": "OK",
+          "count": 8
+        },
+        {
+          "name": "google_news_fx_rates_jp",
+          "status": "OK",
+          "count": 8
+        },
+        {
+          "name": "google_news_us_market_jp",
+          "status": "OK",
+          "count": 8
+        },
+        {
+          "name": "google_news_japan_themes_jp",
+          "status": "OK",
+          "count": 8
+        },
+        {
+          "name": "newsapi",
+          "status": "NOT_CONFIGURED",
+          "count": 0
+        },
+        {
+          "name": "edinet",
+          "status": "DISABLED",
+          "count": 0
+        },
+        {
+          "name": "tdnet",
+          "status": "DISABLED",
+          "count": 0
+        }
+      ],
+      "errors": [],
+      "warnings": [
+        "NEWSAPI_KEY not configured"
+      ],
+      "dedupedCount": 29
+    }
+  },
+  "usdJpyRadar": {
+    "bias": "neutral",
+    "biasLabel": "中立",
+    "yenWeakScore": 0,
+    "yenStrongScore": 0,
+    "shortPolicy": "ノートレード",
+    "summary": "中立。ドル円は方向感確認までノートレード優先。",
+    "stockImpact": "為替影響は中立。個別材料と金利・指数を優先確認。",
+    "watchEvents": [
+      "米CPI",
+      "FOMC",
+      "雇用統計",
+      "PCE",
+      "日銀会合",
+      "要人発言",
+      "為替介入警戒"
+    ],
+    "yenWeakMaterials": [],
+    "yenStrongMaterials": [],
+    "updatedAt": "2026/6/23 17:10:27"
+  },
+  "newsFetch": {
+    "ready": true,
+    "status": "PARTIAL",
+    "fetchedAt": "2026-06-23T17:15:03+09:00",
+    "sources": [
+      {
+        "name": "manual_news",
+        "status": "NOT_CONFIGURED",
+        "count": 0,
+        "checked": 2
+      },
+      {
+        "name": "google_news_macro_jp",
+        "status": "OK",
+        "count": 8
+      },
+      {
+        "name": "google_news_fx_rates_jp",
+        "status": "OK",
+        "count": 8
+      },
+      {
+        "name": "google_news_us_market_jp",
+        "status": "OK",
+        "count": 8
+      },
+      {
+        "name": "google_news_japan_themes_jp",
+        "status": "OK",
+        "count": 8
+      },
+      {
+        "name": "newsapi",
+        "status": "NOT_CONFIGURED",
+        "count": 0
+      },
+      {
+        "name": "edinet",
+        "status": "DISABLED",
+        "count": 0
+      },
+      {
+        "name": "tdnet",
+        "status": "DISABLED",
+        "count": 0
+      }
+    ],
+    "errors": [],
+    "warnings": [
+      "NEWSAPI_KEY not configured"
+    ],
+    "dedupedCount": 29
+  },
+  "holidayImportantNews": [
+    {
+      "id": "news-bd6a71a9ca6b3d6c",
+      "title": "日銀の不安定な独立性 「じゅうたんすり減らす」パウエル流にヒント - 日本経済新聞",
+      "summary": "日銀の不安定な独立性 「じゅうたんすり減らす」パウエル流にヒント 日本経済新聞",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5Ldk1saVhJQjRPd1pacjJQNTdCRnFtZzlsNnhYdXc1ZjdDSnFuR0JmR2N4cUx4QlFhSEZXZ2VpM0hNeFNxMDBsbEZYaTFBZWlZOXVrX1BFY0oyMFBuR0wyRUxVbUhvUmgwS1BQRA?oc=5",
+      "publishedAt": "2026-06-23T11:00:00+09:00",
+      "severity": "HIGH",
+      "category": "金利",
+      "themes": [
+        "FOMC",
+        "FRB",
+        "グロース",
+        "日銀",
+        "米金利",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "6857",
+        "6920",
+        "8035",
+        "8306",
+        "8316",
+        "8411",
+        "9984"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": true
+    },
+    {
+      "id": "news-a44603f205c037c3",
+      "title": "「必要とあれば断固たる措置」39年ぶりの円安水準迫るなか日米財務相が対応協議 ミュトスなどの新型AIについても意見交換 - TBS NEWS DIG",
+      "summary": "「必要とあれば断固たる措置」39年ぶりの円安水準迫るなか日米財務相が対応協議 ミュトスなどの新型AIについても意見交換 TBS NEWS DIG",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9kenpIM0pwMXphOW5xdUc2Nkx3R2VFWXRfLUc3SFZCaUlzN3dTU256Qkt1RHZwTjdIRVB2OWh6TUhHRXpJWHk0OW5OdFRwZlNJSGxUd29DYw?oc=5",
+      "publishedAt": "2026-06-23T16:11:27+09:00",
+      "severity": "HIGH",
+      "category": "為替",
+      "themes": [
+        "AI",
+        "データセンター",
+        "ドル円",
+        "半導体",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6526",
+        "6723",
+        "6758",
+        "6857",
+        "6920",
+        "7203",
+        "7267",
+        "8035"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": true
+    },
+    {
+      "id": "news-e2bb4bd57e123530",
+      "title": "［金利１％ 検証日銀］＜インタビュー＞ - 読売新聞",
+      "summary": "［金利１％ 検証日銀］＜インタビュー＞ 読売新聞",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5OemlFVkpIcnhROXpHaTc1U0dMcWZhaVVkLUNSOVYzRVhpM1ZZTDBBTEk2WlpXRERtUXFlM25ldjJtT1pqRGRVcjJPU1lrV1ZsQUxiU3JJUDZvQl9rMGEwem1fVE4?oc=5",
+      "publishedAt": "2026-06-23T05:00:00+09:00",
+      "severity": "MEDIUM",
+      "category": "金利",
+      "themes": [
+        "日銀",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-db6968a790e10405",
+      "title": "「AI関連」が上位独占 2026年に株価上昇したスタンダード上場企業 - 日本経済新聞",
+      "summary": "「AI関連」が上位独占 2026年に株価上昇したスタンダード上場企業 日本経済新聞",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBTWmNWUGdoaFV1cnlfaDRvMThCc1dGUTl5RDBRVjZMOThJRXd4T2RaeHpkLTcydmNoWWEzLTVienBoeERFX1lNc195S1Z3dWstbThTN3NwZUljMVNRQ0pIclB3emczR2pBYXgtWQ?oc=5",
+      "publishedAt": "2026-06-23T05:00:00+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-be3bca4a2441604e",
+      "title": "今日の株式見通し＝続伸、半導体株がけん引 7万3000円試す展開 - Reuters",
+      "summary": "今日の株式見通し＝続伸、半導体株がけん引 7万3000円試す展開 Reuters",
+      "source": "google_news_japan_themes_jp",
+      "sources": [
+        "google_news_japan_themes_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNUU9KTEhwS2NHeXBVWkc0dE5VeF9FTVdadElLbTVqWnotXzVsQkZDUmwyR2ZNZERkLWw1Z2Zza0xNRWE2ME5peTh6aGRCN3owWmZJTnpWY3BsSVZyWWhIQ1oyTVN2U0lBNXlKRG5KbDYxQWlfUlp5Vm9WLWNZejZRZQ?oc=5",
+      "publishedAt": "2026-06-23T08:21:26+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-7feb1f53deea7564",
+      "title": "【今日のドル円】昨日の振り返りと今日のドル円相場見通し 2026年6月23日 - 外為どっとコム",
+      "summary": "【今日のドル円】昨日の振り返りと今日のドル円相場見通し 2026年6月23日 外為どっとコム",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5McVVsWHZrTU1OOEhjVEd4dFlWVDFLMVdRRGExSFJKTkNfN3VxZ3FZTGhmN2M4amI1bEZLVXlYTlFvRWI1eUxBT3ZES0FHMjUzdlpwLUZkSTduLTBEZHlFbDl3RQ?oc=5",
+      "publishedAt": "2026-06-23T09:23:29+09:00",
+      "severity": "MEDIUM",
+      "category": "為替",
+      "themes": [
+        "ドル円",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-f7be6fbdb8204563",
+      "title": "AI業務開発の決定版「Bakusoku.AI」8月1日提供開始 | プレスリリース | ニュース - アステリア株式会社",
+      "summary": "AI業務開発の決定版「Bakusoku.AI」8月1日提供開始 | プレスリリース | ニュース アステリア株式会社",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFB1ckJCMlpDT0dIWHJIbnNDNnRaelQxWnZVNlNrM1pma3lGMVVtbGltR3hvVThtTDdYX1dkWXh2Y21KRkdTeEMxcEFqX1ROSFF4SmdPYw?oc=5",
+      "publishedAt": "2026-06-23T10:05:30+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-e4c6824f4c7b42bc",
+      "title": "山口銀行と西京銀行 普通預金金利０.４％に 日銀利上げ受け - NHKニュース",
+      "summary": "山口銀行と西京銀行 普通預金金利０.４％に 日銀利上げ受け NHKニュース",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1qcE5ESC1WUHREdHoydkltcVBkZHNlOWpIY0xLYkdEVDR6a2RvNVBENzBHVnh5Q0Z6akk1bXVlZXhmeGRiMWlET3A3Ri00NlpNZ2pxX05LV3Y?oc=5",
+      "publishedAt": "2026-06-23T11:26:00+09:00",
+      "severity": "MEDIUM",
+      "category": "金利",
+      "themes": [
+        "日銀",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-7eda96fe0047c13d",
+      "title": "日米、円安対応「揺るがず」 米長官と会談、必要なら「断固たる措置」―片山財務相 - 時事ドットコム",
+      "summary": "日米、円安対応「揺るがず」 米長官と会談、必要なら「断固たる措置」―片山財務相 時事ドットコム",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE4zZFpQa3gxVURaSzh1MlhWVDhBNFYyT1dCcjZzeGMxaGNVRXlfUmV0OXJlN2xIOWQ1Um95cVdtd3hmdGl1TDk4ZjBsVVJNNXJ5VjVjVnhCZ3RkYUxYU2MyVHQ3RQ?oc=5",
+      "publishedAt": "2026-06-23T11:36:00+09:00",
+      "severity": "MEDIUM",
+      "category": "為替",
+      "themes": [
+        "ドル円",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-92328d54c1531471",
+      "title": "au・UQモバイル経由の「Google AI Pro」割引終了へ - ケータイ Watch",
+      "summary": "au・UQモバイル経由の「Google AI Pro」割引終了へ ケータイ Watch",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1paS1LWWs2WXM5cEwtb2NsenFoN1o5X1hNUk9oa0FCVzRWM2Vtdzc5VkNwRWpnWHh1eFJoNGp2UF9palE1YW9sMkh0V1hkZWNQUTJ3ckFWejA2eHRuTjBaa2Z1S0VTd2M?oc=5",
+      "publishedAt": "2026-06-23T11:56:10+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-91ea5796cd332ccf",
+      "title": "「半導体」が２位にランクイン、米マイクロン決算に世界の耳目集まる＜注目テーマ＞ - 株探",
+      "summary": "「半導体」が２位にランクイン、米マイクロン決算に世界の耳目集まる＜注目テーマ＞ 株探",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBxek9GZXFhQ1dsdFczalRVNlI5cmlfTlBuWm44NUY0Y3J0czB0ajJTTlNRRnhFWUEwZnJ0RS1kWHpxRVl5bXphRHp3YV9uRE94T05OLUN5MlBZa0dHWEJ4Qg?oc=5",
+      "publishedAt": "2026-06-23T12:20:00+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "MBO",
+        "TOB",
+        "データセンター",
+        "半導体",
+        "大型株",
+        "業績修正"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-f245af9f025bd1ae",
+      "title": "住友大阪セメント株が33年ぶり高値 半導体で評価、本業は収益固め - 日本経済新聞",
+      "summary": "住友大阪セメント株が33年ぶり高値 半導体で評価、本業は収益固め 日本経済新聞",
+      "source": "google_news_japan_themes_jp",
+      "sources": [
+        "google_news_japan_themes_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5PVlJYMzJWSERwbFhNeE5TRWc2SnY4X3dIUHpwaHkxYkoxZ25LWTVWVXBhLXd0NVdvaWpSNlFuUzZPekMteDl0ZlFfOTQzM2tBaGZ4UUtQcllMaDFUb3JZUVFHTjJVaVc2dUZaQw?oc=5",
+      "publishedAt": "2026-06-23T12:29:57+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-6933c6465e1efffe",
+      "title": "【指標発表予定】14:00 5月シンガポールCPI(トレーダーズ・ウェブ) - Yahoo!ファイナンス",
+      "summary": "【指標発表予定】14:00 5月シンガポールCPI(トレーダーズ・ウェブ) Yahoo!ファイナンス",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPelNIR2hQNnZTczU5UHUwdFdxVk1ObjA1MlhRTE1sZ09UWjhWdkl0clFrNlJCRXhLZV9fcWtfQjA5OVBaaUFwQjJvbGdPLTNLUmRkVlRRRXl3ZmNfTllrSWQyMHUyYjJ3LWNWUVRZd2ZZcUxPMkZ4M3l0Mnl5aDFEbExVOEtyWGs?oc=5",
+      "publishedAt": "2026-06-23T13:45:00+09:00",
+      "severity": "MEDIUM",
+      "category": "米金利",
+      "themes": [
+        "FOMC",
+        "FRB",
+        "グロース",
+        "米金利"
+      ],
+      "relatedTickers": [
+        "6857",
+        "6920",
+        "8035",
+        "9984"
+      ],
+      "impact": "米金利とNASDAQを通じて半導体・AI・グロース株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-c609665942a994c8",
+      "title": "シンガポール経済指標【消費者物価指数（CPI）】 - みんかぶ",
+      "summary": "シンガポール経済指標【消費者物価指数（CPI）】 みんかぶ",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9yVEhTeEZtY1YyV3NLMzVOaU9kMTk0dzlVMUk3Y2lzdWtnX19ST1JrZlhrLU9sSGRYLWprZXpUS29nR1M0bVE?oc=5",
+      "publishedAt": "2026-06-23T14:10:00+09:00",
+      "severity": "MEDIUM",
+      "category": "米金利",
+      "themes": [
+        "FOMC",
+        "FRB",
+        "グロース",
+        "米金利"
+      ],
+      "relatedTickers": [
+        "6857",
+        "6920",
+        "8035",
+        "9984"
+      ],
+      "impact": "米金利とNASDAQを通じて半導体・AI・グロース株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-32c5a64aea998c46",
+      "title": "米ドル/円【USDJPY】：外国為替相場FXレート・チャートをリアルタイム表示 - Yahoo!ファイナンス",
+      "summary": "米ドル/円【USDJPY】：外国為替相場FXレート・チャートをリアルタイム表示 Yahoo!ファイナンス",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBzbWxqc1ltSU1ndEE0VElnZldUTGdyRVJpOTdKeXBsc0RDSm40dm9kLTJqaDZlOVpoR2E5eEZIX1o0bFR1SFR2N2k4WjRiTnN5dHVBTHJn?oc=5",
+      "publishedAt": "2026-06-23T14:17:13+09:00",
+      "severity": "MEDIUM",
+      "category": "為替",
+      "themes": [
+        "ドル円",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-fd37605f01910852",
+      "title": "地銀大再編時代の銀行株、地方経済への示唆 - ピクテ・ジャパン",
+      "summary": "地銀大再編時代の銀行株、地方経済への示唆 ピクテ・ジャパン",
+      "source": "google_news_japan_themes_jp",
+      "sources": [
+        "google_news_japan_themes_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxONnZSU0FMZVU5Uy1xMGJlWmlsVVFpWkxsUzZnOG94V09JREpOaE5ERkNBT1Q4ZS12ZDFqdDY2N3NwYWV4MmJWSC1LT0dPQzVxdGlKVE55cTd1SHJJaWI5eUNrTks3WnVIQ1d2VjBQX0xzYTNHV1ZiZ1gweFRodThjUU1wdlNXQVpI?oc=5",
+      "publishedAt": "2026-06-23T14:39:53+09:00",
+      "severity": "MEDIUM",
+      "category": "金利",
+      "themes": [
+        "日銀",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-dad70907409dda03",
+      "title": "特殊要因除くコアＣＰＩ、5月は＋2.7％ 20カ月連続で2％以上＝日銀 - ニューズウィーク日本版",
+      "summary": "特殊要因除くコアＣＰＩ、5月は＋2.7％ 20カ月連続で2％以上＝日銀 ニューズウィーク日本版",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBUbERlVldJUVZTaDF4NnRraHZIbjJhUkppbG1UVnFZTnQ4V3E2bUtINGRZSVlLcW1ZS2FlcU9mTkhCM2dfaXlERkNEWUV5NFdmYkE5amxxNjJDUQ?oc=5",
+      "publishedAt": "2026-06-23T14:51:00+09:00",
+      "severity": "MEDIUM",
+      "category": "金利",
+      "themes": [
+        "日銀",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-500fa928cfee94db",
+      "title": "特殊要因除くコアＣＰＩ、5月は＋2.7％ 20カ月連続で2％以上＝日銀 - Reuters",
+      "summary": "特殊要因除くコアＣＰＩ、5月は＋2.7％ 20カ月連続で2％以上＝日銀 Reuters",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPZ1lMWmc1Q29ORmRVMVMtaXhybVpiREFlXzFZaFVLcjBKdTFQWmVMc2Uyazk5NVZvSnZmd191ZmJTN2RYX0xXMU5jUlpJUDZZU3I0Yzc2cFFBRGJjQ2Y1ZDd4X1lTNjlVOWVrTTUwR0dwQ0N6VnRIZ0dWQmtSbE5lanF2dFNYa296ZW84?oc=5",
+      "publishedAt": "2026-06-23T14:52:00+09:00",
+      "severity": "MEDIUM",
+      "category": "金利",
+      "themes": [
+        "日銀",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-d1273f99bc26c870",
+      "title": "日経平均は1974円安、米経済指標に関心(フィスコ) - Yahoo!ファイナンス",
+      "summary": "日経平均は1974円安、米経済指標に関心(フィスコ) Yahoo!ファイナンス",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPWXYyeVlscUhXbVF0T0lKU1lNZmt1ZVhJMndrZTdBdGxFV1NpN0EtUlFiOXhWLVNUOFg0MXdsakpYc2JlUHZRSFBsdy1ZSVRWMzl2NGtPWkM2a18wX1ZmYnhEcWd0TFhRTUxYemdYSFZETWxDa2VCV3hnUlY2d2N1M284SndiNXM?oc=5",
+      "publishedAt": "2026-06-23T14:52:00+09:00",
+      "severity": "MEDIUM",
+      "category": "為替",
+      "themes": [
+        "ドル円",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-db6b4700c47cb680",
+      "title": "【速報】日銀 政策金利を1.0％程度に引き上げ 31年ぶり高水準 金融政策決定会合 - ABEMA",
+      "summary": "【速報】日銀 政策金利を1.0％程度に引き上げ 31年ぶり高水準 金融政策決定会合 ABEMA",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBfSUpNQnJWZnJ3YUg5ZVc2VWNBZzMxeXc3LTcyQlFJa3I0Z2ZiMi1sbWhiWFZWb0JNQUFJb1NGWUFZbDZrV3lnY3lvRDViaE5xQm00NXQ5SEs2VU0?oc=5",
+      "publishedAt": "2026-06-23T15:05:19+09:00",
+      "severity": "MEDIUM",
+      "category": "金利",
+      "themes": [
+        "日銀",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-c55aa7b24fb27275",
+      "title": "ナスダック100先物が一時2%安、半導体株巡る懸念で世界的な株安の流れ(Bloomberg) - Yahoo!ファイナンス",
+      "summary": "ナスダック100先物が一時2%安、半導体株巡る懸念で世界的な株安の流れ(Bloomberg) Yahoo!ファイナンス",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPUUdCaWVaRHRHWGhOcGd3R2RJSnRmRUU5SjQ1Vm5LNVotU3NRMTNBbzJ1UnAtTFRrNEtFR2VCdnBWdk0tWmNSc1RMU2Y2TkRyZWw2N04yRGFiSG9hTEMxdEI3MDNCaWhrejBnWVFya2RxbkVqdGVNeXhWUUhoWl9XY0dMNDdPTWc?oc=5",
+      "publishedAt": "2026-06-23T15:35:00+09:00",
+      "severity": "MEDIUM",
+      "category": "米金利",
+      "themes": [
+        "AI",
+        "FOMC",
+        "FRB",
+        "グロース",
+        "データセンター",
+        "半導体",
+        "米金利"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035",
+        "9984"
+      ],
+      "impact": "米金利とNASDAQを通じて半導体・AI・グロース株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-071a38acd509d291",
+      "title": "千葉・茂原市、5.6haに半導体産業などの集積目指す - 建設通信新聞Digital",
+      "summary": "千葉・茂原市、5.6haに半導体産業などの集積目指す 建設通信新聞Digital",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBTR1M4bExSUS1iZ1pHckNnRlNFRTZUdGpQZFRBOUhEbmladk1XTmQwUTRQY1Y0WTc2NVNKek9VSHFBWG9MUFJpbEwtUXV6aWplVkpwSEFR?oc=5",
+      "publishedAt": "2026-06-23T15:51:44+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-998121c9f9705a08",
+      "title": "FX個人投資家動向｜ドルロングが増加、米9月利上げ観測受けて｜豪ドルが低迷 2026年6月23日 - 外為どっとコム",
+      "summary": "FX個人投資家動向｜ドルロングが増加、米9月利上げ観測受けて｜豪ドルが低迷 2026年6月23日 外為どっとコム",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9qb01sWnVxMG9tVU45Mk5TZEg5b2MyNlhlWXUwWGJuMG5xdTd1X0hGTmtvcFRWR0xsUzZJUEVyMkhBUVo4enhaVjVtMXlwZVBxdzlPSTJwQTdLRXlGMGNDT2QzTQ?oc=5",
+      "publishedAt": "2026-06-23T16:13:10+09:00",
+      "severity": "MEDIUM",
+      "category": "金利",
+      "themes": [
+        "日銀",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "8306",
+        "8316",
+        "8411"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-d98620d0a3dff6cf",
+      "title": "続・AI入門 第2回 AIリスクとその対策を考えてみよう - intellilink.co.jp",
+      "summary": "続・AI入門 第2回 AIリスクとその対策を考えてみよう intellilink.co.jp",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBReXJOcHEzRHV2R2h6UzktTmo1aTNFMjdHMnNLdmF3Mm5YeVFkSWtDTXVneVdGVHZRQ2NFNDhHMXVLQ05QOVRwcktaYVh0TUJ3T1Vydk9HVGJibXIxbERtS2hCVW1sNGs?oc=5",
+      "publishedAt": "2026-06-23T16:25:15+09:00",
+      "severity": "MEDIUM",
+      "category": "半導体/AI",
+      "themes": [
+        "AI",
+        "データセンター",
+        "半導体"
+      ],
+      "relatedTickers": [
+        "6526",
+        "6723",
+        "6857",
+        "6920",
+        "8035"
+      ],
+      "impact": "半導体装置・材料・データセンター関連へ連想が出る可能性",
+      "notify": false
+    },
+    {
+      "id": "news-2bd0817fdf6ca632",
+      "title": "じれる円安、介入姿勢惑わす 勢い欠く実需と投機の円売り - 日本経済新聞",
+      "summary": "じれる円安、介入姿勢惑わす 勢い欠く実需と投機の円売り 日本経済新聞",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1mRXIwZ3hrZnlxRW51czkyZW44MXRhaEMxd0lCRlVKU1ZKQ2kwek5vMHBPYU12aXRlNHBWRGxiYm1xb2VMVFhjcjkyRzJUWUVrZmxwZGVmMUVhdUN5UFl4Qmp5Zk8wSkRCV0NSZQ?oc=5",
+      "publishedAt": "2026-06-23T16:27:18+09:00",
+      "severity": "MEDIUM",
+      "category": "為替",
+      "themes": [
+        "ドル円",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-320cfb7043a03a51",
+      "title": "日経平均、2565円安で7万円割れ 利益確定売りで下落幅5位に - 朝日新聞",
+      "summary": "日経平均、2565円安で7万円割れ 利益確定売りで下落幅5位に 朝日新聞",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE8wS3VhS1ZkS2RObkFMZFNKZFN2Z25fc1hMRXpZbmR3bnJ4cHNBSHNFSHRzalA3QXRDQzlYSmZNM0lXV2l2bUp5TVFrLTI1NVVnVEIwWkRydFBndHE4eWxnVTI4aGdBRDA?oc=5",
+      "publishedAt": "2026-06-23T16:53:03+09:00",
+      "severity": "MEDIUM",
+      "category": "為替",
+      "themes": [
+        "ドル円",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6758",
+        "7203",
+        "7267"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": false
+    },
+    {
+      "id": "news-85abf03496dca10f",
+      "title": "エネルギー危機から電化へ：EUにおける政策の4つの柱 | 連載コラム - 自然エネルギー財団",
+      "summary": "エネルギー危機から電化へ：EUにおける政策の4つの柱 | 連載コラム 自然エネルギー財団",
+      "source": "google_news_japan_themes_jp",
+      "sources": [
+        "google_news_japan_themes_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE42SXF6OHBSbVhBQ0FKcmlSeG9XSnlRVElQcTNxRThlVWdWSGxxN3gxc1h0VlhtMGJWMEVzNTVDaERCWG1tV3lVMTJpMmJSME93NVpfWWpyX2JsRmlTaThFd09XRy1TTjA1NldsV2FMQkZOTFdnYmZF?oc=5",
+      "publishedAt": "2026-06-23T11:07:47+09:00",
+      "severity": "LOW",
+      "category": "その他",
+      "themes": [],
+      "relatedTickers": [],
+      "impact": "翌営業日の地合い・監視テーマへの影響を確認",
+      "notify": false
+    },
+    {
+      "id": "news-66cf7d80bdbcedef",
+      "title": "午前の日経平均は反落、過熱感でＡＩ関連株売られる 一時900円超安 - Reuters",
+      "summary": "午前の日経平均は反落、過熱感でＡＩ関連株売られる 一時900円超安 Reuters",
+      "source": "google_news_us_market_jp",
+      "sources": [
+        "google_news_us_market_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOa3gzT2JoNm9QV2pEZ2R0RUpqQW9hNk9tTGs1Y3RUeHc4N3NDeGlTVTFGNlRHcjMxVEdWLUJYOTd0MFhyUkxydFpaZ3U5TVFBQlY4Q0tPcEpzT3FrTU0tOXdjVnhHc2Qya0ktV3V3WkM5U09tRFFadWtjdXlMX2dTTQ?oc=5",
+      "publishedAt": "2026-06-23T12:01:00+09:00",
+      "severity": "LOW",
+      "category": "その他",
+      "themes": [],
+      "relatedTickers": [],
+      "impact": "翌営業日の地合い・監視テーマへの影響を確認",
+      "notify": false
+    },
+    {
+      "id": "news-e3271e4fc6629fe1",
+      "title": "「新エネルギー」の普及につながる技術開発や実証等の事業を募集|6月 - metro.tokyo.lg.jp",
+      "summary": "「新エネルギー」の普及につながる技術開発や実証等の事業を募集|6月 metro.tokyo.lg.jp",
+      "source": "google_news_japan_themes_jp",
+      "sources": [
+        "google_news_japan_themes_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE02bmVOWXlsWlphYk03d0tyYzVFVjJhX2tzMUU4a3Bxb2c4cjJ1WUpnb2ZmLXhhb2NCMTY2TEd2OXpidDUtaDV3ZzRlby03akRYbElLUS1Tb2ZGZ2QzaEJCdzctVzFUNkl1NmhnQWtWM3M1eHBY?oc=5",
+      "publishedAt": "2026-06-23T16:59:39+09:00",
+      "severity": "LOW",
+      "category": "その他",
+      "themes": [],
+      "relatedTickers": [],
+      "impact": "翌営業日の地合い・監視テーマへの影響を確認",
+      "notify": false
+    }
+  ],
+  "importantNews": [
+    {
+      "id": "news-bd6a71a9ca6b3d6c",
+      "title": "日銀の不安定な独立性 「じゅうたんすり減らす」パウエル流にヒント - 日本経済新聞",
+      "summary": "日銀の不安定な独立性 「じゅうたんすり減らす」パウエル流にヒント 日本経済新聞",
+      "source": "google_news_macro_jp",
+      "sources": [
+        "google_news_macro_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5Ldk1saVhJQjRPd1pacjJQNTdCRnFtZzlsNnhYdXc1ZjdDSnFuR0JmR2N4cUx4QlFhSEZXZ2VpM0hNeFNxMDBsbEZYaTFBZWlZOXVrX1BFY0oyMFBuR0wyRUxVbUhvUmgwS1BQRA?oc=5",
+      "publishedAt": "2026-06-23T11:00:00+09:00",
+      "severity": "HIGH",
+      "category": "金利",
+      "themes": [
+        "FOMC",
+        "FRB",
+        "グロース",
+        "日銀",
+        "米金利",
+        "金利上昇",
+        "銀行"
+      ],
+      "relatedTickers": [
+        "6857",
+        "6920",
+        "8035",
+        "8306",
+        "8316",
+        "8411",
+        "9984"
+      ],
+      "impact": "翌営業日の銀行株・地銀株・為替感応株に影響する可能性",
+      "notify": true
+    },
+    {
+      "id": "news-a44603f205c037c3",
+      "title": "「必要とあれば断固たる措置」39年ぶりの円安水準迫るなか日米財務相が対応協議 ミュトスなどの新型AIについても意見交換 - TBS NEWS DIG",
+      "summary": "「必要とあれば断固たる措置」39年ぶりの円安水準迫るなか日米財務相が対応協議 ミュトスなどの新型AIについても意見交換 TBS NEWS DIG",
+      "source": "google_news_fx_rates_jp",
+      "sources": [
+        "google_news_fx_rates_jp"
+      ],
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9kenpIM0pwMXphOW5xdUc2Nkx3R2VFWXRfLUc3SFZCaUlzN3dTU256Qkt1RHZwTjdIRVB2OWh6TUhHRXpJWHk0OW5OdFRwZlNJSGxUd29DYw?oc=5",
+      "publishedAt": "2026-06-23T16:11:27+09:00",
+      "severity": "HIGH",
+      "category": "為替",
+      "themes": [
+        "AI",
+        "データセンター",
+        "ドル円",
+        "半導体",
+        "為替",
+        "輸出"
+      ],
+      "relatedTickers": [
+        "6501",
+        "6526",
+        "6723",
+        "6758",
+        "6857",
+        "6920",
+        "7203",
+        "7267",
+        "8035"
+      ],
+      "impact": "輸出株、内需株、為替感応株の寄り付きに影響する可能性",
+      "notify": true
+    }
+  ],
+  "importantNewsCount": 2
+}
