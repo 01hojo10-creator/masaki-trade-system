@@ -69,7 +69,8 @@
         month: '2-digit',
         day: '2-digit',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
+        second: '2-digit'
       }).format(date);
     }catch(error){
       return date.toLocaleString();
@@ -206,91 +207,86 @@
     return '<div class="list" id="symbolList">' + html.join('') + '</div>';
   }
 
-  function severityRank(value){
-    var key = String(value || '').toUpperCase();
-    if(key === 'HIGH') return 3;
-    if(key === 'MEDIUM') return 2;
-    if(key === 'LOW') return 1;
-    return 0;
-  }
-
   function collectMarketNews(activeItem){
-    var combined = [];
-    var map = {};
+    var source = []
+      .concat(asList(currentData && currentData.importantNews))
+      .concat(asList(currentData && currentData.holidayImportantNews))
+      .concat(asList(activeItem && activeItem.importantNews));
+    var seenIds = {};
+    var seenUrls = {};
+    var seenTitles = {};
+    var unique = [];
+    var i;
 
-    function add(items){
-      var list = asList(items);
-      var i;
-      for(i = 0; i < list.length; i += 1){
-        var news = list[i] || {};
-        var key = news.id || news.url || news.title;
-        if(!key || map[key]) continue;
-        map[key] = true;
-        combined.push(news);
-      }
+    for(i = 0; i < source.length; i += 1){
+      var item = source[i] && typeof source[i] === 'object' ? source[i] : null;
+      if(!item) continue;
+      var id = String(item.id || '').trim();
+      var url = String(item.url || '').trim();
+      var title = String(item.title || '').trim();
+      if((id && seenIds[id]) || (url && seenUrls[url]) || (title && seenTitles[title])) continue;
+      if(id) seenIds[id] = true;
+      if(url) seenUrls[url] = true;
+      if(title) seenTitles[title] = true;
+      unique.push(item);
     }
 
-    add(currentData && currentData.importantNews);
-    add(currentData && currentData.holidayImportantNews);
-    add(activeItem && activeItem.importantNews);
-
-    combined.sort(function(a, b){
-      var aTime = parseDate(a.publishedAt);
-      var bTime = parseDate(b.publishedAt);
-      var aValue = aTime ? aTime.getTime() : 0;
-      var bValue = bTime ? bTime.getTime() : 0;
-      if(aValue !== bValue) return bValue - aValue;
-      return severityRank(b.severity) - severityRank(a.severity);
+    var severityOrder = {HIGH: 0, MEDIUM: 1, LOW: 2};
+    unique.sort(function(a, b){
+      var aDate = parseDate(a.publishedAt);
+      var bDate = parseDate(b.publishedAt);
+      var timeDifference = (bDate ? bDate.getTime() : 0) - (aDate ? aDate.getTime() : 0);
+      if(timeDifference) return timeDifference;
+      return (severityOrder[String(a.severity || '').toUpperCase()] ?? 9) -
+        (severityOrder[String(b.severity || '').toUpperCase()] ?? 9);
     });
-
-    return combined;
+    return {items: unique, inputCount: source.length, duplicateCount: source.length - unique.length};
   }
 
-  function renderTickerChips(tickers){
-    var list = asList(tickers);
-    if(!list.length) return '';
-    var html = [];
+  function newsSources(item){
+    var values = [];
+    if(item.source) values.push(String(item.source));
+    var sources = asList(item.sources);
     var i;
-    for(i = 0; i < list.length; i += 1){
-      var code = normalizeJapaneseStockCode(list[i]);
-      if(!code) continue;
-      html.push('<a class="chip ticker-chip" href="' + escapeHtml(tradingViewUrl(code)) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(code) + '</a>');
+    for(i = 0; i < sources.length; i += 1){
+      if(values.indexOf(String(sources[i])) === -1) values.push(String(sources[i]));
     }
-    return html.length ? '<div class="chips news-tickers">' + html.join('') + '</div>' : '';
+    return values.join(' / ') || '---';
+  }
+
+  function renderNewsCard(item){
+    var severity = String(item.severity || 'LOW').toUpperCase();
+    var related = asList(item.relatedTickers);
+    var tickerHtml = related.length
+      ? related.map(function(ticker){ return '<span class="news-ticker">' + escapeHtml(ticker) + '</span>'; }).join('')
+      : '<span class="muted">なし</span>';
+    var link = item.url
+      ? '<a class="news-link" href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener noreferrer">記事を開く</a>'
+      : '';
+
+    return '<article class="news-card severity-' + escapeHtml(severity.toLowerCase()) + '">' +
+      '<div class="news-meta"><span class="severity-badge">' + escapeHtml(severity) + '</span>' +
+      '<time>' + escapeHtml(formatJst(item.publishedAt)) + '</time></div>' +
+      '<h3>' + escapeHtml(item.title || '見出しなし') + '</h3>' +
+      '<dl class="news-facts"><div><dt>分類</dt><dd>' + escapeHtml(item.category || '---') + '</dd></div>' +
+      '<div><dt>出典</dt><dd>' + escapeHtml(newsSources(item)) + '</dd></div></dl>' +
+      '<div class="news-copy"><strong>要約</strong><p>' + escapeHtml(item.summary || '---') + '</p></div>' +
+      '<div class="news-copy impact"><strong>相場への影響</strong><p>' + escapeHtml(item.impact || '---') + '</p></div>' +
+      '<div class="news-related"><strong>関連銘柄</strong><div class="news-tickers">' + tickerHtml + '</div></div>' +
+      link + '</article>';
   }
 
   function renderMarketNews(activeItem){
-    var newsList = collectMarketNews(activeItem);
-    if(!newsList.length){
-      return '<p class="muted">現在、表示できる相場関連ニュースはありません。</p>';
+    var result = collectMarketNews(activeItem);
+    if(!result.items.length){
+      return '<section class="news-section full" id="marketNews" data-news-count="0" data-duplicate-count="0">' +
+        '<div class="section-head"><h2>相場関連ニュース</h2><span>0件</span></div>' +
+        '<p class="muted">現在、表示できる相場関連ニュースはありません。</p></section>';
     }
-
-    var html = [];
-    var i;
-    for(i = 0; i < newsList.length; i += 1){
-      var news = newsList[i] || {};
-      var severity = String(news.severity || '').toUpperCase();
-      var severityClass = severity === 'HIGH' ? 'bad' : (severity === 'MEDIUM' ? 'warn' : '');
-      var sources = asList(news.sources).length ? asList(news.sources).join(' / ') : (news.source || '---');
-      var title = news.title || news.summary || '見出しなし';
-      var titleHtml = news.url
-        ? '<a class="news-title" href="' + escapeHtml(news.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(title) + '</a>'
-        : '<div class="news-title">' + escapeHtml(title) + '</div>';
-      var summary = news.summary && news.summary !== title ? '<p class="news-summary">' + escapeHtml(news.summary) + '</p>' : '';
-      var impact = news.impact ? '<div class="news-impact"><strong>相場への影響：</strong>' + escapeHtml(news.impact) + '</div>' : '';
-
-      html.push(
-        '<article class="news-card' + (severity === 'HIGH' ? ' high' : '') + '">' +
-        '<div class="news-head"><span class="badge ' + severityClass + '">' + escapeHtml(severity || 'NEWS') + '</span>' +
-        '<span class="news-time">' + escapeHtml(formatJst(news.publishedAt)) + '</span></div>' +
-        titleHtml +
-        '<div class="news-meta">' + escapeHtml([news.category || '未分類', sources].join(' / ')) + '</div>' +
-        summary + impact + renderTickerChips(news.relatedTickers) +
-        '</article>'
-      );
-    }
-
-    return '<div class="news-grid">' + html.join('') + '</div>';
+    return '<section class="news-section full" id="marketNews" data-news-count="' + result.items.length +
+      '" data-duplicate-count="' + result.duplicateCount + '">' +
+      '<div class="section-head"><h2>相場関連ニュース</h2><span>' + result.items.length + '件</span></div>' +
+      '<div class="news-grid">' + result.items.map(renderNewsCard).join('') + '</div></section>';
   }
 
   function requestJson(url, onSuccess, onFailure){
@@ -350,7 +346,7 @@
     }
 
     var reports = currentData.reports || {};
-    summary.textContent = currentData.dailySummary || '銘柄と相場関連ニュースを表示します。';
+    summary.textContent = currentData.dailySummary || '銘柄をタップするとTradingViewの60分足を別タブで開きます。';
 
     var tabHtml = [];
     var i;
@@ -373,14 +369,13 @@
 
     var activeItem = reports[activeSlot];
     if(!activeItem){
-      content.innerHTML = '<div class="card full"><h2>' + escapeHtml(slotLabel(activeSlot)) + '</h2><p>この時間帯の通知はまだありません。</p></div>' +
-        '<div class="card full"><h2>相場関連ニュース</h2>' + renderMarketNews(null) + '</div>';
+      content.innerHTML = '<div class="card"><h2>' + escapeHtml(slotLabel(activeSlot)) + '</h2><p>この時間帯の通知はまだありません。</p></div>';
       return;
     }
 
     content.innerHTML =
       '<div class="card full"><h2>銘柄一覧（タップでTradingViewを開く）</h2>' + renderSymbolList(activeItem) + '</div>' +
-      '<div class="card full"><h2>相場関連ニュース</h2>' + renderMarketNews(activeItem) + '</div>';
+      renderMarketNews(activeItem);
   }
 
   function setAutoRefresh(enabled){
@@ -404,17 +399,17 @@
   byId('todayBtn').onclick = function(){
     var key = jstDateKey();
     byId('dateInput').value = key;
-    loadDate(key, false, false, addDays(key, -1));
+    loadDate(key, false, false);
   };
 
   byId('yesterdayBtn').onclick = function(){
     var key = addDays(jstDateKey(), -1);
     byId('dateInput').value = key;
-    loadDate(key, false, false, '');
+    loadDate(key, false, false);
   };
 
   byId('loadBtn').onclick = function(){
-    loadDate(byId('dateInput').value || jstDateKey(), false, false, '');
+    loadDate(byId('dateInput').value || jstDateKey(), false, false);
   };
 
   byId('refreshBtn').onclick = function(){
