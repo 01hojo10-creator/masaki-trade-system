@@ -140,7 +140,14 @@
 
     var name = object ? (object.name || '') : String(raw || '').replace(code, '').trim();
     var details = [];
+    var tradeDirection = object ? String(object.tradeDirection || '').toUpperCase() : '';
+    var directionLabel = object ? (object.directionLabel || object.displayDirectionBadge || '') : '';
+    var viewerDirectionText = object ? (object.viewerDirectionText || '') : '';
     if(object){
+      if(object.notificationDirectionText) details.push(object.notificationDirectionText);
+      if(viewerDirectionText) details.push(viewerDirectionText);
+      if(object.displayEntryText) details.push(object.displayEntryText);
+      if(object.displayRiskText) details.push(object.displayRiskText);
       if(object.reason) details.push(object.reason);
       if(object.signal) details.push(object.signal);
       if(object.theme) details.push(object.theme);
@@ -151,7 +158,10 @@
       code: code,
       name: name,
       statuses: [statusLabel],
-      details: details
+      details: details,
+      tradeDirection: tradeDirection,
+      directionLabel: directionLabel,
+      viewerDirectionText: viewerDirectionText
     };
   }
 
@@ -172,6 +182,9 @@
           ordered.push(entry);
         }else{
           if(!existing.name && entry.name) existing.name = entry.name;
+          if(!existing.tradeDirection && entry.tradeDirection) existing.tradeDirection = entry.tradeDirection;
+          if(!existing.directionLabel && entry.directionLabel) existing.directionLabel = entry.directionLabel;
+          if(!existing.viewerDirectionText && entry.viewerDirectionText) existing.viewerDirectionText = entry.viewerDirectionText;
           if(existing.statuses.indexOf(statusLabel) === -1) existing.statuses.push(statusLabel);
           for(j = 0; j < entry.details.length; j += 1){
             if(existing.details.indexOf(entry.details[j]) === -1) existing.details.push(entry.details[j]);
@@ -182,9 +195,37 @@
 
     addGroup(item.entryCandidates, 'ENTRY');
     addGroup(getPath(item, ['diagnostics', 'entryDiagnostics', 'entryNearbySymbols'], []), 'ENTRY間近');
-    addGroup(item.focusSymbols, 'Focus');
-    addGroup(item.watchSymbols, 'Watch');
+    addGroup(item.focusItems || item.focusSymbols, 'Focus');
+    addGroup(item.watchItems || item.watchSymbols, 'Watch');
     return ordered;
+  }
+
+  function directionClass(direction){
+    if(direction === 'SHORT') return 'direction-short';
+    if(direction === 'LONG') return 'direction-long';
+    return 'direction-neutral';
+  }
+
+  function renderDirectionSummary(item){
+    var summary = item.focusDirectionSummary || currentData.focusDirectionSummary || {};
+    var label = item.focusMarketBiasLabel || summary.focusMarketBiasLabel || '明確なFocusなし';
+    var shortCount = Number(item.focusShortCount != null ? item.focusShortCount : summary.focusShortCount || 0);
+    var longCount = Number(item.focusLongCount != null ? item.focusLongCount : summary.focusLongCount || 0);
+    var neutralCount = Number(item.focusNeutralCount != null ? item.focusNeutralCount : summary.focusNeutralCount || 0);
+    var bias = item.focusMarketBias || summary.focusMarketBias || 'NONE';
+    var isShortBias = bias === 'SHORT_BIAS';
+    var guidance = summary.guidance || (isShortBias ? '買いよりも戻り売り・下落継続監視を優先' : '方向確認待ち');
+    var caution = summary.caution || (isShortBias ? '追い売り注意：寄り付き大幅GDは見送り' : '');
+    var stance = isShortBias ? '買い候補ではありません / 空売り候補です' : (bias === 'LONG_BIAS' ? '買い候補です' : '方向別に確認');
+    return '<div class="card full direction-summary-card ' + escapeHtml(directionClass(isShortBias ? 'SHORT' : (bias === 'LONG_BIAS' ? 'LONG' : 'NEUTRAL'))) + '">' +
+      '<div class="section-head"><h2>本日のFocus方向</h2><span>' + escapeHtml(label) + '</span></div>' +
+      '<div class="direction-summary-main">' +
+        '<strong>' + escapeHtml(label) + '</strong>' +
+        '<span>SHORT ' + escapeHtml(String(shortCount)) + ' / LONG ' + escapeHtml(String(longCount)) + ' / NEUTRAL ' + escapeHtml(String(neutralCount)) + '</span>' +
+        '<span>' + escapeHtml(guidance) + '</span>' +
+        '<span>' + escapeHtml(stance) + '</span>' +
+        (caution ? '<span class="direction-caution">' + escapeHtml(caution) + '</span>' : '') +
+      '</div></div>';
   }
 
   function renderSymbolList(item){
@@ -197,9 +238,12 @@
       var symbol = symbols[i];
       var detail = symbol.statuses.join(' / ');
       if(symbol.details.length) detail += ' | ' + symbol.details.join(' | ');
+      var directionBadge = symbol.directionLabel
+        ? '<span class="symbol-direction ' + escapeHtml(directionClass(symbol.tradeDirection)) + '">' + escapeHtml(symbol.directionLabel) + '</span>'
+        : '';
       html.push(
         '<a class="row clickable" href="' + escapeHtml(tradingViewUrl(symbol.code)) + '" target="_blank" rel="noopener noreferrer">' +
-        '<div><div class="row-main">' + escapeHtml(symbol.code + (symbol.name ? ' ' + symbol.name : '')) + '</div>' +
+        '<div><div class="row-main">' + directionBadge + escapeHtml(symbol.code + (symbol.name ? ' ' + symbol.name : '')) + '</div>' +
         '<div class="row-sub">' + escapeHtml(detail) + '</div></div>' +
         '<div class="num">TV</div></a>'
       );
@@ -374,6 +418,7 @@
     }
 
     content.innerHTML =
+      renderDirectionSummary(activeItem) +
       '<div class="card full"><h2>銘柄一覧（タップでTradingViewを開く）</h2>' + renderSymbolList(activeItem) + '</div>' +
       renderMarketNews(activeItem);
   }
