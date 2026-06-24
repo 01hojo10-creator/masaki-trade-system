@@ -36,6 +36,14 @@ main{max-width:1180px;margin:0 auto;padding:12px;padding-bottom:max(24px,env(saf
 .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;padding:9px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.035);min-width:0}
 .row-main{font-weight:850;overflow-wrap:anywhere}
 .row-sub{margin-top:3px;color:var(--muted);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.symbol-direction{display:inline-flex;align-items:center;min-height:24px;margin-right:7px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);font-size:11px;font-weight:900;vertical-align:middle}
+.direction-short{border-color:rgba(255,154,170,.50);background:rgba(180,28,45,.18);color:#ffdfe5}
+.direction-long{border-color:rgba(96,165,250,.50);background:rgba(37,99,235,.16);color:#dbeafe}
+.direction-neutral{border-color:rgba(255,213,74,.38);background:rgba(255,213,74,.10);color:#ffe7a3}
+.direction-summary-card{border-radius:10px}
+.direction-summary-main{display:grid;gap:6px;font-size:14px;line-height:1.55}
+.direction-summary-main strong{font-size:22px;line-height:1.25}
+.direction-caution{color:#ffcfbd;font-weight:900}
 .num{min-width:30px;text-align:center;padding:2px 7px;border:1px solid rgba(96,165,250,.36);border-radius:999px;color:#bfdbfe;font-size:12px;font-weight:900}
 .clickable{cursor:pointer;transition:transform .12s ease,border-color .12s ease,background .12s ease}
 .clickable:hover,.clickable:focus{outline:none;transform:translateY(-1px);border-color:rgba(96,165,250,.6);background:rgba(96,165,250,.08)}
