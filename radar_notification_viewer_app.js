@@ -143,6 +143,17 @@
     var tradeDirection = object ? String(object.tradeDirection || '').toUpperCase() : '';
     var directionLabel = object ? (object.directionLabel || object.displayDirectionBadge || '') : '';
     var viewerDirectionText = object ? (object.viewerDirectionText || '') : '';
+    var stateClassification = object ? String(object.stateClassification || '').toUpperCase() : '';
+    var stateTier = object ? (object.stateTier || '') : '';
+    var finalAction = object ? String(object.finalAction || '').toUpperCase() : '';
+    if(finalAction !== 'ENTRY_VALID'){
+      directionLabel = String(directionLabel || '')
+        .replace(/空売り候補/g, stateClassification === 'SURGE_WATCH_SHORT_FORBIDDEN' ? '急騰監視 / 空売り禁止' : '反落待ち監視')
+        .replace(/買い候補/g, stateClassification === 'PULLBACK_WAIT' ? '押し目待ち' : '上昇監視');
+    }
+    var tierLabel = finalAction === 'ENTRY_VALID'
+      ? 'ENTRY確認対象'
+      : (stateTier || statusLabel);
     if(object){
       if(object.notificationDirectionText) details.push(object.notificationDirectionText);
       if(viewerDirectionText) details.push(viewerDirectionText);
@@ -157,11 +168,14 @@
     return {
       code: code,
       name: name,
-      statuses: [statusLabel],
+      statuses: [tierLabel],
       details: details,
       tradeDirection: tradeDirection,
       directionLabel: directionLabel,
-      viewerDirectionText: viewerDirectionText
+      viewerDirectionText: viewerDirectionText,
+      stateClassification: stateClassification,
+      stateTier: stateTier,
+      finalAction: finalAction
     };
   }
 
@@ -185,7 +199,8 @@
           if(!existing.tradeDirection && entry.tradeDirection) existing.tradeDirection = entry.tradeDirection;
           if(!existing.directionLabel && entry.directionLabel) existing.directionLabel = entry.directionLabel;
           if(!existing.viewerDirectionText && entry.viewerDirectionText) existing.viewerDirectionText = entry.viewerDirectionText;
-          if(existing.statuses.indexOf(statusLabel) === -1) existing.statuses.push(statusLabel);
+          var mergedStatus = entry.statuses[0] || statusLabel;
+          if(existing.statuses.indexOf(mergedStatus) === -1) existing.statuses.push(mergedStatus);
           for(j = 0; j < entry.details.length; j += 1){
             if(existing.details.indexOf(entry.details[j]) === -1) existing.details.push(entry.details[j]);
           }
@@ -193,10 +208,10 @@
       }
     }
 
-    addGroup(item.entryCandidates, 'ENTRY');
-    addGroup(getPath(item, ['diagnostics', 'entryDiagnostics', 'entryNearbySymbols'], []), 'ENTRY間近');
-    addGroup(item.focusItems || item.focusSymbols, 'Focus');
-    addGroup(item.watchItems || item.watchSymbols, 'Watch');
+    addGroup(item.entryCandidates, 'ENTRY確認対象');
+    addGroup(getPath(item, ['diagnostics', 'entryDiagnostics', 'entryNearbySymbols'], []), '待ち');
+    addGroup(item.focusItems || item.focusSymbols, '監視');
+    addGroup(item.watchItems || item.watchSymbols, '監視');
     return ordered;
   }
 
@@ -214,9 +229,9 @@
     var neutralCount = Number(item.focusNeutralCount != null ? item.focusNeutralCount : summary.focusNeutralCount || 0);
     var bias = item.focusMarketBias || summary.focusMarketBias || 'NONE';
     var isShortBias = bias === 'SHORT_BIAS';
-    var guidance = summary.guidance || (isShortBias ? '買いよりも戻り売り・下落継続監視を優先' : '方向確認待ち');
+    var guidance = summary.guidance || (isShortBias ? '下落監視・反落確認待ちを優先' : '方向確認待ち');
     var caution = summary.caution || (isShortBias ? '追い売り注意：寄り付き大幅GDは見送り' : '');
-    var stance = isShortBias ? '買い候補ではありません / 空売り候補です' : (bias === 'LONG_BIAS' ? '買い候補です' : '方向別に確認');
+    var stance = isShortBias ? '下落監視です / 反落確認待ちです' : (bias === 'LONG_BIAS' ? '上昇監視です / ENTRY確認は個別条件成立後' : 'ENTRY確認対象・監視・待ちを分けて確認');
     return '<div class="card full direction-summary-card ' + escapeHtml(directionClass(isShortBias ? 'SHORT' : (bias === 'LONG_BIAS' ? 'LONG' : 'NEUTRAL'))) + '">' +
       '<div class="section-head"><h2>本日のFocus方向</h2><span>' + escapeHtml(label) + '</span></div>' +
       '<div class="direction-summary-main">' +
