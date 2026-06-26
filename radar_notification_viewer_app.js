@@ -302,6 +302,7 @@
 
   function normalizeBiasLabel(label, bias){
     label = String(label || '');
+    if(/買い候補中心|買い専用監視/.test(label) || bias === 'LONG_ONLY_SCORE_RANK') return label || '買い候補中心';
     if(/空売り|下落監視|売り/.test(label) || bias === 'SHORT_BIAS') return '売り優勢';
     if(/買い|上昇/.test(label) || bias === 'LONG_BIAS') return '買い優勢';
     return '中立・混在';
@@ -318,9 +319,12 @@
     var shortCount = Number(data.focusShortCount || 0);
     var neutralCount = Number(data.focusNeutralCount || 0);
     var bias = normalizeBiasLabel(data.focusMarketBiasLabel, data.focusMarketBias);
+    var isBuyOnly = data.focusMarketBias === 'LONG_ONLY_SCORE_RANK' && shortCount === 0;
     if(value.indexOf('最新通知では') === 0){
       var prefix = '最新通知ではFocus ' + focus + '件、Watch ' + watch + '件です。本日の方向: ' +
-        bias + ' / 買い ' + longCount + ' / 中立 ' + neutralCount + ' / 売り ' + shortCount + '。';
+        (isBuyOnly
+          ? bias + ' / 買い候補 ' + longCount + ' / 中立 ' + neutralCount + '。'
+          : bias + ' / 買い ' + longCount + ' / 中立 ' + neutralCount + ' / 売り ' + shortCount + '。');
       var marker = value.indexOf('本日のレーダー状態');
       if(marker > 0) return prefix + value.slice(marker);
       return value.replace(/^最新通知では.*?(?:。|$)/, prefix);
@@ -337,13 +341,17 @@
     var bias = item.focusMarketBias || summary.focusMarketBias || 'NONE';
     var isShortBias = bias === 'SHORT_BIAS';
     var label = normalizeBiasLabel(rawLabel, bias);
-    var guidance = '方向は「買い / 中立 / 売り」の3分類です。';
-    var stance = 'ENTRY、SL、TP、リスク情報は各カード内で確認してください。';
-    return '<div class="card full direction-summary-card ' + escapeHtml(directionClass(isShortBias ? 'SHORT' : (bias === 'LONG_BIAS' ? 'LONG' : 'NEUTRAL'))) + '">' +
+    var isBuyOnly = bias === 'LONG_ONLY_SCORE_RANK' && shortCount === 0;
+    var guidance = isBuyOnly ? 'Focus / WatchはclassificationScore順です。' : '方向は「買い / 中立 / 売り」の3分類です。';
+    var stance = isBuyOnly ? 'ENTRY可否は順位に使っていません。' : 'ENTRY、SL、TP、リスク情報は各カード内で確認してください。';
+    var countText = isBuyOnly
+      ? '買い候補 ' + longCount + ' / 中立 ' + neutralCount
+      : '買い ' + longCount + ' / 中立 ' + neutralCount + ' / 売り ' + shortCount;
+    return '<div class="card full direction-summary-card ' + escapeHtml(directionClass(isShortBias ? 'SHORT' : ((bias === 'LONG_BIAS' || isBuyOnly) ? 'LONG' : 'NEUTRAL'))) + '">' +
       '<div class="section-head"><h2>本日の方向</h2><span>' + escapeHtml(label) + '</span></div>' +
       '<div class="direction-summary-main">' +
         '<strong>' + escapeHtml(label) + '</strong>' +
-        '<span>買い ' + escapeHtml(String(longCount)) + ' / 中立 ' + escapeHtml(String(neutralCount)) + ' / 売り ' + escapeHtml(String(shortCount)) + '</span>' +
+        '<span>' + escapeHtml(countText) + '</span>' +
         '<span>' + escapeHtml(guidance) + '</span>' +
         '<span>' + escapeHtml(stance) + '</span>' +
       '</div></div>';
