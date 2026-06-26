@@ -140,22 +140,17 @@
 
     var name = object ? (object.name || '') : String(raw || '').replace(code, '').trim();
     var details = [];
-    var tradeDirection = object ? String(object.tradeDirection || '').toUpperCase() : '';
-    var directionLabel = object ? (object.directionLabel || object.displayDirectionBadge || '') : '';
-    var viewerDirectionText = object ? (object.viewerDirectionText || '') : '';
+    var tradeDirection = object ? normalizeDirection(object.tradeDirection || '') : '';
+    var directionLabel = simpleDirectionLabel(tradeDirection);
+    var viewerDirectionText = '方向：' + directionLabel;
     var stateClassification = object ? String(object.stateClassification || '').toUpperCase() : '';
     var stateTier = object ? (object.stateTier || '') : '';
     var finalAction = object ? String(object.finalAction || '').toUpperCase() : '';
-    if(finalAction !== 'ENTRY_VALID'){
-      directionLabel = String(directionLabel || '')
-        .replace(/空売り候補/g, stateClassification === 'SURGE_WATCH_SHORT_FORBIDDEN' ? '急騰監視 / 空売り禁止' : '反落待ち監視')
-        .replace(/買い候補/g, stateClassification === 'PULLBACK_WAIT' ? '押し目待ち' : '上昇監視');
-    }
     var tierLabel = finalAction === 'ENTRY_VALID'
       ? 'ENTRY確認対象'
       : (stateTier || statusLabel);
     if(object){
-      if(object.notificationDirectionText) details.push(object.notificationDirectionText);
+      if(object.notificationDirectionText) details.push(normalizeDirectionText(object.notificationDirectionText, tradeDirection));
       if(viewerDirectionText) details.push(viewerDirectionText);
       if(object.displayEntryText) details.push(object.displayEntryText);
       if(object.displayRiskText) details.push(object.displayRiskText);
@@ -221,25 +216,97 @@
     return 'direction-neutral';
   }
 
+  function normalizeDirection(direction){
+    direction = String(direction || '').toUpperCase();
+    if(direction === 'SHORT' || direction === 'LONG' || direction === 'NEUTRAL') return direction;
+    return 'NEUTRAL';
+  }
+
+  function simpleDirectionLabel(direction){
+    direction = normalizeDirection(direction);
+    if(direction === 'SHORT') return '🔴 売り';
+    if(direction === 'LONG') return '🟢 買い';
+    return '⚪ 中立';
+  }
+
+  function normalizeDirectionText(text, direction){
+    var value = String(text || '');
+    if(!value) return '';
+    var label = simpleDirectionLabel(direction);
+    return value
+      .replace(/🔴\s*空売り(?:ENTRY確認)?(Focus|Watch)?/g, label + '$1')
+      .replace(/🔴\s*下落監視(Focus|Watch)?/g, label + '$1')
+      .replace(/🔵\s*買い(?:ENTRY確認)?(Focus|Watch)?/g, label + '$1')
+      .replace(/🔵\s*上昇監視(Focus|Watch)?/g, label + '$1')
+      .replace(/🟡\s*中立監視(Focus|Watch)?/g, label + '$1')
+      .replace(/空売り候補/g, '売り')
+      .replace(/下落監視候補/g, '売り')
+      .replace(/空売り実行候補/g, '売り')
+      .replace(/空売りFocus/g, '売りFocus')
+      .replace(/空売りWatch/g, '売りWatch')
+      .replace(/買い候補の芽/g, '買い')
+      .replace(/買い候補/g, '買い')
+      .replace(/下落監視/g, '売り')
+      .replace(/上昇監視/g, '買い')
+      .replace(/空売り/g, '売り')
+      .replace(/本日のFocus/g, '本日の方向')
+      .replace(/SHORT\s*/g, '売り ')
+      .replace(/LONG\s*/g, '買い ')
+      .replace(/NEUTRAL\s*/g, '中立 ')
+      .replace(/買い実行対象ではありません\s*\/\s*/g, '')
+      .replace(/空売り実行対象ではありません\s*\/\s*/g, '')
+      .replace(/実行候補ではありません\s*\/\s*/g, '')
+      .replace(/ENTRY・リスク未確定/g, '')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
+  }
+
+  function normalizeBiasLabel(label, bias){
+    label = String(label || '');
+    if(/空売り|下落監視|売り/.test(label) || bias === 'SHORT_BIAS') return '売り優勢';
+    if(/買い|上昇/.test(label) || bias === 'LONG_BIAS') return '買い優勢';
+    return '中立・混在';
+  }
+
+  function normalizeDailySummaryText(text, data){
+    var value = normalizeDirectionText(text, 'NEUTRAL');
+    data = data || {};
+    var focusMatch = value.match(/Focus\s+(\d+)件/);
+    var watchMatch = value.match(/Watch\s+(\d+)件/);
+    var focus = Number(data.focusCount != null ? data.focusCount : (focusMatch ? focusMatch[1] : 0));
+    var watch = Number(data.watchCount != null ? data.watchCount : (watchMatch ? watchMatch[1] : 0));
+    var longCount = Number(data.focusLongCount || 0);
+    var shortCount = Number(data.focusShortCount || 0);
+    var neutralCount = Number(data.focusNeutralCount || 0);
+    var bias = normalizeBiasLabel(data.focusMarketBiasLabel, data.focusMarketBias);
+    if(value.indexOf('最新通知では') === 0){
+      var prefix = '最新通知ではFocus ' + focus + '件、Watch ' + watch + '件です。本日の方向: ' +
+        bias + ' / 買い ' + longCount + ' / 中立 ' + neutralCount + ' / 売り ' + shortCount + '。';
+      var marker = value.indexOf('本日のレーダー状態');
+      if(marker > 0) return prefix + value.slice(marker);
+      return value.replace(/^最新通知では.*?(?:。|$)/, prefix);
+    }
+    return value;
+  }
+
   function renderDirectionSummary(item){
     var summary = item.focusDirectionSummary || currentData.focusDirectionSummary || {};
-    var label = item.focusMarketBiasLabel || summary.focusMarketBiasLabel || '明確なFocusなし';
+    var rawLabel = item.focusMarketBiasLabel || summary.focusMarketBiasLabel || '';
     var shortCount = Number(item.focusShortCount != null ? item.focusShortCount : summary.focusShortCount || 0);
     var longCount = Number(item.focusLongCount != null ? item.focusLongCount : summary.focusLongCount || 0);
     var neutralCount = Number(item.focusNeutralCount != null ? item.focusNeutralCount : summary.focusNeutralCount || 0);
     var bias = item.focusMarketBias || summary.focusMarketBias || 'NONE';
     var isShortBias = bias === 'SHORT_BIAS';
-    var guidance = summary.guidance || (isShortBias ? '下落監視・反落確認待ちを優先' : '方向確認待ち');
-    var caution = summary.caution || (isShortBias ? '追い売り注意：寄り付き大幅GDは見送り' : '');
-    var stance = isShortBias ? '下落監視です / 反落確認待ちです' : (bias === 'LONG_BIAS' ? '上昇監視です / ENTRY確認は個別条件成立後' : 'ENTRY確認対象・監視・待ちを分けて確認');
+    var label = normalizeBiasLabel(rawLabel, bias);
+    var guidance = '方向は「買い / 中立 / 売り」の3分類です。';
+    var stance = 'ENTRY、SL、TP、リスク情報は各カード内で確認してください。';
     return '<div class="card full direction-summary-card ' + escapeHtml(directionClass(isShortBias ? 'SHORT' : (bias === 'LONG_BIAS' ? 'LONG' : 'NEUTRAL'))) + '">' +
-      '<div class="section-head"><h2>本日のFocus方向</h2><span>' + escapeHtml(label) + '</span></div>' +
+      '<div class="section-head"><h2>本日の方向</h2><span>' + escapeHtml(label) + '</span></div>' +
       '<div class="direction-summary-main">' +
         '<strong>' + escapeHtml(label) + '</strong>' +
-        '<span>SHORT ' + escapeHtml(String(shortCount)) + ' / LONG ' + escapeHtml(String(longCount)) + ' / NEUTRAL ' + escapeHtml(String(neutralCount)) + '</span>' +
+        '<span>買い ' + escapeHtml(String(longCount)) + ' / 中立 ' + escapeHtml(String(neutralCount)) + ' / 売り ' + escapeHtml(String(shortCount)) + '</span>' +
         '<span>' + escapeHtml(guidance) + '</span>' +
         '<span>' + escapeHtml(stance) + '</span>' +
-        (caution ? '<span class="direction-caution">' + escapeHtml(caution) + '</span>' : '') +
       '</div></div>';
   }
 
@@ -405,7 +472,7 @@
     }
 
     var reports = currentData.reports || {};
-    summary.textContent = currentData.dailySummary || '銘柄をタップするとTradingViewの60分足を別タブで開きます。';
+    summary.textContent = normalizeDailySummaryText(currentData.dailySummary || '銘柄をタップするとTradingViewの60分足を別タブで開きます。', currentData);
 
     var tabHtml = [];
     var i;
