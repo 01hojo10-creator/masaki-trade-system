@@ -8,11 +8,13 @@
     ['night', '夜']
   ];
   var AUTO_REFRESH_MS = 60000;
-  var VIEWER_VERSION = '20260623-9';
+  var VIEWER_VERSION = '20260626-fallback1';
 
   var currentData = null;
   var activeSlot = 'morning';
   var currentDateKey = '';
+  var currentLoadMeta = null;
+  var emptyMessage = '';
   var autoRefreshEnabled = true;
   var autoRefreshTimer = null;
   var lastLoadedAt = null;
@@ -57,6 +59,40 @@
     var date = new Date(dateKey + 'T00:00:00+09:00');
     date.setDate(date.getDate() + days);
     return jstDateKey(date);
+  }
+
+  function notificationPath(dateKey){
+    return 'reports/radar-notifications-' + dateKey + '.json';
+  }
+
+  function cacheBust(path){
+    return path + (path.indexOf('?') === -1 ? '?' : '&') + 'cb=' + Date.now();
+  }
+
+  function normalizeNotificationPath(path){
+    var value = String(path || '').replace(/\\/g, '/').replace(/^\.\//, '').trim();
+    if(!/^reports\/radar-notifications-\d{4}-\d{2}-\d{2}\.json$/.test(value)) return '';
+    return value;
+  }
+
+  function dateFromNotificationPath(path){
+    var match = String(path || '').match(/radar-notifications-(\d{4}-\d{2}-\d{2})\.json$/);
+    return match ? match[1] : '';
+  }
+
+  function recentNotificationCandidates(dateKey){
+    var candidates = [];
+    var seen = {};
+    var i;
+    for(i = 0; i <= 7; i += 1){
+      var key = addDays(dateKey, -i);
+      var path = notificationPath(key);
+      if(!seen[path]){
+        seen[path] = true;
+        candidates.push({dateKey: key, path: path});
+      }
+    }
+    return candidates;
   }
 
   function formatJst(value){
@@ -120,8 +156,11 @@
 
   function renderStatus(message, type, path){
     var status = byId('status');
+    var meta = currentLoadMeta || {};
     var badges = [];
     if(path) badges.push('<span class="badge">読込先: ' + escapeHtml(path) + '</span>');
+    if(meta.displayDate) badges.push('<span class="badge">表示中: ' + escapeHtml(meta.displayDate) + ' の通知</span>');
+    if(meta.reason) badges.push('<span class="badge">理由: ' + escapeHtml(meta.reason) + '</span>');
     badges.push('<span class="badge good">Viewer ' + VIEWER_VERSION + '</span>');
     badges.push('<span class="badge good">TradingView直結</span>');
     if(lastLoadedAt) badges.push('<span class="badge">最終確認: ' + escapeHtml(formatJst(lastLoadedAt)) + '</span>');
@@ -434,12 +473,67 @@
     catch(error){ onFailure(error.message || '取得エラー'); }
   }
 
-  function loadDate(dateKey, preserveSlot, quiet, fallbackDateKey){
+  function applyNotificationData(nextData, dateKey, preserveSlot, path, meta, statusType, message){
     currentDateKey = dateKey;
-    var path = 'reports/radar-notifications-' + dateKey + '.json';
+    currentLoadMeta = {
+      displayDate: dateKey,
+      path: path,
+      reason: meta && meta.reason ? meta.reason : ''
+    };
+    emptyMessage = '';
+    byId('dateInput').value = dateKey;
+    currentData = nextData || {};
+    var reports = currentData.reports || {};
+    if(!preserveSlot || !reports[activeSlot]) activeSlot = newestSlotKey(reports);
+    lastLoadedAt = new Date();
+    render();
+    renderStatus(message || (dateKey + ' の通知履歴を表示中'), statusType || 'ok', path);
+  }
+
+  function loadReportPath(path, dateKey, preserveSlot, quiet, meta, onFailure){
+    if(!quiet){
+      currentLoadMeta = {
+        displayDate: dateKey,
+        path: path,
+        reason: meta && meta.reason ? meta.reason : ''
+      };
+      renderStatus(dateKey + ' を読み込み中', 'ok', path);
+    }
+    requestJson(cacheBust(path), function(nextData){
+      applyNotificationData(
+        nextData,
+        dateKey,
+        preserveSlot,
+        path,
+        meta,
+        meta && meta.reason ? 'warning' : 'ok',
+        dateKey + ' の通知履歴を表示中'
+      );
+    }, function(message){
+      onFailure(message, path, dateKey);
+    });
+  }
+
+  function showLoadFailure(dateKey, path, message, detail){
+    currentData = null;
+    currentDateKey = dateKey;
+    currentLoadMeta = {
+      displayDate: dateKey,
+      path: path,
+      reason: detail || ''
+    };
+    emptyMessage = detail || '通知履歴を読み込めませんでした。';
+    render();
+    renderStatus(dateKey + ' の通知JSONがありません: ' + message, 'error', path);
+  }
+
+  function loadDate(dateKey, preserveSlot, quiet){
+    var path = notificationPath(dateKey);
+    currentDateKey = dateKey;
+    currentLoadMeta = {displayDate: dateKey, path: path, reason: ''};
     if(!quiet) renderStatus(dateKey + ' を読み込み中', 'ok', path);
 
-    requestJson(path + '?cb=' + Date.now(), function(nextData){
+    requestJson(cacheBust(path), function(nextData){
       currentData = nextData || {};
       byId('dateInput').value = dateKey;
       var reports = currentData.reports || {};
@@ -448,14 +542,75 @@
       render();
       renderStatus(dateKey + ' の通知履歴を表示中', 'ok', path);
     }, function(message){
-      if(fallbackDateKey && fallbackDateKey !== dateKey){
-        renderStatus(dateKey + ' は未生成のため ' + fallbackDateKey + ' を表示します', 'warning', path);
-        loadDate(fallbackDateKey, false, true, '');
+      showLoadFailure(dateKey, path, message, '指定日の通知JSONがありません。初期表示では直近の通知を自動検索します。');
+    });
+  }
+
+  function loadRecentFallback(todayKey, preserveSlot, primaryMessage){
+    var candidates = recentNotificationCandidates(todayKey);
+    var todayPath = notificationPath(todayKey);
+    var index = 0;
+    var reason = '今日 ' + todayKey + ' の通知JSONが未生成のため、直近の通知を表示しています';
+
+    function tryNext(){
+      var candidate;
+      if(index >= candidates.length){
+        showLoadFailure(todayKey, todayPath, primaryMessage || '未生成', '通知JSONが見つかりません。直近7日前まで確認しました。');
         return;
       }
-      currentData = null;
-      render();
-      renderStatus(dateKey + ' の通知履歴を取得できません: ' + message, 'error', path);
+      candidate = candidates[index];
+      index += 1;
+      if(candidate.path === todayPath){
+        tryNext();
+        return;
+      }
+      loadReportPath(candidate.path, candidate.dateKey, preserveSlot, true, {reason: reason}, function(){
+        tryNext();
+      });
+    }
+
+    tryNext();
+  }
+
+  function loadChatgptFallback(todayKey, preserveSlot, primaryMessage){
+    var reportPaths = ['chatgpt-radar-report.json', 'masaki-radar-bridge/chatgpt-radar-report.json'];
+    var reportIndex = 0;
+    var todayPath = notificationPath(todayKey);
+    var reason = '今日 ' + todayKey + ' の通知JSONが未生成のため、直近の通知を表示しています';
+
+    function tryReport(){
+      var reportPath;
+      if(reportIndex >= reportPaths.length){
+        loadRecentFallback(todayKey, preserveSlot, primaryMessage);
+        return;
+      }
+      reportPath = reportPaths[reportIndex];
+      reportIndex += 1;
+      requestJson(cacheBust(reportPath), function(report){
+        var path = normalizeNotificationPath(report && report.dailyNotificationPath);
+        var dateKey = dateFromNotificationPath(path);
+        if(path && path !== todayPath && dateKey){
+          loadReportPath(path, dateKey, preserveSlot, true, {reason: reason}, function(){
+            loadRecentFallback(todayKey, preserveSlot, primaryMessage);
+          });
+          return;
+        }
+        tryReport();
+      }, function(){
+        tryReport();
+      });
+    }
+
+    tryReport();
+  }
+  function loadInitialNotifications(dateKey, preserveSlot, quiet){
+    var path = notificationPath(dateKey);
+    currentDateKey = dateKey;
+    currentLoadMeta = {displayDate: dateKey, path: path, reason: ''};
+    byId('dateInput').value = dateKey;
+    if(!quiet) renderStatus(dateKey + ' を読み込み中', 'ok', path);
+    loadReportPath(path, dateKey, preserveSlot, true, null, function(message){
+      loadChatgptFallback(dateKey, preserveSlot, message);
     });
   }
 
@@ -465,7 +620,7 @@
     var content = byId('content');
 
     if(!currentData){
-      summary.textContent = '通知履歴を読み込めませんでした。';
+      summary.textContent = emptyMessage || '通知履歴を読み込めませんでした。';
       tabs.innerHTML = '';
       content.innerHTML = '';
       return;
@@ -489,7 +644,11 @@
       tabButtons[i].onclick = function(){
         activeSlot = this.getAttribute('data-slot');
         render();
-        renderStatus(currentDateKey + ' の通知履歴を表示中', 'ok', 'reports/radar-notifications-' + currentDateKey + '.json');
+        renderStatus(
+          currentDateKey + ' の通知履歴を表示中',
+          currentLoadMeta && currentLoadMeta.reason ? 'warning' : 'ok',
+          currentLoadMeta && currentLoadMeta.path ? currentLoadMeta.path : notificationPath(currentDateKey)
+        );
       };
     }
 
@@ -517,8 +676,7 @@
     if(enabled){
       autoRefreshTimer = setInterval(function(){
         var today = jstDateKey();
-        var fallback = currentDateKey && currentDateKey !== today ? currentDateKey : addDays(today, -1);
-        loadDate(today, true, true, fallback);
+        loadInitialNotifications(today, true, true);
       }, AUTO_REFRESH_MS);
     }
   }
@@ -546,5 +704,5 @@
   var initialDate = jstDateKey();
   byId('dateInput').value = initialDate;
   setAutoRefresh(true);
-  loadDate(initialDate, false, false, addDays(initialDate, -1));
+  loadInitialNotifications(initialDate, false, false);
 })();
