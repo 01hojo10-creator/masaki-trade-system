@@ -4,11 +4,12 @@
   var SLOT_ORDER = [
     ['morning', '朝'],
     ['midday', '昼'],
+    ['preClose', '\u5f15\u3051\u524d'],
     ['evening', '夕'],
     ['night', '夜']
   ];
   var AUTO_REFRESH_MS = 60000;
-  var VIEWER_VERSION = '20260626-fallback1';
+  var VIEWER_VERSION = '20260703-preclose';
 
   var currentData = null;
   var activeSlot = 'morning';
