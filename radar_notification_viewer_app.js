@@ -9,7 +9,7 @@
     ['night', '夜']
   ];
   var AUTO_REFRESH_MS = 60000;
-  var VIEWER_VERSION = '20260703-preclose';
+  var VIEWER_VERSION = '20260703-rci-pullback-turn';
 
   var currentData = null;
   var activeSlot = 'morning';
@@ -358,6 +358,37 @@
       '</div></div>';
   }
 
+  function rciPullbackTurnData(item){
+    if(item && item.rciPullbackTurn) return item.rciPullbackTurn;
+    if(currentData && currentData.rciPullbackTurn) return currentData.rciPullbackTurn;
+    return null;
+  }
+
+  function renderRciPullbackTurn(item){
+    var data = rciPullbackTurnData(item);
+    if(!data){
+      return '<div class="card full"><h2>RCI押し目反転候補</h2><p>買いサインではありません。ENTRYではなく監視通知です。</p><p class="muted">未生成</p></div>';
+    }
+    var candidates = asList(data.candidates);
+    var status = data.status || 'not_generated';
+    var note = '買いサインではありません。ENTRYではなく監視通知です。';
+    if(status === 'not_generated'){
+      return '<div class="card full"><h2>RCI押し目反転候補</h2><p>' + escapeHtml(note) + '</p><p class="muted">未生成</p></div>';
+    }
+    if(!candidates.length){
+      return '<div class="card full"><h2>RCI押し目反転候補</h2><p>' + escapeHtml(note) + '</p><p class="muted">該当なし</p></div>';
+    }
+    var html = candidates.map(function(candidate){
+      var rci = candidate.rci || {};
+      var detail = '1h / ' + escapeHtml(candidate.hourlyTrend || 'UPTREND') + ' / RCI9 ' + escapeHtml(rci.rci9) + ' / RCI36 ' + escapeHtml(rci.rci36) + ' / RCI52 ' + escapeHtml(rci.rci52) + ' / 前回 ' + escapeHtml(rci.rci9Previous) + ' / Δ ' + escapeHtml(rci.rci9Delta);
+      return '<a class="row clickable" href="' + escapeHtml(tradingViewUrl(candidate.code)) + '" target="_blank" rel="noopener noreferrer">' +
+        '<div><div class="row-main"><span class="symbol-direction direction-neutral">監視</span>' + escapeHtml(candidate.code + (candidate.name ? ' ' + candidate.name : '')) + '</div>' +
+        '<div class="row-sub">' + detail + ' | ' + escapeHtml(candidate.reason || '') + '</div></div>' +
+        '<div class="num">TV</div></a>';
+    }).join('');
+    return '<div class="card full"><h2>RCI押し目反転候補</h2><p>' + escapeHtml(note) + '</p><div class="list">' + html + '</div></div>';
+  }
+
   function renderSymbolList(item){
     var symbols = collectUniqueSymbols(item);
     if(!symbols.length) return '<p class="muted">対象銘柄はありません。</p>';
@@ -669,6 +700,7 @@
 
     content.innerHTML =
       renderDirectionSummary(activeItem) +
+      renderRciPullbackTurn(activeItem) +
       '<div class="card full"><h2>銘柄一覧（タップでTradingViewを開く）</h2>' + renderSymbolList(activeItem) + '</div>' +
       renderMarketNews(activeItem);
   }
