@@ -9,7 +9,14 @@
     ['night', '夜']
   ];
   var AUTO_REFRESH_MS = 60000;
-  var VIEWER_VERSION = '20260703-rci-pullback-turn';
+  var VIEWER_VERSION = '20260704-holiday-news-view';
+  var NEWS_CATEGORY_LABELS = {
+    ai_semiconductor_infra: 'AI半導体・インフラ'
+  };
+  var NEWS_EVENT_STATUS_LABELS = {
+    official_agreement: '公式/契約',
+    reported_talks: '報道/協議中'
+  };
 
   var currentData = null;
   var activeSlot = 'morning';
@@ -112,6 +119,65 @@
     }catch(error){
       return date.toLocaleString();
     }
+  }
+
+  function isWeekendDateKey(dateKey){
+    var date = new Date(String(dateKey || '') + 'T00:00:00+09:00');
+    if(!date || isNaN(date.getTime())) return false;
+    var day = date.getDay();
+    return day === 0 || day === 6;
+  }
+
+  function weekendReason(dateKey){
+    var date = new Date(String(dateKey || '') + 'T00:00:00+09:00');
+    if(!date || isNaN(date.getTime())) return '';
+    if(date.getDay() === 6) return '土曜日';
+    if(date.getDay() === 0) return '日曜日';
+    return '';
+  }
+
+  function nextWeekdayDateKey(dateKey){
+    var date = new Date(String(dateKey || '') + 'T00:00:00+09:00');
+    if(!date || isNaN(date.getTime())) return '';
+    do{
+      date.setDate(date.getDate() + 1);
+    }while(date.getDay() === 0 || date.getDay() === 6);
+    return jstDateKey(date);
+  }
+
+  function isHolidayMode(item){
+    var data = currentData || {};
+    return Boolean(
+      data.isMarketHoliday ||
+      String(data.marketMode || '').toLowerCase() === 'holiday' ||
+      data.holidayNewsMode ||
+      (item && (item.isMarketHoliday || String(item.marketMode || '').toLowerCase() === 'holiday' || item.holidayNewsMode)) ||
+      isWeekendDateKey(currentDateKey)
+    );
+  }
+
+  function holidayReasonText(item){
+    var data = currentData || {};
+    return String(
+      data.holidayReason ||
+      (item && item.holidayReason) ||
+      weekendReason(currentDateKey) ||
+      '市場休業日'
+    );
+  }
+
+  function nextBusinessDateText(item){
+    var data = currentData || {};
+    return String(data.nextBusinessDate || (item && item.nextBusinessDate) || nextWeekdayDateKey(currentDateKey) || '---');
+  }
+
+  function renderHolidayBanner(item){
+    var reason = holidayReasonText(item);
+    var nextDate = nextBusinessDateText(item);
+    return '<section class="holiday-banner" id="holidayBanner">' +
+      '<div class="holiday-banner-main">本日は休場日です' + (reason ? '（' + escapeHtml(reason) + '）' : '') + '</div>' +
+      '<p>通常スキャン・ENTRY判断は停止中です。次回営業日: ' + escapeHtml(nextDate) + '</p>' +
+      '</section>';
   }
 
   function newestSlotKey(reports){
@@ -459,8 +525,24 @@
     return values.join(' / ') || '---';
   }
 
+  function newsCategoryLabel(item){
+    var category = String(item.category || '').trim();
+    if(item.categoryLabel) return String(item.categoryLabel);
+    return NEWS_CATEGORY_LABELS[category] || category || '---';
+  }
+
+  function newsEventStatusLabel(item){
+    var status = String(item.eventStatus || '').trim();
+    if(item.eventStatusLabel) return String(item.eventStatusLabel);
+    return NEWS_EVENT_STATUS_LABELS[status] || '';
+  }
+
   function renderNewsCard(item){
     var severity = String(item.severity || 'LOW').toUpperCase();
+    var eventStatusLabel = newsEventStatusLabel(item);
+    var statusHtml = eventStatusLabel
+      ? '<div><dt>確度</dt><dd>' + escapeHtml(eventStatusLabel) + '</dd></div>'
+      : '';
     var related = asList(item.relatedTickers);
     var tickerHtml = related.length
       ? related.map(function(ticker){ return '<span class="news-ticker">' + escapeHtml(ticker) + '</span>'; }).join('')
@@ -473,7 +555,8 @@
       '<div class="news-meta"><span class="severity-badge">' + escapeHtml(severity) + '</span>' +
       '<time>' + escapeHtml(formatJst(item.publishedAt)) + '</time></div>' +
       '<h3>' + escapeHtml(item.title || '見出しなし') + '</h3>' +
-      '<dl class="news-facts"><div><dt>分類</dt><dd>' + escapeHtml(item.category || '---') + '</dd></div>' +
+      '<dl class="news-facts"><div><dt>分類</dt><dd>' + escapeHtml(newsCategoryLabel(item)) + '</dd></div>' +
+      statusHtml +
       '<div><dt>出典</dt><dd>' + escapeHtml(newsSources(item)) + '</dd></div></dl>' +
       '<div class="news-copy"><strong>要約</strong><p>' + escapeHtml(item.summary || '---') + '</p></div>' +
       '<div class="news-copy impact"><strong>相場への影響</strong><p>' + escapeHtml(item.impact || '---') + '</p></div>' +
@@ -667,7 +750,16 @@
     }
 
     var reports = currentData.reports || {};
+    var holidayMode = isHolidayMode(reports[activeSlot]);
     summary.textContent = normalizeDailySummaryText(currentData.dailySummary || '銘柄をタップするとTradingViewの60分足を別タブで開きます。', currentData);
+
+    if(holidayMode){
+      var holidayItem = reports[activeSlot] || reports[newestSlotKey(reports)] || null;
+      summary.textContent = '休場日のため通常スキャン・Focus / Watch / ENTRY判断は行いません。相場関連ニュースのみ表示します。';
+      tabs.innerHTML = '';
+      content.innerHTML = renderHolidayBanner(holidayItem) + renderMarketNews(holidayItem);
+      return;
+    }
 
     var tabHtml = [];
     var i;
