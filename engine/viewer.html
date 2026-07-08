@@ -70,8 +70,8 @@
     .tile .tvalue { font-size: 34px; }
     section.card { padding: 10px 11px; margin-bottom: 9px; }
     /* スマホでは銘柄コード・企業名をさらに大きく(視認性優先) */
-    td.code { font-size: 15.5px; }
-    td.code .hint-text { font-size: 14px; }
+    td.code { font-size: 16.5px; }
+    td.code .hint-text { font-size: 15px; }
   }
 
   .banner {
@@ -282,13 +282,17 @@
     background: color-mix(in srgb, var(--status-warning) 4%, var(--surface-1));
   }
   .edit-panel .edit-warning {
-    display: flex; align-items: center; gap: 8px;
+    /* 一連の文章として自然に折り返す(flex+gapだと単語がバラバラに分離してしまうためblock化) */
+    display: block; line-height: 1.65;
     font-size: 12px; font-weight: 700; color: var(--status-warning);
     background: color-mix(in srgb, var(--status-warning) 14%, transparent);
     border: 1px solid color-mix(in srgb, var(--status-warning) 45%, transparent);
-    border-radius: 8px; padding: 8px 12px; margin-bottom: 12px;
+    border-radius: 8px; padding: 9px 12px; margin-bottom: 12px;
   }
-  .edit-panel .edit-warning .mono { color: var(--text-primary); font-weight: 600; }
+  .edit-panel .edit-warning .mono {
+    color: var(--text-primary); font-weight: 600;
+    white-space: nowrap;  /* URLは途中改行させず、必要なら行頭へまとめて折り返す */
+  }
   .edit-form {
     display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; margin-bottom: 14px;
   }
