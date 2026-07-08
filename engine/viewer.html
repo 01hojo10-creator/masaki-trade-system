@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MTS新エンジン 公開ビューア</title>
+<style>
+  :root {
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --border:         rgba(11,11,11,0.10);
+    --border-strong:  #c3c2b7;
+
+    --dir-long:       #2a78d6;  /* diverging: 買い(LONG) */
+    --dir-short:      #e34948;  /* diverging: 売り(SHORT) */
+    --dir-neutral:    #898781;  /* neutral midpoint: 中立 */
+
+    --status-good:     #0ca30c; /* focus = 発注準備完了 */
+    --status-warning:  #fab219; /* watch = 条件待ち */
+    --status-critical: #d03b3b; /* excluded = 除外 */
+    --status-neutral:  #898781; /* pool = 監視 */
+
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface-1:      #1a1a19;
+      --page-plane:     #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --border:         rgba(255,255,255,0.10);
+      --border-strong:  #383835;
+
+      --dir-long:       #3987e5;
+      --dir-short:      #e66767;
+      --dir-neutral:    #898781;
+
+      --status-good:     #0ca30c;
+      --status-warning:  #fab219;
+      --status-critical: #d03b3b;
+      --status-neutral:  #898781;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--page-plane);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  body { padding: 16px; max-width: 1280px; margin: 0 auto; }
+
+  .banner {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+  }
+  .banner .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600;
+    padding: 3px 10px; border-radius: 999px;
+    background: color-mix(in srgb, var(--status-good) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--status-good) 45%, transparent);
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+  .banner .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--status-good); flex: none; }
+  .banner .pill.warn {
+    background: color-mix(in srgb, var(--status-warning) 16%, transparent);
+    border-color: color-mix(in srgb, var(--status-warning) 50%, transparent);
+  }
+  .banner .pill.warn .dot { background: var(--status-warning); }
+  .banner .pill.crit {
+    background: color-mix(in srgb, var(--status-critical) 14%, transparent);
+    border-color: color-mix(in srgb, var(--status-critical) 45%, transparent);
+  }
+  .banner .pill.crit .dot { background: var(--status-critical); }
+
+  h1 {
+    font-size: 18px; font-weight: 700; margin: 0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .titlewrap { display: flex; flex-direction: column; gap: 2px; margin-right: auto; }
+  .subtitle { font-size: 12px; color: var(--text-secondary); }
+
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+    font-size: 12px; color: var(--text-secondary);
+    margin-bottom: 14px;
+  }
+  .meta-row b { color: var(--text-primary); font-weight: 600; }
+  .meta-row .mono { font-family: var(--mono); }
+  #refreshBtn {
+    font: inherit; font-size: 12px; font-weight: 600;
+    background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid var(--border-strong); border-radius: 6px;
+    padding: 5px 12px; cursor: pointer;
+  }
+  #refreshBtn:hover { background: color-mix(in srgb, var(--dir-long) 10%, var(--surface-1)); }
+  #refreshBtn:active { transform: translateY(1px); }
+
+  .tiles {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px; margin-bottom: 18px;
+  }
+  .tile {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--tile-accent, var(--border-strong));
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .tile .tlabel {
+    font-size: 12px; color: var(--text-secondary); font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .tile .tlabel .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--tile-accent); flex: none; }
+  .tile .tvalue {
+    font-size: 30px; font-weight: 700; color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    margin-top: 2px;
+  }
+  .tile .tbreak {
+    font-size: 11px; color: var(--text-muted); margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .tile.tile-focus    { --tile-accent: var(--status-good); }
+  .tile.tile-watch    { --tile-accent: var(--status-warning); }
+  .tile.tile-pool     { --tile-accent: var(--status-neutral); }
+  .tile.tile-excluded { --tile-accent: var(--status-critical); }
+
+  section.card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+  }
+  section.card h2 {
+    font-size: 14px; font-weight: 700; margin: 0 0 10px 0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  section.card h2 .count-badge {
+    font-size: 11px; font-weight: 700; color: var(--text-secondary);
+    background: var(--page-plane); border: 1px solid var(--border);
+    border-radius: 999px; padding: 1px 9px;
+    font-variant-numeric: tabular-nums;
+  }
+  section.card .hint { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  thead th {
+    text-align: left; font-weight: 600; color: var(--text-muted);
+    font-size: 11px; text-transform: none;
+    padding: 6px 8px; border-bottom: 1px solid var(--gridline);
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 7px 8px; border-bottom: 1px solid var(--gridline);
+    vertical-align: top; font-variant-numeric: tabular-nums;
+  }
+  tbody tr:hover td { background: color-mix(in srgb, var(--dir-long) 5%, transparent); }
+  td.num { text-align: right; }
+  td.code { font-family: var(--mono); font-weight: 600; white-space: nowrap; }
+  td.name { white-space: nowrap; max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+  .table-scroll { overflow-x: auto; }
+
+  .dirbadge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11.5px; font-weight: 600; white-space: nowrap;
+  }
+  .dirbadge .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .dirbadge.dir-LONG .dot { background: var(--dir-long); }
+  .dirbadge.dir-SHORT .dot { background: var(--dir-short); }
+  .dirbadge.dir-NEUTRAL .dot { background: var(--dir-neutral); }
+
+  .stbadge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; white-space: nowrap;
+    padding: 2px 8px; border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+  }
+  .stbadge .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .stbadge.st-focus    { background: color-mix(in srgb, var(--status-good) 10%, transparent); }
+  .stbadge.st-focus .dot    { background: var(--status-good); }
+  .stbadge.st-watch     { background: color-mix(in srgb, var(--status-warning) 12%, transparent); }
+  .stbadge.st-watch .dot    { background: var(--status-warning); }
+  .stbadge.st-pool      { background: color-mix(in srgb, var(--status-neutral) 10%, transparent); }
+  .stbadge.st-pool .dot     { background: var(--status-neutral); }
+  .stbadge.st-excluded  { background: color-mix(in srgb, var(--status-critical) 10%, transparent); }
+  .stbadge.st-excluded .dot { background: var(--status-critical); }
+
+  .chart-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 600; white-space: nowrap;
+    padding: 3px 9px; border-radius: 6px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface-1); color: var(--text-primary);
+    text-decoration: none;
+  }
+  .chart-link:hover { background: color-mix(in srgb, var(--dir-long) 12%, var(--surface-1)); }
+
+  .hint-text { font-size: 11.5px; color: var(--text-secondary); }
+  .muted { color: var(--text-muted); }
+  .empty-state {
+    text-align: center; padding: 28px 10px; color: var(--text-muted); font-size: 13px;
+  }
+
+  #errorBanner {
+    display: none;
+    background: color-mix(in srgb, var(--status-critical) 10%, var(--surface-1));
+    border: 1px solid color-mix(in srgb, var(--status-critical) 40%, transparent);
+    border-radius: 10px;
+    padding: 12px 14px; margin-bottom: 14px;
+    font-size: 12.5px;
+  }
+  #errorBanner b { color: var(--status-critical); }
+  #errorBanner details { margin-top: 8px; }
+  #errorBanner summary { cursor: pointer; font-weight: 600; color: var(--text-primary); }
+  #errorBanner ol { margin: 8px 0 0 18px; padding: 0; }
+  #errorBanner code {
+    font-family: var(--mono); background: var(--page-plane);
+    padding: 1px 5px; border-radius: 4px; border: 1px solid var(--border);
+  }
+
+  footer {
+    font-size: 11px; color: var(--text-muted); text-align: center;
+    padding: 14px 0 4px;
+  }
+
+  ::-webkit-scrollbar { height: 8px; width: 8px; }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+  <div class="banner">
+    <div class="titlewrap">
+      <h1>MTS新エンジン 公開ビューア</h1>
+      <div class="subtitle">GitHub Pages 公開スナップショット（約5分毎更新・読取専用）</div>
+    </div>
+    <span class="pill" id="connPill"><span class="dot"></span><span id="connText">接続確認中…</span></span>
+    <button id="refreshBtn" type="button">今すぐ更新</button>
+  </div>
+
+  <div id="errorBanner">
+    <div><b>取得エラー:</b> <span id="errorMsg"></span></div>
+    <details>
+      <summary>接続できない場合の対処（file:// で直接開いている場合など）</summary>
+      <ol>
+        <li>まず <code>http://127.0.0.1:8787/health</code> をブラウザで直接開き、bridge が応答するか確認してください。</li>
+        <li>bridge は動いているのに本ページだけ取得できない場合、ブラウザが <code>file://</code> ページからのネットワーク取得を制限している可能性があります。
+          その場合は本ファイルを直接開く代わりに、<code>MTS-Engine</code> フォルダ内で下記コマンドを実行し、
+          表示されたURL（<code>http://127.0.0.1:8790/viewer.html</code> 等）をブラウザで開いてください
+          （bridge本体・ポート8787には一切触れません。閲覧専用の簡易サーバです）:
+          <br><code>python -m http.server 8790</code></li>
+        <li>それでも解決しない場合は、bridge が別ポートで起動していないか（既定 <code>127.0.0.1:8787</code>）を確認してください。</li>
+      </ol>
+    </details>
+  </div>
+
+  <div class="meta-row">
+    <span>更新時刻: <b id="mUpdated">—</b></span>
+    <span>runId: <b class="mono" id="mRunId">—</b></span>
+    <span>marketDate: <b id="mMarketDate">—</b></span>
+    <span>スキャン: <b id="mScan">—</b></span>
+    <span>次回自動更新まで: <b id="mCountdown">—</b></span>
+  </div>
+
+  <div class="tiles">
+    <div class="tile tile-focus">
+      <div class="tlabel"><span class="dot"></span>Focus（発注準備完了）</div>
+      <div class="tvalue" id="tFocus">—</div>
+      <div class="tbreak" id="tFocusBreak">—</div>
+    </div>
+    <div class="tile tile-watch">
+      <div class="tlabel"><span class="dot"></span>Watch（条件待ち）</div>
+      <div class="tvalue" id="tWatch">—</div>
+      <div class="tbreak" id="tWatchBreak">—</div>
+    </div>
+    <div class="tile tile-pool">
+      <div class="tlabel"><span class="dot"></span>Pool（監視）</div>
+      <div class="tvalue" id="tPool">—</div>
+      <div class="tbreak" id="tPoolBreak">—</div>
+    </div>
+    <div class="tile tile-excluded">
+      <div class="tlabel"><span class="dot"></span>Excluded（除外）</div>
+      <div class="tvalue" id="tExcluded">—</div>
+      <div class="tbreak" id="tExcludedBreak">—</div>
+    </div>
+  </div>
+
+  <section class="card">
+    <h2>Focus 詳細 <span class="count-badge" id="focusCount">0件</span></h2>
+    <div class="hint">発注準備が完了した銘柄（全ゲート通過・スコア順位内）。entry / SL / TP はすべて算出済み。</div>
+    <div class="table-scroll">
+      <table id="focusTable">
+        <thead><tr>
+          <th>#</th><th>銘柄</th><th>方向</th><th>状態</th>
+          <th class="num">Entry</th><th class="num">SL</th><th class="num">TP1</th><th class="num">TP2</th><th class="num">TP3</th>
+          <th class="num">RR</th><th class="num">Risk%</th><th class="num">Reward%</th><th class="num">株数</th><th>チャート</th>
+        </tr></thead>
+        <tbody id="focusBody"></tbody>
+      </table>
+    </div>
+    <div class="empty-state" id="focusEmpty" style="display:none;">現在 Focus 対象はありません（市場状況により変動します）</div>
+  </section>
+
+  <section class="card">
+    <h2>Watch 上位20（スコア順） <span class="count-badge" id="watchCount">0件</span></h2>
+    <div class="hint">条件待ちの銘柄。昇格条件（あと何が揃えばFocusになるか）を表示。</div>
+    <div class="table-scroll">
+      <table id="watchTable">
+        <thead><tr>
+          <th>#</th><th>銘柄</th><th>方向</th><th class="num">スコア</th><th>状態</th><th>昇格条件</th><th>チャート</th>
+        </tr></thead>
+        <tbody id="watchBody"></tbody>
+      </table>
+    </div>
+    <div class="empty-state" id="watchEmpty" style="display:none;">Watch 対象はありません</div>
+  </section>
+
+  <section class="card">
+    <h2>Pool / Excluded 内訳</h2>
+    <div class="hint">監視対象・除外銘柄の理由別内訳（件数）。</div>
+    <div id="poolExcludedSummary" style="font-size:12.5px;"></div>
+  </section>
+
+  <footer>
+    このページは同ディレクトリの <span class="mono">latest.json</span>(公開スナップショット)を読むだけです。60秒毎に自動更新します。
+  </footer>
+
+<script>
+(function () {
+  "use strict";
+
+  const BRIDGE_URL = () => "./latest.json?cb=" + Date.now();
+  const REFRESH_MS = 60000;
+
+  const $ = (id) => document.getElementById(id);
+
+  let countdownRemaining = REFRESH_MS / 1000;
+  let countdownTimer = null;
+
+  function fmtNum(v, digits) {
+    if (v === null || v === undefined || v === "" || Number.isNaN(Number(v))) return "—";
+    const n = Number(v);
+    return n.toLocaleString("ja-JP", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  }
+  function fmtPrice(v) { return v === null || v === undefined ? "—" : "¥" + fmtNum(v, 1); }
+  function fmtPct(v) { return v === null || v === undefined ? "—" : fmtNum(v, 2) + "%"; }
+  function esc(s) {
+    return String(s === null || s === undefined ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  function relTime(iso) {
+    if (!iso) return "—";
+    const t = new Date(iso).getTime();
+    if (Number.isNaN(t)) return iso;
+    const sec = Math.max(0, Math.floor((Date.now() - t) / 1000));
+    if (sec < 60) return sec + "秒前";
+    if (sec < 3600) return Math.floor(sec / 60) + "分前";
+    return Math.floor(sec / 3600) + "時間" + Math.floor((sec % 3600) / 60) + "分前";
+  }
+
+  function dirBadge(dir, label) {
+    const d = dir || "NEUTRAL";
+    return `<span class="dirbadge dir-${esc(d)}"><span class="dot"></span>${esc(label || d)}</span>`;
+  }
+  function stateBadge(cls, label) {
+    const c = (cls || "pool").toLowerCase();
+    return `<span class="stbadge st-${esc(c)}"><span class="dot"></span>${esc(label || cls)}</span>`;
+  }
+
+  // TradingView チャートへの静的リンク（東証 = TSE:{code}。英字混在コード 186A 等も同形式で解決確認済み）
+  function chartLink(code) {
+    if (!code) return "";
+    const url = "https://www.tradingview.com/chart/?symbol=TSE:" + encodeURIComponent(code);
+    return `<a class="chart-link" href="${url}" target="_blank" rel="noopener noreferrer">📈 TV</a>`;
+  }
+
+  function directionBreakdown(rows) {
+    let L = 0, S = 0, N = 0;
+    for (const r of rows) {
+      const d = r.tradeDirection;
+      if (d === "LONG") L++; else if (d === "SHORT") S++; else N++;
+    }
+    return `買い${L} / 売り${S} / 中立${N}`;
+  }
+
+  function renderFocus(rows) {
+    $("focusCount").textContent = rows.length + "件";
+    const body = $("focusBody");
+    if (!rows.length) {
+      body.innerHTML = "";
+      $("focusTable").style.display = "none";
+      $("focusEmpty").style.display = "block";
+      return;
+    }
+    $("focusTable").style.display = "table";
+    $("focusEmpty").style.display = "none";
+    const sorted = [...rows].sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+    body.innerHTML = sorted.map((r) => `
+      <tr>
+        <td>${esc(r.rank ?? "")}</td>
+        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div></td>
+        <td>${dirBadge(r.tradeDirection, r.directionLabel)}</td>
+        <td>${stateBadge(r.stateClassification, r.stateLabel)}</td>
+        <td class="num">${fmtPrice(r.entry)}</td>
+        <td class="num">${fmtPrice(r.sl)}</td>
+        <td class="num">${fmtPrice(r.tp1 ?? r.tp)}</td>
+        <td class="num">${fmtPrice(r.tp2)}</td>
+        <td class="num">${fmtPrice(r.tp3)}</td>
+        <td class="num">${fmtNum(r.rr, 2)}</td>
+        <td class="num">${fmtPct(r.riskPercent)}</td>
+        <td class="num">${fmtPct(r.rewardPercent)}</td>
+        <td class="num">${r.shares != null ? r.shares.toLocaleString("ja-JP") : "—"}</td>
+        <td>${chartLink(r.code)}</td>
+      </tr>`).join("");
+  }
+
+  function renderWatch(rows) {
+    $("watchCount").textContent = rows.length + "件";
+    const body = $("watchBody");
+    if (!rows.length) {
+      body.innerHTML = "";
+      $("watchTable").style.display = "none";
+      $("watchEmpty").style.display = "block";
+      return;
+    }
+    $("watchTable").style.display = "table";
+    $("watchEmpty").style.display = "none";
+    const top = [...rows].sort((a, b) => (b.score ?? 0) - (a.score ?? 0)).slice(0, 20);
+    body.innerHTML = top.map((r, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div></td>
+        <td>${dirBadge(r.tradeDirection, r.directionLabel)}</td>
+        <td class="num">${fmtNum(r.score, 1)}</td>
+        <td>${stateBadge(r.stateClassification, r.stateLabel)}</td>
+        <td class="hint-text">${esc(r.promotionHint || r.finalActionLabel || "")}</td>
+        <td>${chartLink(r.code)}</td>
+      </tr>`).join("");
+  }
+
+  function renderPoolExcluded(pool, excluded) {
+    function reasonCounts(rows) {
+      const m = new Map();
+      for (const r of rows) {
+        const k = r.reason || r.stateClassification || "(不明)";
+        m.set(k, (m.get(k) || 0) + 1);
+      }
+      return [...m.entries()].sort((a, b) => b[1] - a[1]);
+    }
+    const poolReasons = reasonCounts(pool);
+    const exReasons = reasonCounts(excluded);
+    function list(title, badgeClass, arr, total) {
+      if (!arr.length) return `<div class="hint-text">${esc(title)}: なし</div>`;
+      const items = arr.map(([k, n]) => `<span class="stbadge st-${badgeClass}"><span class="dot"></span>${esc(k)} ${n}</span>`).join(" ");
+      return `<div style="margin-bottom:8px;"><b>${esc(title)}（計${total}件）:</b><br><div style="margin-top:4px; display:flex; flex-wrap:wrap; gap:6px;">${items}</div></div>`;
+    }
+    $("poolExcludedSummary").innerHTML =
+      list("Pool 理由内訳", "pool", poolReasons, pool.length) +
+      list("Excluded 理由内訳", "excluded", exReasons, excluded.length);
+  }
+
+  function render(data) {
+    $("mUpdated").textContent = relTime(data.timestamp) + "（" + data.timestamp + "）";
+    $("mRunId").textContent = data.runId || "—";
+    $("mMarketDate").textContent = data.marketDate || "—";
+    const scan = data.scan || {};
+    $("mScan").textContent = `${scan.current ?? "?"}/${scan.total ?? "?"} 銘柄 ・ ${scan.complete ? "完了" : (scan.active ? "進行中" : "未完了")}`;
+
+    const focus = data.focus || [], watch = data.watch || [], pool = data.pool || [], excluded = data.excluded || [];
+
+    $("tFocus").textContent = focus.length;
+    $("tWatch").textContent = watch.length;
+    $("tPool").textContent = pool.length;
+    $("tExcluded").textContent = excluded.length;
+    $("tFocusBreak").textContent = directionBreakdown(focus);
+    $("tWatchBreak").textContent = directionBreakdown(watch);
+    $("tPoolBreak").textContent = directionBreakdown(pool);
+    $("tExcludedBreak").textContent = directionBreakdown(excluded);
+
+    renderFocus(focus);
+    renderWatch(watch);
+    renderPoolExcluded(pool, excluded);
+  }
+
+  function setConnected(ok, msg) {
+    const pill = $("connPill"), text = $("connText"), err = $("errorBanner");
+    if (ok) {
+      pill.className = "pill";
+      text.textContent = "取得OK（公開スナップショット）";
+      err.style.display = "none";
+    } else {
+      pill.className = "pill crit";
+      text.textContent = "接続エラー";
+      $("errorMsg").textContent = msg || "不明なエラー";
+      err.style.display = "block";
+    }
+  }
+
+  async function fetchLatest() {
+    try {
+      const res = await fetch(BRIDGE_URL(), { method: "GET", cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status + " " + res.statusText);
+      const data = await res.json();
+      render(data);
+      setConnected(true);
+    } catch (e) {
+      setConnected(false, e && e.message ? e.message : String(e));
+    } finally {
+      countdownRemaining = REFRESH_MS / 1000;
+    }
+  }
+
+  function tickCountdown() {
+    countdownRemaining = Math.max(0, countdownRemaining - 1);
+    $("mCountdown").textContent = countdownRemaining + "秒";
+  }
+
+  $("refreshBtn").addEventListener("click", fetchLatest);
+
+  fetchLatest();
+  setInterval(fetchLatest, REFRESH_MS);
+  countdownTimer = setInterval(tickCountdown, 1000);
+})();
+</script>
+</body>
+</html>
