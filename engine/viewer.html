@@ -117,6 +117,15 @@
   }
   .meta-row b { color: var(--text-primary); font-weight: 600; }
   .meta-row .mono { font-family: var(--mono); }
+  /* 成績レポート(MTS-Eval)へのリンク。ローカル=viewer.html隣のreport.htmlコピー、
+     公開版=Pagesの engine/report.html を同じ相対パス ./report.html で解決する */
+  .report-link {
+    font: inherit; font-size: 12px; font-weight: 600;
+    background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid var(--border-strong); border-radius: 6px;
+    padding: 5px 12px; text-decoration: none; white-space: nowrap;
+  }
+  .report-link:hover { background: color-mix(in srgb, var(--status-good) 10%, var(--surface-1)); }
   #refreshBtn {
     font: inherit; font-size: 12px; font-weight: 600;
     background: var(--surface-1); color: var(--text-primary);
@@ -355,6 +364,7 @@
       <div class="subtitle">GitHub Pages 公開スナップショット（約5分毎更新・読取専用）</div>
     </div>
     <span class="pill" id="connPill"><span class="dot"></span><span id="connText">接続確認中…</span></span>
+    <a class="report-link" href="./report.html" target="_blank" rel="noopener noreferrer">📊 成績レポート</a>
     <button id="refreshBtn" type="button">今すぐ更新</button>
   </div>
 
