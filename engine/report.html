@@ -96,40 +96,53 @@ footer { font-size:11px; color:var(--text-muted); text-align:center; padding:14p
 }
 </style></head><body>
 <h1>MTS-Eval 成績レポート</h1>
-<div class="subtitle">生成 2026-07-10 13:34:19 ／ 評価対象スナップショット: 2026-07-07, 2026-07-08, 2026-07-09 ／ 区分: Focus + Watch<br>
+<div class="subtitle">生成 2026-07-10 14:08:27 ／ 評価対象スナップショット: 2026-07-07, 2026-07-08, 2026-07-09 ／ 区分: Focus + Watch<br>
 勝率 = WIN/(WIN+LOSS)、約定率 = 約定/評価可（数値プランあり）、平均リターン = WIN/LOSS/未決の平均</div>
 
 <div class="tiles">
-  <div class="tile t-rate"><div class="tlabel"><span class="dot"></span>勝率（5日）</div>
-    <div class="tvalue">44.8%</div>
-    <div class="tbreak">確定 268 件（WIN+LOSS）</div></div>
-  <div class="tile t-loss"><div class="tlabel"><span class="dot"></span>累計損益（5日・確定）</div>
-    <div class="tvalue pnl-neg" style="font-size:26px;">-1,147,527円</div>
-    <div class="tbreak">確定268件（一律100株）</div></div>
-  <div class="tile t-win"><div class="tlabel"><span class="dot"></span>WIN（5日）</div>
-    <div class="tvalue">120</div><div class="tbreak">TP先到達</div></div>
-  <div class="tile t-loss"><div class="tlabel"><span class="dot"></span>LOSS（5日）</div>
-    <div class="tvalue">148</div><div class="tbreak">SL先到達</div></div>
-  <div class="tile t-pend"><div class="tlabel"><span class="dot"></span>PENDING（5日）</div>
-    <div class="tvalue">391</div><div class="tbreak">営業日不足・後日確定</div></div>
-  <div class="tile t-ret"><div class="tlabel"><span class="dot"></span>平均リターン（5日）</div>
-    <div class="tvalue">-0.56%</div>
+  <div class="tile t-rate"><div class="tlabel"><span class="dot"></span>focus 勝率（5日）</div>
+    <div class="tvalue">0.0%</div>
+    <div class="tbreak"><span style='color:var(--status-warning)'>まだ1件（統計的評価には20件以上必要）</span></div></div>
+  <div class="tile t-loss"><div class="tlabel"><span class="dot"></span>focus 累計損益（5日・確定）</div>
+    <div class="tvalue pnl-neg" style="font-size:26px;">-15,955円</div>
+    <div class="tbreak">確定1件（一律100株）</div></div>
+  <div class="tile t-win"><div class="tlabel"><span class="dot"></span>focus WIN（5日）</div>
+    <div class="tvalue">0</div><div class="tbreak">TP先到達</div></div>
+  <div class="tile t-loss"><div class="tlabel"><span class="dot"></span>focus LOSS（5日）</div>
+    <div class="tvalue">1</div><div class="tbreak">SL先到達</div></div>
+  <div class="tile t-pend"><div class="tlabel"><span class="dot"></span>focus PENDING（5日）</div>
+    <div class="tvalue">1</div><div class="tbreak">営業日不足・後日確定</div></div>
+  <div class="tile t-ret"><div class="tlabel"><span class="dot"></span>focus 平均リターン（5日）</div>
+    <div class="tvalue">-2.74%</div>
     <div class="tbreak">WIN/LOSS/未決の平均</div></div>
-  <div class="tile t-rr"><div class="tlabel"><span class="dot"></span>平均RR（計画）</div>
-    <div class="tvalue">0.65</div>
-    <div class="tbreak">数値プラン 676 件</div></div>
+  <div class="tile t-rr"><div class="tlabel"><span class="dot"></span>focus 平均RR（計画）</div>
+    <div class="tvalue">0.40</div>
+    <div class="tbreak">focus数値プラン 8 件</div></div>
 </div>
 <div class="sim-note">💰 <b>金額損益はシミュレーション</b>: 全銘柄一律 <b>100株</b> で建てた場合の円建て損益です（シンプルな実力比較のため株数を固定）。
 手数料・スリッページ・実約定価格は含みません。</div>
 <section class='card'><h2>1日評価（focus / watch 別）</h2><div class='table-scroll'><table><thead><tr><th>区分</th><th class='num'>評価可</th><th class='num'>約定</th><th class='num'>WIN</th><th class='num'>LOSS</th><th class='num'>未決</th><th class='num'>不約定</th><th class='num'>PENDING</th><th class='num'>計画なし</th><th class='num'>勝率</th><th class='num'>約定率</th><th class='num'>平均リターン</th></tr></thead><tbody><tr><td>focus</td><td class='num'>2</td><td class='num'>1</td><td class='num'>0</td><td class='num'>0</td><td class='num'>1</td><td class='num'>1</td><td class='num'>0</td><td class='num'>6</td><td class='num'>-</td><td class='num'>50.0%</td><td class='num'>1.13%</td></tr><tr><td>watch</td><td class='num'>657</td><td class='num'>339</td><td class='num'>92</td><td class='num'>108</td><td class='num'>139</td><td class='num'>318</td><td class='num'>0</td><td class='num'>11</td><td class='num'>46.0%</td><td class='num'>51.6%</td><td class='num'>-0.47%</td></tr><tr class='r-all'><td>ALL</td><td class='num'>659</td><td class='num'>340</td><td class='num'>92</td><td class='num'>108</td><td class='num'>140</td><td class='num'>319</td><td class='num'>0</td><td class='num'>17</td><td class='num'>46.0%</td><td class='num'>51.6%</td><td class='num'>-0.46%</td></tr></tbody></table></div></section><section class='card'><h2>3日評価（focus / watch 別）</h2><div class='table-scroll'><table><thead><tr><th>区分</th><th class='num'>評価可</th><th class='num'>約定</th><th class='num'>WIN</th><th class='num'>LOSS</th><th class='num'>未決</th><th class='num'>不約定</th><th class='num'>PENDING</th><th class='num'>計画なし</th><th class='num'>勝率</th><th class='num'>約定率</th><th class='num'>平均リターン</th></tr></thead><tbody><tr><td>focus</td><td class='num'>2</td><td class='num'>1</td><td class='num'>0</td><td class='num'>1</td><td class='num'>0</td><td class='num'>0</td><td class='num'>1</td><td class='num'>6</td><td class='num'>0.0%</td><td class='num'>50.0%</td><td class='num'>-2.74%</td></tr><tr><td>watch</td><td class='num'>657</td><td class='num'>268</td><td class='num'>120</td><td class='num'>147</td><td class='num'>1</td><td class='num'>1</td><td class='num'>388</td><td class='num'>11</td><td class='num'>44.9%</td><td class='num'>40.8%</td><td class='num'>-0.55%</td></tr><tr class='r-all'><td>ALL</td><td class='num'>659</td><td class='num'>269</td><td class='num'>120</td><td class='num'>148</td><td class='num'>1</td><td class='num'>1</td><td class='num'>389</td><td class='num'>17</td><td class='num'>44.8%</td><td class='num'>40.8%</td><td class='num'>-0.56%</td></tr></tbody></table></div></section><section class='card'><h2>5日評価（focus / watch 別）</h2><div class='table-scroll'><table><thead><tr><th>区分</th><th class='num'>評価可</th><th class='num'>約定</th><th class='num'>WIN</th><th class='num'>LOSS</th><th class='num'>未決</th><th class='num'>不約定</th><th class='num'>PENDING</th><th class='num'>計画なし</th><th class='num'>勝率</th><th class='num'>約定率</th><th class='num'>平均リターン</th></tr></thead><tbody><tr><td>focus</td><td class='num'>2</td><td class='num'>1</td><td class='num'>0</td><td class='num'>1</td><td class='num'>0</td><td class='num'>0</td><td class='num'>1</td><td class='num'>6</td><td class='num'>0.0%</td><td class='num'>50.0%</td><td class='num'>-2.74%</td></tr><tr><td>watch</td><td class='num'>657</td><td class='num'>267</td><td class='num'>120</td><td class='num'>147</td><td class='num'>0</td><td class='num'>0</td><td class='num'>390</td><td class='num'>11</td><td class='num'>44.9%</td><td class='num'>40.6%</td><td class='num'>-0.55%</td></tr><tr class='r-all'><td>ALL</td><td class='num'>659</td><td class='num'>268</td><td class='num'>120</td><td class='num'>148</td><td class='num'>0</td><td class='num'>0</td><td class='num'>391</td><td class='num'>17</td><td class='num'>44.8%</td><td class='num'>40.7%</td><td class='num'>-0.56%</td></tr></tbody></table></div></section>
-<section class='card'><h2>日別 Focus 件数推移・確定損益</h2><div class='table-scroll'><table><thead><tr><th>marketDate</th><th class='num'>focus</th><th></th><th class='num'>watch</th><th class='num'>確定損益（5日・100株）</th></tr></thead><tbody><tr><td>2026-07-07</td><td class='num'>6</td><td><span class='bar' style='width:160px'></span></td><td class='num'>15</td><td class='num'><span class='pnl-neg'>-13,037円</span>（2件）</td></tr><tr><td>2026-07-08</td><td class='num'>1</td><td><span class='bar' style='width:27px'></span></td><td class='num'>364</td><td class='num'><span class='pnl-neg'>-992,306円</span>（164件）</td></tr><tr><td>2026-07-09</td><td class='num'>1</td><td><span class='bar' style='width:27px'></span></td><td class='num'>289</td><td class='num'><span class='pnl-neg'>-142,184円</span>（102件）</td></tr></tbody></table></div></section>
-<section class='card'><h2>経過日数別 平均損益カーブ（全エントリー・100株）</h2><div class='hint'>★ 平均が最大なのは <b>3日目（-7,438円）</b>。終値ベースの評価損益(確定後は確定値で固定)・最大10営業日・一律100株。</div><div class='table-scroll'><table><thead><tr><th>経過</th><th class='num'>平均損益</th><th></th><th class='num'>対象件数</th></tr></thead><tbody><tr><td>1日目</td><td class='num'><span class='pnl-neg'>-13,310円</span></td><td><span class='bar-neg' style='width:102px'></span></td><td class='num'>659</td></tr><tr><td>2日目</td><td class='num'><span class='pnl-neg'>-20,802円</span></td><td><span class='bar-neg' style='width:160px'></span></td><td class='num'>369</td></tr><tr><td>3日目 ★</td><td class='num'><span class='pnl-neg'>-7,438円</span></td><td><span class='bar-neg' style='width:57px'></span></td><td class='num'>4</td></tr></tbody></table></div></section>
+<section class='card'><h2>日別 Focus 件数推移・確定損益</h2><div class='table-scroll'><table><thead><tr><th>marketDate</th><th class='num'>focus</th><th></th><th class='num'>watch</th><th class='num'>確定損益（focus・5日・100株）</th></tr></thead><tbody><tr><td>2026-07-07</td><td class='num'>6</td><td><span class='bar' style='width:160px'></span></td><td class='num'>15</td><td class='num'><span style='color:var(--text-muted)'>確定なし</span></td></tr><tr><td>2026-07-08</td><td class='num'>1</td><td><span class='bar' style='width:27px'></span></td><td class='num'>364</td><td class='num'><span class='pnl-neg'>-15,955円</span>（1件）</td></tr><tr><td>2026-07-09</td><td class='num'>1</td><td><span class='bar' style='width:27px'></span></td><td class='num'>289</td><td class='num'><span style='color:var(--text-muted)'>確定なし</span></td></tr></tbody></table></div></section>
+
+<section class="card">
+  <h2>参考: watch全件を建てた場合（エンジンが見送った候補の挙動）</h2>
+  <div class="hint">watchは昇格条件が未成立の候補（教師データとして収集継続）。エンジンの実エントリー対象は
+  focus のみで、以下はエンジンの成績ではありません。</div>
+  <div style="font-size:13px; font-variant-numeric:tabular-nums;">
+    確定 <b>267</b>件（WIN 120 / LOSS 147）・
+    勝率 <b>44.9%</b>・
+    累計損益 <span class="pnl-neg">-1,131,572円</span>・
+    平均リターン -0.55%
+    （5日・一律100株）
+  </div>
+</section>
+<section class='card'><h2>参考: 経過日数別 平均損益カーブ（focus+watch全件・100株）</h2><div class='hint'>★ 平均が最大なのは <b>3日目（-7,438円）</b>。終値ベースの評価損益(確定後は確定値で固定)・最大10営業日・一律100株。</div><div class='table-scroll'><table><thead><tr><th>経過</th><th class='num'>平均損益</th><th></th><th class='num'>対象件数</th></tr></thead><tbody><tr><td>1日目</td><td class='num'><span class='pnl-neg'>-13,310円</span></td><td><span class='bar-neg' style='width:102px'></span></td><td class='num'>659</td></tr><tr><td>2日目</td><td class='num'><span class='pnl-neg'>-20,802円</span></td><td><span class='bar-neg' style='width:160px'></span></td><td class='num'>369</td></tr><tr><td>3日目 ★</td><td class='num'><span class='pnl-neg'>-7,438円</span></td><td><span class='bar-neg' style='width:57px'></span></td><td class='num'>4</td></tr></tbody></table></div></section>
 
 <section class="card">
   <h2>銘柄別 結果明細 <span style="font-size:11px;color:var(--text-muted);font-weight:400">(676 エントリー)</span></h2>
   <div class="hint">判定: 約定フィルタ+TP/SL先到達（同日両接触は sl_first）。確定日・リターンは 5日評価のもの。</div>
   <div class="filters">
-    <select id="fSec"><option value="">区分: 全て</option><option value="focus">focus</option><option value="watch">watch</option></select>
+    <select id="fSec"><option value="focus" selected>区分: focus</option><option value="">区分: 全て</option><option value="watch">watch</option></select>
     <select id="fOc"><option value="">判定(5日): 全て</option>
       <option>WIN</option><option>LOSS</option><option>UNDECIDED</option>
       <option>NOFILL</option><option>PENDING</option><option>NOPLAN</option></select>
@@ -159,6 +172,7 @@ MTS側ファイルは読み取り専用で、本ツールは MTS-Eval 配下（h
     }
   }
   fSec.onchange=fOc.onchange=apply; fTx.oninput=apply;
+  apply();  // 初期表示はfocusのみ(エンジンの実エントリー候補)
 })();
 </script>
 </body></html>
