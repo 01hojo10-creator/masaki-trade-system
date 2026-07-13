@@ -123,9 +123,11 @@
     font: inherit; font-size: 12px; font-weight: 600;
     background: var(--surface-1); color: var(--text-primary);
     border: 1px solid var(--border-strong); border-radius: 6px;
-    padding: 5px 12px; text-decoration: none; white-space: nowrap;
+    padding: 5px 12px; text-decoration: none; white-space: nowrap; cursor: pointer;
   }
   .report-link:hover { background: color-mix(in srgb, var(--status-good) 10%, var(--surface-1)); }
+  .report-link:disabled { opacity: .65; cursor: wait; }
+  #reportStatus { min-width: 0; font-size: 11px; color: var(--text-secondary); }
   #refreshBtn {
     font: inherit; font-size: 12px; font-weight: 600;
     background: var(--surface-1); color: var(--text-primary);
@@ -364,7 +366,8 @@
       <div class="subtitle">GitHub Pages 公開スナップショット（約5分毎更新・読取専用）</div>
     </div>
     <span class="pill" id="connPill"><span class="dot"></span><span id="connText">接続確認中…</span></span>
-    <a class="report-link" href="./report.html" target="_blank" rel="noopener noreferrer">📊 成績レポート</a>
+    <button class="report-link" id="reportBtn" type="button">📊 成績レポート</button>
+    <span id="reportStatus" aria-live="polite"></span>
     <button id="refreshBtn" type="button">今すぐ更新</button>
   </div>
 
@@ -486,7 +489,8 @@
 
   <footer>
     このページの自動更新・表示セクションは <span class="mono">GET http://127.0.0.1:8787/masaki-radar-latest.json</span>
-    のみを行います（30秒毎）。上記「銘柄管理」パネルのみ、明示的な操作時に別ポート(8796)へPOST/DELETEを行います。
+    のみを行います（30秒毎）。「成績レポート」はローカル閲覧時だけ評価開始をPOSTし、公開版では既存レポートを開きます。
+    上記「銘柄管理」パネルのみ、明示的な操作時に別ポート(8796)へPOST/DELETEを行います。
   </footer>
 
 <script>
@@ -494,6 +498,9 @@
   "use strict";
 
   const BRIDGE_URL = () => "./latest.json?cb=" + Date.now();
+  const REPORT_URL = "./report.html";
+  const REPORT_TRIGGER_URL = "http://127.0.0.1:8787/mts-eval/trigger";
+  const REPORT_STATUS_URL = "http://127.0.0.1:8787/mts-eval/status";
   const REFRESH_MS = 60000;
 
   const $ = (id) => document.getElementById(id);
@@ -680,6 +687,55 @@
   }
 
   $("refreshBtn").addEventListener("click", fetchLatest);
+
+  function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+  function showReport(tab) {
+    const url = REPORT_URL + "?cb=" + Date.now();
+    if (tab && !tab.closed) tab.location.replace(url);
+    else window.open(url, "_blank", "noopener,noreferrer");
+  }
+  async function waitForReport(jobId) {
+    for (let attempt = 0; attempt < 300; attempt += 1) {
+      await sleep(2000);
+      const res = await fetch(REPORT_STATUS_URL + "?jobId=" + encodeURIComponent(jobId || ""), { cache: "no-store" });
+      if (!res.ok) throw new Error("status HTTP " + res.status);
+      const data = await res.json();
+      if (data.status === "completed") return data;
+      if (data.status === "failed") throw new Error(data.message || "evaluation failed");
+    }
+    throw new Error("evaluation timeout");
+  }
+  async function updateReport() {
+    const btn = $("reportBtn");
+    const status = $("reportStatus");
+    const tab = window.open("about:blank", "_blank");
+    if (tab) {
+      tab.document.title = "成績レポート更新中";
+      tab.document.body.textContent = "成績レポートを更新しています…";
+    }
+    btn.disabled = true;
+    status.textContent = "更新確認中…";
+    let triggerAccepted = false;
+    try {
+      const res = await fetch(REPORT_TRIGGER_URL, { method: "POST", cache: "no-store" });
+      const data = await res.json();
+      if (!res.ok && res.status !== 409) throw new Error("trigger HTTP " + res.status);
+      triggerAccepted = true;
+      status.textContent = "更新中…数分で反映";
+      await waitForReport(data.jobId);
+      status.textContent = "更新完了";
+      showReport(tab);
+    } catch (error) {
+      status.textContent = triggerAccepted
+        ? "評価更新に失敗したため既存レポートを表示"
+        : "ローカル評価に接続できないため既存レポートを表示";
+      showReport(tab);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  $("reportBtn").addEventListener("click", updateReport);
 
   fetchLatest();
   setInterval(fetchLatest, REFRESH_MS);
