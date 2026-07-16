@@ -248,6 +248,31 @@
   .stbadge.st-excluded  { background: color-mix(in srgb, var(--status-critical) 10%, transparent); }
   .stbadge.st-excluded .dot { background: var(--status-critical); }
 
+  .diag-wrap { min-width: 145px; max-width: 230px; }
+  .diagbadge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 700; white-space: nowrap;
+    padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border);
+  }
+  .diagbadge .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .diag-tailwind { background: color-mix(in srgb, var(--status-good) 12%, transparent); }
+  .diag-tailwind .dot { background: var(--status-good); }
+  .diag-headwind { background: color-mix(in srgb, var(--status-critical) 12%, transparent); }
+  .diag-headwind .dot { background: var(--status-critical); }
+  .diag-mixed { background: color-mix(in srgb, var(--status-warning) 14%, transparent); }
+  .diag-mixed .dot { background: var(--status-warning); }
+  .diag-theme { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+  .diag-theme .dot { background: var(--accent); }
+  .diag-neutral, .diag-na, .diag-missing {
+    background: color-mix(in srgb, var(--status-neutral) 10%, transparent);
+  }
+  .diag-neutral .dot, .diag-na .dot, .diag-missing .dot { background: var(--status-neutral); }
+  .diag-review { background: color-mix(in srgb, var(--status-warning) 14%, transparent); }
+  .diag-review .dot { background: var(--status-warning); }
+  .diag-detail { margin-top: 3px; color: var(--text-muted); font-size: 10.5px; }
+  .diag-detail summary { cursor: pointer; user-select: none; }
+  .diag-detail div { margin-top: 2px; white-space: normal; }
+
   .chart-link {
     display: inline-flex; align-items: center; gap: 4px;
     font-size: 11px; font-weight: 600; white-space: nowrap;
@@ -426,7 +451,7 @@
         <thead><tr>
           <th>#</th><th>銘柄</th><th>方向</th><th>状態</th>
           <th class="num">Entry</th><th class="num">SL</th><th class="num">TP1</th><th class="num">TP2</th><th class="num">TP3</th>
-          <th class="num">RR</th><th class="num">Risk%</th><th class="num">Reward%</th><th class="num">株数</th><th>チャート</th>
+          <th class="num">RR</th><th class="num">Risk%</th><th class="num">Reward%</th><th class="num">株数</th><th>ファンダ/材料</th><th>チャート</th>
         </tr></thead>
         <tbody id="focusBody"></tbody>
       </table>
@@ -538,6 +563,61 @@
     return `<span class="stbadge st-${esc(c)}"><span class="dot"></span>${esc(label || cls)}</span>`;
   }
 
+  function fundamentalNewsCell(diag) {
+    if (!diag || typeof diag !== "object") {
+      return `<div class="diag-wrap"><span class="diagbadge diag-missing"><span class="dot"></span>未診断</span></div>`;
+    }
+    const advice = (diag.advisory && typeof diag.advisory === "object") ? diag.advisory : {};
+    const classByCode = {
+      TAILWIND: "diag-tailwind",
+      HEADWIND: "diag-headwind",
+      MIXED_CONTEXT: "diag-mixed",
+      THEME_ONLY: "diag-theme",
+      NO_MATERIAL_SIGNAL: "diag-neutral",
+      NOT_APPLICABLE: "diag-na",
+      REVIEW_REQUIRED: "diag-review",
+    };
+    const statusLabels = {
+      NOT_REQUESTED: "未実行",
+      PENDING: "調査中",
+      ANALYSIS_READY: "診断済み",
+      PARTIAL: "一部データのみ",
+      STALE: "期限切れ",
+      FAILED: "取得・解析失敗",
+      SOURCE_CONFLICT: "情報源が矛盾",
+    };
+    const code = Object.prototype.hasOwnProperty.call(classByCode, advice.code)
+      ? advice.code : "REVIEW_REQUIRED";
+    const label = advice.label || "要確認";
+    const fundamental = (diag.fundamental && typeof diag.fundamental === "object") ? diag.fundamental : {};
+    const news = (diag.news && typeof diag.news === "object") ? diag.news : {};
+    const composite = (diag.composite && typeof diag.composite === "object") ? diag.composite : {};
+    const reasons = Array.isArray(diag.topReasons) ? diag.topReasons.slice(0, 3) : [];
+    const reasonHtml = reasons.length
+      ? reasons.map((x) => {
+          const scope = (x && x.scope) || "UNKNOWN";
+          const bias = (x && x.priceBias) || "UNKNOWN";
+          const source = (x && x.source) ? ` / ${esc(x.source)}` : "";
+          return `<div>・[${esc(scope)}・${esc(bias)}] ${esc((x && x.label) || "要確認")}${source}</div>`;
+        }).join("")
+      : `<div>・根拠詳細なし</div>`;
+    return `<div class="diag-wrap">
+      <span class="diagbadge ${classByCode[code]}"><span class="dot"></span>${esc(label)}</span>
+      <details class="diag-detail">
+        <summary>詳細</summary>
+        <div>処理: ${esc(statusLabels[diag.pipelineStatus] || diag.pipelineStatus || "UNKNOWN")}</div>
+        <div>業績: ${esc(fundamental.businessPerformanceView || "UNKNOWN")}</div>
+        <div>短期: ${esc(news.shortHorizonPriceBias || "UNKNOWN")}</div>
+        <div>材料件数: 直接 ${esc(news.directCount ?? 0)} / 業種 ${esc(news.sectorCount ?? 0)} / マクロ ${esc(news.macroCount ?? 0)}</div>
+        <div>信頼度: ${esc(news.evidenceConfidence || "UNKNOWN")}</div>
+        <div>MTS方向との関係: ${esc(composite.directionRelation || "UNKNOWN")}</div>
+        ${reasonHtml}
+        <div>判定時刻: ${esc(diag.decisionAsOf || "—")}</div>
+        <div>${esc(advice.description || "補助診断。発注可否を決めるものではありません")}</div>
+      </details>
+    </div>`;
+  }
+
   // TradingView チャートへの静的リンク（東証 = TSE:{code}。英字混在コード 186A 等も同形式で解決確認済み）
   function chartLink(code) {
     if (!code) return "";
@@ -581,6 +661,7 @@
         <td class="num">${fmtPct(r.riskPercent)}</td>
         <td class="num">${fmtPct(r.rewardPercent)}</td>
         <td class="num">${r.shares != null ? r.shares.toLocaleString("ja-JP") : "—"}</td>
+        <td>${fundamentalNewsCell(r.fundamentalNewsDiagnostic)}</td>
         <td>${chartLink(r.code)}</td>
       </tr>`).join("");
   }
