@@ -148,11 +148,11 @@ footer { font-size:11px; color:var(--text-muted); text-align:center; padding:14p
   td.code { font-size:15.5px; }
   td.code .nm { font-size:14px; }
 }
-</style></head><body data-generated-at="2026-07-27 21:32:40">
+</style></head><body data-generated-at="2026-07-27 22:32:54" data-generated-at-ms="1785159174936">
 <div class="report-head">
   <div class="report-title">
     <h1>MTS-Eval 成績レポート</h1>
-    <div class="subtitle">生成 2026-07-27 21:32:40 ／ 評価対象スナップショット: 2026-07-07, 2026-07-08, 2026-07-09, 2026-07-10, 2026-07-13, 2026-07-14, 2026-07-15, 2026-07-16, 2026-07-17, 2026-07-21, 2026-07-22, 2026-07-23, 2026-07-24, 2026-07-27 ／ 区分: Focus + Watch ／ 場中Focus収集: 62件<br>
+    <div class="subtitle">生成 2026-07-27 22:32:54 ／ 評価対象スナップショット: 2026-07-07, 2026-07-08, 2026-07-09, 2026-07-10, 2026-07-13, 2026-07-14, 2026-07-15, 2026-07-16, 2026-07-17, 2026-07-21, 2026-07-22, 2026-07-23, 2026-07-24, 2026-07-27 ／ 区分: Focus + Watch ／ 場中Focus収集: 62件<br>
     FocusはmarketDateにEntryで100株仮想約定、Watchは翌営業日以降のEntryタッチで約定判定。勝率 = WIN/(WIN+LOSS)、約定率 = 約定/評価可（数値プランあり）、平均リターン = WIN/LOSS/未決の平均</div>
   </div>
   <div class="report-update">
@@ -302,32 +302,94 @@ MTS側ファイルは読み取り専用で、本ツールは MTS-Eval 配下（h
   const status = document.getElementById("reportUpdateStatus");
   const triggerUrl = "http://127.0.0.1:8787/mts-eval/trigger";
   const statusUrl = "http://127.0.0.1:8787/mts-eval/status";
+  const publishTimeoutMs = 6 * 60 * 1000;
+  const pollMs = 2000;
+  const fetchTimeoutMs = 10000;
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const cleanUrl = window.location.href.split("#")[0].split("?")[0];
   const currentGeneratedAt = document.body.dataset.generatedAt || "";
+  const currentGeneratedAtMs = Number(document.body.dataset.generatedAtMs || "");
+
+  async function fetchWithTimeout(url, options, timeoutMs) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      return await fetch(url, { ...(options || {}), signal: controller.signal });
+    } finally {
+      clearTimeout(timer);
+    }
+  }
 
   async function waitForCompletion(jobId) {
     for (let attempt = 0; attempt < 300; attempt += 1) {
-      await sleep(2000);
-      const response = await fetch(statusUrl + "?jobId=" + encodeURIComponent(jobId || ""), { cache: "no-store" });
-      if (!response.ok) throw new Error("status HTTP " + response.status);
-      const data = await response.json();
-      if (data.status === "completed") return;
-      if (data.status === "failed") throw new Error(data.message || "evaluation failed");
+      await sleep(pollMs);
+      try {
+        const response = await fetchWithTimeout(
+          statusUrl + "?jobId=" + encodeURIComponent(jobId || ""),
+          { cache: "no-store" },
+          fetchTimeoutMs
+        );
+        if (!response.ok) throw new Error("status HTTP " + response.status);
+        const data = await response.json();
+        if (jobId && data.jobId && data.jobId !== jobId) continue;
+        if (data.status === "completed") return data;
+        if (data.status === "failed") throw new Error(data.message || "evaluation failed");
+      } catch (error) {
+        const message = String(error && error.message || error);
+        if (message.includes("evaluation failed") || message.startsWith("status HTTP ")) throw error;
+      }
     }
     throw new Error("evaluation timeout");
   }
 
-  async function waitForPublishedReport() {
+  async function fetchPublishedReportMeta(timeoutMs) {
+    const response = await fetchWithTimeout(
+      cleanUrl + "?cb=" + Date.now(),
+      { cache: "no-store" },
+      timeoutMs
+    );
+    if (!response.ok) throw new Error("report HTTP " + response.status);
+    const html = await response.text();
+    const parsed = new DOMParser().parseFromString(html, "text/html");
+    const body = parsed.body;
+    const generatedAt = body ? (body.dataset.generatedAt || "") : "";
+    const rawGeneratedAtMs = body ? (body.dataset.generatedAtMs || "") : "";
+    const generatedAtMs = /^\d+$/.test(rawGeneratedAtMs) ? Number(rawGeneratedAtMs) : Number.NaN;
+    const lastModifiedMs = Date.parse(response.headers.get("last-modified") || "");
+    return { generatedAt, generatedAtMs, lastModifiedMs };
+  }
+
+  function isPublishedReportCurrent(meta, completion, requestedAtMs) {
+    if (!Number.isFinite(meta.generatedAtMs)) return false;
+    if (Number.isFinite(currentGeneratedAtMs) && currentGeneratedAtMs > 0
+        && meta.generatedAtMs <= currentGeneratedAtMs) return false;
+    if (currentGeneratedAt && meta.generatedAt === currentGeneratedAt) return false;
+
+    const startedAtMs = Date.parse((completion && completion.startedAt) || "");
+    const expectedStartMs = Number.isFinite(startedAtMs) ? startedAtMs : requestedAtMs;
+    if (Number.isFinite(expectedStartMs) && meta.generatedAtMs + 1000 < expectedStartMs) return false;
+
+    const reportModifiedAtMs = Date.parse((completion && completion.reportModifiedAt) || "");
+    if (Number.isFinite(reportModifiedAtMs) && Number.isFinite(meta.lastModifiedMs)
+        && meta.lastModifiedMs + 60000 < reportModifiedAtMs) return false;
+    return true;
+  }
+
+  async function waitForPublishedReport(completion, requestedAtMs) {
     if (window.location.protocol === "file:") return;
-    for (let attempt = 0; attempt < 45; attempt += 1) {
-      const response = await fetch(cleanUrl + "?cb=" + Date.now(), { cache: "no-store" });
-      if (response.ok) {
-        const html = await response.text();
-        const match = html.match(/<body data-generated-at="([^"]*)"/);
-        if (match && match[1] && match[1] !== currentGeneratedAt) return;
+    const deadline = Date.now() + publishTimeoutMs;
+    while (Date.now() < deadline) {
+      const remaining = deadline - Date.now();
+      try {
+        const meta = await fetchPublishedReportMeta(
+          Math.max(1, Math.min(fetchTimeoutMs, remaining))
+        );
+        if (isPublishedReportCurrent(meta, completion, requestedAtMs)) return meta;
+      } catch (_) {
+        // Pagesの切替中や一時的な通信失敗は、期限内なら再試行する。
       }
-      await sleep(2000);
+      const waitMs = Math.min(pollMs, Math.max(0, deadline - Date.now()));
+      if (waitMs > 0) await sleep(waitMs);
     }
     throw new Error("public report propagation timeout");
   }
@@ -336,17 +398,30 @@ MTS側ファイルは読み取り専用で、本ツールは MTS-Eval 配下（h
     button.disabled = true;
     button.textContent = "更新中…";
     status.textContent = "現在の株価を取得しています";
+    let triggerAccepted = false;
+    const requestedAtMs = Date.now();
     try {
-      const response = await fetch(triggerUrl, { method: "POST", cache: "no-store" });
+      const response = await fetchWithTimeout(
+        triggerUrl,
+        { method: "POST", cache: "no-store" },
+        fetchTimeoutMs
+      );
       const data = await response.json();
       if (!response.ok && response.status !== 409) throw new Error("trigger HTTP " + response.status);
-      await waitForCompletion(data.jobId);
+      triggerAccepted = true;
+      const completion = await waitForCompletion(data.jobId);
       status.textContent = "評価完了。公開反映を確認しています";
-      await waitForPublishedReport();
+      await waitForPublishedReport(completion, requestedAtMs);
       status.textContent = "更新完了。再読込します";
       window.location.replace(cleanUrl + "?cb=" + Date.now());
     } catch (error) {
-      status.textContent = "この端末では更新できません。MINIPで開いてください";
+      const publishTimeout = String(error && error.message || error)
+        .includes("public report propagation timeout");
+      status.textContent = publishTimeout
+        ? "評価は完了しましたが公開反映を確認できません。古いレポートは表示していません。数分後に再試行してください"
+        : (triggerAccepted
+          ? "評価更新を完了できませんでした。以前のレポートを表示したままです"
+          : "この端末から更新処理へ接続できません");
       button.disabled = false;
       button.textContent = "↻ 株価を更新";
     }
