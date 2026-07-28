@@ -514,7 +514,7 @@
 
   <footer>
     このページは最新スナップショットを定期取得して表示します。
-    「成績レポート」はローカル評価に接続できる場合だけ更新を開始し、接続できない場合は既存レポートを表示します。
+    「成績レポート」はローカル評価と公開反映の両方を確認できた場合だけ最新版を表示します。
     「銘柄管理」パネルの更新操作は、対応するローカルサービスへ接続できる場合だけ実行されます。
   </footer>
 
@@ -526,6 +526,9 @@
   const REPORT_URL = "./report.html";
   const REPORT_TRIGGER_URL = "http://127.0.0.1:8787/mts-eval/trigger";
   const REPORT_STATUS_URL = "http://127.0.0.1:8787/mts-eval/status";
+  const REPORT_PUBLISH_TIMEOUT_MS = 6 * 60 * 1000;
+  const REPORT_POLL_MS = 2000;
+  const REPORT_FETCH_TIMEOUT_MS = 10000;
   const REFRESH_MS = 60000;
 
   const $ = (id) => document.getElementById(id);
@@ -770,19 +773,95 @@
   $("refreshBtn").addEventListener("click", fetchLatest);
 
   function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+  async function fetchWithTimeout(url, options, timeoutMs) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      return await fetch(url, { ...(options || {}), signal: controller.signal });
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  function setReportTabMessage(tab, title, message) {
+    if (!tab || tab.closed) return;
+    try {
+      tab.document.title = title;
+      tab.document.body.textContent = message;
+    } catch (_) {
+      // about:blank の案内更新に失敗しても元画面の状態表示は続ける。
+    }
+  }
   function showReport(tab) {
     const url = REPORT_URL + "?cb=" + Date.now();
     if (tab && !tab.closed) tab.location.replace(url);
-    else window.open(url, "_blank", "noopener,noreferrer");
+    else window.location.assign(url);
+  }
+  async function fetchPublishedReportMeta(timeoutMs) {
+    const response = await fetchWithTimeout(
+      REPORT_URL + "?cb=" + Date.now(),
+      { cache: "no-store" },
+      timeoutMs
+    );
+    if (!response.ok) throw new Error("report HTTP " + response.status);
+    const html = await response.text();
+    const parsed = new DOMParser().parseFromString(html, "text/html");
+    const body = parsed.body;
+    const generatedAt = body ? (body.dataset.generatedAt || "") : "";
+    const rawGeneratedAtMs = body ? (body.dataset.generatedAtMs || "") : "";
+    const generatedAtMs = /^\d+$/.test(rawGeneratedAtMs) ? Number(rawGeneratedAtMs) : Number.NaN;
+    const lastModifiedMs = Date.parse(response.headers.get("last-modified") || "");
+    return { generatedAt, generatedAtMs, lastModifiedMs };
+  }
+  function isPublishedReportCurrent(meta, baseline, completion, requestedAtMs) {
+    if (!Number.isFinite(meta.generatedAtMs)) return false;
+    if (baseline && Number.isFinite(baseline.generatedAtMs)
+        && meta.generatedAtMs <= baseline.generatedAtMs) return false;
+    if (baseline && baseline.generatedAt && meta.generatedAt === baseline.generatedAt) return false;
+
+    const startedAtMs = Date.parse((completion && completion.startedAt) || "");
+    const expectedStartMs = Number.isFinite(startedAtMs) ? startedAtMs : requestedAtMs;
+    if (Number.isFinite(expectedStartMs) && meta.generatedAtMs + 1000 < expectedStartMs) return false;
+
+    const reportModifiedAtMs = Date.parse((completion && completion.reportModifiedAt) || "");
+    if (Number.isFinite(reportModifiedAtMs) && Number.isFinite(meta.lastModifiedMs)
+        && meta.lastModifiedMs + 60000 < reportModifiedAtMs) return false;
+    return true;
+  }
+  async function waitForPublishedReport(baseline, completion, requestedAtMs) {
+    const deadline = Date.now() + REPORT_PUBLISH_TIMEOUT_MS;
+    while (Date.now() < deadline) {
+      const remaining = deadline - Date.now();
+      try {
+        const meta = await fetchPublishedReportMeta(
+          Math.max(1, Math.min(REPORT_FETCH_TIMEOUT_MS, remaining))
+        );
+        if (isPublishedReportCurrent(meta, baseline, completion, requestedAtMs)) return meta;
+      } catch (_) {
+        // Pagesの切替中や一時的な通信失敗は、期限内なら再試行する。
+      }
+      const waitMs = Math.min(REPORT_POLL_MS, Math.max(0, deadline - Date.now()));
+      if (waitMs > 0) await sleep(waitMs);
+    }
+    throw new Error("public report propagation timeout");
   }
   async function waitForReport(jobId) {
     for (let attempt = 0; attempt < 300; attempt += 1) {
-      await sleep(2000);
-      const res = await fetch(REPORT_STATUS_URL + "?jobId=" + encodeURIComponent(jobId || ""), { cache: "no-store" });
-      if (!res.ok) throw new Error("status HTTP " + res.status);
-      const data = await res.json();
-      if (data.status === "completed") return data;
-      if (data.status === "failed") throw new Error(data.message || "evaluation failed");
+      await sleep(REPORT_POLL_MS);
+      try {
+        const res = await fetchWithTimeout(
+          REPORT_STATUS_URL + "?jobId=" + encodeURIComponent(jobId || ""),
+          { cache: "no-store" },
+          REPORT_FETCH_TIMEOUT_MS
+        );
+        if (!res.ok) throw new Error("status HTTP " + res.status);
+        const data = await res.json();
+        if (jobId && data.jobId && data.jobId !== jobId) continue;
+        if (data.status === "completed") return data;
+        if (data.status === "failed") throw new Error(data.message || "evaluation failed");
+      } catch (error) {
+        const message = String(error && error.message || error);
+        if (message.includes("evaluation failed") || message.startsWith("status HTTP ")) throw error;
+      }
     }
     throw new Error("evaluation timeout");
   }
@@ -797,20 +876,39 @@
     btn.disabled = true;
     status.textContent = "更新確認中…";
     let triggerAccepted = false;
+    let baseline = null;
     try {
-      const res = await fetch(REPORT_TRIGGER_URL, { method: "POST", cache: "no-store" });
+      baseline = await fetchPublishedReportMeta(REPORT_FETCH_TIMEOUT_MS);
+    } catch (_) {
+      // 完了応答のstartedAtと新レポートのepochで引き続き鮮度を確認できる。
+    }
+    const requestedAtMs = Date.now();
+    try {
+      const res = await fetchWithTimeout(
+        REPORT_TRIGGER_URL,
+        { method: "POST", cache: "no-store" },
+        REPORT_FETCH_TIMEOUT_MS
+      );
       const data = await res.json();
       if (!res.ok && res.status !== 409) throw new Error("trigger HTTP " + res.status);
       triggerAccepted = true;
-      status.textContent = "更新中…数分で反映";
-      await waitForReport(data.jobId);
-      status.textContent = "更新完了";
+      status.textContent = "評価更新中…";
+      const completion = await waitForReport(data.jobId);
+      status.textContent = "評価完了。公開反映を確認中…";
+      setReportTabMessage(tab, "成績レポート公開待ち", "評価が完了しました。公開版の反映を確認しています…");
+      await waitForPublishedReport(baseline, completion, requestedAtMs);
+      status.textContent = "最新版を確認しました";
       showReport(tab);
     } catch (error) {
-      status.textContent = triggerAccepted
-        ? "評価更新に失敗したため既存レポートを表示"
-        : "ローカル評価に接続できないため既存レポートを表示";
-      showReport(tab);
+      const publishTimeout = String(error && error.message || error)
+        .includes("public report propagation timeout");
+      const message = publishTimeout
+        ? "評価は完了しましたが公開反映を確認できません。古いレポートは開いていません"
+        : (triggerAccepted
+          ? "評価更新を完了できませんでした。古いレポートは開いていません"
+          : "ローカル評価に接続できません。古いレポートは開いていません");
+      status.textContent = message;
+      setReportTabMessage(tab, "成績レポート更新確認エラー", message + "。数分後にもう一度お試しください。");
     } finally {
       btn.disabled = false;
     }
