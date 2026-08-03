@@ -148,11 +148,11 @@ footer { font-size:11px; color:var(--text-muted); text-align:center; padding:14p
   td.code { font-size:15.5px; }
   td.code .nm { font-size:14px; }
 }
-</style></head><body data-generated-at="2026-08-04 00:57:33" data-generated-at-ms="1785772653206">
+</style></head><body data-generated-at="2026-08-04 01:11:19" data-generated-at-ms="1785773479562">
 <div class="report-head">
   <div class="report-title">
     <h1>MTS-Eval 成績レポート</h1>
-    <div class="subtitle">生成 2026-08-04 00:57:33 ／ 評価対象スナップショット: 2026-07-07, 2026-07-08, 2026-07-09, 2026-07-10, 2026-07-13, 2026-07-14, 2026-07-15, 2026-07-16, 2026-07-17, 2026-07-21, 2026-07-22, 2026-07-23, 2026-07-24, 2026-07-27, 2026-07-28, 2026-07-29, 2026-07-30, 2026-07-31, 2026-08-03 ／ 区分: Focus + Watch ／ Focus履歴収集: 102件<br>
+    <div class="subtitle">生成 2026-08-04 01:11:19 ／ 評価対象スナップショット: 2026-07-07, 2026-07-08, 2026-07-09, 2026-07-10, 2026-07-13, 2026-07-14, 2026-07-15, 2026-07-16, 2026-07-17, 2026-07-21, 2026-07-22, 2026-07-23, 2026-07-24, 2026-07-27, 2026-07-28, 2026-07-29, 2026-07-30, 2026-07-31, 2026-08-03 ／ 区分: Focus + Watch ／ Focus履歴収集: 102件<br>
     期間満了なし・1シグナル1判定。取引時間内に確定したFocusは固定Entryで100株エントリーし、非ギャップ版のTP1保護→TP2保護→TP3を正式決済とします。15:30以降の確定は時間外見送り・未約定で、成績母数から除外します。TP3または保護線でWIN、TP1前の初期SLでLOSS、保有中=OPENです。翌日ギャップは診断のみ。WatchだけEntry未到達=WAITINGで、TP1または初期SLの先着を参考判定します。勝率 = WIN/(WIN+LOSS)、確定損益はWIN/LOSSのみ</div>
   </div>
   <div class="report-update">
@@ -166,23 +166,26 @@ footer { font-size:11px; color:var(--text-muted); text-align:center; padding:14p
 <div id="view-summary">
 
 <div class="tiles">
-  <div class="tile t-rate"><div class="tlabel"><span class="dot"></span>focus 勝率（確定分）</div>
-    <div class="tvalue">25.0%</div>
-    <div class="tbreak">確定 56 件（WIN+LOSS）</div></div>
-  <div class="tile t-loss"><div class="tlabel"><span class="dot"></span>focus 累計損益（確定）</div>
-    <div class="tvalue pnl-neg" style="font-size:26px;">-40,940円</div>
-    <div class="tbreak">利確・損切り済み 56件（一律100株）</div></div>
-  <div class="tile t-win"><div class="tlabel"><span class="dot"></span>focus WIN</div>
-    <div class="tvalue">14</div><div class="tbreak">TP3または保護線で確定</div></div>
-  <div class="tile t-loss"><div class="tlabel"><span class="dot"></span>focus LOSS</div>
-    <div class="tvalue">42</div><div class="tbreak">TP1前の初期SL到達</div></div>
-  <div class="tile t-pend"><div class="tlabel"><span class="dot"></span>focus 保有中</div>
-    <div class="tvalue">7</div><div class="tbreak">現在評価 -7,305円<br>
-    保護中 0件・確定＋保護中下限 -40,940円</div></div>
+  <div class="tile t-rate"><div class="tlabel"><span class="dot"></span>現行基準 勝率（確定分）</div>
+    <div class="tvalue">52.6%</div>
+    <div class="tbreak"><span style='color:var(--status-warning)'>確定19件（統計的評価には20件以上必要）</span>・建値撤退16件は分母外</div></div>
+  <div class="tile t-win"><div class="tlabel"><span class="dot"></span>現行基準 累計損益（確定）</div>
+    <div class="tvalue pnl-pos" style="font-size:26px;">+90,840円</div>
+    <div class="tbreak">決済済み 35件（一律100株）</div></div>
+  <div class="tile t-win"><div class="tlabel"><span class="dot"></span>現行基準 WIN</div>
+    <div class="tvalue">10</div><div class="tbreak">TP3または保護線で確定</div></div>
+  <div class="tile t-loss"><div class="tlabel"><span class="dot"></span>現行基準 LOSS</div>
+    <div class="tvalue">9</div><div class="tbreak">TP1前の初期SL到達</div></div>
+  <div class="tile t-und"><div class="tlabel"><span class="dot"></span>現行基準 建値撤退</div>
+    <div class="tvalue">16</div><div class="tbreak">+0.5R到達後に建値決済（0円）</div></div>
+  <div class="tile t-pend"><div class="tlabel"><span class="dot"></span>現行基準 保有中</div>
+    <div class="tvalue">4</div><div class="tbreak">現在評価 -259円<br>
+    保護中 0件・確定＋保護中下限 +90,840円</div></div>
   <div class="tile t-rr"><div class="tlabel"><span class="dot"></span>focus 平均RR（計画）</div>
     <div class="tvalue">1.80</div>
     <div class="tbreak">約定評価対象のfocus数値プラン 102 件</div></div>
 </div>
+<div class='sim-note'>参考: 全シグナル（対象外を含む旧母集団・建値化適用後）は 勝率 25.0%・WIN 14 / LOSS 42 / 建値撤退 39・確定損益 -40,940円。上のタイルは現行基準（採用 39件）だけを集計しています。</div>
 <div class="sim-note">💰 <b>金額損益はシミュレーション</b>: 取引時間内に確定したFocusは初回検出時に固定保存したEntryを、Watchは保存後にEntryへ到達した日に、全銘柄一律 <b>100株</b> で建てた場合の円建て損益です（Focusは検出後の場中足から正式な段階保護判定を開始し、シンプルな実力比較のため株数を固定）。15:30以降のFocus確定は未約定として損益を計算しません。
 各カードの「MTS設計株数」は参考表示で、この損益計算には反映していません。手数料・スリッページ・実約定価格は含みません。</div>
 
