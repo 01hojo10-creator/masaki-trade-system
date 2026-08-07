@@ -179,12 +179,9 @@ footer { font-size:11px; color:var(--text-muted); text-align:center; padding:14p
   <div class="tile t-rate"><div class="tlabel"><span class="dot"></span>現行基準実績（2026/8/4以降） 勝率（確定分）</div>
     <div class="tvalue">25.0%</div>
     <div class="tbreak">確定 28 件（WIN+LOSS）・建値撤退4件は分母外</div></div>
-  <div class="tile t-loss"><div class="tlabel"><span class="dot"></span>現行基準実績（2026/8/4以降） 累計損益（確定）</div>
-    <div class="tvalue pnl-neg" style="font-size:26px;">-137,588円</div>
-    <div class="tbreak">決済済み 32件（一律100株）</div></div>
   <div class="tile t-loss"><div class="tlabel"><span class="dot"></span>現行基準実績（2026/8/4以降） 現在総合損益（確定＋保有中）</div>
     <div class="tvalue pnl-neg" style="font-size:26px;">-47,398円</div>
-    <div class="tbreak">確定 -137,588円 ＋ 保有中現在評価 +90,190円<br>未決済評価を含む参考値</div></div>
+    <div class="tbreak">確定済みと保有中の現在評価を合算</div></div>
   <div class="tile t-win"><div class="tlabel"><span class="dot"></span>現行基準実績（2026/8/4以降） WIN</div>
     <div class="tvalue">7</div><div class="tbreak">TP3または保護線で確定</div></div>
   <div class="tile t-loss"><div class="tlabel"><span class="dot"></span>現行基準実績（2026/8/4以降） LOSS</div>
@@ -192,14 +189,12 @@ footer { font-size:11px; color:var(--text-muted); text-align:center; padding:14p
   <div class="tile t-und"><div class="tlabel"><span class="dot"></span>現行基準実績（2026/8/4以降） 建値撤退</div>
     <div class="tvalue">4</div><div class="tbreak">+0.5R到達後に建値決済（0円）</div></div>
   <div class="tile t-pend"><div class="tlabel"><span class="dot"></span>現行基準実績（2026/8/4以降） 保有中</div>
-    <div class="tvalue">32</div><div class="tbreak">損益算出可能 32件: +90,190円<br>
-    <b>確定＋現在評価（算出可能分） -47,398円</b><br>
-    保護中 8件・確定＋保護中下限 -137,588円<br>ほか対象外の保有中 1件（カードに表示・集計外）</div></div>
+    <div class="tvalue">32</div><div class="tbreak">現在保有中の件数</div></div>
   <div class="tile t-rr"><div class="tlabel"><span class="dot"></span>focus 平均RR（計画）</div>
     <div class="tvalue">1.78</div>
     <div class="tbreak">約定評価対象のfocus数値プラン 167 件</div></div>
 </div>
-<div class='sim-note'>参考: 同じ期間（2026/8/4以降）の全Focus（現行基準で対象外になった行を含む）は 勝率 25.0%・WIN 7 / LOSS 21 / 建値撤退 4・確定損益 -137,588円。上のタイルは同期間の現行基準採用分（64件）だけを集計しています。</div>
+<div class='sim-note'>参考: 同じ期間（2026/8/4以降）の全Focus（現行基準で対象外になった行を含む）は 勝率 25.0%・WIN 7 / LOSS 21 / 建値撤退 4。上のタイルは同期間の現行基準採用分（64件）だけを集計しています。</div>
 <div class="sim-note">💰 <b>金額損益はシミュレーション</b>: 取引時間内に確定したFocusは初回検出時に固定保存したEntryを、Watchは保存後にEntryへ到達した日に、全銘柄一律 <b>100株</b> で建てた場合の円建て損益です（Focusは初回検出時刻を含む場中足から正式な段階保護判定を開始し、シンプルな実力比較のため株数を固定）。15:30以降のFocus確定は未約定として損益を計算しません。
 各カードの「MTS設計株数」は参考表示で、この損益計算には反映していません。手数料・スリッページ・実約定価格は含みません。</div>
 
