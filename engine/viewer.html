@@ -25,6 +25,7 @@
     --status-warning:  #fab219; /* watch = 条件待ち */
     --status-critical: #d03b3b; /* excluded = 除外 */
     --status-neutral:  #898781; /* pool = 監視 */
+    --status-earnings: #7c3aed; /* Focus決算接近 = 紫（赤の地合い警告と分離） */
 
     --mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, monospace;
     --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -48,6 +49,7 @@
       --status-warning:  #fab219;
       --status-critical: #d03b3b;
       --status-neutral:  #898781;
+      --status-earnings: #a78bfa;
     }
   }
 
@@ -163,6 +165,16 @@
     font-variant-numeric: tabular-nums;
   }
   .tile.tile-focus    { --tile-accent: var(--status-good); }
+  .tile.tile-focus.market-gate-active {
+    --tile-accent: var(--status-critical);
+    background: color-mix(in srgb, var(--status-critical) 10%, var(--surface-1));
+  }
+  .tile.tile-focus.market-gate-active .tbreak { color: var(--status-critical); font-weight: 700; }
+  .tile.tile-focus.earnings-warning-active {
+    --tile-accent: var(--status-earnings);
+    background: color-mix(in srgb, var(--status-earnings) 11%, var(--surface-1));
+  }
+  .tile.tile-focus.earnings-warning-active .tbreak { color: var(--status-earnings); font-weight: 700; }
   .tile.tile-watch    { --tile-accent: var(--status-warning); }
   .tile.tile-pool     { --tile-accent: var(--status-neutral); }
   .tile.tile-excluded { --tile-accent: var(--status-critical); }
@@ -215,6 +227,22 @@
   #watchBody tr:has(.dir-LONG):hover  td { background: color-mix(in srgb, var(--dir-long) 12%, transparent); }
   #focusBody tr:has(.dir-SHORT):hover td,
   #watchBody tr:has(.dir-SHORT):hover td { background: color-mix(in srgb, var(--dir-short) 12%, transparent); }
+  /* 地合い警告は方向色より優先。赤色だけでなく行内バッジでも明示する。 */
+  #focusBody tr.market-gate-active td {
+    background: color-mix(in srgb, var(--status-critical) 11%, transparent);
+  }
+  #focusBody tr.market-gate-active td:first-child { border-left-color: var(--status-critical); }
+  #focusBody tr.market-gate-active:hover td {
+    background: color-mix(in srgb, var(--status-critical) 18%, transparent);
+  }
+  /* 決算接近は紫。赤色の地合い警告とは別の意味として表示する。 */
+  #focusBody tr.earnings-warning-active td {
+    background: color-mix(in srgb, var(--status-earnings) 13%, transparent);
+  }
+  #focusBody tr.earnings-warning-active td:first-child { border-left-color: var(--status-earnings); }
+  #focusBody tr.earnings-warning-active:hover td {
+    background: color-mix(in srgb, var(--status-earnings) 20%, transparent);
+  }
   td.num { text-align: right; }
   td.code { font-family: var(--mono); font-weight: 600; white-space: nowrap; font-size: 14px; }
   /* 銘柄コードセル内の企業名(.hint-text)を拡大・可読性向上(昇格条件列の.hint-textには影響しない) */
@@ -247,6 +275,32 @@
   .stbadge.st-pool .dot     { background: var(--status-neutral); }
   .stbadge.st-excluded  { background: color-mix(in srgb, var(--status-critical) 10%, transparent); }
   .stbadge.st-excluded .dot { background: var(--status-critical); }
+  .market-gate-wrap { margin-top: 4px; min-width: 160px; }
+  .market-gate-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 800; white-space: nowrap;
+    padding: 2px 8px; border-radius: 999px;
+    color: var(--status-critical);
+    border: 1px solid color-mix(in srgb, var(--status-critical) 55%, transparent);
+    background: color-mix(in srgb, var(--status-critical) 15%, transparent);
+  }
+  .market-gate-badge .dot {
+    width: 7px; height: 7px; border-radius: 50%; flex: none;
+    background: var(--status-critical);
+  }
+  .earnings-warning-wrap { margin-top: 4px; min-width: 160px; }
+  .earnings-warning-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 800; white-space: nowrap;
+    padding: 2px 8px; border-radius: 999px;
+    color: var(--status-earnings);
+    border: 1px solid color-mix(in srgb, var(--status-earnings) 60%, transparent);
+    background: color-mix(in srgb, var(--status-earnings) 17%, transparent);
+  }
+  .earnings-warning-badge .dot {
+    width: 7px; height: 7px; border-radius: 50%; flex: none;
+    background: var(--status-earnings);
+  }
 
   .diag-wrap { min-width: 145px; max-width: 230px; }
   .diagbadge {
@@ -421,7 +475,7 @@
   </div>
 
   <div class="tiles">
-    <div class="tile tile-focus">
+    <div class="tile tile-focus" id="tFocusTile">
       <div class="tlabel"><span class="dot"></span>Focus（発注準備完了）</div>
       <div class="tvalue" id="tFocus">—</div>
       <div class="tbreak" id="tFocusBreak">—</div>
@@ -445,7 +499,7 @@
 
   <section class="card">
     <h2>Focus 詳細 <span class="count-badge" id="focusCount">0件</span></h2>
-    <div class="hint">発注準備が完了した銘柄（全ゲート通過・スコア順位内）。entry / SL / TP はすべて算出済み。</div>
+    <div class="hint">発注準備が完了した銘柄（通常ゲート通過・スコア順位内）。地合い警告中は赤色、決算まで3営業日以内は紫色で表示しますが、いずれもエントリー可です。entry / SL / TP はすべて算出済み。</div>
     <div class="table-scroll">
       <table id="focusTable">
         <thead><tr>
@@ -637,6 +691,25 @@
     return `買い${L} / 売り${S} / 中立${N}`;
   }
 
+  function marketGateBadge(row) {
+    if (!row || row.marketGateActive !== true) return "";
+    const detail = row.marketGateWarning || "地合いゲート中（エントリー可・注意）";
+    return `<div class="market-gate-wrap">
+      <span class="market-gate-badge"><span class="dot"></span>地合いゲート中</span>
+      <div class="hint-text">${esc(detail)}</div>
+    </div>`;
+  }
+
+  function earningsWarningBadge(row) {
+    if (!row || row.earningsWarningActive !== true) return "";
+    const detail = row.earningsWarning || "決算まで3営業日以内";
+    const dateText = row.earningsDate ? `（${row.earningsDate}）` : "";
+    return `<div class="earnings-warning-wrap">
+      <span class="earnings-warning-badge" title="JPX公式の決算発表予定"><span class="dot"></span>決算接近</span>
+      <div class="hint-text">${esc(detail)}${esc(dateText)}</div>
+    </div>`;
+  }
+
   function renderFocus(rows) {
     $("focusCount").textContent = rows.length + "件";
     const body = $("focusBody");
@@ -650,11 +723,14 @@
     $("focusEmpty").style.display = "none";
     const sorted = [...rows].sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
     body.innerHTML = sorted.map((r) => `
-      <tr>
+      <tr class="${[
+        r.marketGateActive === true ? "market-gate-active" : "",
+        r.earningsWarningActive === true ? "earnings-warning-active" : "",
+      ].filter(Boolean).join(" ")}">
         <td>${esc(r.rank ?? "")}</td>
         <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div></td>
         <td>${dirBadge(r.tradeDirection, r.directionLabel)}</td>
-        <td>${stateBadge(r.stateClassification, r.stateLabel)}</td>
+        <td>${stateBadge(r.stateClassification, r.stateLabel)}${marketGateBadge(r)}${earningsWarningBadge(r)}</td>
         <td class="num">${fmtPrice(r.entry)}</td>
         <td class="num">${fmtPrice(r.sl)}</td>
         <td class="num">${fmtPrice(r.tp1 ?? r.tp)}</td>
@@ -722,12 +798,24 @@
     $("mScan").textContent = `${scan.current ?? "?"}/${scan.total ?? "?"} 銘柄 ・ ${scan.complete ? "完了" : (scan.active ? "進行中" : "未完了")}`;
 
     const focus = data.focus || [], watch = data.watch || [], pool = data.pool || [], excluded = data.excluded || [];
+    const marketGateFocusCount = focus.filter((r) => r.marketGateActive === true).length;
+    const earningsWarningFocusCount = focus.filter((r) => r.earningsWarningActive === true).length;
 
     $("tFocus").textContent = focus.length;
     $("tWatch").textContent = watch.length;
     $("tPool").textContent = pool.length;
     $("tExcluded").textContent = excluded.length;
-    $("tFocusBreak").textContent = directionBreakdown(focus);
+    $("tFocusTile").classList.toggle("market-gate-active", marketGateFocusCount > 0);
+    $("tFocusTile").classList.toggle("earnings-warning-active", earningsWarningFocusCount > 0);
+    $("tFocusBreak").textContent = directionBreakdown(focus) + (
+      marketGateFocusCount > 0
+        ? ` / 地合いゲート中 ${marketGateFocusCount}件（エントリー可・注意）`
+        : ""
+    ) + (
+      earningsWarningFocusCount > 0
+        ? ` / 決算接近 ${earningsWarningFocusCount}件（3営業日以内・エントリー可）`
+        : ""
+    );
     $("tWatchBreak").textContent = directionBreakdown(watch);
     $("tPoolBreak").textContent = directionBreakdown(pool);
     $("tExcludedBreak").textContent = directionBreakdown(excluded);
