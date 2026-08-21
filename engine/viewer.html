@@ -497,6 +497,23 @@
     </div>
   </div>
 
+  <section class="card" id="reservationSection">
+    <h2>予約注文プラン（未送信・未約定） <span class="count-badge" id="reservationCount">0件</span></h2>
+    <div class="hint">確定1時間足から作ったSTOP_LIMIT案です。証券会社へは送信されておらず、Focus／保有中／成績には含みません。validFromより前の値動きを約定扱いしません。</div>
+    <div class="table-scroll">
+      <table id="reservationTable">
+        <thead><tr>
+          <th>対象日・場</th><th>銘柄</th><th>方向</th><th>状態</th>
+          <th class="num">Stop</th><th class="num">Limit</th><th class="num">SL</th>
+          <th class="num">TP1</th><th class="num">RR</th><th class="num">株数</th>
+          <th>有効期間・根拠</th><th>チャート</th>
+        </tr></thead>
+        <tbody id="reservationBody"></tbody>
+      </table>
+    </div>
+    <div class="empty-state" id="reservationEmpty" style="display:none;">現在、有効な予約注文プランはありません</div>
+  </section>
+
   <section class="card">
     <h2>Focus 詳細 <span class="count-badge" id="focusCount">0件</span></h2>
     <div class="hint">発注準備が完了した銘柄（通常ゲート通過・スコア順位内）。地合い警告中は赤色、決算まで3営業日以内は紫色で表示しますが、いずれもエントリー可です。entry / SL / TP はすべて算出済み。</div>
@@ -769,6 +786,45 @@
       </tr>`).join("");
   }
 
+  function renderReservations(pendingOrders, nextSessionPlans) {
+    const now = Date.now();
+    const rows = [...(pendingOrders || []), ...(nextSessionPlans || [])]
+      .filter(r => r.reservationStatus === "PENDING")
+      .filter(r => {
+        const until = Date.parse(r.validUntil || "");
+        return Number.isFinite(until) && now < until;
+      });
+    $("reservationCount").textContent = rows.length + "件";
+    const body = $("reservationBody");
+    if (!rows.length) {
+      body.innerHTML = "";
+      $("reservationTable").style.display = "none";
+      $("reservationEmpty").style.display = "block";
+      return;
+    }
+    $("reservationTable").style.display = "table";
+    $("reservationEmpty").style.display = "none";
+    const sorted = [...rows].sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+    body.innerHTML = sorted.map((r) => {
+      const valid = `${esc(r.validFrom || "—")} 以上 / ${esc(r.validUntil || "—")} 未満`;
+      const evidence = `1h確定 ${esc(r.sourceBarCloseAt || "—")} / provider ${esc(r.providerMarketTime || "—")}`;
+      return `<tr>
+        <td>${esc(r.targetTradeDate || "—")}<div class="hint-text">${esc(r.reservationSession || "—")}</div></td>
+        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div></td>
+        <td>${dirBadge(r.tradeDirection, r.tradeDirection)}</td>
+        <td><span class="stbadge st-watch"><span class="dot"></span>${esc(r.reservationStatus || "PENDING")}</span><div class="hint-text">${esc(r.submissionState || "NOT_SUBMITTED")}</div></td>
+        <td class="num">${fmtPrice(r.stopTriggerPrice)}</td>
+        <td class="num">${fmtPrice(r.limitPrice)}</td>
+        <td class="num">${fmtPrice(r.sl)}</td>
+        <td class="num">${fmtPrice(r.tp1)}</td>
+        <td class="num">${fmtNum(r.rr, 2)}</td>
+        <td class="num">${r.shares != null ? Number(r.shares).toLocaleString("ja-JP") : "—"}</td>
+        <td><div class="hint-text">${valid}<br>${evidence}<br>遡及約定なし</div></td>
+        <td>${chartLink(r.code)}</td>
+      </tr>`;
+    }).join("");
+  }
+
   function renderPoolExcluded(pool, excluded) {
     function reasonCounts(rows) {
       const m = new Map();
@@ -798,6 +854,7 @@
     $("mScan").textContent = `${scan.current ?? "?"}/${scan.total ?? "?"} 銘柄 ・ ${scan.complete ? "完了" : (scan.active ? "進行中" : "未完了")}`;
 
     const focus = data.focus || [], watch = data.watch || [], pool = data.pool || [], excluded = data.excluded || [];
+    const pendingOrders = data.pendingOrders || [], nextSessionPlans = data.nextSessionPlans || [];
     const marketGateFocusCount = focus.filter((r) => r.marketGateActive === true).length;
     const earningsWarningFocusCount = focus.filter((r) => r.earningsWarningActive === true).length;
 
@@ -821,6 +878,7 @@
     $("tExcludedBreak").textContent = directionBreakdown(excluded);
 
     renderFocus(focus);
+    renderReservations(pendingOrders, nextSessionPlans);
     renderWatch(watch);
     renderPoolExcluded(pool, excluded);
   }
