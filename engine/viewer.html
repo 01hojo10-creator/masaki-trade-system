@@ -506,7 +506,7 @@
           <th>対象日・場</th><th>銘柄</th><th>方向</th><th>状態</th>
           <th class="num">Stop</th><th class="num">Limit</th><th class="num">SL</th>
           <th class="num">TP1</th><th class="num">RR</th><th class="num">株数</th>
-          <th>有効期間・根拠</th><th>チャート</th>
+          <th>チャート</th>
         </tr></thead>
         <tbody id="reservationBody"></tbody>
       </table>
@@ -806,8 +806,6 @@
     $("reservationEmpty").style.display = "none";
     const sorted = [...rows].sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
     body.innerHTML = sorted.map((r) => {
-      const valid = `${esc(r.validFrom || "—")} 以上 / ${esc(r.validUntil || "—")} 未満`;
-      const evidence = `1h確定 ${esc(r.sourceBarCloseAt || "—")} / provider ${esc(r.providerMarketTime || "—")}`;
       return `<tr>
         <td>${esc(r.targetTradeDate || "—")}<div class="hint-text">${esc(r.reservationSession || "—")}</div></td>
         <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div></td>
@@ -819,7 +817,6 @@
         <td class="num">${fmtPrice(r.tp1)}</td>
         <td class="num">${fmtNum(r.rr, 2)}</td>
         <td class="num">${r.shares != null ? Number(r.shares).toLocaleString("ja-JP") : "—"}</td>
-        <td><div class="hint-text">${valid}<br>${evidence}<br>遡及約定なし</div></td>
         <td>${chartLink(r.code)}</td>
       </tr>`;
     }).join("");
