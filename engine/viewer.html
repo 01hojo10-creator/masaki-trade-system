@@ -64,6 +64,86 @@
   }
   body { padding: 16px; max-width: 1280px; margin: 0 auto; }
 
+  /* 旧Focus / Watch / Pool分類はデータ互換のためDOMに残し、公開UIからは外す。 */
+  .legacy-routing { display: none !important; }
+
+  .reservation-hero {
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--surface-1) 86%, var(--status-warning) 14%), var(--surface-1) 64%);
+    border: 1px solid color-mix(in srgb, var(--status-warning) 48%, var(--border));
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+  .reservation-hero::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -64px;
+    top: -92px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--status-warning) 15%, transparent);
+    pointer-events: none;
+  }
+  .reservation-overline {
+    color: var(--status-warning);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    margin-bottom: 5px;
+  }
+  .reservation-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .reservation-title { margin: 0; font-size: clamp(22px, 3vw, 34px); line-height: 1.18; }
+  .reservation-lead { margin: 7px 0 0; color: var(--text-secondary); max-width: 760px; }
+  .reservation-total { min-width: 112px; text-align: right; }
+  .reservation-total strong {
+    display: block;
+    font-family: var(--mono);
+    font-size: clamp(42px, 7vw, 64px);
+    line-height: .95;
+    color: var(--status-warning);
+  }
+  .reservation-total span { color: var(--text-secondary); font-size: 12px; font-weight: 700; }
+  .reservation-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .reservation-stat {
+    min-width: 0;
+    background: color-mix(in srgb, var(--page-plane) 58%, transparent);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 9px 11px;
+  }
+  .reservation-stat .label { display: block; color: var(--text-muted); font-size: 11px; font-weight: 700; }
+  .reservation-stat strong { font-family: var(--mono); font-size: 18px; }
+  .reservation-stat small { color: var(--text-secondary); margin-left: 3px; }
+  #reservationSection { border-top: 3px solid var(--status-warning); }
+  #reservationBody tr td:first-child { border-left: 3px solid var(--status-warning); }
+  .reservation-scroll-note { color: var(--text-muted); font-size: 11px; margin: 6px 0 3px; }
+
+  @media (max-width: 720px) {
+    .reservation-hero { padding: 14px; }
+    .reservation-head { gap: 10px; }
+    .reservation-total { min-width: 74px; }
+    .reservation-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
   /* スマホ幅ではさらに詰める(CSSのみ・レイアウトは同一) */
   @media (max-width: 480px) {
     body { padding: 10px; }
@@ -474,7 +554,24 @@
     <span>次回自動更新まで: <b id="mCountdown">—</b></span>
   </div>
 
-  <div class="tiles">
+  <section class="reservation-hero" aria-labelledby="reservationHeroTitle">
+    <div class="reservation-overline">ACTIVE ROUTE / CONFIRMED 1H</div>
+    <div class="reservation-head">
+      <div>
+        <h2 class="reservation-title" id="reservationHeroTitle">次回の予約注文プラン</h2>
+        <p class="reservation-lead">現在は確定1時間足から作る予約注文ポリシーを表示しています。旧Focus・Watch・Pool分類は公開画面では使用しません。</p>
+      </div>
+      <div class="reservation-total"><strong id="reservationHeroCount">—</strong><span>有効プラン</span></div>
+    </div>
+    <div class="reservation-summary" aria-label="予約注文の概要">
+      <div class="reservation-stat"><span class="label">次回予約</span><strong id="reservationNextCount">—</strong><small>件</small></div>
+      <div class="reservation-stat"><span class="label">当日注文</span><strong id="reservationPendingCount">—</strong><small>件</small></div>
+      <div class="reservation-stat"><span class="label">未送信</span><strong id="reservationNotSubmitted">—</strong><small>件</small></div>
+      <div class="reservation-stat"><span class="label">対象日・場</span><strong id="reservationTargetDate">—</strong><small id="reservationSession"></small></div>
+    </div>
+  </section>
+
+  <div class="tiles legacy-routing" aria-hidden="true">
     <div class="tile tile-focus" id="tFocusTile">
       <div class="tlabel"><span class="dot"></span>Focus（発注準備完了）</div>
       <div class="tvalue" id="tFocus">—</div>
@@ -500,6 +597,7 @@
   <section class="card" id="reservationSection">
     <h2>予約注文プラン（未送信・未約定） <span class="count-badge" id="reservationCount">0件</span></h2>
     <div class="hint">確定1時間足から作ったSTOP_LIMIT案です。証券会社へは送信されておらず、Focus／保有中／成績には含みません。validFromより前の値動きを約定扱いしません。</div>
+    <div class="reservation-scroll-note">価格・損切り・利確条件は下表で確認できます。スマートフォンでは横にスライドしてください。</div>
     <div class="table-scroll">
       <table id="reservationTable">
         <thead><tr>
@@ -514,7 +612,7 @@
     <div class="empty-state" id="reservationEmpty" style="display:none;">現在、有効な予約注文プランはありません</div>
   </section>
 
-  <section class="card">
+  <section class="card legacy-routing" aria-hidden="true">
     <h2>Focus 詳細 <span class="count-badge" id="focusCount">0件</span></h2>
     <div class="hint">発注準備が完了した銘柄（通常ゲート通過・スコア順位内）。地合い警告中は赤色、決算まで3営業日以内は紫色で表示しますが、いずれもエントリー可です。entry / SL / TP はすべて算出済み。</div>
     <div class="table-scroll">
@@ -530,7 +628,7 @@
     <div class="empty-state" id="focusEmpty" style="display:none;">現在 Focus 対象はありません（市場状況により変動します）</div>
   </section>
 
-  <section class="card">
+  <section class="card legacy-routing" aria-hidden="true">
     <h2>Watch 上位20（スコア順） <span class="count-badge" id="watchCount">0件</span></h2>
     <div class="hint">条件待ちの銘柄。昇格条件（あと何が揃えばFocusになるか）を表示。</div>
     <div class="table-scroll">
@@ -544,7 +642,7 @@
     <div class="empty-state" id="watchEmpty" style="display:none;">Watch 対象はありません</div>
   </section>
 
-  <section class="card">
+  <section class="card legacy-routing" aria-hidden="true">
     <h2>Pool / Excluded 内訳</h2>
     <div class="hint">監視対象・除外銘柄の理由別内訳（件数）。</div>
     <div id="poolExcludedSummary" style="font-size:12.5px;"></div>
@@ -786,14 +884,34 @@
       </tr>`).join("");
   }
 
-  function renderReservations(pendingOrders, nextSessionPlans) {
-    const now = Date.now();
-    const rows = [...(pendingOrders || []), ...(nextSessionPlans || [])]
+  function activeReservationRows(rows, now) {
+    return [...(rows || [])]
       .filter(r => r.reservationStatus === "PENDING")
       .filter(r => {
         const until = Date.parse(r.validUntil || "");
         return Number.isFinite(until) && now < until;
       });
+  }
+
+  function renderReservations(pendingOrders, nextSessionPlans) {
+    const now = Date.now();
+    const activePending = activeReservationRows(pendingOrders, now);
+    const activeNext = activeReservationRows(nextSessionPlans, now);
+    const rows = [...activePending, ...activeNext];
+    const targetDates = [...new Set(rows.map(r => r.targetTradeDate).filter(Boolean))].sort();
+    const sessions = [...new Set(rows.map(r => r.reservationSession).filter(Boolean))];
+    const sessionLabels = { MORNING: "朝", AFTERNOON: "午後" };
+    const notSubmittedCount = rows.filter(r => {
+      const orderState = r.brokerOrderStatus || r.orderStatus || r.submissionStatus || "";
+      return orderState === "NOT_SUBMITTED" || activeNext.includes(r);
+    }).length;
+
+    $("reservationHeroCount").textContent = rows.length;
+    $("reservationNextCount").textContent = activeNext.length;
+    $("reservationPendingCount").textContent = activePending.length;
+    $("reservationNotSubmitted").textContent = notSubmittedCount;
+    $("reservationTargetDate").textContent = targetDates.length === 1 ? targetDates[0] : (targetDates.length ? `${targetDates.length}日程` : "—");
+    $("reservationSession").textContent = sessions.length === 1 ? (sessionLabels[sessions[0]] || sessions[0]) : (sessions.length ? "複数場" : "");
     $("reservationCount").textContent = rows.length + "件";
     const body = $("reservationBody");
     if (!rows.length) {
