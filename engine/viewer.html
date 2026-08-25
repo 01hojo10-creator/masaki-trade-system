@@ -648,7 +648,7 @@
     <div id="poolExcludedSummary" style="font-size:12.5px;"></div>
   </section>
 
-  <section class="card edit-panel">
+  <section class="card edit-panel legacy-routing" aria-hidden="true">
     <h2>銘柄管理（スキャンユニバース編集）</h2>
     <div class="edit-warning">
       ⚠️ この操作のみ<span class="mono">http://127.0.0.1:8796</span>（編集専用サーバー・bridgeとは別ポート）への
@@ -1300,7 +1300,7 @@
     if (btn) deleteSymbol(btn.dataset.code, btn);
   });
 
-  loadUniverse();
+  // Public snapshot: universe editor intentionally disabled.
 })();
 </script>
 </body>
