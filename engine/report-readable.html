@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>MTS-Eval 成績ダイジェスト</title>
+<style>
+:root{
+  --ink:#102d30;
+  --ink-soft:#345357;
+  --paper:#f7f2e7;
+  --paper-2:#fffdf7;
+  --line:#d8d1c3;
+  --good:#16705c;
+  --good-soft:#dcece5;
+  --bad:#bd4438;
+  --bad-soft:#f5dfda;
+  --warn:#aa7620;
+  --warn-soft:#f3e6c9;
+  --open:#456f91;
+  --open-soft:#dfeaf2;
+  --shadow:0 16px 40px rgba(24,52,54,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 90% 6%,rgba(192,145,63,.16),transparent 28rem),
+    linear-gradient(rgba(16,45,48,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(16,45,48,.025) 1px,transparent 1px),
+    var(--paper);
+  background-size:auto,28px 28px,28px 28px,auto;
+  font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+  line-height:1.68;
+}
+a{color:inherit}
+.wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}
+.mast{
+  position:relative;
+  overflow:hidden;
+  padding:52px 0 46px;
+  color:#fdf9ef;
+  background:
+    linear-gradient(115deg,rgba(189,68,56,.18),transparent 44%),
+    linear-gradient(145deg,#0b292c,#173f42 70%,#244e4d);
+}
+.mast:after{
+  content:"";
+  position:absolute;
+  width:340px;height:340px;
+  right:-80px;top:-180px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:50%;
+  box-shadow:0 0 0 42px rgba(255,255,255,.035),0 0 0 84px rgba(255,255,255,.025);
+}
+.eyebrow{
+  display:flex;gap:10px;align-items:center;
+  font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:#e1bd78;
+}
+.eyebrow:before{content:"";width:32px;height:2px;background:#e1bd78}
+h1,h2,h3{font-family:"Yu Mincho","Hiragino Mincho ProN",Georgia,serif}
+h1{margin:12px 0 8px;font-size:clamp(32px,5vw,58px);line-height:1.12;letter-spacing:.02em}
+.lead{max-width:760px;margin:0;color:#dbe7e3;font-size:15px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 11px;border:1px solid rgba(255,255,255,.2);border-radius:999px;
+  background:rgba(255,255,255,.07);font-size:12px;color:#f7f1e4
+}
+.mast-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.action{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 15px;border-radius:10px;text-decoration:none;font-weight:800;font-size:13px;
+  background:#f7f1e4;color:#17383a;box-shadow:0 8px 18px rgba(0,0,0,.13)
+}
+.action.secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.28);box-shadow:none}
+main{padding:34px 0 60px}
+.notice{
+  display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;
+  padding:15px 18px;margin-bottom:24px;border:1px solid #dcccae;border-radius:14px;
+  background:rgba(255,250,237,.84);color:#674d20;font-size:13px
+}
+.notice strong{display:block;color:#503a18}
+.dot-live{width:10px;height:10px;border-radius:50%;background:#d4962c;margin-top:7px;box-shadow:0 0 0 5px rgba(212,150,44,.14)}
+.section{margin-top:28px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:13px}
+.section-head h2{margin:0;font-size:clamp(22px,3vw,31px);line-height:1.2}
+.section-head p{margin:0;color:var(--ink-soft);font-size:12px;text-align:right}
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+.panel{
+  border:1px solid rgba(42,70,72,.14);border-radius:18px;
+  background:rgba(255,253,247,.92);box-shadow:var(--shadow);padding:22px
+}
+.verdict{position:relative;overflow:hidden;background:linear-gradient(135deg,#fffdf7,#f0eadc)}
+.verdict:after{content:"";position:absolute;right:-45px;bottom:-65px;width:180px;height:180px;border-radius:50%;background:rgba(189,68,56,.07)}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--ink-soft)}
+.big-money{margin:5px 0 2px;font-family:"Yu Mincho",Georgia,serif;font-size:clamp(36px,5vw,62px);font-weight:800;line-height:1;color:var(--bad)}
+.big-money small{font-size:.42em}
+.subline{font-size:13px;color:var(--ink-soft)}
+.readout{margin:18px 0 0;padding-top:15px;border-top:1px solid var(--line);font-size:14px}
+.readout strong{color:var(--bad)}
+.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.mini{padding:15px;border-radius:14px;background:#f3eee2;border:1px solid #e3dccf}
+.mini .label{font-size:11px;color:var(--ink-soft)}
+.mini .value{font-family:"Yu Mincho",Georgia,serif;font-size:27px;font-weight:800;line-height:1.2;margin-top:4px}
+.mini .note{font-size:10px;color:#607477;margin-top:3px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+.kpi{padding:17px;border-radius:15px;background:var(--paper-2);border:1px solid var(--line)}
+.kpi span{display:block;font-size:11px;color:var(--ink-soft)}
+.kpi b{display:block;margin-top:3px;font-family:"Yu Mincho",Georgia,serif;font-size:27px;line-height:1.2}
+.kpi small{display:block;margin-top:4px;color:#64787a;font-size:10px}
+.status-strip{display:flex;width:100%;height:22px;overflow:hidden;border-radius:999px;background:#e8e3d9;margin:17px 0 14px}
+.status-strip span{display:block;height:100%}
+.win{background:var(--good)}.loss{background:var(--bad)}.be{background:var(--warn)}.open{background:var(--open)}
+.legend{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.legend-item{padding:10px 11px;border-radius:12px;font-size:11px;border:1px solid var(--line);background:#fff}
+.legend-item b{display:block;font-family:"Yu Mincho",Georgia,serif;font-size:22px}
+.legend-item i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.split{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.direction{position:relative}
+.direction h3{margin:0 0 3px;font-size:23px}
+.direction .money{font-family:"Yu Mincho",Georgia,serif;font-size:34px;font-weight:800}
+.positive{color:var(--good)}.negative{color:var(--bad)}.muted{color:var(--ink-soft)}
+.metrics-line{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.metrics-line span{padding:5px 8px;border-radius:8px;background:#f1ece1;font-size:11px}
+.insight{
+  margin-top:13px;padding:11px 13px;border-left:4px solid var(--warn);background:var(--warn-soft);
+  border-radius:0 10px 10px 0;font-size:12px;color:#604716
+}
+.chart{display:grid;gap:7px}
+.chart-row{display:grid;grid-template-columns:52px 1fr 82px;gap:9px;align-items:center;font-size:11px}
+.bar-track{position:relative;height:12px;border-radius:4px;background:#ece7dc;overflow:hidden}
+.bar-track:after{content:"";position:absolute;top:0;bottom:0;left:50%;width:1px;background:#999185}
+.bar{position:absolute;top:1px;bottom:1px;border-radius:3px;min-width:1px}
+.bar.pos{left:50%;background:var(--good)}
+.bar.neg{right:50%;background:var(--bad)}
+.chart-val{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:590px;font-size:12px}
+th,td{padding:11px 12px;border-bottom:1px solid #ece7dd;text-align:left;white-space:nowrap}
+th{position:sticky;top:0;background:#173d40;color:#fff;font-size:10px;letter-spacing:.05em}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.badge{display:inline-flex;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.04em}
+.badge.WIN{background:var(--good-soft);color:var(--good)}
+.badge.LOSS{background:var(--bad-soft);color:var(--bad)}
+.badge.BREAKEVEN{background:var(--warn-soft);color:#8b611d}
+.badge.OPEN{background:var(--open-soft);color:var(--open)}
+.rank-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.watch{
+  display:grid;grid-template-columns:1.2fr repeat(5,minmax(80px,1fr));gap:10px;align-items:stretch
+}
+.watch-lead{padding:18px;border-radius:14px;background:#173d40;color:#fff}
+.watch-lead b{display:block;font-family:"Yu Mincho",Georgia,serif;font-size:34px}
+.watch-stat{padding:15px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.watch-stat b{display:block;font-family:"Yu Mincho",Georgia,serif;font-size:26px}
+.watch-stat span{font-size:10px;color:var(--ink-soft)}
+.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.note{padding:16px;border-radius:14px;border:1px solid var(--line);background:#fff}
+.note b{display:block;margin-bottom:4px;font-size:13px}
+.note p{margin:0;color:var(--ink-soft);font-size:11px}
+.provenance{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:10px;color:#607476;overflow-wrap:anywhere}
+.local-only{font-weight:900;color:#d8ad62}
+.reveal{animation:rise .55s both}
+.reveal:nth-child(2){animation-delay:.06s}.reveal:nth-child(3){animation-delay:.12s}.reveal:nth-child(4){animation-delay:.18s}
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@media(max-width:850px){
+  .hero-grid,.split,.rank-grid{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .watch{grid-template-columns:repeat(2,1fr)}.watch-lead{grid-column:1/-1}
+  .notes{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .wrap{width:min(100% - 24px,1180px)}.mast{padding:38px 0 34px}
+  h1{font-size:36px}.panel{padding:17px}.legend{grid-template-columns:repeat(2,1fr)}
+  .section-head{display:block}.section-head p{text-align:left;margin-top:4px}
+  .chart-row{grid-template-columns:43px 1fr 72px}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}.reveal{animation:none}}
+@media print{
+  body{background:#fff}.mast{padding:24px 0;color:#102d30;background:#fff;border-bottom:2px solid #102d30}
+  .mast .lead,.mast .pill,.mast .action.secondary{color:#102d30}.mast-actions{display:none}
+  .panel,.kpi{box-shadow:none;break-inside:avoid}.section{break-inside:avoid}.wrap{width:100%}
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap">
+    <div class="eyebrow">MTS-Eval / Local digest</div>
+    <h1>成績を、迷わず読む。</h1>
+    <p class="lead">現行基準で実際に採用されたFocusだけを主役にした軽量レポートです。詳細検証は既存の公式レポートへ残し、ここでは成績の方向・弱点・観測範囲を短時間で確認できます。</p>
+    <div class="meta">
+      <span class="pill">対象シグナル 2026-08-05〜2026-08-14</span>
+      <span class="pill">現行Focus 127件</span>
+      <span class="pill">生成 2026-08-25 18:45:32 JST</span>
+      <span class="pill local-only">LOCAL ONLY / 非公開</span>
+    </div>
+    <div class="mast-actions">
+      <a class="action" href="eval_report.html">詳細レポートを開く →</a>
+      <a class="action secondary" href="#method">集計条件を確認</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="notice reveal">
+    <span class="dot-live" aria-hidden="true"></span>
+    <div><strong>対象日時の注意</strong>CSVと詳細HTMLは 2026-08-25 15:47 JST 更新。Focusシグナルの最新日は 2026-08-14、保有中7件の評価時点は 2026-08-25 15:30 JST です。</div>
+  </div>
+
+  <section class="section reveal" aria-labelledby="overview">
+    <div class="section-head">
+      <h2 id="overview">最初に見る成績</h2>
+      <p>現行期間・current_basis=TAKEN・一律100株</p>
+    </div>
+    <div class="hero-grid">
+      <article class="panel verdict">
+        <div class="kicker">CURRENT TOTAL P&amp;L</div>
+        <div class="big-money">−40,103<small>円</small></div>
+        <div class="subline">確定 −48,903円 ＋ 保有中評価 +8,800円</div>
+        <p class="readout"><strong>現時点ではプラス優位を確認できません。</strong>確定損益と平均Rがマイナスです。一方、LONGはプラスで、SHORT 17件の損失が全体を押し下げています。</p>
+      </article>
+      <article class="panel">
+        <div class="mini-grid">
+          <div class="mini"><div class="label">勝率</div><div class="value">29.6%</div><div class="note">24勝 / 57敗</div></div>
+          <div class="mini"><div class="label">確定件数</div><div class="value">120</div><div class="note">建値撤退39件を含む</div></div>
+          <div class="mini"><div class="label">保有中</div><div class="value">7</div><div class="note">全件 valuation=FINAL</div></div>
+          <div class="mini"><div class="label">対象Focus</div><div class="value">127</div><div class="note">現行基準採用分のみ</div></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><span>プロフィットファクター</span><b>0.91</b><small>総利益 484,317円 / 総損失 533,220円</small></div>
+      <div class="kpi"><span>平均実現R</span><b>−0.09R</b><small>確定120件、中央値 0.00R</small></div>
+      <div class="kpi"><span>確定損益DD</span><b>−143,471円</b><small>決済日順の累積損益から算出</small></div>
+      <div class="kpi"><span>母集団</span><b>10日</b><small>シグナル日 8/5〜8/14、短期観測</small></div>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="outcomes">
+    <div class="section-head">
+      <h2 id="outcomes">127件の現在地</h2>
+      <p>勝率の分母はWIN+LOSSのみ。建値撤退とOPENは分母外</p>
+    </div>
+    <div class="panel">
+      <div class="status-strip" role="img" aria-label="WIN 24件、LOSS 57件、建値撤退39件、保有中7件">
+        <span class="win" style="width:18.9%"></span>
+        <span class="loss" style="width:44.9%"></span>
+        <span class="be" style="width:30.7%"></span>
+        <span class="open" style="width:5.5%"></span>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span><i class="win"></i>WIN</span><b>24</b><small>18.9% of all</small></div>
+        <div class="legend-item"><span><i class="loss"></i>LOSS</span><b>57</b><small>44.9% of all</small></div>
+        <div class="legend-item"><span><i class="be"></i>建値撤退</span><b>39</b><small>30.7% of all</small></div>
+        <div class="legend-item"><span><i class="open"></i>保有中</span><b>7</b><small>5.5% of all</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="direction">
+    <div class="section-head">
+      <h2 id="direction">方向別で差が大きい</h2>
+      <p>公式ルールの変更提案ではなく、現行成績の内訳表示</p>
+    </div>
+    <div class="split">
+      <article class="panel direction">
+        <div class="kicker">LONG / 110件</div>
+        <h3>ロング</h3>
+        <div class="money positive">+61,998円</div>
+        <div class="metrics-line"><span>WIN 24</span><span>LOSS 44</span><span>建値 37</span><span>OPEN 5</span><span>勝率 35.3%</span></div>
+        <div class="insight">現行Focusの確定損益はLONG側がプラスです。ただし期間が短く、継続観測が必要です。</div>
+      </article>
+      <article class="panel direction">
+        <div class="kicker">SHORT / 17件</div>
+        <h3>ショート</h3>
+        <div class="money negative">−110,901円</div>
+        <div class="metrics-line"><span>WIN 0</span><span>LOSS 13</span><span>建値 2</span><span>OPEN 2</span><span>勝率 0.0%</span></div>
+        <div class="insight">17件という小さい母集団ですが、現時点の全体損益を最も強く押し下げている区分です。</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="timeline">
+    <div class="section-head">
+      <h2 id="timeline">決済損益の波</h2>
+      <p>日別確定損益。中央線より右がプラス、左がマイナス</p>
+    </div>
+    <div class="panel chart">
+      <div class="chart-row"><span>8/05</span><div class="bar-track"><i class="bar neg" style="width:1.6%"></i></div><span class="chart-val negative">−4,232</span></div>
+      <div class="chart-row"><span>8/06</span><div class="bar-track"><i class="bar neg" style="width:23.3%"></i></div><span class="chart-val negative">−60,658</span></div>
+      <div class="chart-row"><span>8/07</span><div class="bar-track"><i class="bar neg" style="width:28.0%"></i></div><span class="chart-val negative">−72,698</span></div>
+      <div class="chart-row"><span>8/10</span><div class="bar-track"><i class="bar pos" style="width:50.0%"></i></div><span class="chart-val positive">+129,893</span></div>
+      <div class="chart-row"><span>8/12</span><div class="bar-track"><i class="bar neg" style="width:9.8%"></i></div><span class="chart-val negative">−25,399</span></div>
+      <div class="chart-row"><span>8/13</span><div class="bar-track"><i class="bar neg" style="width:5.5%"></i></div><span class="chart-val negative">−14,334</span></div>
+      <div class="chart-row"><span>8/14</span><div class="bar-track"><i class="bar pos" style="width:38.9%"></i></div><span class="chart-val positive">+101,092</span></div>
+      <div class="chart-row"><span>8/17</span><div class="bar-track"><i class="bar neg" style="width:13.5%"></i></div><span class="chart-val negative">−35,007</span></div>
+      <div class="chart-row"><span>8/18</span><div class="bar-track"><i class="bar pos" style="width:22.8%"></i></div><span class="chart-val positive">+59,216</span></div>
+      <div class="chart-row"><span>8/19</span><div class="bar-track"><i class="bar neg" style="width:49.9%"></i></div><span class="chart-val negative">−129,551</span></div>
+      <div class="chart-row"><span>8/20</span><div class="bar-track"><i class="bar neg" style="width:5.4%"></i></div><span class="chart-val negative">−13,920</span></div>
+      <div class="chart-row"><span>8/21</span><div class="bar-track"></div><span class="chart-val">±0</span></div>
+      <div class="chart-row"><span>8/25</span><div class="bar-track"><i class="bar pos" style="width:6.4%"></i></div><span class="chart-val positive">+16,695</span></div>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="ranks">
+    <div class="section-head">
+      <h2 id="ranks">寄与が大きかった銘柄</h2>
+      <p>確定損益・一律100株。因果関係を示すものではありません</p>
+    </div>
+    <div class="rank-grid">
+      <div>
+        <h3>上位5件</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>銘柄</th><th>方向</th><th>決済日</th><th class="num">損益</th><th class="num">R</th></tr></thead>
+          <tbody>
+            <tr><td>5711 三菱マテリアル</td><td>LONG</td><td>8/10</td><td class="num positive">+80,729円</td><td class="num">3.00</td></tr>
+            <tr><td>3778 さくらインターネット</td><td>LONG</td><td>8/18</td><td class="num positive">+51,291円</td><td class="num">2.00</td></tr>
+            <tr><td>4478 フリー</td><td>LONG</td><td>8/14</td><td class="num positive">+49,187円</td><td class="num">4.07</td></tr>
+            <tr><td>6963 ローム</td><td>LONG</td><td>8/18</td><td class="num positive">+38,998円</td><td class="num">1.50</td></tr>
+            <tr><td>4044 セントラル硝子</td><td>LONG</td><td>8/10</td><td class="num positive">+37,673円</td><td class="num">2.00</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        <h3>下位5件</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>銘柄</th><th>方向</th><th>決済日</th><th class="num">損益</th><th class="num">R</th></tr></thead>
+          <tbody>
+            <tr><td>6946 日本アビオニクス</td><td>LONG</td><td>8/19</td><td class="num negative">−26,844円</td><td class="num">−1.00</td></tr>
+            <tr><td>7013 IHI</td><td>SHORT</td><td>8/12</td><td class="num negative">−25,486円</td><td class="num">−1.00</td></tr>
+            <tr><td>3107 ダイワボウHD</td><td>LONG</td><td>8/19</td><td class="num negative">−23,944円</td><td class="num">−1.00</td></tr>
+            <tr><td>6965 浜松ホトニクス</td><td>LONG</td><td>8/19</td><td class="num negative">−21,451円</td><td class="num">−1.00</td></tr>
+            <tr><td>6113 アマダ</td><td>LONG</td><td>8/07</td><td class="num negative">−21,390円</td><td class="num">−1.00</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="recent">
+    <div class="section-head">
+      <h2 id="recent">最新シグナル日の例</h2>
+      <p>2026-08-14の現行基準Focusから抜粋</p>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>銘柄</th><th>方向</th><th>状態</th><th class="num">現在/確定損益</th><th>補足</th></tr></thead>
+      <tbody>
+        <tr><td>2269 明治HD</td><td>LONG</td><td><span class="badge WIN">WIN</span></td><td class="num positive">+16,695円</td><td>確定</td></tr>
+        <tr><td>1812 鹿島建設</td><td>LONG</td><td><span class="badge WIN">WIN</span></td><td class="num positive">+6,224円</td><td>確定</td></tr>
+        <tr><td>9504 中国電力</td><td>LONG</td><td><span class="badge WIN">WIN</span></td><td class="num positive">+4,355円</td><td>確定</td></tr>
+        <tr><td>1332 ニッスイ</td><td>LONG</td><td><span class="badge OPEN">OPEN</span></td><td class="num negative">−1,200円</td><td>8/25 15:30評価</td></tr>
+        <tr><td>3635 コーエーテクモHD</td><td>LONG</td><td><span class="badge BREAKEVEN">建値</span></td><td class="num">±0円</td><td>確定</td></tr>
+        <tr><td>5032 ANYCOLOR</td><td>LONG</td><td><span class="badge LOSS">LOSS</span></td><td class="num negative">−11,363円</td><td>確定</td></tr>
+        <tr><td>7751 キヤノン</td><td>LONG</td><td><span class="badge LOSS">LOSS</span></td><td class="num negative">−10,649円</td><td>確定</td></tr>
+        <tr><td>6465 ホシザキ</td><td>LONG</td><td><span class="badge LOSS">LOSS</span></td><td class="num negative">−18,510円</td><td>確定</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="watch">
+    <div class="section-head">
+      <h2 id="watch">Watchは参考枠</h2>
+      <p>Focusの公式成績とは混ぜません</p>
+    </div>
+    <div class="watch">
+      <div class="watch-lead"><span>参考勝率</span><b>27.3%</b><small>311 WIN / 828 LOSS</small></div>
+      <div class="watch-stat"><b>1,748</b><span>現行Watch行</span></div>
+      <div class="watch-stat"><b>278</b><span>OPEN</span></div>
+      <div class="watch-stat"><b>196</b><span>Entry待ち</span></div>
+      <div class="watch-stat"><b>135</b><span>Focus昇格済み</span></div>
+      <div class="watch-stat"><b>1,139</b><span>WIN+LOSS</span></div>
+    </div>
+  </section>
+
+  <section class="section reveal" id="method" aria-labelledby="method-title">
+    <div class="section-head">
+      <h2 id="method-title">このレポートの読み方</h2>
+      <p>事実データはCSV、ここは閲覧用の派生HTML</p>
+    </div>
+    <div class="notes">
+      <div class="note"><b>勝率</b><p>WIN ÷ (WIN + LOSS)。建値撤退39件と保有中7件は分母に含めません。</p></div>
+      <div class="note"><b>損益</b><p>全銘柄一律100株のシミュレーション。手数料、スリッページ、実約定差は含みません。</p></div>
+      <div class="note"><b>正式対象</b><p>2026-08-04以降のcurrent期間かつ current_basis=TAKEN のFocusのみを主集計しています。</p></div>
+      <div class="note"><b>保有中評価</b><p>OPEN 7件はすべて valuation_status=FINAL。確定損益とは分けて表示します。</p></div>
+      <div class="note"><b>データ源</b><p>MTS-Evalの正本CSV。価格評価は既存ルールどおりyfinance由来で、MTS判断は変更しません。</p></div>
+      <div class="note"><b>期間の短さ</b><p>シグナル日は10日間です。方向別や銘柄別の差を将来成績の保証として扱わないでください。</p></div>
+    </div>
+    <div class="provenance">
+      schemaVersion: mts_eval_readable_report_v1<br>
+      source: outputs/eval_results.csv<br>
+      sourceRowCount: 7,014 / targetRowCount: 127<br>
+      sourceCsvSha256: 69f5073f000d00292b14825bee2de0836c00bf276fed9643f1b4719e0242026a<br>
+      sourceDetailedReportSha256: b45961cc847c8d7b75ba6ee8dcc7662a7ac49bb3e05a250e686217ee0599f1b7<br>
+      missingInformation: なし（OPEN 7件は全件FINAL）。本HTMLはローカル閲覧専用で、公開対象ではありません。
+    </div>
+  </section>
+</main>
+</body>
+</html>
