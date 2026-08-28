@@ -64,8 +64,7 @@
   }
   body { padding: 16px; max-width: 1280px; margin: 0 auto; }
 
-  /* 公開版では編集パネルだけを非表示にし、WATCH/Focus/Poolは公開する。 */
-  .legacy-routing { display: none !important; }
+  /* 編集パネルは公開ページでも表示し、8796未接続時はJSで無効化する。 */
 
   .watch-hero {
     position: relative;
@@ -527,7 +526,7 @@
   <div class="banner">
     <div class="titlewrap">
       <h1>MTS新エンジン 公開ビューア</h1>
-      <div class="subtitle">GitHub Pages 公開スナップショット（約5分毎更新・読取専用）</div>
+      <div class="subtitle">GitHub Pages 公開スナップショット（約5分毎更新）。銘柄管理はローカル編集サービス接続時のみ利用できます。</div>
     </div>
     <span class="pill" id="connPill"><span class="dot"></span><span id="connText">接続確認中…</span></span>
     <a class="report-link" id="reportBtn" href="./report.html" target="_blank" rel="noopener noreferrer">📊 成績レポート</a>
@@ -558,23 +557,6 @@
     <span>スキャン: <b id="mScan">—</b></span>
     <span>次回自動更新まで: <b id="mCountdown">—</b></span>
   </div>
-
-  <section class="watch-hero" aria-labelledby="watchHeroTitle">
-    <div class="watch-overline">ACTIVE ROUTE / WATCH → ENTRY</div>
-    <div class="watch-head">
-      <div>
-        <h2 class="watch-title" id="watchHeroTitle">WATCH / 監視銘柄</h2>
-        <p class="watch-lead">現行G1〜G9と現在価格の条件を監視しています。条件を満たしてFocusへ初回昇格した時点がENTRYです。WATCHでは、現在の未達理由とENTRY待ち条件を表示します。</p>
-      </div>
-      <div class="watch-total"><strong id="watchHeroCount">—</strong><span>監視中</span></div>
-    </div>
-    <div class="watch-summary" aria-label="WATCHの概要">
-      <div class="watch-stat"><span class="label">表示中</span><strong id="watchVisibleCount">—</strong><small>件</small></div>
-      <div class="watch-stat"><span class="label">ENTRY待ち</span><strong id="watchWaitingCount">—</strong><small>件</small></div>
-      <div class="watch-stat"><span class="label">ENTRY候補</span><strong id="focusHeroCount">—</strong><small>件</small></div>
-      <div class="watch-stat"><span class="label">市場日</span><strong id="watchMarketDate">—</strong><small>更新中</small></div>
-    </div>
-  </section>
 
   <div class="tiles">
     <div class="tile tile-focus" id="tFocusTile">
@@ -616,17 +598,18 @@
   </section>
 
   <section class="card">
-    <h2>WATCH / 監視銘柄（上位10） <span class="count-badge" id="watchCount">0件</span></h2>
-    <div class="hint">候補判定は現行ルールのままです。各銘柄の現在のENTRY待ち理由と、未達条件が揃えばFocusへ進む条件を表示します。</div>
+    <h2>WATCH銘柄 <span class="count-badge" id="watchCount">0件</span></h2>
+    <div class="hint">実選定結果をスコア順で最大10件表示します。</div>
     <div class="table-scroll">
       <table id="watchTable">
         <thead><tr>
-          <th>#</th><th>銘柄</th><th>方向</th><th class="num">スコア</th><th>状態</th><th>現在のENTRY待ち理由</th><th>ENTRY待ち条件</th><th>チャート</th>
+          <th>#</th><th>銘柄</th><th>方向</th><th class="num">スコア</th><th>チャート</th>
         </tr></thead>
         <tbody id="watchBody"></tbody>
       </table>
     </div>
-    <div class="empty-state" id="watchEmpty" style="display:none;">Watch 対象はありません</div>
+    <div class="empty-state" id="watchEmpty" style="display:none;">実WATCH未生成</div>
+    <div class="hint-text" id="watchDataSource" style="margin-top:8px;">実WATCH snapshotを確認中</div>
   </section>
 
   <section class="card">
@@ -635,7 +618,7 @@
     <div id="poolExcludedSummary" style="font-size:12.5px;"></div>
   </section>
 
-  <section class="card edit-panel legacy-routing" aria-hidden="true">
+  <section class="card edit-panel">
     <h2>銘柄管理（スキャンユニバース編集）</h2>
     <div class="edit-warning">
       ⚠️ この操作のみ<span class="mono">http://127.0.0.1:8796</span>（編集専用サーバー・bridgeとは別ポート）への
@@ -852,9 +835,6 @@
     const body = $("watchBody");
     if (!rows.length) {
       $("watchCount").textContent = "0件";
-      $("watchHeroCount").textContent = "0";
-      $("watchVisibleCount").textContent = "0";
-      $("watchWaitingCount").textContent = "0";
       body.innerHTML = "";
       $("watchTable").style.display = "none";
       $("watchEmpty").style.display = "block";
@@ -866,22 +846,102 @@
     $("watchCount").textContent = top.length === rows.length
       ? `${rows.length}件`
       : `${top.length}/${rows.length}件`;
-    $("watchHeroCount").textContent = rows.length;
-    $("watchVisibleCount").textContent = top.length;
-    $("watchWaitingCount").textContent = rows.length;
     body.innerHTML = top.map((r, i) => `
       <tr>
         <td>${i + 1}</td>
         <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div></td>
         <td>${dirBadge(r.tradeDirection, r.directionLabel)}</td>
         <td class="num">${fmtNum(r.score, 1)}</td>
-        <td>${stateBadge(r.stateClassification, r.stateLabel)}</td>
-        <td class="hint-text"><b>現在:</b> ${esc(r.finalActionLabel || r.reason || "条件待ち")}
-          <div class="mono">reason: ${esc(r.reason || "—")}</div></td>
-        <td class="hint-text"><b>未達:</b> ${esc((Array.isArray(r.missingConditions) ? r.missingConditions : []).join(" / ") || "—")}
-          <div>${esc(r.promotionHint || "条件が揃えばFocus")}</div></td>
         <td>${chartLink(r.code)}</td>
       </tr>`).join("");
+  }
+
+  function isSyntheticWatchRow(row) {
+    const name = String(row && row.name || "").trim();
+    return /^WATCH候補\d+$/.test(name);
+  }
+
+  function watchRowsForDisplay(data) {
+    const marker = `${data && data.source || ""} ${data && data.runId || ""}`.toLowerCase();
+    const fixtureSnapshot = /fixture|dummy|pre-public-viewer-watch10/.test(marker);
+    const direct = Array.isArray(data && data.watch) ? data.watch : [];
+    if (fixtureSnapshot || direct.some(isSyntheticWatchRow)) {
+      return {
+        rows: [],
+        sourceLabel: "実WATCH未生成（fixture・ダミー表示を拒否）",
+        emptyLabel: "実WATCH未生成",
+      };
+    }
+    if (direct.length) {
+      return {
+        rows: direct,
+        sourceLabel: "実市場データから生成したWATCH snapshot",
+        emptyLabel: "実WATCH未生成",
+      };
+    }
+
+    // 旧schemaのsnapshotでは、実際に選定された詳細プランだけが
+    // pendingOrders / nextSessionPlans に残る。選外行やfixtureから補完せず、
+    // 保存済み実選定結果を表示互換としてWATCHへ読み替える。
+    const savedPlans = [
+      ...(Array.isArray(data && data.pendingOrders) ? data.pendingOrders : []),
+      ...(Array.isArray(data && data.nextSessionPlans) ? data.nextSessionPlans : []),
+    ];
+    const seen = new Set();
+    const selected = savedPlans
+      .filter((plan) => {
+        const code = String(plan && plan.code || "").trim();
+        const name = String(plan && plan.name || "").trim();
+        const score = Number(plan && plan.score);
+        if (!code || !name || !Number.isFinite(score) || isSyntheticWatchRow(plan)) return false;
+        if (seen.has(code)) return false;
+        seen.add(code);
+        return true;
+      })
+      .sort((a, b) => Number(b.score) - Number(a.score))
+      .slice(0, 10)
+      .map((plan, index) => ({
+        rank: index + 1,
+        code: plan.code,
+        name: plan.name,
+        tradeDirection: plan.tradeDirection,
+        stateClassification: "watch",
+        stateLabel: "保存済み実選定",
+        score: plan.score,
+        reason: "saved_real_selection_no_5m_observation",
+        finalAction: "WAIT",
+        finalActionLabel: "保存済み実選定 / ENTRY結果未収録",
+        missingConditions: ["completed_5m_entry_observation_not_saved"],
+        promotionHint: `保存済み実選定（有効期限 ${plan.validUntil || "不明"}）。完成5分足のENTRY判定結果はこのsnapshotに未収録です。`,
+        plannedEntryPrice: plan.riskEntryPrice,
+        sl: plan.sl,
+        tp: plan.tp1,
+        tp1: plan.tp1,
+        tp2: plan.tp2,
+        tp3: plan.tp3,
+        rr: plan.rr,
+        shares: plan.shares,
+        watchId: `watch-${plan.signalId || plan.code}`,
+        watchStartedAt: plan.validFrom,
+        watchValidUntil: plan.validUntil,
+        watchSourceBarStartAt: plan.sourceBarStartAt,
+        watchSourceBarCloseAt: plan.sourceBarCloseAt,
+        watchSourceBarAvailableAt: plan.barAvailableAt,
+        watchEntryLowerPrice: plan.entryLowerPrice,
+        watchEntryUpperPrice: plan.entryUpperPrice,
+        watchSelectionPolicyVersion: plan.entryPolicyVersion,
+        entryPolicyVersion: plan.entryPolicyVersion,
+        effectiveFrom: plan.effectiveFrom,
+        entryRevalidated: false,
+        entryRevalidationReason: "completed_5m_entry_observation_not_saved",
+      }));
+    return {
+      rows: selected,
+      sourceLabel: selected.length
+        ? `最新の保存済み実市場データから ${selected.length}件を表示（架空補完なし）`
+        : "実WATCH未生成",
+      emptyLabel: "実WATCH未生成",
+    };
   }
 
   function renderPoolExcluded(pool, excluded) {
@@ -912,7 +972,10 @@
     const scan = data.scan || {};
     $("mScan").textContent = `${scan.current ?? "?"}/${scan.total ?? "?"} 銘柄 ・ ${scan.complete ? "完了" : (scan.active ? "進行中" : "未完了")}`;
 
-    const focus = data.focus || [], watch = data.watch || [], pool = data.pool || [], excluded = data.excluded || [];
+    const watchView = watchRowsForDisplay(data);
+    const focus = data.focus || [], watch = watchView.rows, pool = data.pool || [], excluded = data.excluded || [];
+    $("watchDataSource").textContent = watchView.sourceLabel;
+    $("watchEmpty").textContent = watchView.emptyLabel;
     const marketGateFocusCount = focus.filter((r) => r.marketGateActive === true).length;
     const earningsWarningFocusCount = focus.filter((r) => r.earningsWarningActive === true).length;
 
@@ -934,9 +997,6 @@
     $("tWatchBreak").textContent = directionBreakdown(watch);
     $("tPoolBreak").textContent = directionBreakdown(pool);
     $("tExcludedBreak").textContent = directionBreakdown(excluded);
-    $("focusHeroCount").textContent = focus.length;
-    $("watchMarketDate").textContent = data.marketDate || "—";
-
     renderFocus(focus);
     renderWatch(watch);
     renderPoolExcluded(pool, excluded);
@@ -1283,7 +1343,7 @@
     if (btn) deleteSymbol(btn.dataset.code, btn);
   });
 
-  // Public snapshot: universe editor intentionally disabled.
+  loadUniverse();
 })();
 </script>
 </body>
