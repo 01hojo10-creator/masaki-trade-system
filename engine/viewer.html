@@ -152,6 +152,52 @@
     td.code .hint-text { font-size: 15px; }
   }
 
+  /* 今後のイベント帯（engine/events.json を表示するだけ。判定には無関係） */
+  .events-band {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin: 0 0 10px;
+  }
+  .events-head {
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    margin-bottom: 4px;
+  }
+  .events-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+  .events-list li {
+    display: flex; align-items: center; gap: 8px; min-width: 0;
+    padding: 4px 8px;
+    border-left: 4px solid var(--status-neutral);
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--page-plane) 58%, transparent);
+  }
+  .events-list li.ev-boj     { border-left-color: var(--status-critical); }
+  .events-list li.ev-fomc    { border-left-color: var(--dir-long); }
+  .events-list li.ev-index   { border-left-color: var(--status-warning); }
+  .events-list li.ev-us_data { border-left-color: var(--status-earnings); }
+  .events-list li.ev-other   { border-left-color: var(--status-neutral); }
+  .events-date  { font-family: var(--mono); font-size: 12px; color: var(--text-secondary); flex: none; }
+  .events-label { font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+  .events-note  { color: var(--text-muted); font-size: 11px; min-width: 0; overflow-wrap: anywhere; }
+  .events-days {
+    margin-left: auto; flex: none;
+    font-family: var(--mono); font-size: 11px; font-weight: 800;
+    padding: 1px 7px; border-radius: 999px;
+    border: 1px solid var(--border-strong); color: var(--text-secondary);
+  }
+  .events-days.soon  { color: #fff; background: var(--status-critical); border-color: var(--status-critical); }
+  .events-days.today { color: #fff; background: var(--status-good); border-color: var(--status-good); }
+  @media (max-width: 480px) {
+    .events-band { padding: 7px 9px; }
+    .events-list li { flex-wrap: wrap; gap: 3px 8px; }
+    .events-note { flex-basis: 100%; order: 10; }   /* スマホでは note を 2 行目に回し、残り日数は 1 行目に残す */
+  }
+
   .banner {
     display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
     background: var(--surface-1);
@@ -533,6 +579,11 @@
     <span id="reportStatus" aria-live="polite"></span>
     <button id="refreshBtn" type="button">今すぐ更新</button>
   </div>
+
+  <section class="events-band" id="eventsBand" hidden aria-label="今後のイベント">
+    <div class="events-head">📅 今後のイベント</div>
+    <ul class="events-list" id="eventsList"></ul>
+  </section>
 
   <div id="errorBanner">
     <div><b>取得エラー:</b> <span id="errorMsg"></span></div>
@@ -1180,6 +1231,80 @@
   }
 
   $("reportBtn").addEventListener("click", (event) => { event.currentTarget.href = REPORT_URL + "?cb=" + Date.now(); });
+
+  // ---- 今後のイベント帯（engine/events.json、手動編集）。表示専用で判定には一切使わない ----
+  // 公開版(engine/viewer.html)は ./events.json、ローカル(リポジトリ直下の viewer.html)は ./engine/events.json を読む。
+  const EVENTS_URLS = ["./events.json", "./engine/events.json"];
+  const EVENT_TYPES = new Set(["boj", "fomc", "index", "us_data", "other"]);
+  const EVENTS_MAX = 5;
+  const WEEKDAYS_JA = ["日", "月", "火", "水", "木", "金", "土"];
+
+  function todayJst() {
+    // "YYYY-MM-DD"（日本時間）
+    return new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Tokyo" });
+  }
+  function parseYmd(s) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || ""));
+    if (!m) return null;
+    const d = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+  function daysBetween(fromYmd, toYmd) {
+    return Math.round((parseYmd(toYmd) - parseYmd(fromYmd)) / 86400000);
+  }
+  function fmtEventDate(ymd) {
+    const d = parseYmd(ymd);
+    return (d.getUTCMonth() + 1) + "/" + d.getUTCDate() + "(" + WEEKDAYS_JA[d.getUTCDay()] + ")";
+  }
+  function renderEvents(list) {
+    const band = $("eventsBand");
+    const ul = $("eventsList");
+    const today = todayJst();
+    const rows = list
+      .filter((e) => e && typeof e === "object" && parseYmd(e.date) && String(e.date) >= today && e.label)
+      .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0))
+      .slice(0, EVENTS_MAX);
+    if (!rows.length) { band.hidden = true; ul.innerHTML = ""; return; }
+    ul.innerHTML = rows.map((e) => {
+      const type = EVENT_TYPES.has(e.type) ? e.type : "other";
+      const days = daysBetween(today, e.date);
+      const badgeClass = days === 0 ? "events-days today" : (days <= 3 ? "events-days soon" : "events-days");
+      const badgeText = days === 0 ? "本日" : "あと" + days + "日";
+      const note = e.note ? '<span class="events-note">' + esc(e.note) + "</span>" : "";
+      return '<li class="ev-' + esc(type) + '">'
+        + '<span class="events-date">' + esc(fmtEventDate(e.date)) + "</span>"
+        + '<span class="events-label">' + esc(e.label) + "</span>"
+        + note
+        + '<span class="' + badgeClass + '">' + esc(badgeText) + "</span>"
+        + "</li>";
+    }).join("");
+    band.hidden = false;
+  }
+  async function loadEvents() {
+    let list = null;
+    for (const url of EVENTS_URLS) {
+      try {
+        const res = await fetch(url + "?cb=" + Date.now(), { method: "GET", cache: "no-store" });
+        if (!res.ok) continue;
+        list = await res.json();
+        break;
+      } catch (e) {
+        // 次の候補パスを試す（file:// 直開き・404・JSON 破損はここに来る）
+      }
+    }
+    if (!Array.isArray(list)) {
+      console.warn("events.json を読めないため「今後のイベント」帯は表示しません");
+      $("eventsBand").hidden = true;
+      return;
+    }
+    try {
+      renderEvents(list);
+    } catch (e) {
+      console.warn("events.json の描画に失敗したため帯を非表示にします", e);
+      $("eventsBand").hidden = true;
+    }
+  }
+  loadEvents();
 
   fetchLatest();
   setInterval(fetchLatest, REFRESH_MS);
