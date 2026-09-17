@@ -159,15 +159,16 @@ footer { font-size:11px; color:var(--text-muted); text-align:center; padding:14p
 .baseline{border:2px solid var(--dir-long,#3b82f6);}
 .baseline h2{margin-bottom:6px}
 .baseline .bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0}
-.baseline .bstat{padding:8px 10px;border:1px solid var(--border,#333);border-radius:8px;background:var(--surface-1,transparent)}
+.baseline .bstat{padding:8px 10px;border:1.5px solid var(--border-strong,#c3c2b7);border-radius:8px;
+  background:var(--surface-1,transparent);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .baseline .blabel{font-size:11px;color:var(--text-muted,#888)}
 .baseline .bvalue{font-size:20px;font-weight:800;margin-top:2px}
 .baseline .bsub{font-size:11px;color:var(--text-muted,#888)}
 details.ref-details>summary{cursor:pointer;font-weight:700;padding:6px 0}
 details.ref-details:not([open])>summary{color:var(--text-muted,#888)}
 .baseline .btrades{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin-top:8px;max-width:100%}
-.baseline .btrade{background:var(--surface-1,transparent);border:1px solid var(--border,#333);border-radius:8px;
-  padding:8px 10px;font-size:12px;min-width:0;overflow-wrap:anywhere}
+.baseline .btrade{background:var(--surface-1,transparent);border:1.5px solid var(--border-strong,#c3c2b7);border-radius:8px;
+  padding:8px 10px;font-size:12px;min-width:0;overflow-wrap:anywhere;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .baseline .btrade.nodata{grid-column:1/-1;text-align:center;color:var(--text-muted,#888);padding:16px 10px}
 .baseline .bt-head{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}
 .baseline .bt-date{font-family:var(--mono);color:var(--text-secondary,inherit);font-size:12px}
@@ -178,11 +179,11 @@ details.ref-details:not([open])>summary{color:var(--text-muted,#888)}
 .baseline .bt-levels{color:var(--text-secondary,inherit);margin-top:5px;font-variant-numeric:tabular-nums}
 .baseline .bt-pnl{margin-top:5px;font-weight:700}
 @media (max-width:480px){ .baseline .btrades{grid-template-columns:1fr} }
-</style></head><body data-generated-at="2026-09-17 15:53:04" data-generated-at-ms="1789627984558">
+</style></head><body data-generated-at="2026-09-17 16:10:18" data-generated-at-ms="1789629018375">
 <div class="report-head">
   <div class="report-title">
     <h1>MTS-Eval 成績レポート</h1>
-    <div class="subtitle">生成 2026-09-17 15:53:04 ／ 区分: Focus + Watch ／ Focus履歴収集: 372件<br>
+    <div class="subtitle">生成 2026-09-17 16:10:18 ／ 区分: Focus + Watch ／ Focus履歴収集: 372件<br>
     期間満了なし・1シグナル1判定。取引時間内に確定したFocusは固定Entryで100株エントリーし、非ギャップ版のTP1保護→TP2保護→TP3を正式決済とします。15:30以降の確定は時間外見送り・未約定で、成績母数から除外します。TP3または保護線でWIN、TP1前の初期SLでLOSS、保有中=OPENです。翌日ギャップは診断のみ。WatchだけEntry未到達=WAITINGで、TP1または初期SLの先着を参考判定します。勝率 = WIN/(WIN+LOSS)、確定損益はWIN/LOSSのみ</div>
   </div>
   <div class="report-update">
