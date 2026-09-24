@@ -640,7 +640,7 @@
         <thead><tr>
           <th>#</th><th>銘柄</th><th>方向</th><th>状態</th>
           <th class="num">Entry</th><th class="num">SL</th><th class="num">TP1</th><th class="num">TP2</th><th class="num">TP3</th>
-          <th class="num">RR</th><th class="num">Risk%</th><th class="num">Reward%</th><th class="num">株数</th><th>ファンダ/材料</th><th>チャート</th>
+          <th class="num">RR</th><th class="num">Risk%</th><th class="num">Reward%</th><th>ファンダ/材料</th><th>チャート</th>
         </tr></thead>
         <tbody id="focusBody"></tbody>
       </table>
@@ -876,7 +876,6 @@
         <td class="num">${fmtNum(r.rr, 2)}</td>
         <td class="num">${fmtPct(r.riskPercent)}</td>
         <td class="num">${fmtPct(r.rewardPercent)}</td>
-        <td class="num">${r.shares != null ? r.shares.toLocaleString("ja-JP") : "—"}</td>
         <td>${fundamentalNewsCell(r.fundamentalNewsDiagnostic)}</td>
         <td>${chartLink(r.code)}</td>
       </tr>`).join("");
