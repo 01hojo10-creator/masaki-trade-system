@@ -674,7 +674,7 @@
     <div class="edit-warning">
       ⚠️ この操作のみ<span class="mono">http://127.0.0.1:8796</span>（編集専用サーバー・bridgeとは別ポート）への
       <b>変更系通信（POST/DELETE）</b>を行います。他の全セクションはGET専用のままです。
-      追加・削除は次回scheduler周期（市場時間中5分毎）からスキャン対象に反映されます。
+      削除した銘柄は一覧から非表示になります。スキャン対象への反映は次の自動更新時です。
     </div>
     <div id="editAvailability" class="edit-availability" role="status" aria-live="polite">MTS接続を確認中…</div>
     <div class="hint">現在の実効ユニバース: <b id="uniCount">—</b>件。
@@ -1015,7 +1015,20 @@
       list("Excluded 理由内訳", "excluded", exReasons, excluded.length);
   }
 
+  let latestSnapshot = null;
+  let visibleUniverseCodes = null;
+  function visibleSnapshot(data, codes) {
+    if (!Array.isArray(codes)) return data;
+    const normalize = (code) => String(code || "").trim().toUpperCase().replace(/\.T$/, "");
+    const allowed = new Set(codes.map(normalize));
+    const view = { ...data };
+    for (const key of ["focus", "watch", "pool", "excluded", "pendingOrders", "nextSessionPlans"]) {
+      view[key] = (data[key] || []).filter((row) => allowed.has(normalize(row.code)));
+    }
+    return view;
+  }
   function render(data) {
+    data = visibleSnapshot(data, visibleUniverseCodes || data.displayUniverseCodes);
     $("mUpdated").textContent = relTime(data.timestamp) + "（" + data.timestamp + "）";
     $("mRunId").textContent = data.runId || "—";
     $("mMarketDate").textContent = data.marketDate || "—";
@@ -1071,6 +1084,8 @@
       const res = await fetch(BRIDGE_URL(), { method: "GET", cache: "no-store" });
       if (!res.ok) throw new Error("HTTP " + res.status + " " + res.statusText);
       const data = await res.json();
+      latestSnapshot = data;
+      await loadUniverse();
       render(data);
       setConnected(true);
     } catch (e) {
@@ -1366,11 +1381,13 @@
   async function loadUniverse() {
     setEditorAvailability(null);
     try {
-      const res = await fetch(EDITOR_URL, { method: "GET", cache: "no-store" });
+      const res = await fetchWithTimeout(EDITOR_URL, { method: "GET", cache: "no-store" }, 1500);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const data = await res.json();
       universeCache = data.codes || {};
+      visibleUniverseCodes = Object.keys(universeCache);
       setEditorAvailability(true);
+      if (latestSnapshot) render(latestSnapshot);
       $("uniCount").textContent = data.count ?? Object.keys(universeCache).length;
       if (data.specDataDivergence) {
         setEditMsg("err", "⚠ " + data.specDataDivergence);
@@ -1445,7 +1462,7 @@
       const res = await fetch(EDITOR_URL + "/" + encodeURIComponent(code), { method: "DELETE" });
       const data = await res.json();
       if (res.ok && data.ok) {
-        setEditMsg("ok", `✓ ${code}（${data.name}）を削除しました。次回scheduler周期からスキャン対象外になります。全${data.count}件。`);
+        setEditMsg("ok", `✓ ${code}（${data.name}）を削除しました。一覧から非表示にしました。次の自動更新からスキャン対象外になります。全${data.count}件。`);
         await loadUniverse();
       } else if (res.status === 503) {
         setEditMsg("err", "✗ 一時的な書き込み競合が発生しました。少し待って再試行してください。");
