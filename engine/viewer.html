@@ -650,7 +650,7 @@
 
   <section class="card">
     <h2>WATCH銘柄 <span class="count-badge" id="watchCount">0件</span></h2>
-    <div class="hint">実選定結果をスコア順で最大10件表示します。</div>
+    <div class="hint">押し目型・トレンド継続型・支持反発型を評価し、スコア順で最大10件表示します。</div>
     <div class="table-scroll">
       <table id="watchTable">
         <thead><tr>
@@ -865,7 +865,7 @@
         r.earningsWarningActive === true ? "earnings-warning-active" : "",
       ].filter(Boolean).join(" ")}">
         <td>${esc(r.rank ?? "")}</td>
-        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div></td>
+        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div>${r.setupType === "TREND_CONTINUATION_BREAKOUT" ? '<div class="hint-text">トレンド継続型</div>' : ""}</td>
         <td>${dirBadge(r.tradeDirection, r.directionLabel)}</td>
         <td>${stateBadge(r.stateClassification, r.stateLabel)}${marketGateBadge(r)}${earningsWarningBadge(r)}</td>
         <td class="num">${fmtPrice(r.entry)}</td>
@@ -899,7 +899,7 @@
     body.innerHTML = top.map((r, i) => `
       <tr>
         <td>${i + 1}</td>
-        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div></td>
+        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div>${r.setupType === "TREND_CONTINUATION_BREAKOUT" ? '<div class="hint-text">トレンド継続型</div>' : ""}</td>
         <td>${dirBadge(r.tradeDirection, r.directionLabel)}</td>
         <td class="num">${fmtNum(r.score, 1)}</td>
         <td>${chartLink(r.code)}</td>
