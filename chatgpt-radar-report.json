@@ -1,12 +1,12 @@
 {
   "ready": true,
-  "marketDate": "2026-10-13",
-  "generatedAt": "2026-10-13T17:15:00+09:00",
-  "runId": "20261013-152802-eng001",
+  "marketDate": "2026-10-14",
+  "generatedAt": "2026-10-14T09:35:00+09:00",
+  "runId": "20261014-092940-eng001",
   "marketMode": "regular",
   "isMarketHoliday": false,
   "holidayReason": "",
-  "nextBusinessDate": "2026-10-14",
+  "nextBusinessDate": "2026-10-15",
   "holidayNewsMode": false,
   "importantNewsCount": 0,
   "importantNews": [],
@@ -17,14 +17,14 @@
   "source": "MTS-Engine bridge latest",
   "publishedAt": "",
   "latestSnapshot": "",
-  "timestamp": "2026-10-13T15:28:02.464+09:00",
+  "timestamp": "2026-10-14T09:29:40.207+09:00",
   "scan": {
     "status": "complete",
     "current": 554,
     "total": 554,
     "complete": true,
-    "focusUpdated": "2026-10-13T15:28:02.464+09:00",
-    "watchUpdated": "2026-10-13T15:28:02.464+09:00"
+    "focusUpdated": "2026-10-14T09:29:40.207+09:00",
+    "watchUpdated": "2026-10-14T09:29:40.207+09:00"
   },
   "focus": [
     {
@@ -808,28 +808,28 @@
       "tradeDirection": "LONG",
       "stateClassification": "watch",
       "reason": "watch_5m_trigger_not_reached",
-      "score": 75.22,
+      "score": 80.94,
       "entry": null,
-      "sl": 5952.656422390036,
-      "tp": 6199.321291470095,
+      "sl": 5941.677147233456,
+      "tp": 6176.312995272453,
       "rr": 1.5,
       "shares": null,
       "currentPrice": null,
       "currentPriceValid": false,
       "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
-      "lastCompletedClose": 6004.0,
+      "lastCompletedClose": 5995.0,
       "activeFocusPosition": false,
       "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "setupDiagnosticLong": {
-        "impulseStrengthATR": 2.5312200384548684,
-        "pullbackDepthATR": 0.56274353417892,
+        "impulseStrengthATR": 2.902571913133377,
+        "pullbackDepthATR": 1.0394804266327782,
         "setupType": "FRESH_TREND_PULLBACK",
         "favorable": true,
         "g4Passed": true,
         "g4Reason": null,
         "g5Passed": false,
         "g5Reason": "reservation_price_not_applicable",
-        "atrRatio": 0.005579468083980023,
+        "atrRatio": 0.0054193485150690395,
         "lowVolatility": true,
         "stage2Reason": "candidate",
         "stage2Gate": null,
@@ -838,7 +838,7 @@
         "stage2RangePosition": null,
         "stage2RangeLower": false,
         "stage2SupportDistanceATR": null,
-        "stage2RoomATR": 4.383444005807154,
+        "stage2RoomATR": 4.304106554522127,
         "stage2RoomBreak": true,
         "stage2BreakdownRetest": false,
         "selectionReason": "selected"
@@ -863,47 +863,159 @@
       "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
       "continuationDiagnostic": {
         "LONG": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "9cdb2b02791f86f342e686f739a45a00d30f1e4fff0b7aea09504797c621ed89",
+            "inputHash": "5b196c58270c54391e937a3f352b08a654923bbc3675548d3ae6688b3398a6f3"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         },
         "SHORT": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "9cdb2b02791f86f342e686f739a45a00d30f1e4fff0b7aea09504797c621ed89",
+            "inputHash": "5b196c58270c54391e937a3f352b08a654923bbc3675548d3ae6688b3398a6f3"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         }
       },
-      "tp1": 6199.321291470095,
-      "tp2": 6248.654265286107,
-      "tp3": 6347.320212918131,
-      "plannedEntryPrice": 6051.32237002206,
-      "stopTriggerPrice": 6026.0,
-      "entryLowerPrice": 6026.0,
-      "entryUpperPrice": 6051.32237002206,
-      "invalidationPrice": 5995.0,
+      "tp1": 6176.312995272453,
+      "tp2": 6223.240164880252,
+      "tp3": 6317.094504095851,
+      "plannedEntryPrice": 6035.531486449055,
+      "stopTriggerPrice": 6011.0,
+      "entryLowerPrice": 6011.0,
+      "entryUpperPrice": 6035.531486449055,
+      "invalidationPrice": 5992.0,
       "setupType": "FRESH_TREND_PULLBACK",
-      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791504000:1791864000:1791867600",
-      "signalATR": 33.76316002941243,
+      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791504000:1791867600:1791871200",
+      "signalATR": 32.70864859874012,
       "slBasis": "daily_atr_floor",
       "tpSource": "fresh_structure_or_r",
-      "extension5dPct": 1.61,
-      "peakExtensionATR": 1.6816527830208279,
+      "extension5dPct": -0.96,
+      "peakExtensionATR": 1.920741923265432,
       "rangePosition": null,
       "rangeLower": false,
-      "impulseStrengthATR": 2.5312200384548684,
-      "pullbackDepthATR": 0.56274353417892,
-      "impulsePrice": 6014.0,
+      "impulseStrengthATR": 2.902571913133377,
+      "pullbackDepthATR": 1.0394804266327782,
+      "impulsePrice": 6026.0,
       "impulseBasePrice": 5928.0,
-      "dailyATR": 123.33243454002925,
+      "dailyATR": 117.3179240194985,
       "entryMode": "FRESH_TREND_PULLBACK_LONG",
       "emaFastHeld": true,
       "emaMidHeld": true,
-      "watchId": "watch-43d3f127b586dbb2f7c3caa0",
-      "watchStartedAt": "2026-10-13T15:23:21+09:00",
-      "watchValidUntil": "2026-10-13T15:30:00+09:00",
-      "watchSourceBarStartAt": "2026-10-13T14:00:00+09:00",
-      "watchSourceBarCloseAt": "2026-10-13T15:00:00+09:00",
-      "watchSourceBarAvailableAt": "2026-10-13T15:23:10+09:00",
-      "watchEntryLowerPrice": 6026.0,
-      "watchEntryUpperPrice": 6051.32237002206,
+      "watchId": "watch-ee6bda8bb92690c28e540f9d",
+      "watchStartedAt": "2026-10-14T09:04:22+09:00",
+      "watchValidUntil": "2026-10-14T11:30:00+09:00",
+      "watchSourceBarStartAt": "2026-10-13T15:00:00+09:00",
+      "watchSourceBarCloseAt": "2026-10-13T15:30:00+09:00",
+      "watchSourceBarAvailableAt": "2026-10-14T09:04:11+09:00",
+      "watchEntryLowerPrice": 6011.0,
+      "watchEntryUpperPrice": 6035.531486449055,
       "missingConditions": [
         "watch_5m_trigger_not_reached"
       ],
@@ -914,10 +1026,10 @@
       "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
       "selectionGuard": {
         "policyVersion": "focus_cap5_selection_guard_v1_20260930",
-        "trigger": 6026.0,
-        "hourlyClose": 6004.0,
-        "watchStart5mClose": 6001.0,
-        "watchStart5mCloseAt": "2026-10-13T15:20:00+09:00",
+        "trigger": 6011.0,
+        "hourlyClose": 5995.0,
+        "watchStart5mClose": 5995.0,
+        "watchStart5mCloseAt": "2026-10-13T15:30:00+09:00",
         "watchStart5mFinal": true,
         "blocked": false,
         "reasons": []
@@ -925,30 +1037,29 @@
       "marketGateBlocked": false,
       "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "currentPrice1mDiagnostic": {
-        "currentPrice": 6001.0,
-        "currentPriceQuoteAt": "2026-10-13T15:14:00+09:00",
+        "currentPrice": 5975.0,
+        "currentPriceQuoteAt": "2026-10-14T09:16:33+09:00",
         "currentPriceSource": "yahoo_focus_detection_1m_close",
-        "currentPriceAgeSeconds": 857.234,
-        "currentPriceSession": "afternoon",
+        "currentPriceAgeSeconds": 803.414,
+        "currentPriceSession": "morning",
         "currentPriceValid": false,
         "currentPriceInvalidReason": "current_price_stale"
       },
       "currentPrice5mDiagnostic": {
         "valid": true,
         "reason": null,
-        "price": 6001.0,
-        "barStartAt": "2026-10-13T15:20:00+09:00",
-        "barCloseAt": "2026-10-13T15:25:00+09:00",
-        "ageSeconds": 197.234,
-        "session": "afternoon",
+        "price": 5983.0,
+        "barStartAt": "2026-10-14T09:15:00+09:00",
+        "barCloseAt": "2026-10-14T09:20:00+09:00",
+        "ageSeconds": 596.414,
+        "session": "morning",
         "bar": {
-          "t": 1791872400,
-          "o": 6000.0,
-          "h": 6004.0,
-          "l": 6000.0,
-          "c": 6001.0,
-          "v": 0,
-          "cMissing": true
+          "t": 1791936900,
+          "o": 5979.0,
+          "h": 5983.0,
+          "l": 5979.0,
+          "c": 5983.0,
+          "v": 600
         }
       },
       "shortTradeCaution": "",
@@ -957,28 +1068,28 @@
       "shortAvailabilityWarning": "",
       "displayEntryText": "watch_5m_trigger_not_reached",
       "displayRiskText": "押し目買い待ち",
-      "displayTargetText": "6199.321291470095",
+      "displayTargetText": "6176.312995272453",
       "displayDirectionBadge": "🟢 買い",
       "notificationDirectionText": "🟢 買いWatch：9401 ＴＢＳホールディングス watch_5m_trigger_not_reached",
       "viewerDirectionText": "方向：🟢 買い"
     },
     {
-      "code": "6232",
-      "name": "ＡＣＳＬ",
+      "code": "5016",
+      "name": "ＪＸ金属",
       "theme": "",
       "tradeDirection": "SHORT",
       "stateClassification": "watch",
-      "reason": "watch_5m_trigger_not_reached",
-      "score": 74.53,
+      "reason": "focus_capacity_full",
+      "score": 79.85,
       "entry": null,
-      "sl": 1239.8231084818049,
-      "tp": 1105.8055756882686,
-      "rr": 1.5000000000000022,
+      "sl": 3610.655599422889,
+      "tp": 3307.1321978993556,
+      "rr": 1.4999999999999982,
       "shares": null,
       "currentPrice": null,
       "currentPriceValid": false,
       "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
-      "lastCompletedClose": 1202.0,
+      "lastCompletedClose": 3534.0,
       "activeFocusPosition": false,
       "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "setupDiagnosticLong": {
@@ -992,15 +1103,15 @@
         "g5Reason": null
       },
       "setupDiagnosticShort": {
-        "impulseStrengthATR": 5.595477989613997,
-        "pullbackDepthATR": 1.4952962343691665,
+        "impulseStrengthATR": 3.4309349158873803,
+        "pullbackDepthATR": 1.14332897578294,
         "setupType": "FRESH_TREND_PULLBACK",
         "favorable": true,
         "g4Passed": true,
         "g4Reason": null,
         "g5Passed": false,
         "g5Reason": "reservation_price_not_applicable",
-        "atrRatio": 0.013245371487438007,
+        "atrRatio": 0.012133952536149007,
         "lowVolatility": false,
         "stage2Reason": "candidate",
         "stage2Gate": null,
@@ -1009,76 +1120,188 @@
         "stage2RangePosition": null,
         "stage2RangeLower": false,
         "stage2SupportDistanceATR": null,
-        "stage2RoomATR": 5.117818891273744,
+        "stage2RoomATR": 4.301396923762025,
         "stage2RoomBreak": true,
         "stage2BreakdownRetest": false,
         "selectionReason": "selected"
       },
       "directionLabel": "🔴 売り",
       "stateLabel": "売り / 条件待ち",
-      "finalActionLabel": "ENTRY待ち",
+      "finalActionLabel": "保有上限（新規Focus停止）",
       "finalAction": "WAIT",
-      "promotionHint": "完成5分足がENTRY帯で確定すればENTRY",
+      "promotionHint": "新ルールの保有が上限に到達: 空くまで新規Focus停止",
       "effectiveFrom": "2026-09-09T15:30:00+09:00",
       "watchSelectionPolicyVersion": "confirmed_1h_stop_limit_reservation_v1_20260818",
       "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
       "continuationDiagnostic": {
         "LONG": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "564baada0686b016faa1fb5ac54f0c5b6facbb26da3406f86d31c82ce6edabee",
+            "inputHash": "ffee23f6d62c20c2f0d0b5f51ef2147b41cbbe227f2b26561c76a42ab1bbbeec"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         },
         "SHORT": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "564baada0686b016faa1fb5ac54f0c5b6facbb26da3406f86d31c82ce6edabee",
+            "inputHash": "ffee23f6d62c20c2f0d0b5f51ef2147b41cbbe227f2b26561c76a42ab1bbbeec"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         }
       },
-      "tp1": 1105.8055756882686,
-      "tp2": 1079.0020691295615,
-      "tp3": 1025.395056012147,
-      "plannedEntryPrice": 1186.2160953643904,
-      "stopTriggerPrice": 1198.0,
-      "entryLowerPrice": 1186.2160953643904,
-      "entryUpperPrice": 1198.0,
-      "invalidationPrice": 1208.0,
+      "tp1": 3307.1321978993556,
+      "tp2": 3246.4275175946486,
+      "tp3": 3125.0181569852352,
+      "plannedEntryPrice": 3489.2462388134754,
+      "stopTriggerPrice": 3521.0,
+      "entryLowerPrice": 3489.2462388134754,
+      "entryUpperPrice": 3521.0,
+      "invalidationPrice": 3551.0,
       "setupType": "FRESH_TREND_PULLBACK",
-      "setupId": "fresh_trend_pullback_v1_20260731:SHORT:1791338400:1791856800:1791867600",
-      "signalATR": 15.71187284747954,
+      "setupId": "fresh_trend_pullback_v1_20260731:SHORT:1791424800:1791849600:1791867600",
+      "signalATR": 42.338348248699155,
       "slBasis": "daily_atr_floor",
       "tpSource": "fresh_structure_or_r",
-      "extension5dPct": 8.75,
-      "peakExtensionATR": 2.4822122859259936,
+      "extension5dPct": 8.39,
+      "peakExtensionATR": 2.9514198552934956,
       "rangePosition": null,
       "rangeLower": false,
-      "impulseStrengthATR": 5.595477989613997,
-      "pullbackDepthATR": 1.4952962343691665,
-      "impulsePrice": 1183.0,
-      "impulseBasePrice": 1276.0,
-      "dailyATR": 67.00876639676794,
+      "impulseStrengthATR": 3.4309349158873803,
+      "pullbackDepthATR": 1.14332897578294,
+      "impulsePrice": 3492.0,
+      "impulseBasePrice": 3670.0,
+      "dailyATR": 151.7617007617667,
       "entryMode": "FRESH_TREND_PULLBACK_SHORT",
       "emaFastHeld": true,
       "emaMidHeld": true,
-      "watchId": "watch-9dcad7a160aee85887754c49",
-      "watchStartedAt": "2026-10-13T15:23:21+09:00",
-      "watchValidUntil": "2026-10-13T15:30:00+09:00",
-      "watchSourceBarStartAt": "2026-10-13T14:00:00+09:00",
-      "watchSourceBarCloseAt": "2026-10-13T15:00:00+09:00",
-      "watchSourceBarAvailableAt": "2026-10-13T15:22:41+09:00",
-      "watchEntryLowerPrice": 1186.2160953643904,
-      "watchEntryUpperPrice": 1198.0,
+      "watchId": "watch-cad331f54e9adde1fc83bae5",
+      "watchStartedAt": "2026-10-14T09:04:22+09:00",
+      "watchValidUntil": "2026-10-14T11:30:00+09:00",
+      "watchSourceBarStartAt": "2026-10-13T15:00:00+09:00",
+      "watchSourceBarCloseAt": "2026-10-13T15:30:00+09:00",
+      "watchSourceBarAvailableAt": "2026-10-14T09:03:37+09:00",
+      "watchEntryLowerPrice": 3489.2462388134754,
+      "watchEntryUpperPrice": 3521.0,
       "missingConditions": [
-        "watch_5m_trigger_not_reached"
+        "focus_capacity_full"
       ],
       "entryRevalidated": false,
-      "entryRevalidationReason": "watch_5m_trigger_not_reached",
+      "entryRevalidationReason": "focus_capacity_full",
       "watchSelectionRankPending": true,
       "rank": 2,
       "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
       "selectionGuard": {
         "policyVersion": "focus_cap5_selection_guard_v1_20260930",
-        "trigger": 1198.0,
-        "hourlyClose": 1202.0,
-        "watchStart5mClose": 1199.0,
-        "watchStart5mCloseAt": "2026-10-13T15:20:00+09:00",
+        "trigger": 3521.0,
+        "hourlyClose": 3534.0,
+        "watchStart5mClose": 3534.0,
+        "watchStart5mCloseAt": "2026-10-13T15:30:00+09:00",
         "watchStart5mFinal": true,
         "blocked": false,
         "reasons": []
@@ -1086,30 +1309,29 @@
       "marketGateBlocked": false,
       "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "currentPrice1mDiagnostic": {
-        "currentPrice": 1199.0,
-        "currentPriceQuoteAt": "2026-10-13T15:13:00+09:00",
+        "currentPrice": 3510.0,
+        "currentPriceQuoteAt": "2026-10-14T09:17:02+09:00",
         "currentPriceSource": "yahoo_focus_detection_1m_close",
-        "currentPriceAgeSeconds": 917.234,
-        "currentPriceSession": "afternoon",
+        "currentPriceAgeSeconds": 774.414,
+        "currentPriceSession": "morning",
         "currentPriceValid": false,
         "currentPriceInvalidReason": "current_price_stale"
       },
       "currentPrice5mDiagnostic": {
         "valid": true,
         "reason": null,
-        "price": 1199.0,
-        "barStartAt": "2026-10-13T15:20:00+09:00",
-        "barCloseAt": "2026-10-13T15:25:00+09:00",
-        "ageSeconds": 197.234,
-        "session": "afternoon",
+        "price": 3510.0,
+        "barStartAt": "2026-10-14T09:15:00+09:00",
+        "barCloseAt": "2026-10-14T09:20:00+09:00",
+        "ageSeconds": 596.414,
+        "session": "morning",
         "bar": {
-          "t": 1791872400,
-          "o": 1200.0,
-          "h": 1202.0,
-          "l": 1199.0,
-          "c": 1199.0,
-          "v": 0,
-          "cMissing": true
+          "t": 1791936900,
+          "o": 3503.0,
+          "h": 3512.0,
+          "l": 3503.0,
+          "c": 3510.0,
+          "v": 104000
         }
       },
       "shortTradeCaution": "信用売り可否・貸株料・逆日歩・空売り規制は証券会社側で確認",
@@ -1119,10 +1341,282 @@
       "comment": "安値割れ待ち",
       "displayEntryText": "安値割れ待ち",
       "displayRiskText": "踏み上げ注意 / 戻り高値超えで撤退",
-      "displayTargetText": "1105.8055756882686",
+      "displayTargetText": "3307.1321978993556",
       "displayDirectionBadge": "🔴 売り",
-      "notificationDirectionText": "🔴 売りWatch：6232 ＡＣＳＬ 安値割れ待ち",
+      "notificationDirectionText": "🔴 売りWatch：5016 ＪＸ金属 安値割れ待ち",
       "viewerDirectionText": "方向：🔴 売り"
+    },
+    {
+      "code": "4578",
+      "name": "大塚HD",
+      "theme": "",
+      "tradeDirection": "LONG",
+      "stateClassification": "watch",
+      "reason": "watch_5m_before_watch",
+      "score": 79.18,
+      "entry": null,
+      "sl": 11591.320678675893,
+      "tp": 12144.656613706687,
+      "rr": 1.4999999999999958,
+      "shares": null,
+      "currentPrice": null,
+      "currentPriceValid": false,
+      "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
+      "lastCompletedClose": 11735.0,
+      "activeFocusPosition": false,
+      "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
+      "setupDiagnosticLong": {
+        "impulseStrengthATR": 4.950706530073308,
+        "pullbackDepthATR": 0.6785717260958356,
+        "setupType": "FRESH_TREND_PULLBACK",
+        "favorable": true,
+        "g4Passed": true,
+        "g4Reason": null,
+        "g5Passed": false,
+        "g5Reason": "reservation_price_not_applicable",
+        "atrRatio": 0.005943349450607931,
+        "lowVolatility": true,
+        "stage2Reason": "candidate",
+        "stage2Gate": null,
+        "stage2Terminal": "candidate",
+        "stage2EntryMode": "FRESH_TREND_PULLBACK_LONG",
+        "stage2RangePosition": null,
+        "stage2RangeLower": false,
+        "stage2SupportDistanceATR": null,
+        "stage2RoomATR": 4.728913144162585,
+        "stage2RoomBreak": true,
+        "stage2BreakdownRetest": false,
+        "selectionReason": "selected"
+      },
+      "setupDiagnosticShort": {
+        "impulseStrengthATR": null,
+        "pullbackDepthATR": null,
+        "setupType": "RANGE_WATCH",
+        "favorable": false,
+        "g4Passed": null,
+        "g4Reason": null,
+        "g5Passed": null,
+        "g5Reason": null
+      },
+      "directionLabel": "🟢 買い",
+      "stateLabel": "買い / 条件待ち",
+      "finalActionLabel": "ENTRY待ち",
+      "finalAction": "WAIT",
+      "promotionHint": "完成5分足がENTRY帯で確定すればENTRY",
+      "effectiveFrom": "2026-09-09T15:30:00+09:00",
+      "watchSelectionPolicyVersion": "confirmed_1h_stop_limit_reservation_v1_20260818",
+      "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
+      "continuationDiagnostic": {
+        "LONG": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "a7a1496df897b037715d08f10b7748ccca0107f2710a2a011d61566b07b8fee4",
+            "inputHash": "2143aa8f3200c18d86e758c8dd4eba9e4a718e536aca4ca66733a389a85c316d"
+          },
+          "status": "REJECTED",
+          "reason": "continuation_volume_zero"
+        },
+        "SHORT": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "a7a1496df897b037715d08f10b7748ccca0107f2710a2a011d61566b07b8fee4",
+            "inputHash": "2143aa8f3200c18d86e758c8dd4eba9e4a718e536aca4ca66733a389a85c316d"
+          },
+          "status": "REJECTED",
+          "reason": "continuation_volume_zero"
+        }
+      },
+      "tp1": 12144.656613706687,
+      "tp2": 12255.323800712848,
+      "tp3": 12476.658174725166,
+      "plannedEntryPrice": 11812.655052688211,
+      "stopTriggerPrice": 11760.0,
+      "entryLowerPrice": 11760.0,
+      "entryUpperPrice": 11812.655052688211,
+      "invalidationPrice": 11700.0,
+      "setupType": "FRESH_TREND_PULLBACK",
+      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791169200:1791864000:1791867600",
+      "signalATR": 70.20673691761547,
+      "slBasis": "daily_atr_floor",
+      "tpSource": "fresh_structure_or_r",
+      "extension5dPct": -0.13,
+      "peakExtensionATR": 1.912272423057297,
+      "rangePosition": null,
+      "rangeLower": false,
+      "impulseStrengthATR": 4.950706530073308,
+      "pullbackDepthATR": 0.6785717260958356,
+      "impulsePrice": 11750.0,
+      "impulseBasePrice": 11380.0,
+      "dailyATR": 276.66796751539795,
+      "entryMode": "FRESH_TREND_PULLBACK_LONG",
+      "emaFastHeld": true,
+      "emaMidHeld": true,
+      "watchId": "watch-1d0a6340713faf628b73b0e8",
+      "watchStartedAt": "2026-10-14T09:23:21+09:00",
+      "watchValidUntil": "2026-10-14T11:30:00+09:00",
+      "watchSourceBarStartAt": "2026-10-13T15:00:00+09:00",
+      "watchSourceBarCloseAt": "2026-10-13T15:30:00+09:00",
+      "watchSourceBarAvailableAt": "2026-10-14T09:22:33+09:00",
+      "watchEntryLowerPrice": 11760.0,
+      "watchEntryUpperPrice": 11812.655052688211,
+      "missingConditions": [
+        "watch_5m_before_watch"
+      ],
+      "entryRevalidated": false,
+      "entryRevalidationReason": "watch_5m_before_watch",
+      "watchSelectionRankPending": true,
+      "rank": 3,
+      "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
+      "selectionGuard": {
+        "policyVersion": "focus_cap5_selection_guard_v1_20260930",
+        "trigger": 11760.0,
+        "hourlyClose": 11735.0,
+        "watchStart5mClose": 11445.0,
+        "watchStart5mCloseAt": "2026-10-14T09:20:00+09:00",
+        "watchStart5mFinal": false,
+        "blocked": false,
+        "reasons": []
+      },
+      "marketGateBlocked": false,
+      "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
+      "currentPrice1mDiagnostic": {
+        "currentPrice": 11445.0,
+        "currentPriceQuoteAt": "2026-10-14T09:16:00+09:00",
+        "currentPriceSource": "yahoo_focus_detection_1m_close",
+        "currentPriceAgeSeconds": 836.414,
+        "currentPriceSession": "morning",
+        "currentPriceValid": false,
+        "currentPriceInvalidReason": "current_price_stale"
+      },
+      "currentPrice5mDiagnostic": {
+        "valid": false,
+        "reason": "watch_5m_before_watch",
+        "price": 11445.0,
+        "barStartAt": "2026-10-14T09:15:00+09:00",
+        "barCloseAt": "2026-10-14T09:20:00+09:00",
+        "ageSeconds": 596.414,
+        "session": "morning",
+        "bar": {
+          "t": 1791936900,
+          "o": 11440.0,
+          "h": 11445.0,
+          "l": 11430.0,
+          "c": 11445.0,
+          "v": 2200
+        }
+      },
+      "shortTradeCaution": "",
+      "shortEntryCaution": "",
+      "shortExitRuleText": "",
+      "shortAvailabilityWarning": "",
+      "displayEntryText": "watch_5m_before_watch",
+      "displayRiskText": "押し目買い待ち",
+      "displayTargetText": "12144.656613706687",
+      "displayDirectionBadge": "🟢 買い",
+      "notificationDirectionText": "🟢 買いWatch：4578 大塚HD watch_5m_before_watch",
+      "viewerDirectionText": "方向：🟢 買い"
     },
     {
       "code": "6752",
@@ -1130,17 +1624,17 @@
       "theme": "",
       "tradeDirection": "SHORT",
       "stateClassification": "watch",
-      "reason": "watch_5m_trigger_not_reached",
-      "score": 73.95,
+      "reason": "focus_capacity_full",
+      "score": 78.19,
       "entry": null,
-      "sl": 4415.054570222457,
-      "tp": 4075.4814704852192,
+      "sl": 4455.012062794642,
+      "tp": 4128.228208354164,
       "rr": 1.5,
       "shares": null,
       "currentPrice": null,
       "currentPriceValid": false,
       "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
-      "lastCompletedClose": 4365.0,
+      "lastCompletedClose": 4380.0,
       "activeFocusPosition": false,
       "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "setupDiagnosticLong": {
@@ -1155,14 +1649,14 @@
       },
       "setupDiagnosticShort": {
         "impulseStrengthATR": 6.754637349735167,
-        "pullbackDepthATR": 1.2822230937430192,
+        "pullbackDepthATR": 1.5503283486557278,
         "setupType": "FRESH_TREND_PULLBACK",
         "favorable": true,
         "g4Passed": true,
         "g4Reason": null,
         "g5Passed": false,
         "g5Reason": "reservation_price_not_applicable",
-        "atrRatio": 0.012393105948577003,
+        "atrRatio": 0.01193302722385737,
         "lowVolatility": false,
         "stage2Reason": "candidate",
         "stage2Gate": null,
@@ -1171,76 +1665,188 @@
         "stage2RangePosition": null,
         "stage2RangeLower": false,
         "stage2SupportDistanceATR": null,
-        "stage2RoomATR": 3.8418394455616593,
-        "stage2RoomBreak": true,
+        "stage2RoomATR": 3.7996670506654455,
+        "stage2RoomBreak": false,
         "stage2BreakdownRetest": false,
         "selectionReason": "selected"
       },
       "directionLabel": "🔴 売り",
       "stateLabel": "売り / 条件待ち",
-      "finalActionLabel": "ENTRY待ち",
+      "finalActionLabel": "保有上限（新規Focus停止）",
       "finalAction": "WAIT",
-      "promotionHint": "完成5分足がENTRY帯で確定すればENTRY",
+      "promotionHint": "新ルールの保有が上限に到達: 空くまで新規Focus停止",
       "effectiveFrom": "2026-09-09T15:30:00+09:00",
       "watchSelectionPolicyVersion": "confirmed_1h_stop_limit_reservation_v1_20260818",
       "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
       "continuationDiagnostic": {
         "LONG": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "e4d76e55ade99e00f57a9ef9bfef6b1a71f8abe12c99891071723dc696ec8ac0",
+            "inputHash": "4b99debe609c7280eda618c4c4920193241fc67805718635e47ea12e9061e6ad"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         },
         "SHORT": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "e4d76e55ade99e00f57a9ef9bfef6b1a71f8abe12c99891071723dc696ec8ac0",
+            "inputHash": "4b99debe609c7280eda618c4c4920193241fc67805718635e47ea12e9061e6ad"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         }
       },
-      "tp1": 4075.4814704852192,
-      "tp2": 3927.225330327562,
-      "tp3": 3709.689330327562,
-      "plannedEntryPrice": 4279.225330327562,
-      "stopTriggerPrice": 4319.0,
-      "entryLowerPrice": 4279.225330327562,
-      "entryUpperPrice": 4319.0,
-      "invalidationPrice": 4384.0,
+      "tp1": 4128.228208354164,
+      "tp2": 3972.2985210184506,
+      "tp3": 3754.7625210184506,
+      "plannedEntryPrice": 4324.298521018451,
+      "stopTriggerPrice": 4363.0,
+      "entryLowerPrice": 4324.298521018451,
+      "entryUpperPrice": 4363.0,
+      "invalidationPrice": 4396.0,
       "setupType": "FRESH_TREND_PULLBACK",
-      "setupId": "fresh_trend_pullback_v1_20260731:SHORT:1791417600:1791864000:1791867600",
-      "signalATR": 53.0328928965839,
+      "setupId": "fresh_trend_pullback_v1_20260731:SHORT:1791417600:1791864000:1791871200",
+      "signalATR": 51.60197197539934,
       "slBasis": "daily_atr_floor",
       "tpSource": "fresh_structure_or_r",
-      "extension5dPct": 6.9,
+      "extension5dPct": 8.58,
       "peakExtensionATR": 2.461033404390033,
       "rangePosition": null,
       "rangeLower": false,
       "impulseStrengthATR": 6.754637349735167,
-      "pullbackDepthATR": 1.2822230937430192,
+      "pullbackDepthATR": 1.5503283486557278,
       "impulsePrice": 4316.0,
       "impulseBasePrice": 4668.0,
-      "dailyATR": 169.78654986861946,
+      "dailyATR": 163.39192722023904,
       "entryMode": "FRESH_TREND_PULLBACK_SHORT",
-      "emaFastHeld": true,
+      "emaFastHeld": false,
       "emaMidHeld": true,
-      "watchId": "watch-57a5cbcc8e6d57ad076accec",
-      "watchStartedAt": "2026-10-13T15:23:21+09:00",
-      "watchValidUntil": "2026-10-13T15:30:00+09:00",
-      "watchSourceBarStartAt": "2026-10-13T14:00:00+09:00",
-      "watchSourceBarCloseAt": "2026-10-13T15:00:00+09:00",
-      "watchSourceBarAvailableAt": "2026-10-13T15:22:50+09:00",
-      "watchEntryLowerPrice": 4279.225330327562,
-      "watchEntryUpperPrice": 4319.0,
+      "watchId": "watch-e74930980c1f9b6ea00801d5",
+      "watchStartedAt": "2026-10-14T09:04:22+09:00",
+      "watchValidUntil": "2026-10-14T11:30:00+09:00",
+      "watchSourceBarStartAt": "2026-10-13T15:00:00+09:00",
+      "watchSourceBarCloseAt": "2026-10-13T15:30:00+09:00",
+      "watchSourceBarAvailableAt": "2026-10-14T09:03:52+09:00",
+      "watchEntryLowerPrice": 4324.298521018451,
+      "watchEntryUpperPrice": 4363.0,
       "missingConditions": [
-        "watch_5m_trigger_not_reached"
+        "focus_capacity_full"
       ],
       "entryRevalidated": false,
-      "entryRevalidationReason": "watch_5m_trigger_not_reached",
+      "entryRevalidationReason": "focus_capacity_full",
       "watchSelectionRankPending": true,
-      "rank": 3,
+      "rank": 4,
       "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
       "selectionGuard": {
         "policyVersion": "focus_cap5_selection_guard_v1_20260930",
-        "trigger": 4319.0,
-        "hourlyClose": 4365.0,
-        "watchStart5mClose": 4385.0,
-        "watchStart5mCloseAt": "2026-10-13T15:20:00+09:00",
+        "trigger": 4363.0,
+        "hourlyClose": 4380.0,
+        "watchStart5mClose": 4380.0,
+        "watchStart5mCloseAt": "2026-10-13T15:30:00+09:00",
         "watchStart5mFinal": true,
         "blocked": false,
         "reasons": []
@@ -1248,30 +1854,29 @@
       "marketGateBlocked": false,
       "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "currentPrice1mDiagnostic": {
-        "currentPrice": 4385.0,
-        "currentPriceQuoteAt": "2026-10-13T15:14:00+09:00",
+        "currentPrice": 4354.0,
+        "currentPriceQuoteAt": "2026-10-14T09:17:02+09:00",
         "currentPriceSource": "yahoo_focus_detection_1m_close",
-        "currentPriceAgeSeconds": 857.234,
-        "currentPriceSession": "afternoon",
+        "currentPriceAgeSeconds": 774.414,
+        "currentPriceSession": "morning",
         "currentPriceValid": false,
         "currentPriceInvalidReason": "current_price_stale"
       },
       "currentPrice5mDiagnostic": {
         "valid": true,
         "reason": null,
-        "price": 4385.0,
-        "barStartAt": "2026-10-13T15:20:00+09:00",
-        "barCloseAt": "2026-10-13T15:25:00+09:00",
-        "ageSeconds": 197.234,
-        "session": "afternoon",
+        "price": 4354.0,
+        "barStartAt": "2026-10-14T09:15:00+09:00",
+        "barCloseAt": "2026-10-14T09:20:00+09:00",
+        "ageSeconds": 596.414,
+        "session": "morning",
         "bar": {
-          "t": 1791872400,
-          "o": 4382.0,
-          "h": 4392.0,
-          "l": 4380.0,
-          "c": 4385.0,
-          "v": 0,
-          "cMissing": true
+          "t": 1791936900,
+          "o": 4356.0,
+          "h": 4365.0,
+          "l": 4352.0,
+          "c": 4354.0,
+          "v": 40900
         }
       },
       "shortTradeCaution": "信用売り可否・貸株料・逆日歩・空売り規制は証券会社側で確認",
@@ -1281,40 +1886,40 @@
       "comment": "安値割れ待ち",
       "displayEntryText": "安値割れ待ち",
       "displayRiskText": "踏み上げ注意 / 戻り高値超えで撤退",
-      "displayTargetText": "4075.4814704852192",
+      "displayTargetText": "4128.228208354164",
       "displayDirectionBadge": "🔴 売り",
       "notificationDirectionText": "🔴 売りWatch：6752 パナソニックHD 安値割れ待ち",
       "viewerDirectionText": "方向：🔴 売り"
     },
     {
-      "code": "1928",
-      "name": "積水ハウス",
+      "code": "8766",
+      "name": "東京海上HD",
       "theme": "",
       "tradeDirection": "LONG",
       "stateClassification": "watch",
       "reason": "watch_5m_trigger_not_reached",
-      "score": 73.02,
+      "score": 76.92,
       "entry": null,
-      "sl": 3360.723424284525,
-      "tp": 3451.67539358493,
-      "rr": 1.4999999999999938,
+      "sl": 525.7101703248795,
+      "tp": 552.6216944594685,
+      "rr": 1.5,
       "shares": null,
       "currentPrice": null,
       "currentPriceValid": false,
       "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
-      "lastCompletedClose": 3379.0,
+      "lastCompletedClose": 533.5,
       "activeFocusPosition": false,
       "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "setupDiagnosticLong": {
-        "impulseStrengthATR": 5.135547528230881,
-        "pullbackDepthATR": 0.9061739770287275,
+        "impulseStrengthATR": 4.074793628230481,
+        "pullbackDepthATR": 1.7810480093051897,
         "setupType": "FRESH_TREND_PULLBACK",
         "favorable": true,
         "g4Passed": true,
         "g4Reason": null,
         "g5Passed": false,
         "g5Reason": "reservation_price_not_applicable",
-        "atrRatio": 0.0035733226248067956,
+        "atrRatio": 0.006647823372305759,
         "lowVolatility": true,
         "stage2Reason": "candidate",
         "stage2Gate": null,
@@ -1323,7 +1928,7 @@
         "stage2RangePosition": null,
         "stage2RangeLower": false,
         "stage2SupportDistanceATR": null,
-        "stage2RoomATR": 4.495544058520501,
+        "stage2RoomATR": 4.527524016668999,
         "stage2RoomBreak": true,
         "stage2BreakdownRetest": false,
         "selectionReason": "selected"
@@ -1348,208 +1953,159 @@
       "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
       "continuationDiagnostic": {
         "LONG": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 14,
+              "positive": 89
+            },
+            "invalidCount": 17,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "cc1f4de87351226ac68cc5aa8e0ec6ee6de1c59837eab262392a9c78360d192b",
+            "inputHash": "d29ee448b7166a6b2bae9f06b4aa978758793189cd01b1678f2f58c9cda78715"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         },
         "SHORT": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 14,
+              "positive": 89
+            },
+            "invalidCount": 17,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "cc1f4de87351226ac68cc5aa8e0ec6ee6de1c59837eab262392a9c78360d192b",
+            "inputHash": "d29ee448b7166a6b2bae9f06b4aa978758793189cd01b1678f2f58c9cda78715"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         }
       },
-      "tp1": 3451.67539358493,
-      "tp2": 3469.8657874450114,
-      "tp3": 3506.2465751651735,
-      "plannedEntryPrice": 3397.1042120046873,
-      "stopTriggerPrice": 3388.0,
-      "entryLowerPrice": 3388.0,
-      "entryUpperPrice": 3397.1042120046873,
-      "invalidationPrice": 3375.0,
+      "tp1": 552.6216944594685,
+      "tp2": 558.0039992863863,
+      "tp3": 568.7686089402218,
+      "plannedEntryPrice": 536.4747799787151,
+      "stopTriggerPrice": 533.7999877929688,
+      "entryLowerPrice": 533.7999877929688,
+      "entryUpperPrice": 536.4747799787151,
+      "invalidationPrice": 528.7999877929688,
       "setupType": "FRESH_TREND_PULLBACK",
-      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791435600:1791864000:1791867600",
-      "signalATR": 12.13894933958281,
+      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791504000:1791849600:1791867600",
+      "signalATR": 3.566389580995092,
       "slBasis": "daily_atr_floor",
       "tpSource": "fresh_structure_or_r",
-      "extension5dPct": 2.05,
-      "peakExtensionATR": 2.6594641785943858,
+      "extension5dPct": 1.13,
+      "peakExtensionATR": 3.225497404894503,
       "rangePosition": null,
       "rangeLower": false,
-      "impulseStrengthATR": 5.135547528230881,
-      "pullbackDepthATR": 0.9061739770287275,
-      "impulsePrice": 3386.0,
-      "impulseBasePrice": 3324.0,
-      "dailyATR": 45.475984650202676,
+      "impulseStrengthATR": 4.074793628230481,
+      "pullbackDepthATR": 1.7810480093051897,
+      "impulsePrice": 536.5,
+      "impulseBasePrice": 518.5,
+      "dailyATR": 13.45576206729453,
       "entryMode": "FRESH_TREND_PULLBACK_LONG",
       "emaFastHeld": true,
       "emaMidHeld": true,
-      "watchId": "watch-bea28a87cfac06618c9c9f37",
-      "watchStartedAt": "2026-10-13T15:23:21+09:00",
-      "watchValidUntil": "2026-10-13T15:30:00+09:00",
-      "watchSourceBarStartAt": "2026-10-13T14:00:00+09:00",
-      "watchSourceBarCloseAt": "2026-10-13T15:00:00+09:00",
-      "watchSourceBarAvailableAt": "2026-10-13T15:22:20+09:00",
-      "watchEntryLowerPrice": 3388.0,
-      "watchEntryUpperPrice": 3397.1042120046873,
-      "missingConditions": [
-        "watch_5m_trigger_not_reached"
-      ],
-      "entryRevalidated": false,
-      "entryRevalidationReason": "watch_5m_trigger_not_reached",
-      "watchSelectionRankPending": true,
-      "rank": 4,
-      "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
-      "selectionGuard": {
-        "policyVersion": "focus_cap5_selection_guard_v1_20260930",
-        "trigger": 3388.0,
-        "hourlyClose": 3379.0,
-        "watchStart5mClose": 3381.0,
-        "watchStart5mCloseAt": "2026-10-13T15:20:00+09:00",
-        "watchStart5mFinal": true,
-        "blocked": false,
-        "reasons": []
-      },
-      "marketGateBlocked": false,
-      "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
-      "currentPrice1mDiagnostic": {
-        "currentPrice": 3381.0,
-        "currentPriceQuoteAt": "2026-10-13T15:14:00+09:00",
-        "currentPriceSource": "yahoo_focus_detection_1m_close",
-        "currentPriceAgeSeconds": 857.234,
-        "currentPriceSession": "afternoon",
-        "currentPriceValid": false,
-        "currentPriceInvalidReason": "current_price_stale"
-      },
-      "currentPrice5mDiagnostic": {
-        "valid": true,
-        "reason": null,
-        "price": 3381.0,
-        "barStartAt": "2026-10-13T15:20:00+09:00",
-        "barCloseAt": "2026-10-13T15:25:00+09:00",
-        "ageSeconds": 197.234,
-        "session": "afternoon",
-        "bar": {
-          "t": 1791872400,
-          "o": 3383.0,
-          "h": 3383.0,
-          "l": 3380.0,
-          "c": 3381.0,
-          "v": 0,
-          "cMissing": true
-        }
-      },
-      "shortTradeCaution": "",
-      "shortEntryCaution": "",
-      "shortExitRuleText": "",
-      "shortAvailabilityWarning": "",
-      "displayEntryText": "watch_5m_trigger_not_reached",
-      "displayRiskText": "押し目買い待ち",
-      "displayTargetText": "3451.67539358493",
-      "displayDirectionBadge": "🟢 買い",
-      "notificationDirectionText": "🟢 買いWatch：1928 積水ハウス watch_5m_trigger_not_reached",
-      "viewerDirectionText": "方向：🟢 買い"
-    },
-    {
-      "code": "3350",
-      "name": "メタプラネット",
-      "theme": "",
-      "tradeDirection": "SHORT",
-      "stateClassification": "watch",
-      "reason": "watch_5m_trigger_not_reached",
-      "score": 72.89,
-      "entry": null,
-      "sl": 269.783858365006,
-      "tp": 229.86777595060698,
-      "rr": 1.5000000000000009,
-      "shares": null,
-      "currentPrice": null,
-      "currentPriceValid": false,
-      "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
-      "lastCompletedClose": 260.0,
-      "activeFocusPosition": false,
-      "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
-      "setupDiagnosticLong": {
-        "impulseStrengthATR": null,
-        "pullbackDepthATR": null,
-        "setupType": "RANGE_WATCH",
-        "favorable": false,
-        "g4Passed": null,
-        "g4Reason": null,
-        "g5Passed": null,
-        "g5Reason": null
-      },
-      "setupDiagnosticShort": {
-        "impulseStrengthATR": 8.590426097249267,
-        "pullbackDepthATR": 1.8852660982649894,
-        "setupType": "FRESH_TREND_PULLBACK",
-        "favorable": true,
-        "g4Passed": true,
-        "g4Reason": null,
-        "g5Passed": false,
-        "g5Reason": "reservation_price_not_applicable",
-        "atrRatio": 0.016718445529616512,
-        "lowVolatility": false,
-        "stage2Reason": "candidate",
-        "stage2Gate": null,
-        "stage2Terminal": "candidate",
-        "stage2EntryMode": "FRESH_TREND_PULLBACK_SHORT",
-        "stage2RangePosition": null,
-        "stage2RangeLower": false,
-        "stage2SupportDistanceATR": null,
-        "stage2RoomATR": 5.643932771356333,
-        "stage2RoomBreak": false,
-        "stage2BreakdownRetest": false,
-        "selectionReason": "selected"
-      },
-      "directionLabel": "🔴 売り",
-      "stateLabel": "売り / 条件待ち",
-      "finalActionLabel": "ENTRY待ち",
-      "finalAction": "WAIT",
-      "promotionHint": "完成5分足がENTRY帯で確定すればENTRY",
-      "effectiveFrom": "2026-09-09T15:30:00+09:00",
-      "watchSelectionPolicyVersion": "confirmed_1h_stop_limit_reservation_v1_20260818",
-      "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
-      "continuationDiagnostic": {
-        "LONG": {
-          "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
-        },
-        "SHORT": {
-          "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
-        }
-      },
-      "tp1": 229.86777595060698,
-      "tp2": 210.8174253992464,
-      "tp3": 184.2434253992464,
-      "plannedEntryPrice": 253.8174253992464,
-      "stopTriggerPrice": 257.0,
-      "entryLowerPrice": 253.8174253992464,
-      "entryUpperPrice": 257.0,
-      "invalidationPrice": 260.0,
-      "setupType": "FRESH_TREND_PULLBACK",
-      "setupId": "fresh_trend_pullback_v1_20260731:SHORT:1791255600:1791849600:1791867600",
-      "signalATR": 4.243432801004803,
-      "slBasis": "daily_atr_floor",
-      "tpSource": "fresh_structure_or_r",
-      "extension5dPct": 11.78,
-      "peakExtensionATR": 2.8325883493702526,
-      "rangePosition": null,
-      "rangeLower": false,
-      "impulseStrengthATR": 8.590426097249267,
-      "pullbackDepthATR": 1.8852660982649894,
-      "impulsePrice": 252.0,
-      "impulseBasePrice": 295.0,
-      "dailyATR": 19.958041207199518,
-      "entryMode": "FRESH_TREND_PULLBACK_SHORT",
-      "emaFastHeld": false,
-      "emaMidHeld": true,
-      "watchId": "watch-5eff010ee6dc14c28264040d",
-      "watchStartedAt": "2026-10-13T15:23:21+09:00",
-      "watchValidUntil": "2026-10-13T15:30:00+09:00",
-      "watchSourceBarStartAt": "2026-10-13T14:00:00+09:00",
-      "watchSourceBarCloseAt": "2026-10-13T15:00:00+09:00",
-      "watchSourceBarAvailableAt": "2026-10-13T15:22:23+09:00",
-      "watchEntryLowerPrice": 253.8174253992464,
-      "watchEntryUpperPrice": 257.0,
+      "watchId": "watch-0d0080daa4d852472523b77d",
+      "watchStartedAt": "2026-10-14T09:04:22+09:00",
+      "watchValidUntil": "2026-10-14T11:30:00+09:00",
+      "watchSourceBarStartAt": "2026-10-13T15:00:00+09:00",
+      "watchSourceBarCloseAt": "2026-10-13T15:30:00+09:00",
+      "watchSourceBarAvailableAt": "2026-10-14T09:04:08+09:00",
+      "watchEntryLowerPrice": 533.7999877929688,
+      "watchEntryUpperPrice": 536.4747799787151,
       "missingConditions": [
         "watch_5m_trigger_not_reached"
       ],
@@ -1560,10 +2116,10 @@
       "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
       "selectionGuard": {
         "policyVersion": "focus_cap5_selection_guard_v1_20260930",
-        "trigger": 257.0,
-        "hourlyClose": 260.0,
-        "watchStart5mClose": 262.0,
-        "watchStart5mCloseAt": "2026-10-13T15:20:00+09:00",
+        "trigger": 533.7999877929688,
+        "hourlyClose": 533.5,
+        "watchStart5mClose": 533.5,
+        "watchStart5mCloseAt": "2026-10-13T15:30:00+09:00",
         "watchStart5mFinal": true,
         "blocked": false,
         "reasons": []
@@ -1571,354 +2127,29 @@
       "marketGateBlocked": false,
       "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "currentPrice1mDiagnostic": {
-        "currentPrice": 262.0,
-        "currentPriceQuoteAt": "2026-10-13T15:14:00+09:00",
+        "currentPrice": 528.5999755859375,
+        "currentPriceQuoteAt": "2026-10-14T09:17:03+09:00",
         "currentPriceSource": "yahoo_focus_detection_1m_close",
-        "currentPriceAgeSeconds": 857.234,
-        "currentPriceSession": "afternoon",
+        "currentPriceAgeSeconds": 773.414,
+        "currentPriceSession": "morning",
         "currentPriceValid": false,
         "currentPriceInvalidReason": "current_price_stale"
       },
       "currentPrice5mDiagnostic": {
         "valid": true,
         "reason": null,
-        "price": 262.0,
-        "barStartAt": "2026-10-13T15:20:00+09:00",
-        "barCloseAt": "2026-10-13T15:25:00+09:00",
-        "ageSeconds": 197.234,
-        "session": "afternoon",
+        "price": 528.5,
+        "barStartAt": "2026-10-14T09:15:00+09:00",
+        "barCloseAt": "2026-10-14T09:20:00+09:00",
+        "ageSeconds": 596.414,
+        "session": "morning",
         "bar": {
-          "t": 1791872400,
-          "o": 259.0,
-          "h": 262.0,
-          "l": 259.0,
-          "c": 262.0,
-          "v": 0,
-          "cMissing": true
-        }
-      },
-      "shortTradeCaution": "信用売り可否・貸株料・逆日歩・空売り規制は証券会社側で確認",
-      "shortEntryCaution": "安値割れ確認待ち / 寄り付き大幅GDは追い売り注意 / 戻りを待って売る / 直近安値割れを確認して売る",
-      "shortExitRuleText": "戻り高値超えで撤退",
-      "shortAvailabilityWarning": "信用売り可否は証券会社で確認",
-      "comment": "安値割れ待ち",
-      "displayEntryText": "安値割れ待ち",
-      "displayRiskText": "踏み上げ注意 / 戻り高値超えで撤退",
-      "displayTargetText": "229.86777595060698",
-      "displayDirectionBadge": "🔴 売り",
-      "notificationDirectionText": "🔴 売りWatch：3350 メタプラネット 安値割れ待ち",
-      "viewerDirectionText": "方向：🔴 売り"
-    },
-    {
-      "code": "485A",
-      "name": "パワーX",
-      "theme": "",
-      "tradeDirection": "SHORT",
-      "stateClassification": "watch",
-      "reason": "watch_5m_trigger_not_reached",
-      "score": 71.46,
-      "entry": null,
-      "sl": 2003.0567876980729,
-      "tp": 1688.703349555974,
-      "rr": 1.5,
-      "shares": null,
-      "currentPrice": null,
-      "currentPriceValid": false,
-      "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
-      "lastCompletedClose": 1915.0,
-      "activeFocusPosition": false,
-      "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
-      "setupDiagnosticLong": {
-        "impulseStrengthATR": null,
-        "pullbackDepthATR": null,
-        "setupType": "RANGE_WATCH",
-        "favorable": false,
-        "g4Passed": null,
-        "g4Reason": null,
-        "g5Passed": null,
-        "g5Reason": null
-      },
-      "setupDiagnosticShort": {
-        "impulseStrengthATR": 5.593878427593253,
-        "pullbackDepthATR": 0.7726153918968608,
-        "setupType": "FRESH_TREND_PULLBACK",
-        "favorable": true,
-        "g4Passed": true,
-        "g4Reason": null,
-        "g5Passed": false,
-        "g5Reason": "reservation_price_not_applicable",
-        "atrRatio": 0.01966253681563715,
-        "lowVolatility": false,
-        "stage2Reason": "candidate",
-        "stage2Gate": null,
-        "stage2Terminal": "candidate",
-        "stage2EntryMode": "FRESH_TREND_PULLBACK_SHORT",
-        "stage2RangePosition": null,
-        "stage2RangeLower": false,
-        "stage2SupportDistanceATR": null,
-        "stage2RoomATR": 5.109667856299708,
-        "stage2RoomBreak": true,
-        "stage2BreakdownRetest": false,
-        "selectionReason": "selected"
-      },
-      "directionLabel": "🔴 売り",
-      "stateLabel": "売り / 条件待ち",
-      "finalActionLabel": "ENTRY待ち",
-      "finalAction": "WAIT",
-      "promotionHint": "完成5分足がENTRY帯で確定すればENTRY",
-      "effectiveFrom": "2026-09-09T15:30:00+09:00",
-      "watchSelectionPolicyVersion": "confirmed_1h_stop_limit_reservation_v1_20260818",
-      "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
-      "continuationDiagnostic": {
-        "LONG": {
-          "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
-        },
-        "SHORT": {
-          "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
-        }
-      },
-      "tp1": 1688.703349555974,
-      "tp2": 1625.8326619275542,
-      "tp3": 1498.7034124412332,
-      "plannedEntryPrice": 1877.3154124412333,
-      "stopTriggerPrice": 1905.0,
-      "entryLowerPrice": 1877.3154124412333,
-      "entryUpperPrice": 1905.0,
-      "invalidationPrice": 1931.0,
-      "setupType": "FRESH_TREND_PULLBACK",
-      "setupId": "fresh_trend_pullback_v1_20260731:SHORT:1791417600:1791856800:1791867600",
-      "signalATR": 36.91278341168879,
-      "slBasis": "daily_atr_floor",
-      "tpSource": "fresh_structure_or_r",
-      "extension5dPct": 12.64,
-      "peakExtensionATR": 2.8464458796064878,
-      "rangePosition": null,
-      "rangeLower": false,
-      "impulseStrengthATR": 5.593878427593253,
-      "pullbackDepthATR": 0.7726153918968608,
-      "impulsePrice": 1901.0,
-      "impulseBasePrice": 2135.0,
-      "dailyATR": 157.17671907104938,
-      "entryMode": "FRESH_TREND_PULLBACK_SHORT",
-      "emaFastHeld": true,
-      "emaMidHeld": true,
-      "watchId": "watch-9166519b215639abf68716ed",
-      "watchStartedAt": "2026-10-13T15:23:21+09:00",
-      "watchValidUntil": "2026-10-13T15:30:00+09:00",
-      "watchSourceBarStartAt": "2026-10-13T14:00:00+09:00",
-      "watchSourceBarCloseAt": "2026-10-13T15:00:00+09:00",
-      "watchSourceBarAvailableAt": "2026-10-13T15:23:12+09:00",
-      "watchEntryLowerPrice": 1877.3154124412333,
-      "watchEntryUpperPrice": 1905.0,
-      "missingConditions": [
-        "watch_5m_trigger_not_reached"
-      ],
-      "entryRevalidated": false,
-      "entryRevalidationReason": "watch_5m_trigger_not_reached",
-      "watchSelectionRankPending": true,
-      "rank": 6,
-      "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
-      "selectionGuard": {
-        "policyVersion": "focus_cap5_selection_guard_v1_20260930",
-        "trigger": 1905.0,
-        "hourlyClose": 1915.0,
-        "watchStart5mClose": 1914.0,
-        "watchStart5mCloseAt": "2026-10-13T15:20:00+09:00",
-        "watchStart5mFinal": true,
-        "blocked": false,
-        "reasons": []
-      },
-      "marketGateBlocked": false,
-      "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
-      "currentPrice1mDiagnostic": {
-        "currentPrice": 1914.0,
-        "currentPriceQuoteAt": "2026-10-13T15:14:00+09:00",
-        "currentPriceSource": "yahoo_focus_detection_1m_close",
-        "currentPriceAgeSeconds": 857.234,
-        "currentPriceSession": "afternoon",
-        "currentPriceValid": false,
-        "currentPriceInvalidReason": "current_price_stale"
-      },
-      "currentPrice5mDiagnostic": {
-        "valid": true,
-        "reason": null,
-        "price": 1914.0,
-        "barStartAt": "2026-10-13T15:20:00+09:00",
-        "barCloseAt": "2026-10-13T15:25:00+09:00",
-        "ageSeconds": 197.234,
-        "session": "afternoon",
-        "bar": {
-          "t": 1791872400,
-          "o": 1910.0,
-          "h": 1915.0,
-          "l": 1910.0,
-          "c": 1914.0,
-          "v": 0,
-          "cMissing": true
-        }
-      },
-      "shortTradeCaution": "信用売り可否・貸株料・逆日歩・空売り規制は証券会社側で確認",
-      "shortEntryCaution": "安値割れ確認待ち / 寄り付き大幅GDは追い売り注意 / 戻りを待って売る / 直近安値割れを確認して売る",
-      "shortExitRuleText": "戻り高値超えで撤退",
-      "shortAvailabilityWarning": "信用売り可否は証券会社で確認",
-      "comment": "安値割れ待ち",
-      "displayEntryText": "安値割れ待ち",
-      "displayRiskText": "踏み上げ注意 / 戻り高値超えで撤退",
-      "displayTargetText": "1688.703349555974",
-      "displayDirectionBadge": "🔴 売り",
-      "notificationDirectionText": "🔴 売りWatch：485A パワーX 安値割れ待ち",
-      "viewerDirectionText": "方向：🔴 売り"
-    },
-    {
-      "code": "5032",
-      "name": "ANYCOLOR",
-      "theme": "",
-      "tradeDirection": "LONG",
-      "stateClassification": "watch",
-      "reason": "watch_5m_trigger_not_reached",
-      "score": 71.23,
-      "entry": null,
-      "sl": 3087.197328133303,
-      "tp": 3272.861138551419,
-      "rr": 1.5,
-      "shares": null,
-      "currentPrice": null,
-      "currentPriceValid": false,
-      "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
-      "lastCompletedClose": 3130.0,
-      "activeFocusPosition": false,
-      "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
-      "setupDiagnosticLong": {
-        "impulseStrengthATR": 4.072304975268882,
-        "pullbackDepthATR": 0.6833566744460418,
-        "setupType": "FRESH_TREND_PULLBACK",
-        "favorable": true,
-        "g4Passed": true,
-        "g4Reason": null,
-        "g5Passed": false,
-        "g5Reason": "reservation_price_not_applicable",
-        "atrRatio": 0.006943137009531273,
-        "lowVolatility": true,
-        "stage2Reason": "candidate",
-        "stage2Gate": null,
-        "stage2Terminal": "candidate",
-        "stage2EntryMode": "FRESH_TREND_PULLBACK_LONG",
-        "stage2RangePosition": null,
-        "stage2RangeLower": false,
-        "stage2SupportDistanceATR": null,
-        "stage2RoomATR": 5.074984162092167,
-        "stage2RoomBreak": true,
-        "stage2BreakdownRetest": false,
-        "selectionReason": "selected"
-      },
-      "setupDiagnosticShort": {
-        "impulseStrengthATR": null,
-        "pullbackDepthATR": null,
-        "setupType": "RANGE_WATCH",
-        "favorable": false,
-        "g4Passed": null,
-        "g4Reason": null,
-        "g5Passed": null,
-        "g5Reason": null
-      },
-      "directionLabel": "🟢 買い",
-      "stateLabel": "買い / 条件待ち",
-      "finalActionLabel": "ENTRY待ち",
-      "finalAction": "WAIT",
-      "promotionHint": "完成5分足がENTRY帯で確定すればENTRY",
-      "effectiveFrom": "2026-09-09T15:30:00+09:00",
-      "watchSelectionPolicyVersion": "confirmed_1h_stop_limit_reservation_v1_20260818",
-      "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
-      "continuationDiagnostic": {
-        "LONG": {
-          "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
-        },
-        "SHORT": {
-          "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
-        }
-      },
-      "tp1": 3272.861138551419,
-      "tp2": 3309.9939006350423,
-      "tp3": 3384.259424802289,
-      "plannedEntryPrice": 3161.4628523005495,
-      "stopTriggerPrice": 3145.0,
-      "entryLowerPrice": 3145.0,
-      "entryUpperPrice": 3161.4628523005495,
-      "invalidationPrice": 3125.0,
-      "setupType": "FRESH_TREND_PULLBACK",
-      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791507600:1791864000:1791867600",
-      "signalATR": 21.950469734066246,
-      "slBasis": "daily_atr_floor",
-      "tpSource": "fresh_structure_or_r",
-      "extension5dPct": 2.79,
-      "peakExtensionATR": 2.6757379606866807,
-      "rangePosition": null,
-      "rangeLower": false,
-      "impulseStrengthATR": 4.072304975268882,
-      "pullbackDepthATR": 0.6833566744460418,
-      "impulsePrice": 3140.0,
-      "impulseBasePrice": 3050.0,
-      "dailyATR": 92.83190520905802,
-      "entryMode": "FRESH_TREND_PULLBACK_LONG",
-      "emaFastHeld": true,
-      "emaMidHeld": true,
-      "watchId": "watch-db675079d7a9604a1bec6f03",
-      "watchStartedAt": "2026-10-13T15:23:21+09:00",
-      "watchValidUntil": "2026-10-13T15:30:00+09:00",
-      "watchSourceBarStartAt": "2026-10-13T14:00:00+09:00",
-      "watchSourceBarCloseAt": "2026-10-13T15:00:00+09:00",
-      "watchSourceBarAvailableAt": "2026-10-13T15:22:35+09:00",
-      "watchEntryLowerPrice": 3145.0,
-      "watchEntryUpperPrice": 3161.4628523005495,
-      "missingConditions": [
-        "watch_5m_trigger_not_reached"
-      ],
-      "entryRevalidated": false,
-      "entryRevalidationReason": "watch_5m_trigger_not_reached",
-      "watchSelectionRankPending": true,
-      "rank": 7,
-      "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
-      "selectionGuard": {
-        "policyVersion": "focus_cap5_selection_guard_v1_20260930",
-        "trigger": 3145.0,
-        "hourlyClose": 3130.0,
-        "watchStart5mClose": 3130.0,
-        "watchStart5mCloseAt": "2026-10-13T15:20:00+09:00",
-        "watchStart5mFinal": true,
-        "blocked": false,
-        "reasons": []
-      },
-      "marketGateBlocked": false,
-      "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
-      "currentPrice1mDiagnostic": {
-        "currentPrice": 3130.0,
-        "currentPriceQuoteAt": "2026-10-13T15:14:00+09:00",
-        "currentPriceSource": "yahoo_focus_detection_1m_close",
-        "currentPriceAgeSeconds": 857.234,
-        "currentPriceSession": "afternoon",
-        "currentPriceValid": false,
-        "currentPriceInvalidReason": "current_price_stale"
-      },
-      "currentPrice5mDiagnostic": {
-        "valid": true,
-        "reason": null,
-        "price": 3130.0,
-        "barStartAt": "2026-10-13T15:20:00+09:00",
-        "barCloseAt": "2026-10-13T15:25:00+09:00",
-        "ageSeconds": 197.234,
-        "session": "afternoon",
-        "bar": {
-          "t": 1791872400,
-          "o": 3130.0,
-          "h": 3130.0,
-          "l": 3130.0,
-          "c": 3130.0,
-          "v": 0,
-          "cMissing": true
+          "t": 1791936900,
+          "o": 529.5999755859375,
+          "h": 529.7000122070312,
+          "l": 527.2999877929688,
+          "c": 528.5,
+          "v": 1062700
         }
       },
       "shortTradeCaution": "",
@@ -1927,40 +2158,40 @@
       "shortAvailabilityWarning": "",
       "displayEntryText": "watch_5m_trigger_not_reached",
       "displayRiskText": "押し目買い待ち",
-      "displayTargetText": "3272.861138551419",
+      "displayTargetText": "552.6216944594685",
       "displayDirectionBadge": "🟢 買い",
-      "notificationDirectionText": "🟢 買いWatch：5032 ANYCOLOR watch_5m_trigger_not_reached",
+      "notificationDirectionText": "🟢 買いWatch：8766 東京海上HD watch_5m_trigger_not_reached",
       "viewerDirectionText": "方向：🟢 買い"
     },
     {
-      "code": "9042",
-      "name": "阪急阪神ＨＬＤＧＳ",
+      "code": "5032",
+      "name": "ANYCOLOR",
       "theme": "",
       "tradeDirection": "LONG",
       "stateClassification": "watch",
-      "reason": "watch_5m_trigger_not_reached",
-      "score": 70.4,
+      "reason": "watch_5m_before_watch",
+      "score": 76.49,
       "entry": null,
-      "sl": 4501.9973126214,
-      "tp": 4770.8044194166505,
-      "rr": 1.5000000000000042,
+      "sl": 3088.921193983344,
+      "tp": 3269.3444732941175,
+      "rr": 1.5,
       "shares": null,
       "currentPrice": null,
       "currentPriceValid": false,
       "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
-      "lastCompletedClose": 4530.0,
+      "lastCompletedClose": 3135.0,
       "activeFocusPosition": false,
       "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "setupDiagnosticLong": {
-        "impulseStrengthATR": 3.4222192794751147,
-        "pullbackDepthATR": 1.8222306548131821,
+        "impulseStrengthATR": 4.072304975268882,
+        "pullbackDepthATR": 0.9322267598379713,
         "setupType": "FRESH_TREND_PULLBACK",
         "favorable": true,
         "g4Passed": true,
         "g4Reason": null,
         "g5Passed": false,
         "g5Reason": "reservation_price_not_applicable",
-        "atrRatio": 0.0065140996837203605,
+        "atrRatio": 0.006786900777268823,
         "lowVolatility": true,
         "stage2Reason": "candidate",
         "stage2Gate": null,
@@ -1969,7 +2200,7 @@
         "stage2RangePosition": null,
         "stage2RangeLower": false,
         "stage2SupportDistanceATR": null,
-        "stage2RoomATR": 5.371330536326128,
+        "stage2RoomATR": 5.045862272136711,
         "stage2RoomBreak": true,
         "stage2BreakdownRetest": false,
         "selectionReason": "selected"
@@ -1994,47 +2225,703 @@
       "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
       "continuationDiagnostic": {
         "LONG": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "169d1eb2ec987c79d7b70166639bf20b9aa42790bfa34a3ebeb70a2e87f96ca8",
+            "inputHash": "7da2ebd6caed5b3303bf3e6e879df9777a17c72fcf8dc34e09cefaceab9fb85f"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         },
         "SHORT": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "169d1eb2ec987c79d7b70166639bf20b9aa42790bfa34a3ebeb70a2e87f96ca8",
+            "inputHash": "7da2ebd6caed5b3303bf3e6e879df9777a17c72fcf8dc34e09cefaceab9fb85f"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         }
       },
-      "tp1": 4770.8044194166505,
-      "tp2": 4824.5658407757,
-      "tp3": 4932.0886834938,
-      "plannedEntryPrice": 4609.5201553395,
-      "stopTriggerPrice": 4587.0,
-      "entryLowerPrice": 4587.0,
-      "entryUpperPrice": 4609.5201553395,
-      "invalidationPrice": 4505.0,
+      "tp1": 3269.3444732941175,
+      "tp2": 3305.429129156272,
+      "tp3": 3377.5984408805816,
+      "plannedEntryPrice": 3161.0905057076534,
+      "stopTriggerPrice": 3145.0,
+      "entryLowerPrice": 3145.0,
+      "entryUpperPrice": 3161.0905057076534,
+      "invalidationPrice": 3120.0,
       "setupType": "FRESH_TREND_PULLBACK",
-      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791435600:1791525600:1791849600",
-      "signalATR": 30.026873785999662,
+      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791507600:1791864000:1791867600",
+      "signalATR": 21.45400761020437,
       "slBasis": "daily_atr_floor",
       "tpSource": "fresh_structure_or_r",
-      "extension5dPct": 1.77,
-      "peakExtensionATR": 1.6907965143031551,
+      "extension5dPct": 1.31,
+      "peakExtensionATR": 2.6757379606866807,
       "rangePosition": null,
       "rangeLower": false,
-      "impulseStrengthATR": 3.4222192794751147,
-      "pullbackDepthATR": 1.8222306548131821,
-      "impulsePrice": 4560.0,
-      "impulseBasePrice": 4451.0,
-      "dailyATR": 95.00033182075377,
+      "impulseStrengthATR": 4.072304975268882,
+      "pullbackDepthATR": 0.9322267598379713,
+      "impulsePrice": 3140.0,
+      "impulseBasePrice": 3050.0,
+      "dailyATR": 90.21163965538695,
       "entryMode": "FRESH_TREND_PULLBACK_LONG",
       "emaFastHeld": true,
       "emaMidHeld": true,
-      "watchId": "watch-61e4ef8e0e85f63b3c74178d",
-      "watchStartedAt": "2026-10-13T15:23:21+09:00",
-      "watchValidUntil": "2026-10-13T15:30:00+09:00",
-      "watchSourceBarStartAt": "2026-10-13T14:00:00+09:00",
-      "watchSourceBarCloseAt": "2026-10-13T15:00:00+09:00",
-      "watchSourceBarAvailableAt": "2026-10-13T15:23:08+09:00",
-      "watchEntryLowerPrice": 4587.0,
-      "watchEntryUpperPrice": 4609.5201553395,
+      "watchId": "watch-ca4609c9a74c68efd4f858ac",
+      "watchStartedAt": "2026-10-14T09:23:21+09:00",
+      "watchValidUntil": "2026-10-14T11:30:00+09:00",
+      "watchSourceBarStartAt": "2026-10-13T15:00:00+09:00",
+      "watchSourceBarCloseAt": "2026-10-13T15:30:00+09:00",
+      "watchSourceBarAvailableAt": "2026-10-14T09:22:36+09:00",
+      "watchEntryLowerPrice": 3145.0,
+      "watchEntryUpperPrice": 3161.0905057076534,
+      "missingConditions": [
+        "watch_5m_before_watch"
+      ],
+      "entryRevalidated": false,
+      "entryRevalidationReason": "watch_5m_before_watch",
+      "watchSelectionRankPending": true,
+      "rank": 6,
+      "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
+      "selectionGuard": {
+        "policyVersion": "focus_cap5_selection_guard_v1_20260930",
+        "trigger": 3145.0,
+        "hourlyClose": 3135.0,
+        "watchStart5mClose": 3095.0,
+        "watchStart5mCloseAt": "2026-10-14T09:20:00+09:00",
+        "watchStart5mFinal": false,
+        "blocked": false,
+        "reasons": []
+      },
+      "marketGateBlocked": false,
+      "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
+      "currentPrice1mDiagnostic": {
+        "currentPrice": 3095.0,
+        "currentPriceQuoteAt": "2026-10-14T09:16:20+09:00",
+        "currentPriceSource": "yahoo_focus_detection_1m_close",
+        "currentPriceAgeSeconds": 816.414,
+        "currentPriceSession": "morning",
+        "currentPriceValid": false,
+        "currentPriceInvalidReason": "current_price_stale"
+      },
+      "currentPrice5mDiagnostic": {
+        "valid": false,
+        "reason": "watch_5m_before_watch",
+        "price": 3095.0,
+        "barStartAt": "2026-10-14T09:15:00+09:00",
+        "barCloseAt": "2026-10-14T09:20:00+09:00",
+        "ageSeconds": 596.414,
+        "session": "morning",
+        "bar": {
+          "t": 1791936900,
+          "o": 3095.0,
+          "h": 3095.0,
+          "l": 3095.0,
+          "c": 3095.0,
+          "v": 700
+        }
+      },
+      "shortTradeCaution": "",
+      "shortEntryCaution": "",
+      "shortExitRuleText": "",
+      "shortAvailabilityWarning": "",
+      "displayEntryText": "watch_5m_before_watch",
+      "displayRiskText": "押し目買い待ち",
+      "displayTargetText": "3269.3444732941175",
+      "displayDirectionBadge": "🟢 買い",
+      "notificationDirectionText": "🟢 買いWatch：5032 ANYCOLOR watch_5m_before_watch",
+      "viewerDirectionText": "方向：🟢 買い"
+    },
+    {
+      "code": "4680",
+      "name": "ラウンドワン",
+      "theme": "",
+      "tradeDirection": "LONG",
+      "stateClassification": "watch",
+      "reason": "watch_5m_before_watch",
+      "score": 76.3,
+      "entry": null,
+      "sl": 1298.2171060640496,
+      "tp": 1393.8558829090057,
+      "rr": 1.5000000000000029,
+      "shares": null,
+      "currentPrice": null,
+      "currentPriceValid": false,
+      "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
+      "lastCompletedClose": 1317.5,
+      "activeFocusPosition": false,
+      "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
+      "setupDiagnosticLong": {
+        "impulseStrengthATR": 9.262054925920049,
+        "pullbackDepthATR": 0.9169695414808517,
+        "setupType": "FRESH_TREND_PULLBACK",
+        "favorable": true,
+        "g4Passed": true,
+        "g4Reason": null,
+        "g5Passed": false,
+        "g5Reason": "reservation_price_not_applicable",
+        "atrRatio": 0.011944493937761473,
+        "lowVolatility": false,
+        "stage2Reason": "candidate",
+        "stage2Gate": null,
+        "stage2Terminal": "candidate",
+        "stage2EntryMode": "FRESH_TREND_PULLBACK_LONG",
+        "stage2RangePosition": null,
+        "stage2RangeLower": false,
+        "stage2SupportDistanceATR": null,
+        "stage2RoomATR": 3.5946568984756695,
+        "stage2RoomBreak": true,
+        "stage2BreakdownRetest": false,
+        "selectionReason": "selected"
+      },
+      "setupDiagnosticShort": {
+        "impulseStrengthATR": null,
+        "pullbackDepthATR": null,
+        "setupType": "RANGE_WATCH",
+        "favorable": false,
+        "g4Passed": null,
+        "g4Reason": null,
+        "g5Passed": null,
+        "g5Reason": null
+      },
+      "directionLabel": "🟢 買い",
+      "stateLabel": "買い / 条件待ち",
+      "finalActionLabel": "ENTRY待ち",
+      "finalAction": "WAIT",
+      "promotionHint": "完成5分足がENTRY帯で確定すればENTRY",
+      "effectiveFrom": "2026-09-09T15:30:00+09:00",
+      "watchSelectionPolicyVersion": "confirmed_1h_stop_limit_reservation_v1_20260818",
+      "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
+      "continuationDiagnostic": {
+        "LONG": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "a1cc121e8d7e7b35a9707ab5a8a0e04ace8d41eb8bd31251329a830911329850",
+            "inputHash": "458b42d5aeabeb1998938e9d77e99dce3bb9dcacd79c4592a548ffd661ad181c"
+          },
+          "status": "REJECTED",
+          "reason": "continuation_volume_zero"
+        },
+        "SHORT": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "a1cc121e8d7e7b35a9707ab5a8a0e04ace8d41eb8bd31251329a830911329850",
+            "inputHash": "458b42d5aeabeb1998938e9d77e99dce3bb9dcacd79c4592a548ffd661ad181c"
+          },
+          "status": "REJECTED",
+          "reason": "continuation_volume_zero"
+        }
+      },
+      "tp1": 1393.8558829090057,
+      "tp2": 1499.472616802032,
+      "tp3": 1600.206616802032,
+      "plannedEntryPrice": 1336.472616802032,
+      "stopTriggerPrice": 1324.5,
+      "entryLowerPrice": 1324.5,
+      "entryUpperPrice": 1336.472616802032,
+      "invalidationPrice": 1309.0,
+      "setupType": "FRESH_TREND_PULLBACK",
+      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1790208000:1791860400:1791864000",
+      "signalATR": 15.963489069376083,
+      "slBasis": "daily_atr_floor",
+      "tpSource": "fresh_structure_or_r",
+      "extension5dPct": 1.06,
+      "peakExtensionATR": 1.9117321249407144,
+      "rangePosition": null,
+      "rangeLower": false,
+      "impulseStrengthATR": 9.262054925920049,
+      "pullbackDepthATR": 0.9169695414808517,
+      "impulsePrice": 1325.0,
+      "impulseBasePrice": 1162.0,
+      "dailyATR": 47.819388422478035,
+      "entryMode": "FRESH_TREND_PULLBACK_LONG",
+      "emaFastHeld": true,
+      "emaMidHeld": true,
+      "watchId": "watch-22b7d03eba1ec61011ec1bdd",
+      "watchStartedAt": "2026-10-14T09:23:21+09:00",
+      "watchValidUntil": "2026-10-14T11:30:00+09:00",
+      "watchSourceBarStartAt": "2026-10-13T15:00:00+09:00",
+      "watchSourceBarCloseAt": "2026-10-13T15:30:00+09:00",
+      "watchSourceBarAvailableAt": "2026-10-14T09:22:34+09:00",
+      "watchEntryLowerPrice": 1324.5,
+      "watchEntryUpperPrice": 1336.472616802032,
+      "missingConditions": [
+        "watch_5m_before_watch"
+      ],
+      "entryRevalidated": false,
+      "entryRevalidationReason": "watch_5m_before_watch",
+      "watchSelectionRankPending": true,
+      "rank": 7,
+      "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
+      "selectionGuard": {
+        "policyVersion": "focus_cap5_selection_guard_v1_20260930",
+        "trigger": 1324.5,
+        "hourlyClose": 1317.5,
+        "watchStart5mClose": 1289.5,
+        "watchStart5mCloseAt": "2026-10-14T09:20:00+09:00",
+        "watchStart5mFinal": false,
+        "blocked": false,
+        "reasons": []
+      },
+      "marketGateBlocked": false,
+      "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
+      "currentPrice1mDiagnostic": {
+        "currentPrice": 1289.0,
+        "currentPriceQuoteAt": "2026-10-14T09:17:02+09:00",
+        "currentPriceSource": "yahoo_focus_detection_1m_close",
+        "currentPriceAgeSeconds": 774.414,
+        "currentPriceSession": "morning",
+        "currentPriceValid": false,
+        "currentPriceInvalidReason": "current_price_stale"
+      },
+      "currentPrice5mDiagnostic": {
+        "valid": false,
+        "reason": "watch_5m_before_watch",
+        "price": 1289.5,
+        "barStartAt": "2026-10-14T09:15:00+09:00",
+        "barCloseAt": "2026-10-14T09:20:00+09:00",
+        "ageSeconds": 596.414,
+        "session": "morning",
+        "bar": {
+          "t": 1791936900,
+          "o": 1292.0,
+          "h": 1292.0,
+          "l": 1289.0,
+          "c": 1289.5,
+          "v": 11300
+        }
+      },
+      "shortTradeCaution": "",
+      "shortEntryCaution": "",
+      "shortExitRuleText": "",
+      "shortAvailabilityWarning": "",
+      "displayEntryText": "watch_5m_before_watch",
+      "displayRiskText": "押し目買い待ち",
+      "displayTargetText": "1393.8558829090057",
+      "displayDirectionBadge": "🟢 買い",
+      "notificationDirectionText": "🟢 買いWatch：4680 ラウンドワン watch_5m_before_watch",
+      "viewerDirectionText": "方向：🟢 買い"
+    },
+    {
+      "code": "4483",
+      "name": "JMDC",
+      "theme": "",
+      "tradeDirection": "LONG",
+      "stateClassification": "watch",
+      "reason": "watch_5m_trigger_not_reached",
+      "score": 75.53,
+      "entry": null,
+      "sl": 3692.2672031278976,
+      "tp": 3975.3391366600736,
+      "rr": 1.5,
+      "shares": null,
+      "currentPrice": null,
+      "currentPriceValid": false,
+      "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
+      "lastCompletedClose": 3715.0,
+      "activeFocusPosition": false,
+      "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
+      "setupDiagnosticLong": {
+        "impulseStrengthATR": 2.700940431290118,
+        "pullbackDepthATR": 1.8296273868878712,
+        "setupType": "FRESH_TREND_PULLBACK",
+        "favorable": true,
+        "g4Passed": true,
+        "g4Reason": null,
+        "g5Passed": false,
+        "g5Reason": "reservation_price_not_applicable",
+        "atrRatio": 0.007181184499862498,
+        "lowVolatility": true,
+        "stage2Reason": "candidate",
+        "stage2Gate": null,
+        "stage2Terminal": "candidate",
+        "stage2EntryMode": "FRESH_TREND_PULLBACK_LONG",
+        "stage2RangePosition": null,
+        "stage2RangeLower": false,
+        "stage2SupportDistanceATR": null,
+        "stage2RoomATR": 6.214993944597268,
+        "stage2RoomBreak": true,
+        "stage2BreakdownRetest": false,
+        "selectionReason": "selected"
+      },
+      "setupDiagnosticShort": {
+        "impulseStrengthATR": null,
+        "pullbackDepthATR": null,
+        "setupType": "RANGE_WATCH",
+        "favorable": false,
+        "g4Passed": null,
+        "g4Reason": null,
+        "g5Passed": null,
+        "g5Reason": null
+      },
+      "directionLabel": "🟢 買い",
+      "stateLabel": "買い / 条件待ち",
+      "finalActionLabel": "ENTRY待ち",
+      "finalAction": "WAIT",
+      "promotionHint": "完成5分足がENTRY帯で確定すればENTRY",
+      "effectiveFrom": "2026-09-09T15:30:00+09:00",
+      "watchSelectionPolicyVersion": "confirmed_1h_stop_limit_reservation_v1_20260818",
+      "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
+      "continuationDiagnostic": {
+        "LONG": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "3cb10ebdf26b4c29f3f60640c9f183b63458df91dcebed896235f1ab33e8270c",
+            "inputHash": "4d3d9837fa8da44f81e974acd0e493f7338fcb3c46c44bdfca3e5ba15adb448c"
+          },
+          "status": "REJECTED",
+          "reason": "continuation_volume_zero"
+        },
+        "SHORT": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "3cb10ebdf26b4c29f3f60640c9f183b63458df91dcebed896235f1ab33e8270c",
+            "inputHash": "4d3d9837fa8da44f81e974acd0e493f7338fcb3c46c44bdfca3e5ba15adb448c"
+          },
+          "status": "REJECTED",
+          "reason": "continuation_volume_zero"
+        }
+      },
+      "tp1": 3975.3391366600736,
+      "tp2": 4031.9535233665088,
+      "tp3": 4145.18229677938,
+      "plannedEntryPrice": 3805.495976540768,
+      "stopTriggerPrice": 3785.0,
+      "entryLowerPrice": 3785.0,
+      "entryUpperPrice": 3805.495976540768,
+      "invalidationPrice": 3695.0,
+      "setupType": "FRESH_TREND_PULLBACK",
+      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791504000:1791507600:1791849600",
+      "signalATR": 27.327968721023662,
+      "slBasis": "daily_atr_floor",
+      "tpSource": "fresh_structure_or_r",
+      "extension5dPct": -1.07,
+      "peakExtensionATR": 2.1536780292058144,
+      "rangePosition": null,
+      "rangeLower": false,
+      "impulseStrengthATR": 2.700940431290118,
+      "pullbackDepthATR": 1.8296273868878712,
+      "impulsePrice": 3745.0,
+      "impulseBasePrice": 3660.0,
+      "dailyATR": 103.72760499264132,
+      "entryMode": "FRESH_TREND_PULLBACK_LONG",
+      "emaFastHeld": true,
+      "emaMidHeld": true,
+      "watchId": "watch-c967ae06209167391527269e",
+      "watchStartedAt": "2026-10-14T09:04:22+09:00",
+      "watchValidUntil": "2026-10-14T11:30:00+09:00",
+      "watchSourceBarStartAt": "2026-10-13T15:00:00+09:00",
+      "watchSourceBarCloseAt": "2026-10-13T15:30:00+09:00",
+      "watchSourceBarAvailableAt": "2026-10-14T09:03:33+09:00",
+      "watchEntryLowerPrice": 3785.0,
+      "watchEntryUpperPrice": 3805.495976540768,
       "missingConditions": [
         "watch_5m_trigger_not_reached"
       ],
@@ -2045,10 +2932,10 @@
       "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
       "selectionGuard": {
         "policyVersion": "focus_cap5_selection_guard_v1_20260930",
-        "trigger": 4587.0,
-        "hourlyClose": 4530.0,
-        "watchStart5mClose": 4533.0,
-        "watchStart5mCloseAt": "2026-10-13T15:20:00+09:00",
+        "trigger": 3785.0,
+        "hourlyClose": 3715.0,
+        "watchStart5mClose": 3715.0,
+        "watchStart5mCloseAt": "2026-10-13T15:30:00+09:00",
         "watchStart5mFinal": true,
         "blocked": false,
         "reasons": []
@@ -2056,28 +2943,28 @@
       "marketGateBlocked": false,
       "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "currentPrice1mDiagnostic": {
-        "currentPrice": 4533.0,
-        "currentPriceQuoteAt": "2026-10-13T15:14:00+09:00",
+        "currentPrice": 3690.0,
+        "currentPriceQuoteAt": "2026-10-14T09:15:28+09:00",
         "currentPriceSource": "yahoo_focus_detection_1m_close",
-        "currentPriceAgeSeconds": 857.234,
-        "currentPriceSession": "afternoon",
+        "currentPriceAgeSeconds": 868.414,
+        "currentPriceSession": "morning",
         "currentPriceValid": false,
         "currentPriceInvalidReason": "current_price_stale"
       },
       "currentPrice5mDiagnostic": {
         "valid": true,
         "reason": null,
-        "price": 4533.0,
-        "barStartAt": "2026-10-13T15:20:00+09:00",
-        "barCloseAt": "2026-10-13T15:25:00+09:00",
-        "ageSeconds": 197.234,
-        "session": "afternoon",
+        "price": 3690.0,
+        "barStartAt": "2026-10-14T09:15:00+09:00",
+        "barCloseAt": "2026-10-14T09:20:00+09:00",
+        "ageSeconds": 596.414,
+        "session": "morning",
         "bar": {
-          "t": 1791872400,
-          "o": 4532.0,
-          "h": 4535.0,
-          "l": 4532.0,
-          "c": 4533.0,
+          "t": 1791936900,
+          "o": 3700.0,
+          "h": 3700.0,
+          "l": 3685.0,
+          "c": 3690.0,
           "v": 0,
           "cMissing": true
         }
@@ -2088,40 +2975,40 @@
       "shortAvailabilityWarning": "",
       "displayEntryText": "watch_5m_trigger_not_reached",
       "displayRiskText": "押し目買い待ち",
-      "displayTargetText": "4770.8044194166505",
+      "displayTargetText": "3975.3391366600736",
       "displayDirectionBadge": "🟢 買い",
-      "notificationDirectionText": "🟢 買いWatch：9042 阪急阪神ＨＬＤＧＳ watch_5m_trigger_not_reached",
+      "notificationDirectionText": "🟢 買いWatch：4483 JMDC watch_5m_trigger_not_reached",
       "viewerDirectionText": "方向：🟢 買い"
     },
     {
-      "code": "4578",
-      "name": "大塚HD",
+      "code": "7419",
+      "name": "ノジマ",
       "theme": "",
       "tradeDirection": "LONG",
       "stateClassification": "watch",
       "reason": "watch_5m_trigger_not_reached",
-      "score": 69.85,
+      "score": 75.0,
       "entry": null,
-      "sl": 11595.35585386401,
-      "tp": 12145.124053364554,
-      "rr": 1.4999999999999958,
+      "sl": 1266.1778939266735,
+      "tp": 1326.1476479848618,
+      "rr": 1.5,
       "shares": null,
       "currentPrice": null,
       "currentPriceValid": false,
       "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
-      "lastCompletedClose": 11730.0,
+      "lastCompletedClose": 1271.0,
       "activeFocusPosition": false,
       "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "setupDiagnosticLong": {
-        "impulseStrengthATR": 4.950706530073308,
-        "pullbackDepthATR": 0.6785717260958356,
+        "impulseStrengthATR": 4.913351460553381,
+        "pullbackDepthATR": 1.9462208733307047,
         "setupType": "FRESH_TREND_PULLBACK",
         "favorable": true,
         "g4Passed": true,
         "g4Reason": null,
         "g5Passed": false,
         "g5Reason": "reservation_price_not_applicable",
-        "atrRatio": 0.006236355245362961,
+        "atrRatio": 0.006372096331821284,
         "lowVolatility": true,
         "stage2Reason": "candidate",
         "stage2Gate": null,
@@ -2130,7 +3017,7 @@
         "stage2RangePosition": null,
         "stage2RangeLower": false,
         "stage2SupportDistanceATR": null,
-        "stage2RoomATR": 4.476685873052203,
+        "stage2RoomATR": 4.376789516870805,
         "stage2RoomBreak": true,
         "stage2BreakdownRetest": false,
         "selectionReason": "selected"
@@ -2155,47 +3042,159 @@
       "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
       "continuationDiagnostic": {
         "LONG": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 14,
+              "positive": 89
+            },
+            "invalidCount": 17,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "7f478605017230de0bfb8a0a0cc23e5be939e3a2816744664e3e2c60c7213fcd",
+            "inputHash": "13bc4dda33ac6042a7a23141c6f22fa49198c762a2365137ecf9f9ab68054d76"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         },
         "SHORT": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 14,
+              "positive": 89
+            },
+            "invalidCount": 17,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "7f478605017230de0bfb8a0a0cc23e5be939e3a2816744664e3e2c60c7213fcd",
+            "inputHash": "13bc4dda33ac6042a7a23141c6f22fa49198c762a2365137ecf9f9ab68054d76"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         }
       },
-      "tp1": 12145.124053364554,
-      "tp2": 12255.077693264664,
-      "tp3": 12474.984973064882,
-      "plannedEntryPrice": 11815.263133664228,
-      "stopTriggerPrice": 11760.0,
-      "entryLowerPrice": 11760.0,
-      "entryUpperPrice": 11815.263133664228,
-      "invalidationPrice": 11700.0,
+      "tp1": 1326.1476479848618,
+      "tp2": 1338.1415987964995,
+      "tp3": 1362.1295004197748,
+      "plannedEntryPrice": 1290.1657955499488,
+      "stopTriggerPrice": 1284.0,
+      "entryLowerPrice": 1284.0,
+      "entryUpperPrice": 1290.1657955499488,
+      "invalidationPrice": 1267.0,
       "setupType": "FRESH_TREND_PULLBACK",
-      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791169200:1791864000:1791867600",
-      "signalATR": 73.68417821897052,
+      "setupId": "fresh_trend_pullback_v1_20260731:LONG:1791432000:1791856800:1791860400",
+      "signalATR": 8.221060733265118,
       "slBasis": "daily_atr_floor",
       "tpSource": "fresh_structure_or_r",
-      "extension5dPct": 2.76,
-      "peakExtensionATR": 1.912272423057297,
+      "extension5dPct": 1.68,
+      "peakExtensionATR": 2.6670072696175744,
       "rangePosition": null,
       "rangeLower": false,
-      "impulseStrengthATR": 4.950706530073308,
-      "pullbackDepthATR": 0.6785717260958356,
-      "impulsePrice": 11750.0,
-      "impulseBasePrice": 11380.0,
-      "dailyATR": 274.88409975027344,
+      "impulseStrengthATR": 4.913351460553381,
+      "pullbackDepthATR": 1.9462208733307047,
+      "impulsePrice": 1283.0,
+      "impulseBasePrice": 1240.0,
+      "dailyATR": 23.679457955607823,
       "entryMode": "FRESH_TREND_PULLBACK_LONG",
       "emaFastHeld": true,
       "emaMidHeld": true,
-      "watchId": "watch-df61ca6e2b3652fb67becbc9",
-      "watchStartedAt": "2026-10-13T15:23:21+09:00",
-      "watchValidUntil": "2026-10-13T15:30:00+09:00",
-      "watchSourceBarStartAt": "2026-10-13T14:00:00+09:00",
-      "watchSourceBarCloseAt": "2026-10-13T15:00:00+09:00",
-      "watchSourceBarAvailableAt": "2026-10-13T15:22:32+09:00",
-      "watchEntryLowerPrice": 11760.0,
-      "watchEntryUpperPrice": 11815.263133664228,
+      "watchId": "watch-9a41d6ebf94551895d92118d",
+      "watchStartedAt": "2026-10-14T09:04:22+09:00",
+      "watchValidUntil": "2026-10-14T11:30:00+09:00",
+      "watchSourceBarStartAt": "2026-10-13T15:00:00+09:00",
+      "watchSourceBarCloseAt": "2026-10-13T15:30:00+09:00",
+      "watchSourceBarAvailableAt": "2026-10-14T09:03:58+09:00",
+      "watchEntryLowerPrice": 1284.0,
+      "watchEntryUpperPrice": 1290.1657955499488,
       "missingConditions": [
         "watch_5m_trigger_not_reached"
       ],
@@ -2206,10 +3205,10 @@
       "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
       "selectionGuard": {
         "policyVersion": "focus_cap5_selection_guard_v1_20260930",
-        "trigger": 11760.0,
-        "hourlyClose": 11730.0,
-        "watchStart5mClose": 11745.0,
-        "watchStart5mCloseAt": "2026-10-13T15:20:00+09:00",
+        "trigger": 1284.0,
+        "hourlyClose": 1271.0,
+        "watchStart5mClose": 1271.0,
+        "watchStart5mCloseAt": "2026-10-13T15:30:00+09:00",
         "watchStart5mFinal": true,
         "blocked": false,
         "reasons": []
@@ -2217,30 +3216,29 @@
       "marketGateBlocked": false,
       "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "currentPrice1mDiagnostic": {
-        "currentPrice": 11745.0,
-        "currentPriceQuoteAt": "2026-10-13T15:14:00+09:00",
+        "currentPrice": 1271.0,
+        "currentPriceQuoteAt": "2026-10-14T09:16:03+09:00",
         "currentPriceSource": "yahoo_focus_detection_1m_close",
-        "currentPriceAgeSeconds": 857.234,
-        "currentPriceSession": "afternoon",
+        "currentPriceAgeSeconds": 833.414,
+        "currentPriceSession": "morning",
         "currentPriceValid": false,
         "currentPriceInvalidReason": "current_price_stale"
       },
       "currentPrice5mDiagnostic": {
         "valid": true,
         "reason": null,
-        "price": 11745.0,
-        "barStartAt": "2026-10-13T15:20:00+09:00",
-        "barCloseAt": "2026-10-13T15:25:00+09:00",
-        "ageSeconds": 197.234,
-        "session": "afternoon",
+        "price": 1273.0,
+        "barStartAt": "2026-10-14T09:15:00+09:00",
+        "barCloseAt": "2026-10-14T09:20:00+09:00",
+        "ageSeconds": 596.414,
+        "session": "morning",
         "bar": {
-          "t": 1791872400,
-          "o": 11735.0,
-          "h": 11745.0,
-          "l": 11735.0,
-          "c": 11745.0,
-          "v": 0,
-          "cMissing": true
+          "t": 1791936900,
+          "o": 1273.0,
+          "h": 1274.0,
+          "l": 1272.0,
+          "c": 1273.0,
+          "v": 3100
         }
       },
       "shortTradeCaution": "",
@@ -2249,28 +3247,28 @@
       "shortAvailabilityWarning": "",
       "displayEntryText": "watch_5m_trigger_not_reached",
       "displayRiskText": "押し目買い待ち",
-      "displayTargetText": "12145.124053364554",
+      "displayTargetText": "1326.1476479848618",
       "displayDirectionBadge": "🟢 買い",
-      "notificationDirectionText": "🟢 買いWatch：4578 大塚HD watch_5m_trigger_not_reached",
+      "notificationDirectionText": "🟢 買いWatch：7419 ノジマ watch_5m_trigger_not_reached",
       "viewerDirectionText": "方向：🟢 買い"
     },
     {
-      "code": "6965",
-      "name": "浜松ホトニクス",
+      "code": "7184",
+      "name": "富山第一銀行",
       "theme": "",
       "tradeDirection": "SHORT",
       "stateClassification": "watch",
-      "reason": "watch_selected_at_or_below_trigger",
-      "score": 69.52,
+      "reason": "watch_5m_before_watch",
+      "score": 74.52,
       "entry": null,
-      "sl": 2386.276399122566,
-      "tp": 2222.6041746695873,
-      "rr": 1.4999999999999964,
+      "sl": 3642.047700287089,
+      "tp": 3381.6676142952983,
+      "rr": 1.4999999999999978,
       "shares": null,
       "currentPrice": null,
       "currentPriceValid": false,
       "currentPriceInvalidReason": "current_price_not_required_for_watch_selection",
-      "lastCompletedClose": 2347.0,
+      "lastCompletedClose": 3575.0,
       "activeFocusPosition": false,
       "entryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "setupDiagnosticLong": {
@@ -2284,15 +3282,15 @@
         "g5Reason": null
       },
       "setupDiagnosticShort": {
-        "impulseStrengthATR": 4.643143097929168,
-        "pullbackDepthATR": 1.6284191403970443,
+        "impulseStrengthATR": 3.2765560275818006,
+        "pullbackDepthATR": 0.13835425673372384,
         "setupType": "FRESH_TREND_PULLBACK",
         "favorable": true,
         "g4Passed": true,
         "g4Reason": null,
         "g5Passed": false,
         "g5Reason": "reservation_price_not_applicable",
-        "atrRatio": 0.010451816496571203,
+        "atrRatio": 0.01021486091141545,
         "lowVolatility": true,
         "stage2Reason": "candidate",
         "stage2Gate": null,
@@ -2301,109 +3299,218 @@
         "stage2RangePosition": null,
         "stage2RangeLower": false,
         "stage2SupportDistanceATR": null,
-        "stage2RoomATR": 4.048511134945694,
-        "stage2RoomBreak": false,
+        "stage2RoomATR": 4.322963191878871,
+        "stage2RoomBreak": true,
         "stage2BreakdownRetest": false,
         "selectionReason": "selected"
       },
       "directionLabel": "🔴 売り",
       "stateLabel": "売り / 条件待ち",
-      "finalActionLabel": "選定時トリガー通過（売りENTRY不可）",
+      "finalActionLabel": "ENTRY待ち",
       "finalAction": "WAIT",
-      "promotionHint": "選定時点で価格が既にトリガー以下: この選定ではENTRYしない",
+      "promotionHint": "完成5分足がENTRY帯で確定すればENTRY",
       "effectiveFrom": "2026-09-09T15:30:00+09:00",
       "watchSelectionPolicyVersion": "confirmed_1h_stop_limit_reservation_v1_20260818",
       "watchSelectionMethod": "confirmed_hourly_bars_daily_bars_existing_gates_score_capacity",
       "continuationDiagnostic": {
         "LONG": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "d12df8e5dfed01086da35aeaba2ea352422a9250f23ef5c3439577ad83eccd57",
+            "inputHash": "aaa295f193988e61e24a902a7ccbae30efb91d47ee8456914b1efe5c39c0edd8"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         },
         "SHORT": {
+          "volumeInput": {
+            "version": "continuation_volume_window_v1",
+            "barCount": 126,
+            "windowCount": 23,
+            "windowStartIndex": 103,
+            "insideCounts": {
+              "positive": 20,
+              "zero": 3
+            },
+            "outsideCounts": {
+              "zero": 15,
+              "positive": 88
+            },
+            "invalidCount": 18,
+            "samples": [
+              {
+                "index": 105,
+                "timestamp": 1791417600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 112,
+                "timestamp": 1791504000.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 119,
+                "timestamp": 1791849600.0,
+                "state": "zero",
+                "inVolumeWindow": true
+              },
+              {
+                "index": 0,
+                "timestamp": 1789344000.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 7,
+                "timestamp": 1789430400.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              },
+              {
+                "index": 14,
+                "timestamp": 1789516800.0,
+                "state": "zero",
+                "inVolumeWindow": false
+              }
+            ],
+            "samplesTruncated": true,
+            "sourceHash": "d12df8e5dfed01086da35aeaba2ea352422a9250f23ef5c3439577ad83eccd57",
+            "inputHash": "aaa295f193988e61e24a902a7ccbae30efb91d47ee8456914b1efe5c39c0edd8"
+          },
           "status": "REJECTED",
-          "reason": "continuation_invalid_bars"
+          "reason": "continuation_volume_zero"
         }
       },
-      "tp1": 2222.6041746695873,
-      "tp2": 2189.8697297789913,
-      "tp3": 2124.2205093413745,
-      "plannedEntryPrice": 2320.8075093413745,
-      "stopTriggerPrice": 2339.0,
-      "entryLowerPrice": 2320.8075093413745,
-      "entryUpperPrice": 2339.0,
-      "invalidationPrice": 2354.5,
+      "tp1": 3381.6676142952983,
+      "tp2": 3329.59159709694,
+      "tp3": 3225.4395627002236,
+      "plannedEntryPrice": 3537.8956658903726,
+      "stopTriggerPrice": 3565.0,
+      "entryLowerPrice": 3537.8956658903726,
+      "entryUpperPrice": 3565.0,
+      "invalidationPrice": 3575.0,
       "setupType": "FRESH_TREND_PULLBACK",
-      "setupId": "fresh_trend_pullback_v1_20260731:SHORT:1791421200:1791856800:1791867600",
-      "signalATR": 24.256654211500507,
+      "setupId": "fresh_trend_pullback_v1_20260731:SHORT:1791421200:1791867600:1791871200",
+      "signalATR": 36.1391121461697,
       "slBasis": "daily_atr_floor",
       "tpSource": "fresh_structure_or_r",
-      "extension5dPct": 6.01,
-      "peakExtensionATR": 2.775755386131286,
+      "extension5dPct": 8.12,
+      "peakExtensionATR": 1.4681056825546162,
       "rangePosition": null,
       "rangeLower": false,
-      "impulseStrengthATR": 4.643143097929168,
-      "pullbackDepthATR": 1.6284191403970443,
-      "impulsePrice": 2315.0,
-      "impulseBasePrice": 2436.5,
-      "dailyATR": 81.83611222648973,
+      "impulseStrengthATR": 3.2765560275818006,
+      "pullbackDepthATR": 0.13835425673372384,
+      "impulsePrice": 3570.0,
+      "impulseBasePrice": 3695.0,
+      "dailyATR": 130.19004299589523,
       "entryMode": "FRESH_TREND_PULLBACK_SHORT",
       "emaFastHeld": true,
       "emaMidHeld": true,
-      "watchId": "watch-f2bbac98d352970fcbc101b9",
-      "watchStartedAt": "2026-10-13T15:23:21+09:00",
-      "watchValidUntil": "2026-10-13T15:30:00+09:00",
-      "watchSourceBarStartAt": "2026-10-13T14:00:00+09:00",
-      "watchSourceBarCloseAt": "2026-10-13T15:00:00+09:00",
-      "watchSourceBarAvailableAt": "2026-10-13T15:22:52+09:00",
-      "watchEntryLowerPrice": 2320.8075093413745,
-      "watchEntryUpperPrice": 2339.0,
+      "watchId": "watch-30c25846f8e7ce2a938505b0",
+      "watchStartedAt": "2026-10-14T09:29:40+09:00",
+      "watchValidUntil": "2026-10-14T11:30:00+09:00",
+      "watchSourceBarStartAt": "2026-10-13T15:00:00+09:00",
+      "watchSourceBarCloseAt": "2026-10-13T15:30:00+09:00",
+      "watchSourceBarAvailableAt": "2026-10-14T09:29:13+09:00",
+      "watchEntryLowerPrice": 3537.8956658903726,
+      "watchEntryUpperPrice": 3565.0,
       "missingConditions": [
-        "watch_selected_at_or_below_trigger"
+        "watch_5m_before_watch"
       ],
       "entryRevalidated": false,
-      "entryRevalidationReason": "watch_selected_at_or_below_trigger",
+      "entryRevalidationReason": "watch_5m_before_watch",
       "watchSelectionRankPending": true,
       "rank": 10,
       "directionSymmetryPolicyVersion": "watch_direction_symmetry_v1_20261002",
       "selectionGuard": {
         "policyVersion": "focus_cap5_selection_guard_v1_20260930",
-        "trigger": 2339.0,
-        "hourlyClose": 2347.0,
-        "watchStart5mClose": 2338.0,
-        "watchStart5mCloseAt": "2026-10-13T15:20:00+09:00",
-        "watchStart5mFinal": true,
-        "blocked": true,
-        "reasons": [
-          "watch_start_5m_close_at_or_below_trigger"
-        ]
+        "trigger": 3565.0,
+        "hourlyClose": 3575.0,
+        "watchStart5mClose": 3515.0,
+        "watchStart5mCloseAt": "2026-10-14T09:20:00+09:00",
+        "watchStart5mFinal": false,
+        "blocked": false,
+        "reasons": []
       },
       "marketGateBlocked": false,
       "watchEntryPolicyVersion": "confirmed_1h_completed_5m_entry_v2_20260909",
       "currentPrice1mDiagnostic": {
-        "currentPrice": 2338.0,
-        "currentPriceQuoteAt": "2026-10-13T15:14:00+09:00",
+        "currentPrice": 3505.0,
+        "currentPriceQuoteAt": "2026-10-14T09:16:51+09:00",
         "currentPriceSource": "yahoo_focus_detection_1m_close",
-        "currentPriceAgeSeconds": 857.234,
-        "currentPriceSession": "afternoon",
+        "currentPriceAgeSeconds": 785.414,
+        "currentPriceSession": "morning",
         "currentPriceValid": false,
         "currentPriceInvalidReason": "current_price_stale"
       },
       "currentPrice5mDiagnostic": {
-        "valid": true,
-        "reason": null,
-        "price": 2338.0,
-        "barStartAt": "2026-10-13T15:20:00+09:00",
-        "barCloseAt": "2026-10-13T15:25:00+09:00",
-        "ageSeconds": 197.234,
-        "session": "afternoon",
+        "valid": false,
+        "reason": "watch_5m_before_watch",
+        "price": 3515.0,
+        "barStartAt": "2026-10-14T09:15:00+09:00",
+        "barCloseAt": "2026-10-14T09:20:00+09:00",
+        "ageSeconds": 596.414,
+        "session": "morning",
         "bar": {
-          "t": 1791872400,
-          "o": 2334.5,
-          "h": 2339.0,
-          "l": 2334.0,
-          "c": 2338.0,
-          "v": 0,
-          "cMissing": true
+          "t": 1791936900,
+          "o": 3515.0,
+          "h": 3515.0,
+          "l": 3515.0,
+          "c": 3515.0,
+          "v": 100
         }
       },
       "shortTradeCaution": "信用売り可否・貸株料・逆日歩・空売り規制は証券会社側で確認",
@@ -2413,9 +3520,9 @@
       "comment": "安値割れ待ち",
       "displayEntryText": "安値割れ待ち",
       "displayRiskText": "踏み上げ注意 / 戻り高値超えで撤退",
-      "displayTargetText": "2222.6041746695873",
+      "displayTargetText": "3381.6676142952983",
       "displayDirectionBadge": "🔴 売り",
-      "notificationDirectionText": "🔴 売りWatch：6965 浜松ホトニクス 安値割れ待ち",
+      "notificationDirectionText": "🔴 売りWatch：7184 富山第一銀行 安値割れ待ち",
       "viewerDirectionText": "方向：🔴 売り"
     }
   ],
@@ -2435,8 +3542,8 @@
   "focusNeutralCount": 0,
   "focusMarketBias": "LONG_BIAS",
   "focusMarketBiasLabel": "買い優勢",
-  "watchLongCount": 5,
-  "watchShortCount": 5,
+  "watchLongCount": 7,
+  "watchShortCount": 3,
   "watchNeutralCount": 0,
   "counts": {
     "focus": 5,
@@ -2449,9 +3556,9 @@
     "noticeType": "WATCH_ONLY",
     "isEntrySignal": false,
     "description": "1時間足上昇トレンド中にRCI9/36/52が-75以下で、RCI9が上向いた押し目反転監視候補",
-    "marketDate": "2026-10-13",
-    "generatedAt": "2026-10-13T17:15:00+09:00",
-    "runId": "20261013-152802-eng001",
+    "marketDate": "2026-10-14",
+    "generatedAt": "2026-10-14T09:35:00+09:00",
+    "runId": "20261014-092940-eng001",
     "status": "not_generated",
     "candidates": [],
     "totalCandidates": 0,
@@ -2466,9 +3573,9 @@
   },
   "diagnostics": {
     "ready": true,
-    "marketDate": "2026-10-13",
-    "generatedAt": "2026-10-13T17:15:00+09:00",
-    "runId": "20261013-152802-eng001",
+    "marketDate": "2026-10-14",
+    "generatedAt": "2026-10-14T09:35:00+09:00",
+    "runId": "20261014-092940-eng001",
     "dataIntegrity": {},
     "focusDiagnostics": {},
     "watchDiagnostics": {},
@@ -2484,8 +3591,8 @@
     "source": "MTS-Engine bridge latest",
     "focusZeroAllowed": true
   },
-  "notificationType": "evening",
-  "notificationLabel": "夕",
-  "shortNotificationText": "【相場レーダー｜2026/10/13 夕】\n地合い：complete\nFocus：5件\nWatch：10件\n本日の方向：買い優勢\n買い 3 / 中立 0 / 売り 2\n🔴 売りFocus：6330 東洋エンジニアリング 安値割れ待ち\n🟢 買いFocus：3397 トリドールHD 4265.0\n🟢 買いFocus：4912 ライオン 1779.5\n注目：---\nENTRY候補：0件\n方針：売買条件を変更せず、Focus/Watch/ENTRY不成立理由を確認。\n詳細は本日のレーダーページで確認。",
-  "dailyNotificationPath": "reports/radar-notifications-2026-10-13.json"
+  "notificationType": "morning",
+  "notificationLabel": "朝",
+  "shortNotificationText": "【相場レーダー｜2026/10/14 朝】\n地合い：complete\nFocus：5件\nWatch：10件\n本日の方向：買い優勢\n買い 3 / 中立 0 / 売り 2\n🔴 売りFocus：6330 東洋エンジニアリング 安値割れ待ち\n🟢 買いFocus：3397 トリドールHD 4265.0\n🟢 買いFocus：4912 ライオン 1779.5\n注目：---\nENTRY候補：0件\n方針：売買条件を変更せず、Focus/Watch/ENTRY不成立理由を確認。\n詳細は本日のレーダーページで確認。",
+  "dailyNotificationPath": "reports/radar-notifications-2026-10-14.json"
 }
