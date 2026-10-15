@@ -828,6 +828,30 @@
   }
   function fmtPrice(v) { return v === null || v === undefined ? "—" : "¥" + fmtNum(v, 1); }
   function fmtPct(v) { return v === null || v === undefined ? "—" : fmtNum(v, 2) + "%"; }
+  // Display-only fallback from the saved plan; never mutate the snapshot.
+  function planPercent(row, field) {
+    if (field !== "riskPercent" && field !== "rewardPercent") return null;
+    const number = (v) => {
+      if (typeof v !== "number" && typeof v !== "string") return null;
+      if (typeof v === "string" && !v.trim()) return null;
+      const n = Number(v);
+      return Number.isFinite(n) ? n : null;
+    };
+    const value = row[field];
+    if (value !== null && value !== undefined && value !== "") {
+      const n = number(value);
+      return n !== null && n >= 0 ? n : null;
+    }
+    const entry = number(row.entry);
+    const direction = row.tradeDirection;
+    if (entry === null || entry <= 0 || !["LONG", "SHORT"].includes(direction)) return null;
+    const level = number(field === "riskPercent" ? row.sl : (row.tp1 ?? row.tp));
+    if (level === null || level <= 0) return null;
+    const sign = direction === "LONG" ? 1 : -1;
+    const distance = sign * (field === "riskPercent" ? entry - level : level - entry);
+    const percent = distance / entry * 100;
+    return distance > 0 && Number.isFinite(percent) ? percent : null;
+  }
   function esc(s) {
     return String(s === null || s === undefined ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -874,9 +898,15 @@
       FAILED: "取得・解析失敗",
       SOURCE_CONFLICT: "情報源が矛盾",
     };
+    const expiresAt = Date.parse(diag.expiresAt || "");
+    const pipelineStatus = ["ANALYSIS_READY", "PARTIAL"].includes(diag.pipelineStatus)
+      && Number.isFinite(expiresAt) && Date.now() > expiresAt ? "STALE" : diag.pipelineStatus;
     const code = Object.prototype.hasOwnProperty.call(classByCode, advice.code)
       ? advice.code : "REVIEW_REQUIRED";
     const label = advice.label || "要確認";
+    const status = statusLabels[pipelineStatus] || "状態不明";
+    const displayLabel = pipelineStatus === "ANALYSIS_READY" ? label : status + "・要確認";
+    const displayClass = pipelineStatus === "ANALYSIS_READY" ? classByCode[code] : "diag-review";
     const fundamental = (diag.fundamental && typeof diag.fundamental === "object") ? diag.fundamental : {};
     const news = (diag.news && typeof diag.news === "object") ? diag.news : {};
     const composite = (diag.composite && typeof diag.composite === "object") ? diag.composite : {};
@@ -890,17 +920,19 @@
         }).join("")
       : `<div>・根拠詳細なし</div>`;
     return `<div class="diag-wrap">
-      <span class="diagbadge ${classByCode[code]}"><span class="dot"></span>${esc(label)}</span>
+      <span class="diagbadge ${displayClass}"><span class="dot"></span>${esc(displayLabel)}</span>
       <details class="diag-detail">
         <summary>詳細</summary>
-        <div>処理: ${esc(statusLabels[diag.pipelineStatus] || diag.pipelineStatus || "UNKNOWN")}</div>
+        <div>処理: ${esc(statusLabels[pipelineStatus] || pipelineStatus || "UNKNOWN")}</div>
         <div>業績: ${esc(fundamental.businessPerformanceView || "UNKNOWN")}</div>
         <div>短期: ${esc(news.shortHorizonPriceBias || "UNKNOWN")}</div>
         <div>材料件数: 直接 ${esc(news.directCount ?? 0)} / 業種 ${esc(news.sectorCount ?? 0)} / マクロ ${esc(news.macroCount ?? 0)}</div>
         <div>信頼度: ${esc(news.evidenceConfidence || "UNKNOWN")}</div>
         <div>MTS方向との関係: ${esc(composite.directionRelation || "UNKNOWN")}</div>
         ${reasonHtml}
-        <div>判定時刻: ${esc(diag.decisionAsOf || "—")}</div>
+        <div>診断情報時刻: ${esc(diag.decisionAsOf || "—")}</div>
+        <div>有効期限: ${esc(diag.expiresAt || "—")}</div>
+        <div>表示時点の補助情報。Entry時点の判断根拠ではありません。</div>
         <div>${esc(advice.description || "補助診断。発注可否を決めるものではありません")}</div>
       </details>
     </div>`;
@@ -968,8 +1000,8 @@
         <td class="num">${fmtPrice(r.tp2)}</td>
         <td class="num">${fmtPrice(r.tp3)}</td>
         <td class="num">${fmtNum(r.rr, 2)}</td>
-        <td class="num">${fmtPct(r.riskPercent)}</td>
-        <td class="num">${fmtPct(r.rewardPercent)}</td>
+        <td class="num">${fmtPct(planPercent(r, "riskPercent"))}</td>
+        <td class="num">${fmtPct(planPercent(r, "rewardPercent"))}</td>
         <td>${fundamentalNewsCell(r.fundamentalNewsDiagnostic)}</td>
       </tr>`).join("");
   }
