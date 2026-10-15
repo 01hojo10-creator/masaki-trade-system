@@ -565,6 +565,10 @@
 
   ::-webkit-scrollbar { height: 8px; width: 8px; }
   ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+  .related-themes { margin-top: 8px; white-space: normal; min-width: 155px; max-width: 270px; font-size: 11px; font-weight: 400; line-height: 1.6; }
+  .related-themes a { color: #1763a6; text-decoration: underline; overflow-wrap: anywhere; }
+  .related-themes .theme-label { display: inline-block; padding: 1px 6px; margin: 2px 4px 2px 0; border: 1px solid #adc3d8; border-radius: 6px; color: #245277; }
+  .related-themes small { display: block; color: #617084; }
 </style>
 </head>
 <body>
@@ -636,7 +640,8 @@
     <h2>Focus 詳細 <span class="count-badge" id="focusCount">0件</span></h2>
     <div class="hint">Focus / ENTRY候補（通常ゲート通過・スコア順位内）。地合い警告中は赤色、決算まで3営業日以内は紫色で表示します。entry / SL / TP はすべて算出済み。</div>
     <div class="table-scroll">
-      <table id="focusTable">
+      <div class="hint-text">関連テーマは企業の事業・取組。表示専用で、当日の強弱・売買推奨を示しません。</div>
+    <table id="focusTable">
         <thead><tr>
           <th>#</th><th>銘柄</th><th>方向</th><th>状態</th>
           <th class="num">Entry</th><th class="num">SL</th><th class="num">TP1</th><th class="num">TP2</th><th class="num">TP3</th>
@@ -652,7 +657,8 @@
     <h2>WATCH銘柄 <span class="count-badge" id="watchCount">0件</span></h2>
     <div class="hint">押し目型・トレンド継続型・支持反発型を評価し、スコア順で最大10件表示します。</div>
     <div class="table-scroll">
-      <table id="watchTable">
+      <div class="hint-text">関連テーマは企業の事業・取組。表示専用で、当日の強弱・売買推奨を示しません。</div>
+    <table id="watchTable">
         <thead><tr>
           <th>#</th><th>銘柄</th><th>方向</th><th class="num">スコア</th><th>チャート</th>
         </tr></thead>
@@ -714,6 +720,77 @@
   "use strict";
 
   const BRIDGE_URL = () => "./latest.json?cb=" + Date.now();
+  // Display-only catalog: never changes snapshot rows, scores, sorting or trade plans.
+  const THEME_URL = "./themes.json";
+  let displayThemes = Object.create(null);
+  let themeLoadFailed = false;
+  function themePlaceholder(code) {
+    const normalized = String(code || "").replace(/\.T$/, "");
+    return /^[0-9A-Z]{4}$/.test(normalized)
+      ? `<div class="related-themes" data-theme-code="${normalized}"></div>` : "";
+  }
+  function validTheme(item) {
+    if (!item || typeof item.label !== "string" || !item.label.trim() || item.label.length > 40 || /[\x00-\x1f]/.test(item.label)) return false;
+    if (typeof item.sourceUrl !== "string" || /[\s\\]/.test(item.sourceUrl)) return false;
+    try {
+      const u = new URL(item.sourceUrl);
+      if (u.protocol !== "https:" || u.username || u.password || (u.port && u.port !== "443") || !/^[a-z0-9.-]+$/i.test(u.hostname) || !u.hostname.includes(".")) return false;
+    } catch (_) { return false; }
+    if (typeof item.checkedAt !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(item.checkedAt)) return false;
+    const d = new Date(item.checkedAt + "T00:00:00Z");
+    return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === item.checkedAt && item.checkedAt <= new Date().toISOString().slice(0, 10);
+  }
+  function applyThemeCells() {
+    document.querySelectorAll("[data-theme-code]").forEach(cell => {
+      cell.replaceChildren();
+      const title = document.createElement("small");
+      title.textContent = "関連テーマ（事業・取組）";
+      cell.append(title);
+      const entry = displayThemes[cell.dataset.themeCode];
+      const themes = entry && Array.isArray(entry.themes) ? entry.themes.filter(validTheme).slice(0, 8) : [];
+      if (!themes.length) {
+        const unknown = document.createElement("span");
+        unknown.textContent = themeLoadFailed ? "未分類（情報取得不可）" : "未分類（根拠未確認）";
+        cell.append(unknown);
+        return;
+      }
+      themes.forEach(item => {
+        const block = document.createElement("div");
+        const label = document.createElement("span");
+        label.className = "theme-label";
+        label.textContent = item.label;
+        const source = document.createElement("a");
+        source.href = item.sourceUrl;
+        source.target = "_blank";
+        source.rel = "noopener noreferrer";
+        source.textContent = "出典";
+        source.title = item.sourceUrl;
+        const date = document.createElement("small");
+        date.textContent = "確認 " + item.checkedAt;
+        block.append(label, source, date);
+        cell.append(block);
+      });
+    });
+  }
+  async function loadDisplayThemes() {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch(THEME_URL, {cache: "no-store", signal: controller.signal});
+      if (!response.ok) throw new Error("theme fetch failed");
+      const data = await response.json();
+      if (!data || data.schemaVersion !== 1 || data.displayOnly !== true || !data.entries || typeof data.entries !== "object" || Array.isArray(data.entries)) throw new Error("invalid themes");
+      displayThemes = Object.assign(Object.create(null), data.entries);
+      themeLoadFailed = false;
+    } catch (_) {
+      displayThemes = Object.create(null);
+      themeLoadFailed = true;
+    } finally {
+      clearTimeout(timeout);
+      applyThemeCells();
+    }
+  }
+
   const REPORT_URL = "./report.html";
   const REPORT_TRIGGER_URL = "http://127.0.0.1:8787/mts-eval/trigger";
   const REPORT_STATUS_URL = "http://127.0.0.1:8787/mts-eval/status";
@@ -865,7 +942,7 @@
         r.earningsWarningActive === true ? "earnings-warning-active" : "",
       ].filter(Boolean).join(" ")}">
         <td>${esc(r.rank ?? "")}</td>
-        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div>${r.setupType === "TREND_CONTINUATION_BREAKOUT" ? '<div class="hint-text">トレンド継続型</div>' : ""}</td>
+        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div>${r.setupType === "TREND_CONTINUATION_BREAKOUT" ? '<div class="hint-text">トレンド継続型</div>' : ""}${themePlaceholder(r.code)}</td>
         <td>${dirBadge(r.tradeDirection, r.directionLabel)}</td>
         <td>${stateBadge(r.stateClassification, r.stateLabel)}${marketGateBadge(r)}${earningsWarningBadge(r)}</td>
         <td class="num">${fmtPrice(r.entry)}</td>
@@ -899,7 +976,7 @@
     body.innerHTML = top.map((r, i) => `
       <tr>
         <td>${i + 1}</td>
-        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div>${r.setupType === "TREND_CONTINUATION_BREAKOUT" ? '<div class="hint-text">トレンド継続型</div>' : ""}</td>
+        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div>${r.setupType === "TREND_CONTINUATION_BREAKOUT" ? '<div class="hint-text">トレンド継続型</div>' : ""}${themePlaceholder(r.code)}</td>
         <td>${dirBadge(r.tradeDirection, r.directionLabel)}</td>
         <td class="num">${fmtNum(r.score, 1)}</td>
         <td>${chartLink(r.code)}</td>
@@ -1062,6 +1139,7 @@
     $("tExcludedBreak").textContent = directionBreakdown(excluded);
     renderFocus(focus);
     renderWatch(watch);
+    applyThemeCells();
     renderPoolExcluded(pool, excluded);
   }
 
@@ -1485,6 +1563,7 @@
   });
 
   loadUniverse();
+  loadDisplayThemes();
 })();
 </script>
 </body>
