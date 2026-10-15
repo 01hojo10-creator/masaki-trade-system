@@ -455,6 +455,9 @@
   .diag-detail summary { cursor: pointer; user-select: none; }
   .diag-detail div { margin-top: 2px; white-space: normal; }
 
+  .symbol-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; max-width: 270px; margin-top: 8px; white-space: normal; }
+  .symbol-links .related-themes { margin-top: 0; min-width: 0; }
+  #watchTable .score-cell { text-align: center; white-space: nowrap; }
   .chart-link {
     display: inline-flex; align-items: center; gap: 4px;
     font-size: 11px; font-weight: 600; white-space: nowrap;
@@ -660,7 +663,7 @@
         <thead><tr>
           <th>#</th><th>銘柄</th><th>方向</th><th>状態</th>
           <th class="num">Entry</th><th class="num">SL</th><th class="num">TP1</th><th class="num">TP2</th><th class="num">TP3</th>
-          <th class="num">RR</th><th class="num">Risk%</th><th class="num">Reward%</th><th>ファンダ/材料</th><th>チャート</th>
+          <th class="num">RR</th><th class="num">Risk%</th><th class="num">Reward%</th><th>ファンダ/材料</th>
         </tr></thead>
         <tbody id="focusBody"></tbody>
       </table>
@@ -674,7 +677,7 @@
     <div class="table-scroll">
     <table id="watchTable">
         <thead><tr>
-          <th>#</th><th>銘柄</th><th>方向</th><th class="num">スコア</th><th>チャート</th>
+          <th>#</th><th>銘柄</th><th>方向</th><th class="score-cell">スコア</th>
         </tr></thead>
         <tbody id="watchBody"></tbody>
       </table>
@@ -956,7 +959,7 @@
         r.earningsWarningActive === true ? "earnings-warning-active" : "",
       ].filter(Boolean).join(" ")}">
         <td>${esc(r.rank ?? "")}</td>
-        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div>${r.setupType === "TREND_CONTINUATION_BREAKOUT" ? '<div class="hint-text">トレンド継続型</div>' : ""}${themePlaceholder(r.code)}</td>
+        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div>${r.setupType === "TREND_CONTINUATION_BREAKOUT" ? '<div class="hint-text">トレンド継続型</div>' : ""}<div class="symbol-links">${themePlaceholder(r.code)}${chartLink(r.code)}</div></td>
         <td>${dirBadge(r.tradeDirection, r.directionLabel)}</td>
         <td>${stateBadge(r.stateClassification, r.stateLabel)}${marketGateBadge(r)}${earningsWarningBadge(r)}</td>
         <td class="num">${fmtPrice(r.entry)}</td>
@@ -968,7 +971,6 @@
         <td class="num">${fmtPct(r.riskPercent)}</td>
         <td class="num">${fmtPct(r.rewardPercent)}</td>
         <td>${fundamentalNewsCell(r.fundamentalNewsDiagnostic)}</td>
-        <td>${chartLink(r.code)}</td>
       </tr>`).join("");
   }
 
@@ -990,10 +992,9 @@
     body.innerHTML = top.map((r, i) => `
       <tr>
         <td>${i + 1}</td>
-        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div>${r.setupType === "TREND_CONTINUATION_BREAKOUT" ? '<div class="hint-text">トレンド継続型</div>' : ""}${themePlaceholder(r.code)}</td>
+        <td class="code">${esc(r.code)}<div class="hint-text">${esc(r.name)}</div>${r.setupType === "TREND_CONTINUATION_BREAKOUT" ? '<div class="hint-text">トレンド継続型</div>' : ""}<div class="symbol-links">${themePlaceholder(r.code)}${chartLink(r.code)}</div></td>
         <td>${dirBadge(r.tradeDirection, r.directionLabel)}</td>
-        <td class="num">${fmtNum(r.score, 1)}</td>
-        <td>${chartLink(r.code)}</td>
+        <td class="score-cell">${fmtNum(r.score, 1)}</td>
       </tr>`).join("");
   }
 
