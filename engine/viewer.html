@@ -168,6 +168,12 @@
     letter-spacing: .08em;
     margin-bottom: 4px;
   }
+  .events-head { cursor: pointer; padding: 4px 0; color: var(--text-primary); }
+  .events-head:focus-visible { outline: 2px solid var(--status-warning); outline-offset: 3px; }
+  .events-action { margin-left: 8px; font-size: 11px; }
+  .events-action::after { content: "開く"; }
+  #eventsDetails[open] .events-action::after { content: "閉じる"; }
+  #eventsCount { font-weight: 400; letter-spacing: normal; }
   .events-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
   .events-list li {
     display: flex; align-items: center; gap: 8px; min-width: 0;
@@ -592,9 +598,11 @@
   </div>
 
   <section class="events-band" id="eventsBand" hidden aria-label="今後のイベント">
-    <div class="events-head">📅 今後のイベント</div>
+    <details id="eventsDetails">
+    <summary class="events-head">📅 今後のイベント <span id="eventsCount">0件</span><span class="events-action" aria-hidden="true"></span></summary>
     <ul class="events-list" id="eventsList"></ul>
       <p class="events-maintenance">日時はJST・今後45日／重要度は目安。公式日程を手動確認（2026/10/15）。予定は変更される場合があります。</p>
+    </details>
   </section>
 
   <div id="errorBanner">
@@ -1380,7 +1388,9 @@
       })
       .sort((a, b) => (a.date + (a.timeJst || "99:99")).localeCompare(b.date + (b.timeJst || "99:99")))
       .slice(0, EVENTS_MAX);
-    if (!rows.length) { band.hidden = true; ul.innerHTML = ""; return; }
+    $("eventsCount").textContent = rows.length + "件";
+    // Update only the list: native details retains the user's open state.
+    if (!rows.length) { band.hidden = false; ul.innerHTML = "<li>今後45日以内のイベントはありません。</li>"; return; }
     ul.innerHTML = rows.map((e) => {
       const type = EVENT_TYPES.has(e.type) ? e.type : "other";
       const days = daysBetween(today, e.date);
