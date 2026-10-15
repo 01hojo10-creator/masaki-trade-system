@@ -566,7 +566,7 @@
   ::-webkit-scrollbar { height: 8px; width: 8px; }
   ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
   .related-themes { margin-top: 8px; white-space: normal; min-width: 155px; max-width: 270px; font-size: 11px; font-weight: 400; line-height: 1.6; }
-  .related-themes a { color: #1763a6; text-decoration: underline; overflow-wrap: anywhere; }
+  .related-themes a { white-space: nowrap; color: #1763a6; text-decoration: underline; overflow-wrap: anywhere; }
   .related-themes .theme-label { display: inline-block; padding: 1px 6px; margin: 2px 4px 2px 0; border: 1px solid #adc3d8; border-radius: 6px; color: #245277; }
   .related-themes small { display: block; color: #617084; }
 </style>
@@ -640,7 +640,7 @@
     <h2>Focus 詳細 <span class="count-badge" id="focusCount">0件</span></h2>
     <div class="hint">Focus / ENTRY候補（通常ゲート通過・スコア順位内）。地合い警告中は赤色、決算まで3営業日以内は紫色で表示します。entry / SL / TP はすべて算出済み。</div>
     <div class="table-scroll">
-      <div class="hint-text">関連テーマは企業の事業・取組。表示専用で、当日の強弱・売買推奨を示しません。</div>
+      <div class="hint-text">関連テーマは企業の事業・取組。表示専用で、当日の強弱・売買推奨を示しません。登録済み出典を1日1回照合し、新銘柄・内容変更は手動確認します。</div>
     <table id="focusTable">
         <thead><tr>
           <th>#</th><th>銘柄</th><th>方向</th><th>状態</th>
@@ -657,7 +657,7 @@
     <h2>WATCH銘柄 <span class="count-badge" id="watchCount">0件</span></h2>
     <div class="hint">押し目型・トレンド継続型・支持反発型を評価し、スコア順で最大10件表示します。</div>
     <div class="table-scroll">
-      <div class="hint-text">関連テーマは企業の事業・取組。表示専用で、当日の強弱・売買推奨を示しません。</div>
+      <div class="hint-text">関連テーマは企業の事業・取組。表示専用で、当日の強弱・売買推奨を示しません。登録済み出典を1日1回照合し、新銘柄・内容変更は手動確認します。</div>
     <table id="watchTable">
         <thead><tr>
           <th>#</th><th>銘柄</th><th>方向</th><th class="num">スコア</th><th>チャート</th>
@@ -724,6 +724,7 @@
   const THEME_URL = "./themes.json";
   let displayThemes = Object.create(null);
   let themeLoadFailed = false;
+  let themePendingCodes = new Set();
   function themePlaceholder(code) {
     const normalized = String(code || "").replace(/\.T$/, "");
     return /^[0-9A-Z]{4}$/.test(normalized)
@@ -747,10 +748,16 @@
       title.textContent = "関連テーマ（事業・取組）";
       cell.append(title);
       const entry = displayThemes[cell.dataset.themeCode];
+      if (entry && entry.sourceStatus) {
+        const status = document.createElement("small");
+        const messages = {VERIFIED_UNCHANGED:"公式出典を取得・変更なし", REVIEW_REQUIRED:"出典変更・要再確認（確認済み分類を表示）", FETCH_FAILED:"出典取得失敗（確認済み分類を表示）", NOT_CHECKED:"出典取得待ち"};
+        status.textContent = messages[entry.sourceStatus] || "出典要確認";
+        cell.append(status);
+      }
       const themes = entry && Array.isArray(entry.themes) ? entry.themes.filter(validTheme).slice(0, 8) : [];
       if (!themes.length) {
         const unknown = document.createElement("span");
-        unknown.textContent = themeLoadFailed ? "未分類（情報取得不可）" : "未分類（根拠未確認）";
+        unknown.textContent = themeLoadFailed ? "未分類（情報取得不可）" : themePendingCodes.has(cell.dataset.themeCode) ? "未分類（出典登録待ち）" : "未分類（根拠未確認）";
         cell.append(unknown);
         return;
       }
@@ -782,9 +789,11 @@
       if (!data || data.schemaVersion !== 1 || data.displayOnly !== true || !data.entries || typeof data.entries !== "object" || Array.isArray(data.entries)) throw new Error("invalid themes");
       displayThemes = Object.assign(Object.create(null), data.entries);
       themeLoadFailed = false;
+      themePendingCodes = new Set((Array.isArray(data.sourceRefresh && data.sourceRefresh.unclassifiedSymbols) ? data.sourceRefresh.unclassifiedSymbols : []).map(item => item.code));
     } catch (_) {
       displayThemes = Object.create(null);
       themeLoadFailed = true;
+      themePendingCodes = new Set();
     } finally {
       clearTimeout(timeout);
       applyThemeCells();
@@ -1165,6 +1174,7 @@
       latestSnapshot = data;
       await loadUniverse();
       render(data);
+      loadDisplayThemes();
       setConnected(true);
     } catch (e) {
       setConnected(false, e && e.message ? e.message : String(e));
