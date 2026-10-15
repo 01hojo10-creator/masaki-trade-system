@@ -565,6 +565,9 @@
 
   ::-webkit-scrollbar { height: 8px; width: 8px; }
   ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+  .events-time, .events-kind { white-space: nowrap; font-size: 11px; }
+  .events-source { color: inherit; text-decoration: underline; font-size: 11px; white-space: nowrap; }
+  .events-maintenance { font-size: 11px; opacity: .75; margin: 6px 0 0; }
   .related-themes { margin-top: 8px; white-space: normal; min-width: 155px; max-width: 270px; font-size: 11px; font-weight: 400; line-height: 1.6; }
   .related-themes a { white-space: nowrap; color: #684519; text-decoration: underline; overflow-wrap: anywhere; }
   .related-themes .theme-label { display: inline-block; padding: 1px 6px; margin: 2px 4px 2px 0; border: 1px solid #9a794c; border-radius: 6px; color: #684519; }
@@ -591,6 +594,7 @@
   <section class="events-band" id="eventsBand" hidden aria-label="今後のイベント">
     <div class="events-head">📅 今後のイベント</div>
     <ul class="events-list" id="eventsList"></ul>
+      <p class="events-maintenance">日時はJST・今後45日／重要度は目安。公式日程を手動確認（2026/10/15）。予定は変更される場合があります。</p>
   </section>
 
   <div id="errorBanner">
@@ -1330,8 +1334,15 @@
   // ---- 今後のイベント帯（engine/events.json、手動編集）。表示専用で判定には一切使わない ----
   // 公開版(engine/viewer.html)は ./events.json、ローカル(リポジトリ直下の viewer.html)は ./engine/events.json を読む。
   const EVENTS_URLS = ["./events.json", "./engine/events.json"];
-  const EVENT_TYPES = new Set(["boj", "fomc", "index", "us_data", "other"]);
-  const EVENTS_MAX = 5;
+  const EVENT_TYPES = new Set(["boj", "fomc", "index", "us_data", "jp_data", "other"]);
+  const EVENTS_MAX = 12;
+  const EVENTS_DAYS = 45;
+  const EVENT_KIND_LABELS = {boj:"金融政策", fomc:"金融政策", index:"指数", us_data:"米指標", jp_data:"日本指標", other:"政治・その他"};
+  const EVENT_SOURCE_HOSTS = new Set(["www.stat.go.jp", "www.federalreserve.gov", "www.bea.gov", "www.bls.gov", "www.boj.or.jp", "www.jpx.co.jp", "www.fec.gov", "www.esri.cao.go.jp"]);
+  function validEventSource(value) {
+    try { const u = new URL(value); return u.protocol === "https:" && !u.username && !u.password && !u.port && EVENT_SOURCE_HOSTS.has(u.hostname); }
+    catch (_) { return false; }
+  }
   const WEEKDAYS_JA = ["日", "月", "火", "水", "木", "金", "土"];
 
   function todayJst() {
@@ -1342,7 +1353,7 @@
     const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || ""));
     if (!m) return null;
     const d = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
-    return Number.isNaN(d.getTime()) ? null : d;
+    return Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== s ? null : d;
   }
   function daysBetween(fromYmd, toYmd) {
     return Math.round((parseYmd(toYmd) - parseYmd(fromYmd)) / 86400000);
@@ -1355,9 +1366,19 @@
     const band = $("eventsBand");
     const ul = $("eventsList");
     const today = todayJst();
+    const seen = new Set();
     const rows = list
-      .filter((e) => e && typeof e === "object" && parseYmd(e.date) && String(e.date) >= today && e.label)
-      .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0))
+      .filter(e => {
+        if (!e || !parseYmd(e.date) || !e.label || !validEventSource(e.sourceUrl)) return false;
+        if (e.endDate && (!parseYmd(e.endDate) || e.endDate < e.date)) return false;
+        if (e.timeJst != null && !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(e.timeJst)) return false;
+        if ((e.endDate || e.date) < today || daysBetween(today, e.date) > EVENTS_DAYS) return false;
+        if (e.timeJst && Date.parse(e.date + "T" + e.timeJst + ":00+09:00") <= Date.now()) return false;
+        const key = e.date + "|" + e.label;
+        if (seen.has(key)) return false;
+        seen.add(key); return true;
+      })
+      .sort((a, b) => (a.date + (a.timeJst || "99:99")).localeCompare(b.date + (b.timeJst || "99:99")))
       .slice(0, EVENTS_MAX);
     if (!rows.length) { band.hidden = true; ul.innerHTML = ""; return; }
     ul.innerHTML = rows.map((e) => {
@@ -1366,9 +1387,15 @@
       const badgeClass = days === 0 ? "events-days today" : (days <= 3 ? "events-days soon" : "events-days");
       const badgeText = days === 0 ? "本日" : "あと" + days + "日";
       const note = e.note ? '<span class="events-note">' + esc(e.note) + "</span>" : "";
+      const time = e.timeJst ? e.timeJst : "時刻未定";
+      const importance = e.importance === "high" ? "重要" : "注目";
+      const source = '<a class="events-source" href="' + esc(e.sourceUrl) + '" target="_blank" rel="noopener noreferrer" title="公式出典・確認 ' + esc(e.checkedAt || "未確認") + '">出典</a>';
       return '<li class="ev-' + esc(type) + '">'
         + '<span class="events-date">' + esc(fmtEventDate(e.date)) + "</span>"
+        + '<span class="events-time">' + esc(time) + '</span>'
+        + '<span class="events-kind">' + esc(EVENT_KIND_LABELS[type]) + '・' + importance + '</span>'
         + '<span class="events-label">' + esc(e.label) + "</span>"
+        + source
         + note
         + '<span class="' + badgeClass + '">' + esc(badgeText) + "</span>"
         + "</li>";
